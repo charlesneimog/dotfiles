@@ -21,6 +21,14 @@ return {
 
 		keys = {
 			{
+				"<leader>rn",
+				function()
+					vim.lsp.buf.rename()
+				end,
+				mode = "n",
+				desc = "[R]ename [N]ode",
+			},
+			{
 				"<leader>v",
 				function()
 					vim.diagnostic.open_float()
@@ -54,7 +62,7 @@ return {
 				pyright = {},
 				html = {},
 				lua_ls = {},
-				tsserver = {},
+				-- tsserver = {},
 			}
 
 			local mason_lspconfig = require("mason-lspconfig")

@@ -39,10 +39,6 @@ return {
 					winbar = 1000,
 				},
 			},
-			winbar = {
-				lualine_a = { "buffers" },
-				lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
-			},
 			inactive_winbar = {
 				lualine_a = { "buffers" },
 				lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
@@ -68,8 +64,8 @@ return {
 						"filename",
 						file_status = true, -- Displays file status (readonly status, modified status)
 						newfile_status = false, -- Display new file status (new file means no write after created)
-						path = 1, -- 0: Just the filename
-						shorting_target = 40, -- Shortens path to leave 40 spaces in the window
+						path = 0, -- 0: Just the filename
+						shorting_target = 10, -- Shortens path to leave 40 spaces in the window
 						symbols = {
 							modified = "[+]", -- Text to show when the file is modified.
 							readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
@@ -79,33 +75,34 @@ return {
 					},
 				},
 				lualine_x = {
-					"copilot",
 					{
-						require("lazy.status").updates,
-						cond = require("lazy.status").has_updates,
-						-- color = { fg = "#ff9e64" },
+						"buffers",
+						buffers_color = {
+							active = "lualine_b_normal",
+							inactive = "lualine_b_inactive",
+						},
 					},
 					{
 						function()
 							local client = vim.lsp.get_active_clients()
-							-- client and clien ~= 'copilot'
-							if client and client[1].name ~= "copilot" then
+							if client("copilot") then
 								local clients = " "
 								local numClients = #client
 								for i, v in ipairs(client) do
-									clients = clients .. v.name
-									if i < numClients then
-										clients = clients .. ", "
+									if v.name ~= "copilot" then
+										clients = clients .. v.name
+										if i < numClients then
+											clients = clients .. ", "
+										end
 									end
 								end
 								return clients
 							end
 							return ""
 						end,
-						-- color = { fg = "#ff9e64" },
 					},
 				},
-				lualine_z = { mylocation },
+				lualine_z = { mylocation, "copilot" },
 			},
 		})
 		for _, kind in ipairs({ "Add", "Change", "Delete" }) do

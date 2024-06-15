@@ -1,35 +1,48 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/OScofo
+    - /home/neimog/Documents/Git/OScofo/Resources/pd.cmake
+    - /home/neimog/Documents/Git/audience
+    - /home/neimog/Documents/Git/Moteto-v2
     - /home/neimog/Documents/Git/dotfiles
+    - /home/neimog/Nextcloud/Biblioteca/Pesquisa/2024 - OScofo
+    - /home/neimog/Documents/Git/Caravana
+    - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/OM
+    - /home/neimog/Documents/Git/pd.cmake
+    - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/py4pd-freesound
+    - /home/neimog/Documents/Git/orchidea
+    - /home/neimog/Documents/Git/grambilib
+    - /home/neimog/Documents/Git/libpd
+    - /home/neimog/Documents/Git/libpd/pure-data
+    - /home/neimog/Documents/Git/Docs/Tese
+    - /home/neimog/Documents/Git/py4pd/Resources/pd.cmake
+    - /home/neimog/Documents/Git/syncup
+    - /home/neimog/Documents/Git/pd-vamp
+    - /home/neimog/Documents/Git/pd-vamp/Libraries/rt-vamp-plugin-sdk
+    - /home/neimog/Documents/Git/Ideias-Roubadas-III
+    - /home/neimog/Documents/Git/Docs/Tese/Projects/pd-partialtrack
+    - /home/neimog/Documents/Git/pd-partialtrack
+    - /home/neimog/Documents/Git/helmholtz_tilde
+    - /home/neimog/Documents/Git/nucleomusicanova.github.io
+    - /home/neimog/Documents/Git/Synthia
+    - /home/neimog/Documents/Git/grainer_tilde
+    - /home/neimog/Documents/Git/pd-else
+    - /home/neimog/Documents/Git/pd-else/Resources/pd.cmake
     - /home/neimog/Documents/Git/OM-CKN
     - /home/neimog/Documents/Git/Ideias-Roubadas-IV
-    - /home/neimog/Documents/Git/pd4web
-    - /home/neimog/Documents/Git/Docs/Tese
-    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/moteto
     - /home/neimog/Documents/Git/smspd
-    - /home/neimog/Documents/Git/Patches
     - /home/neimog/Documents/Git/emloris
-    - /home/neimog/Documents/Git/audience
-    - /home/neimog/Documents/Git/pd-partialtrack
-    - /home/neimog/Documents/Git/CMakeAudioHelpers
     - /home/neimog/Documents/Git/smspd/Libraries/libsms
     - /home/neimog/Documents/Git/pd-fftconvolver/Libraries/FFTConvolver
     - /home/neimog/Documents/Git/simpl
-    - /home/neimog/Documents/Git/helmholtz_tilde
-    - /home/neimog/Documents/Git/Cardinal
-    - /home/neimog/Documents/test
     - /home/neimog/Documents/Git/NmnCardial
     - /home/neimog/Documents/Git/charlesneimog.github.io
-    - /home/neimog/Documents/pd.cmake
     - /home/neimog/Documents/Git/pd.build
-    - /home/neimog/Documents/Git/py4pd
-    - /home/neimog/Documents/Git/pd-follower
-    - /home/neimog/Documents/Git/ambi_tilde
     - /home/neimog/Documents/Git/scofo
     - /home/neimog/Documents/Git/pd-neimog
-    - /home/neimog/Documents/Git/Ideias-Roubadas-III
     - /home/neimog/Documents/Git/web-audio-latency
     - /home/neimog/Documents/Git/saturator
     - /home/neimog/Documents/Git/ACH2207
@@ -39,17 +52,14 @@ recentrepos:
     - /home/neimog/Documents/Git/Ideias-Roubadas-II
     - /home/neimog/Documents/Git/OM-py
     - /home/neimog/Documents/Git/loris
-    - /home/neimog/Documents/flathub
     - /home/neimog/Documents/Git/pd-spt
     - /home/neimog/Documents/Git/SOFAlizer-for-pd
     - /home/neimog/Documents/Git/HoaLibrary-PD
-    - /home/neimog/Documents/Git/grambilib
     - /home/neimog/Documents/Git/Piece-I
     - /home/neimog/Documents/Git/pd-pt
     - /home/neimog/Documents/Git/libsms
-    - /home/neimog/Documents/Git/orchidea
 startuppopupversion: 5
-lastversion: 0.42.0
+lastversion: 0.44.1
 customcommandshistory:
     - q
     - ""
@@ -60,6 +70,7 @@ customcommandshistory:
 hidecommandlog: false
 ignorewhitespaceindiffview: false
 diffcontextsize: 3
+renamesimilaritythreshold: 50
 localbranchsortorder: recency
 remotebranchsortorder: alphabetical
 gitlogorder: topo-order

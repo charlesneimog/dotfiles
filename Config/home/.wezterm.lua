@@ -1,7 +1,9 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
+
 wezterm.warn_about_missing_glyphs = false
+config.hide_tab_bar_if_only_one_tab = true
 
 local function basename(str)
 	if str then
@@ -181,15 +183,14 @@ local function getTheme(myconfig)
 end
 
 config.enable_wayland = false
-config.font_size = 17
+config.font_size = 15
 config.initial_cols = 110
 config.initial_rows = 30
 
--- config.font = wezterm.font_with_fallback({
--- 	"JetBrainsMonoNerdFont",
--- 	"DengXian",
--- })
--- config.font = wezterm.font("JetBrainsMonoNerdFont")
+config.font = wezterm.font_with_fallback({
+	{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
+	{ family = "Meslo LG S", scale = 1.3 },
+})
 
 -- config.hide_tab_bar_if_only_one_tab = true
 getTheme(config)
@@ -203,21 +204,8 @@ config.use_fancy_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
 
 wezterm.on("update-status", function(window, _)
-	local hour = tonumber(wezterm.strftime("%H"))
-	local minutes = tonumber(wezterm.strftime("%M"))
-	local seconds = tonumber(wezterm.strftime("%S"))
-	local waterSymbol = " "
-	local lunch = " "
-	if hour == 12 and minutes == 0 then
-		lunch = "🥗  "
-	end
-	if minutes % 7 == 0 and seconds % 2 == 0 and seconds < 30 then
-		waterSymbol = "💧 "
-	end
-
 	window:set_right_status(wezterm.format({
-		{ Text = lunch },
-		{ Text = waterSymbol },
+		{ Text = wezterm.strftime(" %H:%M:%S ") },
 	}))
 end)
 

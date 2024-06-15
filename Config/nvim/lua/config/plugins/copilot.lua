@@ -1,11 +1,3 @@
--- return {
--- 	"github/copilot.vim",
--- 	event = "InsertEnter",
--- 	config = function()
--- 		-- require("copilot").setup()
--- 	end,
--- }
-
 return {
 	{ "AndreM222/copilot-lualine" },
 	{
@@ -17,15 +9,6 @@ return {
 				suggestion = { enabled = false, auto_trigger = false },
 				panel = { enabled = false },
 			})
-			-- require("copilot").setup({
-			-- 	panel = {
-			-- 		enabled = false,
-			-- 	},
-			-- 	suggestion = {
-			-- 		enabled = true,
-			-- 		auto_trigger = false,
-			-- 	},
-			-- })
 		end,
 	},
 	{

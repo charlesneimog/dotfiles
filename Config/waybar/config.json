@@ -1,15 +1,46 @@
 {
-  "layer": "top",
-  "modules-left": ["group/launcher", "battery", "tray"],
-  "modules-center": ["hyprland/workspaces"],
-  "modules-right": ["privacy", "clock", "custom/notification"],
+  "font": "JetBrainsMono Nerd Font",
+  "reload_style_on_change": true,
+  "spacing": 1,
+  "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
+  "modules-center": ["hyprland/workspaces", "sway/workspaces"],
+  "modules-right": [
+    "custom/weather",
+    "network",
+    "pulseaudio",
+    "group/hardware",
+    "clock",
+    "custom/notification"
+  ],
 
-  "custom/weather": {
-    "format": "{}",
-    "interval": 300,
-    "return-type": "json",
-    "exec": "curl -s 'https://wttr.in/Sao_Paulo?format=1' |jq --unbuffered --compact-output -M -R '{text:.}'",
-    "exec-if": "ping wttr.in -c1"
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 15,
+    "icon-theme": "Tela-circle",
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close"
+  },
+
+  "sway/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "󰖟",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "urgent": ""
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": []
+    }
   },
 
   "hyprland/workspaces": {
@@ -19,7 +50,8 @@
       "2": "",
       "3": "",
       "4": "",
-      "5": "",
+      "5": "",
+      "6": "",
       "urgent": ""
     },
     "persistent-workspaces": {
@@ -27,73 +59,64 @@
       "2": [],
       "3": [],
       "4": [],
-      "5": []
+      "5": [],
+      "6": []
     }
   },
 
-  "custom/network": {
-    "tooltip": false,
-    "format": "󰖩",
-    "on-click": "wezterm-gui start nmtui-connect"
+  "tray": {
+    "icon-size": 15,
+    "spacing": 5,
+    "show-passive-items": false
   },
 
+  "group/quick-actions": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/power-menu",
+      "idle_inhibitor",
+      "bluetooth",
+      "power-profiles-daemon",
+      "custom/themes",
+      "custom/wallpaper"
+    ]
+  },
   "idle_inhibitor": {
     "format": "{icon}",
-    "timeout": 15,
     "format-icons": {
-      "activated": "",
-      "deactivated": ""
+      "activated": " ",
+      "deactivated": " "
     }
   },
-
-  "bluetooth": {
-    "format-off": "󰂲",
-    "format-on": "",
-    "format-disabled": "󰂲",
-    "format-connected": " {device_alias}",
-    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
-    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
-    "on-click": "blueman-manager"
+  "custom/power-menu": {
+    "format": " ",
+    "tooltip": true,
+    "tooltip-format": " Open Wlogout!",
+    "on-click": "~/.config/hypr/scripts/power-menu.sh"
   },
 
-  "backlight": {
-    "tooltip": false,
-    "format": " {}%",
-    "interval": 10,
-    "on-scroll-up": "brightnessctl set 5%+",
-    "on-scroll-down": "brightnessctl set 5%-"
+  "group/settings": {
+    "orientation": "horizontal",
+    "modules": []
   },
+  "temperature": {
+    "critical-threshold": 80,
+    "format": "{temperatureC}°C {icon}",
+    "format-icons": ["", "", ""]
+  },
+
   "pulseaudio": {
     "format": "{volume}% {icon}",
-    "format-bluetooth": "{volume}% {icon}",
-    "format-muted": "",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " 󰝟  {format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
     "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "default": ["", ""]
+      "default": ["", " ", " "]
     },
-    "scroll-step": 1,
-    "on-click": "pavucontrol",
-    "ignored-sinks": ["Easy Effects Sink"]
-  },
-
-  "battery": {
-    "states": {
-      "good": 95,
-      "warning": 30,
-      "critical": 20
-    },
-    "format": "{icon} {capacity}%",
-    "format-charging": "  {capacity}%",
-    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    "signal": 12,
-    "interval": 5
+    "max-volume": 100,
+    "on-click": "pavucontrol"
   },
 
   "power-profiles-daemon": {
@@ -101,63 +124,11 @@
     "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
     "tooltip": true,
     "format-icons": {
-      "default": "󱐋",
-      "performance": "󱐋",
+      "default": "󱐌",
+      "performance": "󱐌",
       "balanced": "󰗑",
-      "power-saver": ""
+      "power-saver": "󰔱"
     }
-  },
-  "custom/launcher": {
-    "format": " ",
-    "on-click": "rofi -show drun",
-    "on-click-right": "killall rofi"
-  },
-
-  "group/launcher": {
-    "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 500
-    },
-    "modules": [
-      "custom/launcher",
-      "pulseaudio",
-      "custom/themes",
-      "bluetooth",
-      "custom/network",
-      "custom/weather",
-      "idle_inhibitor",
-      "custom/cliphist",
-      "power-profiles-daemon",
-      "backlight"
-    ]
-  },
-
-  "tray": {
-    "icon-size": 18,
-    "spacing": 15,
-    "show-passive-items": true
-  },
-  "privacy": {
-    "icon-spacing": 4,
-    "icon-size": 18,
-    "transition-duration": 250,
-    "modules": [
-      {
-        "type": "screenshare",
-        "tooltip": true,
-        "tooltip-icon-size": 24
-      },
-      {
-        "type": "audio-out",
-        "tooltip": true,
-        "tooltip-icon-size": 24
-      },
-      {
-        "type": "audio-in",
-        "tooltip": true,
-        "tooltip-icon-size": 24
-      }
-    ]
   },
 
   "custom/themes": {
@@ -171,47 +142,68 @@
     },
     "on-click": "$HOME/.config/hypr/functions.sh change_theme",
     "signal": 12,
-    "interval": 5
+    "interval": 60
   },
 
-  "custom/cliphist": {
-    "format": "",
-    "on-click": "sleep 0.1 && ~/.config/waybar/Scripts/cliphist.sh",
-    "on-click-right": "sleep 0.1 && ~/.config/waybar/Scripts/cliphist.sh d",
-    "on-click-middle": "sleep 0.1 && ~/.config/waybar/Scripts/cliphist.sh w",
-    "tooltip": false
-  },
-
-  "clock": {
-    "format": "{:%H:%M}  ",
-    "format-alt": "{:%A, %B %d, %Y (%R)}  ",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    "calendar": {
-      "mode": "year",
-      "mode-mon-col": 3,
-      "weeks-pos": "right",
-      "on-scroll": 1,
-      "on-click-right": "mode",
-      "format": {
-        "months": "<span color='#ffead3'><b>{}</b></span>",
-        "days": "<span color='#ecc6d9'><b>{}</b></span>",
-        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
-        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+  "privacy": {
+    "icon-spacing": 4,
+    "icon-size": 15,
+    "transition-duration": 250,
+    "modules": [
+      {
+        "type": "screenshare",
+        "tooltip": true,
+        "tooltip-icon-size": 18
+      },
+      {
+        "type": "audio-out",
+        "tooltip": true,
+        "tooltip-icon-size": 18
+      },
+      {
+        "type": "audio-in",
+        "tooltip": true,
+        "tooltip-icon-size": 18
       }
-    },
-    "actions": {
-      "on-click-right": "mode",
-      "on-click-forward": "tz_up",
-      "on-click-backward": "tz_down",
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down"
-    }
+    ]
+  },
+  "backlight": {
+    "tooltip": false,
+    "format": " {}%",
+    "interval": 10,
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-"
+  },
+
+  "bluetooth": {
+    "format-off": " 󰂲",
+    "format-on": " ",
+    "format-disabled": "󰂲",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "blueman-manager"
+  },
+
+  // Network setup
+  "network": {
+    "format": "{ifname}",
+    "format-wifi": "{essid} 󰤨 ",
+    "format-disconnected": " 󰤭 ",
+    "tooltip-format-wifi": "{essid} 󰤨 ",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50,
+    "interval": 2,
+    "exec-if": "which nm-connection-editor",
+    "exec": "nm-connection-editor",
+    "on-click": "nm-connection-editor"
   },
 
   "custom/notification": {
     "tooltip": false,
-    "format": "{icon} ",
     "format-icons": {
       "notification": "<span foreground='red'><sup></sup></span>",
       "none": "",
@@ -222,11 +214,60 @@
       "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
       "dnd-inhibited-none": ""
     },
+    "format": "{icon} ",
     "return-type": "json",
     "exec-if": "which swaync-client",
     "exec": "swaync-client -swb",
     "on-click": "swaync-client -t -sw",
     "on-click-right": "swaync-client -d -sw",
     "escape": true
+  },
+
+  "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": false
+    },
+    "modules": ["battery", "cpu", "memory"]
+  },
+
+  "custom/wallpaper": {
+    "format": " 󰋪",
+    "on-click": "$HOME/.config/hypr/functions.sh fetch_random_wallpaper"
+  },
+
+  "custom/weather": {
+    "exec": "python /home/neimog/Documents/Git/dotfiles/Config/waybar/Scripts/weather.py",
+    "restart-interval": 600,
+    "return-type": "json"
+  },
+
+  "battery": {
+    "states": {
+      "good": 70,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}% {icon}",
+    "format-charging": "  {capacity}%",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "signal": 12,
+    "interval": 5
+  },
+
+  "cpu": {
+    "format": " {usage}%  ",
+    "tooltip": false
+  },
+
+  "memory": {
+    "format": " {}%  "
+  },
+  "clock": {
+    "format": "󱑂 {:%R %a %d %b}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "timezone": "Brazil/East",
+    "format-alt": "󰨳 {:%d %b}"
   }
 }

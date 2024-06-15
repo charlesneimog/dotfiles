@@ -1,6 +1,6 @@
-#
-# ~/.bashrc
-#
+# Latex
+export TEXMFHOME=~/.texmf
+export PATH="/home/neimog/Documents/Git/dotfiles/Scripts:$PATH"
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -33,4 +33,5 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
 

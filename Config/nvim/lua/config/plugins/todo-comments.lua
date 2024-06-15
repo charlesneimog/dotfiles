@@ -15,16 +15,17 @@ end
 return {
 	"folke/todo-comments.nvim",
 	dependencies = "nvim-lua/plenary.nvim",
-	-- keys = { BUG:
-	-- 	{
-	-- 		"<leader>T",
-	-- 		function()
-	-- 			vim.cmd("TodoTelescope keywords=TODO,BUG")
-	-- 		end,
-	-- 		desc = "[T]odo Toogle",
-	-- 		mode = { "n", "v" },
-	-- 	},
-	-- },
+	event = "InsertEnter",
+	keys = {
+		{
+			"<leader>T",
+			function()
+				vim.cmd("TodoTelescope keywords=TODO,BUG")
+			end,
+			desc = "[T]odo Toogle",
+			mode = { "n", "v" },
+		},
+	},
 
 	opts = {
 		signs = true, -- show icons in the signs column

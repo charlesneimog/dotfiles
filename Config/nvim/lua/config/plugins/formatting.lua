@@ -19,10 +19,11 @@ return {
 				json = { "prettier" },
 				markdown = { "prettier" },
 				lua = { "stylua" },
-				python = { { "isort", "black" } },
+				python = { "black" },
 				cpp = { "clang-format" },
 				c = { "clang-format" },
-				yaml = { "yamlfmt" },
+				cmake = { "cmake-format" },
+				yaml = { "yamlfix" },
 				bash = { "shfmt" },
 			},
 			format_on_save = {
