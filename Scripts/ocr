@@ -1,0 +1,48 @@
+#!/bin/bash
+
+#!/bin/bash
+
+declare -A languages=(
+    [1]="eng"
+    [2]="por"
+    [3]="fra"
+)
+
+selected_languages=()
+
+echo "Select languages:"
+echo "1. English"
+echo "2. Portuguese"
+echo "3. French"
+echo "Enter the numbers of the languages you want to select (comma-separated):"
+read input
+
+IFS=',' read -ra choices <<< "$input"
+
+for choice in "${choices[@]}"; do
+    if [[ "${languages[$choice]}" ]]; then
+        selected_languages+=("${languages[$choice]}")
+    else
+        echo "Invalid choice: $choice"
+    fi
+done
+
+echo "Selected languages: ${selected_languages[@]}"
+
+echo "Enter n of collums of the pdf:"
+read input
+COLLUMS=$input
+
+
+# Open file chooser and store selected file path
+pdf_file=$(zenity --file-selection --title="Select a PDF file")
+output_file=${pdf_file%.*}_ocr.pdf
+
+# Check if the user canceled file selection
+if [ -z "$pdf_file" ]; then
+    echo "File selection canceled. Exiting."
+    exit 1
+fi
+
+# Run the command with obtained values
+ocrmypdf -l ${selected_languages[@]} --jobs 4 --deskew --force-ocr "$pdf_file" "$output_file" 

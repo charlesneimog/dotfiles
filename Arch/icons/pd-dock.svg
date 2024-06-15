@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="64"
+   height="64"
+   version="1"
+   id="svg4"
+   sodipodi:docname="puredata.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="11.661049"
+     inkscape:cx="26.669984"
+     inkscape:cy="27.999195"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <circle
+     cx="32"
+     cy="32"
+     r="27"
+     fill="#ececec"
+     style="paint-order:stroke fill markers"
+     id="circle1" />
+  <text
+     x="28.577082"
+     y="24.686516"
+     id="7fb48d028a00LABEL label text"
+     style="font-size:7.71006px;font-family:Monaco;fill:#000000;stroke-width:0"
+     transform="scale(0.99918407,1.0008166)" />
+  <rect
+     x="16.066893"
+     y="13.396452"
+     width="11.555676"
+     height="11.574555"
+     id="7fb48d028a00BASE"
+     style="fill:#00fc04;stroke:#000000;stroke-width:0.331987;stroke-dasharray:none" />
+  <ellipse
+     cx="21.844732"
+     cy="19.183735"
+     id="7fb48d028a00BUT"
+     style="fill:#00fc04;stroke:#000000;stroke-width:0.331987;stroke-dasharray:none"
+     rx="5.0074596"
+     ry="5.0156407" />
+  <polyline
+     transform="matrix(0.77037838,0,0,0.77163704,-64.052465,-47.562871)"
+     points="104.0 99.0 148.0 99.0 148.0 124.0 104.0 124.0 104.0 99.0"
+     id=".x7fb48cd26890.t7fb48cc1a7d0R obj"
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.72235;stroke-linejoin:miter;stroke-dasharray:none" />
+  <rect
+     transform="scale(1,-1)"
+     x="16.066893"
+     y="-30.372467"
+     width="5.3926482"
+     height="1.5432742"
+     id=".x7fb48cd26890.t7fb48cc1a7d0i0 inlet"
+     style="fill:#000000;stroke:#000000;stroke-width:1.32795;stroke-dasharray:none" />
+  <rect
+     x="44.570892"
+     y="28.829197"
+     width="5.3926487"
+     height="1.5432742"
+     id=".x7fb48cd26890.t7fb48cc1a7d0i1 inlet"
+     style="fill:#000000;stroke:#000000;stroke-width:1.32795;stroke-dasharray:none" />
+  <text
+     x="17.622025"
+     y="44.191944"
+     id=".x7fb48cd26890.t7fb48cc1a7d0 obj text"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:15.4202px;line-height:125%;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke-width:0"
+     transform="scale(0.99918407,1.0008166)"><tspan
+       id="tspan4141"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:15.4202px;line-height:125%;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono, Bold';text-align:start;letter-spacing:0.771006px;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#000000;fill-opacity:1;stroke-width:0">Pd</tspan></text>
+  <polyline
+     transform="matrix(0.77037838,0,0,0.77163704,-64.052465,-47.562871)"
+     points="107.0 94.0 107.0 99.0"
+     id="l7fb48cc19700 cord"
+     style="fill:none;stroke:#000000;stroke-width:4.30588;stroke-linejoin:round" />
+  <rect
+     style="fill:#000000;stroke:#000000;stroke-width:1.32463;stroke-dasharray:none"
+     id="rect4160"
+     height="1.5441127"
+     width="5.3780136"
+     y="-48.053566"
+     x="16.066475"
+     transform="scale(1,-1)" />
+</svg>

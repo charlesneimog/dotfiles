@@ -1,0 +1,28 @@
+audioapi: 5
+noaudioin: False
+audioindev1: 0 2
+audioindevname1: JACK
+noaudioout: False
+audiooutdev1: 0 2
+audiooutdevname1: JACK
+audiobuf: 25
+rate: 48000
+callback: 1
+audioblocksize: 0
+midiapi: 0
+nomidiin: False
+midiindev1: 0
+midiindevname1: Midi Through Port-0
+nomidiout: False
+midioutdev1: 0
+midioutdevname1: Midi Through Port-0
+path1: /home/neimog/Documents/Git
+path2: /home/neimog/Documents/Pd/externals
+npath: 2
+standardpath: 1
+verbose: 0
+nloadlib: 0
+defeatrt: 0
+flags: -font-weight normal -font-size 12
+zoom: 2
+loading: no

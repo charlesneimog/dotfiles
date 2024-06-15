@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Get Notion token and main database
+notion_token=$(pass show notion-token)
+main_database=$(pass show notion-database)
+
+# Open file chooser and store selected file path
+pdf_file=$(zenity --file-selection --title="Select a PDF file")
+
+# Check if the user canceled file selection
+if [ -z "$pdf_file" ]; then
+    echo "File selection canceled. Exiting."
+    exit 1
+fi
+
+# Run the command with obtained values
+/home/neimog/miniconda3/envs/notes/bin/python /home/neimog/Documents/Git/dotfiles/Scripts/pdf2notion-offline.py --notionToken "$notion_token" --mainDataBase "$main_database" "$pdf_file"

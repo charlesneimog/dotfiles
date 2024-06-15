@@ -1,0 +1,30 @@
+name: Add PDF to Notion DataBase
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install -r ./MyApps/requirements.txt
+  
+    - name: Articles
+      run: | 
+        python ./MyApps/pdf2notion.py --emailPass ${{ secrets.EMAILPASS }} --emailSender ${{ secrets.EMAILSENDER }} --emailReceiver ${{ secrets.EMAILRECEIVER }} --notionToken ${{ secrets.NOTIONTOKEN }} --mainDataBase ${{ secrets.MAINDATABASE }}
+        rm -rf ./MyApps/attachments/*
+
+

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+selected_text=$(xsel -o | tr -d '\n')
+translation=$(trans -b -t pt <<< "$selected_text")
+#zenity --info --title="Output" --text="$translation" 
+zenity --info --title="Output" --text="<span size=\"x-large\">$translation</span>"
+
+#--icon=info "$selected_text" "$translation"
+
+

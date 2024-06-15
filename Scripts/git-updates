@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Set the root directory of your Git repositories
+git_root="$HOME/Documents/Git/"
+
+# List all folders in the root directory
+for repo in "$git_root"*; do
+    if [ -d "$repo" ]; then
+        # Navigate to the repository
+        echo "Checking: $repo"
+        cd "$repo" || exit
+        repo_name=$(basename "$repo")
+        
+        if [ -d "$repo/.git" ]; then
+            # Check if the repository has uncommitted changes
+            if [ -n "$(git status --porcelain)" ]; then
+                notify-send "Git: Update $repo_name." --icon=dialog-warning
+            fi
+
+            # Check if the repository is not up to date
+            if [ -n "$(git fetch --dry-run 2>&1)" ]; then
+                notify-send "Git: Update $repo_name." --icon=dialog-warning
+            fi
+        else
+            # Check if the directory is a "Docs"
+            if [ "$repo_name" = "Docs" ]; then
+                for docs_repo in "$repo"/*; do
+                    if [ -d "$docs_repo" ]; then
+                        # Navigate to the repository
+                        cd "$docs_repo" || exit
+                        repo_name=$(basename "$docs_repo")
+                        echo "Checking: $docs_repo"
+                        
+                        if [ -d "$docs_repo/.git" ]; then
+                            # Check if the repository has uncommitted changes
+                            if [ -n "$(git status --porcelain)" ]; then
+                                notify-send "Git: Update $repo_name." --icon=dialog-warning
+                            fi
+
+                            # Check if the repository is not up to date
+                            if [ -n "$(git fetch --dry-run 2>&1)" ]; then
+                                notify-send "Git: Update $repo_name." --icon=dialog-warning
+                            fi
+                        else
+                            echo "Skipping non-Git directory: $repo_name"
+                        fi
+                        cd - || exit
+                    fi
+                done
+            else
+                echo "Skipping non-Git directory: $repo_name"
+            fi
+        fi
+        cd - || exit
+    fi
+done
+
+

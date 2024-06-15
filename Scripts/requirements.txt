@@ -1,0 +1,8 @@
+unicode
+notion-vzhd1701-fork
+markdown
+unidecode
+pyTelegramBotAPI
+git+https://github.com/charlesneimog/pdfannots.git
+webcolors
+crossrefapi

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Run pacman -Qu and store the output in a variable
+pacman_output=$(pacman -Qu)
+
+# Check if the output is not empty
+if [ -n "$pacman_output" ]; then
+  # Send a notification (you can replace 'notify-send' with your preferred notification command)
+  notify-send "Pacman Update Available" "There are updates available: $pacman_output"
+fi
+
+flatpak update -y
+yay -Syu --noconfirm

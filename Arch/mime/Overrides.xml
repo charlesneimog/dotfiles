@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+
+    <!-- Rnote -->
+
+	<mime-type type="text/x-rnote">
+		<comment xml:lang="en">Rnote</comment>
+		<glob pattern="*.rnote"/>
+		<generic-icon name="rnote-neimog" />
+	</mime-type>
+
+    <!-- PureData -->
+
+	<mime-type type="text/x-puredata">
+		<comment xml:lang="en">Pure Data Patch</comment>
+		<glob pattern="*.pd"/>
+		<generic-icon name="pd-neimog" />
+	</mime-type>
+	
+	<!-- Musescore -->
+	<mime-type type="text/x-musescore">
+		<comment xml:lang="en">Musescore</comment>
+		<glob pattern="*.mscz"/>
+		<generic-icon name="musescore-neimog" />
+	</mime-type>
+
+
+</mime-info>

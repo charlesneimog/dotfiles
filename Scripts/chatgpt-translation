@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#notify-send --icon=info "$(xsel -o)" "$(xsel -o | trans -b -t pt)"
+
+
+# Capture the selected text from the clipboard and remove newlines
+selected_text=$(xsel -o | tr -d '\n')
+
+# Translate the selected text from English to French using the OpenAI API
+#opentranslator --help > ~/out.txt
+
+output=$(/home/neimog/.local/bin/opentranslator --engine text-davinci-003 --translate portuguese --temperature 0.7 --text "$selected_text")
+
+
+# Display a message in a Zenity dialog box
+zenity --info --title="Translation Complete" --text="$output"
+
