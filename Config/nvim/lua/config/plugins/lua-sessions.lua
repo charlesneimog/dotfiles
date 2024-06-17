@@ -1,13 +1,13 @@
 return {
 	"rmagatti/auto-session",
 	keys = {
-		-- {
-		-- 	"<leader>os",
-		-- 	function()
-		-- 		require("auto-session.session_lens").search_session()
-		-- 	end,
-		-- 	desc = "Open Sessions",
-		-- },
+		{
+			"<leader>os",
+			function()
+				require("auto-session.session_lens").search_session()
+			end,
+			desc = "Open Sessions",
+		},
 	},
 	config = function()
 		require("auto-session").setup({
@@ -21,9 +21,6 @@ return {
 				theme_conf = { border = true },
 				previewer = false,
 			},
-		})
-		vim.keymap.set("n", "<leader>os>", require("auto-session.session-lens").search_session, {
-			noremap = true,
 		})
 	end,
 }
