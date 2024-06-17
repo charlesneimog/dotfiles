@@ -1,12 +1,12 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/pd.cmake
+    - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/Docs/Tese
     - /home/neimog/Documents/Git/py4pd-freesound
     - /home/neimog/Documents/Git/OM-CKN
     - /home/neimog/Documents/Git/Ideias-Roubadas-IV
-    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/moteto
     - /home/neimog/Documents/Git/smspd
     - /home/neimog/Documents/Git/Patches
