@@ -2,7 +2,7 @@ return {
 	"rmagatti/auto-session",
 	keys = {
 		{
-			"<leader>os",
+			"<leader>p",
 			function()
 				require("auto-session.session_lens").search_session()
 			end,
