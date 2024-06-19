@@ -22,6 +22,7 @@ return {
 				python = { { "isort", "black" } },
 				cpp = { "clang-format" },
 				c = { "clang-format" },
+				cmake = { "cmake-format" },
 				yaml = { "yamlfmt" },
 				bash = { "shfmt" },
 			},
