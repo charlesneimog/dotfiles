@@ -1,8 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/neimog/Documents/Git/pd.cmake
-    - /home/neimog/Documents/Git/pd-else/Resources/pd.cmake
     - /home/neimog/Documents/Git/pd-else
+    - /home/neimog/Documents/Git/pd-else/Resources/pd.cmake
+    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/Docs/Tese
     - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/dotfiles
