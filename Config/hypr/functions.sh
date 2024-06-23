@@ -14,6 +14,9 @@ fetch_bing_wallpaper() {
     local url_path=$(curl -s "$api_url" | jq -r ".images[0].url")
     curl -L -o "${output}" "${base_url}${url_path}"
     convert "${output}" "${output_png}"
+    mkdir -p ~/.config/rofi/images/
+    ln -s -f "${output_png}" ~/.config/rofi/images/b.png
+
 }
 
 change_theme(){
