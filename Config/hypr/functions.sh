@@ -16,6 +16,7 @@ fetch_bing_wallpaper() {
     convert "${output}" "${output_png}"
     mkdir -p ~/.config/rofi/images/
     ln -s -f "${output_png}" ~/.config/rofi/images/b.png
+    ln -s -f "${output_png}" ~/.config/rofi/images/a.png
 
 }
 
