@@ -1,9 +1,9 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/grainer_tilde
     - /home/neimog/Documents/Git/Docs/Tese
     - /home/neimog/Documents/Git/pd-else
-    - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/pd-else/Resources/pd.cmake
@@ -12,7 +12,6 @@ recentrepos:
     - /home/neimog/Documents/Git/Ideias-Roubadas-IV
     - /home/neimog/Documents/Git/moteto
     - /home/neimog/Documents/Git/smspd
-    - /home/neimog/Documents/Git/Patches
     - /home/neimog/Documents/Git/emloris
     - /home/neimog/Documents/Git/audience
     - /home/neimog/Documents/Git/pd-partialtrack
