@@ -25,7 +25,7 @@ return {
 				"javascript",
 				"vim",
 				"bash",
-				"html",
+				-- "html",
 				"regex",
 				"markdown",
 				"markdown_inline",
