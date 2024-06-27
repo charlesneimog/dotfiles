@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/pd-partialtrack
     - /home/neimog/Documents/Git/pd-follower
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/helmholtz_tilde
@@ -18,7 +19,6 @@ recentrepos:
     - /home/neimog/Documents/Git/smspd
     - /home/neimog/Documents/Git/emloris
     - /home/neimog/Documents/Git/audience
-    - /home/neimog/Documents/Git/pd-partialtrack
     - /home/neimog/Documents/Git/CMakeAudioHelpers
     - /home/neimog/Documents/Git/smspd/Libraries/libsms
     - /home/neimog/Documents/Git/pd-fftconvolver/Libraries/FFTConvolver
