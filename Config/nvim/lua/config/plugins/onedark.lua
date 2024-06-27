@@ -10,7 +10,6 @@ local GnomeThemeMode = getGnomeThemeMode()
 
 return {
 	"olimorris/onedarkpro.nvim",
-	tag = "treesitter-0.9.2",
 	config = function()
 		if GnomeThemeMode == "dark" then
 			require("onedarkpro").setup({
