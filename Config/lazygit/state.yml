@@ -1,7 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/neimog/Documents/Git/dotfiles
+    - /home/neimog/Documents/Git/Docs/Tese
     - /home/neimog/Documents/Git/pd-follower
+    - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/CMakeAudioHelpers
     - /home/neimog/Documents/Git/pd-partialtrack
     - /home/neimog/Documents/Git/helmholtz_tilde
@@ -10,7 +11,6 @@ recentrepos:
     - /home/neimog/Documents/Git/Synthia
     - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/grainer_tilde
-    - /home/neimog/Documents/Git/Docs/Tese
     - /home/neimog/Documents/Git/pd-else
     - /home/neimog/Documents/Git/pd-else/Resources/pd.cmake
     - /home/neimog/Documents/Git/py4pd-freesound
