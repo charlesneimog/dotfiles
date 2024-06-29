@@ -7,11 +7,11 @@ translate_selection(){
 }
 
 fetch_bing_wallpaper() {
-    local api_url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=pt-BR"
+    local api_url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=2&mkt=pt-BR"
     local base_url="https://www.bing.com"
     local output="$HOME/.config/hypr/wallpaper.jpg"
     local output_png="$HOME/.config/hypr/wallpaper.png"
-    local url_path=$(curl -s "$api_url" | jq -r ".images[0].url")
+    local url_path=$(curl -s "$api_url" | jq -r ".images[1].url")
     curl -L -o "${output}" "${base_url}${url_path}"
     convert "${output}" "${output_png}"
     mkdir -p ~/.config/rofi/images/
