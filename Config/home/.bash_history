@@ -258,3 +258,39 @@ clear
 eexport QT_QPA_PLATFORM=xcb
 export QT_QPA_PLATFORM=xcb
 /app/bin/mscore 
+export QT_QPA_PLATFORM=wayland
+flatpak run
+run
+ls
+clear
+cd
+ls
+ls /
+/app/
+ls /app
+ls /app/bin
+/app/bin/mscore
+clear
+        mkdir -p ~/.var/app/org.musescore.MuseScore/data/MuseSampler
+        mkdir -p ~/.var/app/org.musescore.MuseScore/data/MuseSampler/lib
+ln -s "~/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "~/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
+ls
+cd ..
+ln -s "~/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "~/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
+ln -s "~/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "~/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
+clear
+ls
+ln
+ls
+ls
+cd .var
+cd app/org.musescore.MuseScore/data/MuseSampler/lib
+ls
+cd
+clear
+ls ~/.local/share/MuseSampler/lib/
+ln -s "/home/neimog/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "home/neimog/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
+ln -s "~/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "~/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
+ln -s "~/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "~/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
+ln -s "/home/neimog/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "/home/neimog/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
+ls ~/.local/share/MuseSampler/lib/
