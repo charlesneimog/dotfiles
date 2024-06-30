@@ -11,7 +11,7 @@ fetch_bing_wallpaper() {
     local base_url="https://www.bing.com"
     local output="$HOME/.config/hypr/wallpaper.jpg"
     local output_png="$HOME/.config/hypr/wallpaper.png"
-    local url_path=$(curl -s "$api_url" | jq -r ".images[1].url")
+    local url_path=$(curl -s "$api_url" | jq -r ".images[0].url")
     curl -L -o "${output}" "${base_url}${url_path}"
     convert "${output}" "${output_png}"
     mkdir -p ~/.config/rofi/images/
