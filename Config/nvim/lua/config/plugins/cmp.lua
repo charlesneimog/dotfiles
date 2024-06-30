@@ -10,6 +10,7 @@ return {
 		"hrsh7th/cmp-nvim-lua",
 		"hrsh7th/cmp-cmdline",
 		"lukas-reineke/cmp-rg",
+		"micangl/cmp-vimtex",
 		{
 			"onsails/lspkind-nvim",
 			config = function()
@@ -157,6 +158,7 @@ return {
 				{ name = "nvim_lua" },
 				{ name = "buffer" },
 				{ name = "calc" },
+				{ name = "vimtext" },
 				-- { name = "treesitter" },
 			},
 			sorting = {
