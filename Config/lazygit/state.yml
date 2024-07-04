@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/pd-follower
     - /home/neimog/Documents/Git/Docs/Tese
     - /home/neimog/Documents/Git/Docs/Tese/Projects/pd-partialtrack
@@ -8,7 +9,6 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-partialtrack
     - /home/neimog/Documents/Git/helmholtz_tilde
     - /home/neimog/Documents/Git/nucleomusicanova.github.io
-    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/Synthia
     - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/grainer_tilde
@@ -29,7 +29,6 @@ recentrepos:
     - /home/neimog/Documents/Git/charlesneimog.github.io
     - /home/neimog/Documents/Git/pd.build
     - /home/neimog/Documents/Git/py4pd
-    - /home/neimog/Documents/Git/ambi_tilde
     - /home/neimog/Documents/Git/scofo
     - /home/neimog/Documents/Git/pd-neimog
     - /home/neimog/Documents/Git/Ideias-Roubadas-III
