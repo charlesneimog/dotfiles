@@ -16,14 +16,14 @@ return {
 	"folke/todo-comments.nvim",
 	dependencies = "nvim-lua/plenary.nvim",
 	keys = {
-		-- {
-		-- 	"<leader>T",
-		-- 	function()
-		-- 		vim.cmd("TodoTelescope keywords=TODO,BUG")
-		-- 	end,
-		-- 	desc = "[T]odo Toogle",
-		-- 	mode = { "n", "v" },
-		-- },
+		{
+			"<leader>T",
+			function()
+				vim.cmd("TodoTelescope keywords=TODO,BUG")
+			end,
+			desc = "[T]odo Toogle",
+			mode = { "n", "v" },
+		},
 	},
 
 	opts = {
