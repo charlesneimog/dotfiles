@@ -122,9 +122,9 @@ then
         eval "$__conda_setup"
     else
         if [ -f "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh" ]; then
-            . "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"
+# . "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"  # commented out by conda initialize
         else
-            export PATH="/home/neimog/.config/miniconda3.dir/bin:$PATH"
+# export PATH="/home/neimog/.config/miniconda3.dir/bin:$PATH"  # commented out by conda initialize
         fi
     fi
     unset __conda_setup
