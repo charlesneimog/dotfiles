@@ -258,7 +258,7 @@ sudo cp ~/.config/nvim/Arch/mime/Overrides.xml /usr/share/mime/packages/
 #│              FlatPacks               │
 #╰──────────────────────────────────────╯
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
-packages = ("org.zotero.Zotero" "com.github.flxzt.rnote" "com.github.maoschanz.drawing" "com.github.tchx84.Flatseal" "de.haeckerfelix.Fragments" "com.mattjakeman.ExtensionManager" "org.gnome.Evince" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio" "io.github.shiftey.Desktop" "org.gimp.GIMP")
+packages = ("org.zotero.Zotero" "com.github.flxzt.rnote"     "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio")
 
 for package in "${packages[@]}"; do
     flatpak_install_package "$package"
