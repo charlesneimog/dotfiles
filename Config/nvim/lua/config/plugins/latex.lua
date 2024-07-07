@@ -26,7 +26,8 @@ return {
 				continuous = 1,
 				executable = "latexmk",
 				options = {
-					"-pdflatex=lualatex",
+					"-pdflua",
+					-- "-pdflatex=lualatex",
 					"-shell-escape",
 					"-verbose",
 					"-file-line-error",
