@@ -1,7 +1,9 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
+
 wezterm.warn_about_missing_glyphs = false
+config.enable_tab_bar = false
 
 local function basename(str)
 	if str then
