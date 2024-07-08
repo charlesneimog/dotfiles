@@ -3,7 +3,7 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 
 wezterm.warn_about_missing_glyphs = false
-config.enable_tab_bar = false
+config.hide_tab_bar_if_only_one_tab = true
 
 local function basename(str)
 	if str then
