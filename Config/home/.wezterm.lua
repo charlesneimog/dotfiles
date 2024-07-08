@@ -220,6 +220,7 @@ wezterm.on("update-status", function(window, _)
 	window:set_right_status(wezterm.format({
 		{ Text = lunch },
 		{ Text = waterSymbol },
+		{ Text = wezterm.strftime(" %H:%M:%S ") },
 	}))
 end)
 
