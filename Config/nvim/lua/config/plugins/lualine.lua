@@ -78,8 +78,8 @@ return {
 					{
 						"buffers",
 						buffers_color = {
-							active = "lualine_{section}_normal", -- Color for active buffer.
-							inactive = "lualine_{section}_inactive", -- Color for inactive buffer.
+							active = "lualine_z_normal",
+							inactive = "lualine_b_normal",
 						},
 					},
 					"copilot",
