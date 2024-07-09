@@ -39,10 +39,10 @@ return {
 					winbar = 1000,
 				},
 			},
-			winbar = {
-				lualine_a = { "buffers" },
-				lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
-			},
+			-- winbar = {
+			-- 	lualine_a = { "buffers" },
+			-- 	lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
+			-- },
 			inactive_winbar = {
 				lualine_a = { "buffers" },
 				lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
@@ -77,6 +77,7 @@ return {
 							newfile = "[New]", -- Text to show for newly created file before first write
 						},
 					},
+					{ "buffers" },
 				},
 				lualine_x = {
 					"copilot",
