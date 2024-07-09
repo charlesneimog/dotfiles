@@ -60,6 +60,9 @@ return {
 					"diagnostics",
 				},
 				lualine_c = {
+					{ "buffers" },
+				},
+				lualine_x = {
 					{
 						"filename",
 						file_status = true, -- Displays file status (readonly status, modified status)
@@ -73,9 +76,6 @@ return {
 							newfile = "[New]", -- Text to show for newly created file before first write
 						},
 					},
-					{ "buffers" },
-				},
-				lualine_x = {
 					"copilot",
 					{
 						function()
