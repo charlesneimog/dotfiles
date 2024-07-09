@@ -60,9 +60,6 @@ return {
 					"diagnostics",
 				},
 				lualine_c = {
-					{ "buffers" },
-				},
-				lualine_x = {
 					{
 						"filename",
 						file_status = true, -- Displays file status (readonly status, modified status)
@@ -74,6 +71,15 @@ return {
 							readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
 							unnamed = "[No Name]", -- Text to show for unnamed buffers.
 							newfile = "[New]", -- Text to show for newly created file before first write
+						},
+					},
+				},
+				lualine_x = {
+					{
+						"buffers",
+						buffers_color = {
+							active = "lualine_{section}_normal", -- Color for active buffer.
+							inactive = "lualine_{section}_inactive", -- Color for inactive buffer.
 						},
 					},
 					"copilot",
