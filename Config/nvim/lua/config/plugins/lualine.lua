@@ -80,14 +80,15 @@ return {
 					{
 						function()
 							local client = vim.lsp.get_active_clients()
-							-- client and clien ~= 'copilot'
 							if client and client[1].name ~= "copilot" then
 								local clients = " "
 								local numClients = #client
 								for i, v in ipairs(client) do
 									clients = clients .. v.name
-									if i < numClients then
-										clients = clients .. ", "
+									if clients ~= "copilot" then
+										if i < numClients then
+											clients = clients .. ", "
+										end
 									end
 								end
 								return clients
