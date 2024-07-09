@@ -1,10 +1,5 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-#ZSH_THEME="robbyrussell"
+ZSH_THEME="robbyrussell"
 autoload -U promptinit && promptinit
-
-
 SSH_ENV=$HOME/.ssh/environment
 
 # start the ssh-agent
@@ -84,7 +79,7 @@ bindkey '^k' history-search-forward
 bindkey '^ ' autosuggest-accept
 
 # History
-HISTSIZE=5000
+HISTSIZE=50
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -115,19 +110,14 @@ eval "$(zoxide init --cmd cd zsh)"
 # Check if there is no process called "Hyprland"
 if pgrep -x "Hyprland" > /dev/null
 then
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
     __conda_setup="$('/home/neimog/.config/miniconda3.dir/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
         eval "$__conda_setup"
     else
         if [ -f "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh" ]; then
-# . "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"  # commented out by conda initialize
         else
-# export PATH="/home/neimog/.config/miniconda3.dir/bin:$PATH"  # commented out by conda initialize
         fi
     fi
     unset __conda_setup
-    # <<< conda initialize <<<
 fi
 
