@@ -79,7 +79,7 @@ bindkey '^k' history-search-forward
 bindkey '^ ' autosuggest-accept
 
 # History
-HISTSIZE=50
+HISTSIZE=1000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
