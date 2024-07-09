@@ -78,11 +78,6 @@ return {
 				lualine_x = {
 					"copilot",
 					{
-						require("lazy.status").updates,
-						cond = require("lazy.status").has_updates,
-						-- color = { fg = "#ff9e64" },
-					},
-					{
 						function()
 							local client = vim.lsp.get_active_clients()
 							-- client and clien ~= 'copilot'
@@ -99,7 +94,6 @@ return {
 							end
 							return ""
 						end,
-						-- color = { fg = "#ff9e64" },
 					},
 				},
 				lualine_z = { mylocation },
