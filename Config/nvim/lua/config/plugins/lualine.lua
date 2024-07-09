@@ -39,10 +39,10 @@ return {
 					winbar = 1000,
 				},
 			},
-			-- inactive_winbar = {
-			-- 	lualine_a = { "buffers" },
-			-- 	lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
-			-- },
+			inactive_winbar = {
+				lualine_a = { "buffers" },
+				lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
+			},
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = {
