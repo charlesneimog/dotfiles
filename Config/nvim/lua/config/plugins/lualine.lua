@@ -79,7 +79,7 @@ return {
 						"buffers",
 						buffers_color = {
 							active = "lualine_z_normal",
-							inactive = "lualine_b_normal",
+							inactive = "lualine_z_inactive",
 						},
 					},
 					"copilot",
