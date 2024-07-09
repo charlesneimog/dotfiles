@@ -85,7 +85,7 @@ return {
 								local numClients = #client
 								for i, v in ipairs(client) do
 									clients = clients .. v.name
-									if clients ~= "copilot" then
+									if v.name ~= "copilot" then
 										if i < numClients then
 											clients = clients .. ", "
 										end
