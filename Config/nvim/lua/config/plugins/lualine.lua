@@ -44,7 +44,7 @@ return {
 				lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
 			},
 			sections = {
-				lualine_a = { "mode" },
+				lualine_a = { "copilot", "mode" },
 				lualine_b = {
 					"branch",
 					{
@@ -77,13 +77,6 @@ return {
 				lualine_x = {
 					{
 						"buffers",
-						buffers_color = {
-							active = "lualine_b_normal",
-							inactive = "lualine_b_inactive",
-						},
-					},
-					{
-						"copilot",
 						buffers_color = {
 							active = "lualine_b_normal",
 							inactive = "lualine_b_inactive",
