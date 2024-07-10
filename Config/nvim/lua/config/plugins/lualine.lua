@@ -82,7 +82,13 @@ return {
 							inactive = "lualine_b_inactive",
 						},
 					},
-					"copilot",
+					{
+						"copilot",
+						buffers_color = {
+							active = "lualine_b_normal",
+							inactive = "lualine_b_inactive",
+						},
+					},
 					{
 						function()
 							local client = vim.lsp.get_active_clients()
