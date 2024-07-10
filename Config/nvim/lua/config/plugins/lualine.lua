@@ -77,10 +77,10 @@ return {
 				lualine_x = {
 					{
 						"buffers",
-						-- buffers_color = {
-						-- 	active = "lualine_b_normal",
-						-- 	inactive = "lualine_b_inactive",
-						-- },
+						buffers_color = {
+							active = "lualine_b_normal",
+							inactive = "lualine_b_inactive",
+						},
 					},
 					"copilot",
 					{
