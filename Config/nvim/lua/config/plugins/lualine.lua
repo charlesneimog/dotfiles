@@ -44,7 +44,7 @@ return {
 				lualine_z = { "os.date('%a')", "data", "require'lsp-status'.status()" },
 			},
 			sections = {
-				lualine_a = { "copilot", "mode" },
+				lualine_a = { "mode" },
 				lualine_b = {
 					"branch",
 					{
@@ -102,7 +102,7 @@ return {
 						end,
 					},
 				},
-				lualine_z = { mylocation },
+				lualine_z = { mylocation, "copilot" },
 			},
 		})
 		for _, kind in ipairs({ "Add", "Change", "Delete" }) do
