@@ -1,4 +1,6 @@
-# ──────────────────────────────────────
+#╭──────────────────────────────────────╮
+#│            Main Functions            │
+#╰──────────────────────────────────────╯
 install_package() {
     local package="$1"
 
@@ -133,7 +135,7 @@ done
 #╭──────────────────────────────────────╮
 #│   Text Processing and Typesetting    │
 #╰──────────────────────────────────────╯
-packages=("texlive-langportuguese" "texlive-basic" "texlive-bin" "texlive-binextra" "texlive-fontsrecommended" "texlive-latexrecommended" "texlive-latexextra" "ocrmypdf")
+packages=("texlive-langportuguese" "texlive-basic" "texlive-bin" "texlive-binextra" "texlive-fontsrecommended") 
 
 for package in "${packages[@]}"; do
     install_package "$package"
@@ -163,21 +165,21 @@ sudo ufw enable
 sudo systemctl enable ufw
 sudo systemctl enable bluetooth.service
 
-#╭──────────────────────────────────────╮
-#│             Install Paru             │
-#╰──────────────────────────────────────╯
+# Paru
 git clone https://aur.archlinux.org/paru.git
 cd paru && makepkg -si --noconfirm && cd ..
 
-#╭──────────────────────────────────────╮
-#│              Miniconda               │
-#╰──────────────────────────────────────╯
+# Miniconda
 mkdir -p ~/.config/miniconda3.dir
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/.config/miniconda3.dir/miniconda.sh
 bash ~/.config/miniconda3.dir/miniconda.sh -b -u -p ~/.config/miniconda3.dir
 rm -rf ~/.config/miniconda3.dir/miniconda.sh
 ~/.config/miniconda3.dir/bin/conda init bash
 ~/.config/miniconda3.dir/bin/conda init zsh
+
+# Agendamentos
+texlive-langportuguese"
+
 
 #╭──────────────────────────────────────╮
 #│    Open Pd Patches with plugdata     │
