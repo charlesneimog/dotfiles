@@ -158,27 +158,6 @@ for package in "${packages[@]}"; do
     install_package "$package"
 done
 
-#╭──────────────────────────────────────╮
-#│            Configurations            │
-#╰──────────────────────────────────────╯
-sudo ufw enable
-sudo systemctl enable ufw
-sudo systemctl enable bluetooth.service
-
-# Paru
-git clone https://aur.archlinux.org/paru.git
-cd paru && makepkg -si --noconfirm && cd ..
-
-# Miniconda
-mkdir -p ~/.config/miniconda3.dir
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/.config/miniconda3.dir/miniconda.sh
-bash ~/.config/miniconda3.dir/miniconda.sh -b -u -p ~/.config/miniconda3.dir
-rm -rf ~/.config/miniconda3.dir/miniconda.sh
-~/.config/miniconda3.dir/bin/conda init bash
-~/.config/miniconda3.dir/bin/conda init zsh
-
-# Agendamentos
-texlive-langportuguese"
 
 
 #╭──────────────────────────────────────╮
@@ -267,6 +246,30 @@ for package in "${packages[@]}"; do
 done
 
 flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark -y --user
+
+#╭──────────────────────────────────────╮
+#│            Configurations            │
+#╰──────────────────────────────────────╯
+sudo ufw enable
+sudo systemctl enable ufw
+sudo systemctl enable bluetooth.service
+ln -s /usr/bin/nvim /usr/bin/vi
+
+# Paru
+git clone https://aur.archlinux.org/paru.git
+cd paru && makepkg -si --noconfirm && cd ..
+
+# Miniconda
+mkdir -p ~/.config/miniconda3.dir
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/.config/miniconda3.dir/miniconda.sh
+bash ~/.config/miniconda3.dir/miniconda.sh -b -u -p ~/.config/miniconda3.dir
+rm -rf ~/.config/miniconda3.dir/miniconda.sh
+~/.config/miniconda3.dir/bin/conda init bash
+~/.config/miniconda3.dir/bin/conda init zsh
+
+# Agendamentos
+
+
 
 #╭──────────────────────────────────────╮
 #│                Clear                 │
