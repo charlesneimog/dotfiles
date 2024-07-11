@@ -10,6 +10,7 @@ return {
 		"onsails/lspkind.nvim",
 		"saadparwaiz1/cmp_luasnip",
 		"rafamadriz/friendly-snippets",
+		"lukas-reineke/cmp-under-comparator",
 	},
 	config = function()
 		local cmp = require("cmp")
