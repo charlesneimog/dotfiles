@@ -2,27 +2,22 @@ return {
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-path",
-		"saadparwaiz1/cmp_luasnip",
-		"lukas-reineke/cmp-under-comparator",
 		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-nvim-lua",
-		"hrsh7th/cmp-cmdline",
-		"lukas-reineke/cmp-rg",
+		"hrsh7th/cmp-path",
+		"hrsh7th/cmp-nvim-lsp",
+		"L3MON4D3/LuaSnip",
 		"micangl/cmp-vimtex",
-		{
-			"onsails/lspkind-nvim",
-			config = function()
-				require("lspkind").init()
-			end,
-		},
+		"onsails/lspkind.nvim",
+		"saadparwaiz1/cmp_luasnip",
+		"rafamadriz/friendly-snippets",
 	},
 	config = function()
 		local cmp = require("cmp")
 		local cmp_buffer = require("cmp_buffer")
 		local compare = require("cmp.config.compare")
 		local luasnip = require("luasnip")
+		local lspkind = require("lspkind")
+		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.setup.cmdline("/", {
 			mapping = cmp.mapping.preset.cmdline(),
@@ -86,6 +81,14 @@ return {
 		}
 
 		cmp.setup({
+			completion = {
+				completeopt = "menu,menuone,preview,noselect",
+			},
+			snippet = { -- configure how nvim-cmp interacts with snippet engine
+				expand = function(args)
+					luasnip.lsp_expand(args.body)
+				end,
+			},
 			formatting = {
 				fields = { "kind", "abbr", "menu" },
 				format = function(entry, item)
@@ -106,12 +109,6 @@ return {
 				documentation = require("cmp.config.window").bordered(),
 			},
 
-			snippet = {
-				expand = function(args)
-					luasnip.lsp_expand(args.body)
-					-- TODO: Config luasnip
-				end,
-			},
 			mapping = cmp.mapping.preset.insert({
 				["<Tab>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
@@ -136,13 +133,18 @@ return {
 
 			sources = {
 				{
-					name = "copilot",
-					max_item_count = 3,
-				},
-				{
 					name = "codeium",
 					max_item_count = 3,
 				},
+				{
+					name = "copilot",
+					max_item_count = 3,
+				},
+				{ name = "nvim_lsp" },
+				{ name = "nvim_lua" },
+				{ name = "luasnip" }, -- snippets
+				{ name = "buffer" }, -- text within current buffer
+				{ name = "path" }, -- file system paths
 				{
 					name = "nvim_lsp",
 					entry_filter = function(entry, ctx)
@@ -153,9 +155,6 @@ return {
 						return true
 					end,
 				},
-				{ name = "path" },
-				{ name = "luasnip" },
-				{ name = "nvim_lua" },
 				{ name = "vimtext" },
 				-- { name = "treesitter" },
 			},
