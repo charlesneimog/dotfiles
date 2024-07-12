@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Verifica se /mnt/Documents está montado
+if mountpoint -q /mnt/Documents; then
+    # Desmonta o sistema de arquivos
+    umount /mnt/Documents
+    echo "Desmontado /mnt/Documents com sucesso."
+else
+    echo "/mnt/Documents não está atualmente montado."
+
+fi
+
+
