@@ -7,6 +7,13 @@ if mountpoint -q /mnt/Documents; then
     echo "Desmontado /mnt/Documents com sucesso."
 else
     echo "/mnt/Documents não está atualmente montado."
+    # Check if disks are connected
+    if [ $(lsblk -o NAME | grep -c sdc) -eq 1 ]; then
+        # Mount the filesystem
+        mount /dev/sdc1 /mnt/Documents
+        echo "Montado /mnt/Documents com sucesso."
+    else
+        echo "Disco não conectado."
 
 fi
 
