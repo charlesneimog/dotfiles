@@ -269,8 +269,6 @@ rm -rf ~/.config/miniconda3.dir/miniconda.sh
 
 # Agendamentos
 
-
-
 #╭──────────────────────────────────────╮
 #│                Clear                 │
 #╰──────────────────────────────────────╯
