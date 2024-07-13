@@ -247,6 +247,25 @@ done
 
 flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark -y --user
 
+
+#╭──────────────────────────────────────╮
+#│               Tarefas                │
+#╰──────────────────────────────────────╯
+crontab -l > current_cron
+sed '/---script managed section---/q' current_cron > new_cron
+
+cat >> new_cron << EOF
+#---script managed section---
+*/30 * * * * rsync -av /home/neimog/Documents/Biblioteca/ /mnt/Documents/Biblioteca
+0 9 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/checkupdates
+0 17 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/git-updates
+EOF
+
+crontab < new_cron
+rm -f new_cron current_cron
+
+
+
 #╭──────────────────────────────────────╮
 #│            Configurations            │
 #╰──────────────────────────────────────╯
