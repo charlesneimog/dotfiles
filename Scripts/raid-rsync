@@ -1,17 +1,11 @@
 #!/bin/bash
 
-pid=$(pgrep -t tty$(fgconsole) xinit)
-pid=$(pgrep -P $pid -n)
+# Define o display
+DISPLAY=:0
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 
-import_environment() {
-        (( pid )) && for var; do
-                IFS='=' read key val < <(egrep -z "$var" /proc/$pid/environ)
-
-                printf -v "$key" %s "$val"
-                [[ ${!key} ]] && export "$key"
-        done
-}
-
-import_environment XAUTHORITY USER DISPLAY
-
+# Envia a notificação para o usuário
+export DISPLAY
+export DBUS_SESSION_BUS_ADDRESS
+su "neimog" -c "/usr/bin/notify-send 'RAID Sync' 'RAID Sync started' -t 5000" >> /tmp/raid-rsync.log 2>&1"
 
