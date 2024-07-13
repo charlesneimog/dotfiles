@@ -1,36 +1,5 @@
 #!/bin/bash
 
-mount_raid() {
-    # Create a mount point if it doesn't exist
-    MOUNT_POINT="/mnt/raid"
-    if [ ! -d "$MOUNT_POINT" ]; then
-        sudo mkdir -p "$MOUNT_POINT"
-    fi
-
-    # Mount the RAID array
-    sudo mount /dev/md0 "$MOUNT_POINT"
-
-    # Check if the mount was successful
-    if mountpoint -q "$MOUNT_POINT"; then
-        echo "RAID array mounted successfully at $MOUNT_POINT."
-    else
-        echo "Failed to mount RAID array."
-    fi
-}
-
-umount_raid() {
-    # Mount point
-    MOUNT_POINT="/mnt/raid"
-
-    # Unmount the RAID array
-    sudo umount "$MOUNT_POINT"
-
-    # Check if the unmount was successful
-    if mountpoint -q "$MOUNT_POINT"; then
-        echo "Failed to unmount RAID array."
-    else
-        echo "RAID array unmounted successfully from $MOUNT_POINT."
-    fi
-}
+DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u neimog)/bus notify-send "USB Notification" "Dispositivo USB conectado!"
 
 
