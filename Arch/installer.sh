@@ -117,7 +117,7 @@ done
 #╭──────────────────────────────────────╮
 #│     Programming and Development      │
 #╰──────────────────────────────────────╯
-packages=("nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk")
+packages=("cmake" "nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk")
 
 for package in "${packages[@]}"; do
     install_package "$package"
@@ -158,8 +158,6 @@ for package in "${packages[@]}"; do
     install_package "$package"
 done
 
-
-
 #╭──────────────────────────────────────╮
 #│    Open Pd Patches with plugdata     │
 #╰──────────────────────────────────────╯
@@ -168,7 +166,7 @@ echo "[Default Applications]\ntext/x-puredata=plugdata.desktop" > ~/.local/share
 #╭──────────────────────────────────────╮
 #│               PACKAGES               │
 #╰──────────────────────────────────────╯
-packages=("sonic-visualiser" "muse-sounds-manager-bin" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "onedriver" "zathura-pdf-mupdf-git" "intel-ucode")
+packages=("sonic-visualiser" "muse-sounds-manager-bin" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "zathura-pdf-mupdf-git" "intel-ucode")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
@@ -249,6 +247,16 @@ flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark -y --
 
 
 #╭──────────────────────────────────────╮
+#│          Build and compile           │
+#╰──────────────────────────────────────╯
+git clone https://github.com/charlesneimog/syncup
+cd syncup
+cmake . -B build
+cmake --build build
+sudo cmake --install build
+
+
+#╭──────────────────────────────────────╮
 #│               Tarefas                │
 #╰──────────────────────────────────────╯
 crontab -l > current_cron
@@ -256,7 +264,7 @@ sed '/---script managed section---/q' current_cron > new_cron
 
 cat >> new_cron << EOF
 #---script managed section---
-*/30 * * * * rsync -av /home/neimog/Documents/Biblioteca/ /mnt/Documents/Biblioteca
+*/30 * * * * syncup /home/neimog/Documents/Biblioteca/ run/media/neimog/DOCS-SSD/Biblioteca
 */60 * * * * syncup /home/neimog/Documents/Anytype /run/media/neimog/DOCS-SSD/Anytype
 0 9 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/checkupdates
 0 17 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/git-updates
@@ -264,8 +272,6 @@ EOF
 
 crontab < new_cron
 rm -f new_cron current_cron
-
-
 
 #╭──────────────────────────────────────╮
 #│            Configurations            │
@@ -286,8 +292,6 @@ bash ~/.config/miniconda3.dir/miniconda.sh -b -u -p ~/.config/miniconda3.dir
 rm -rf ~/.config/miniconda3.dir/miniconda.sh
 ~/.config/miniconda3.dir/bin/conda init bash
 ~/.config/miniconda3.dir/bin/conda init zsh
-
-# Agendamentos
 
 #╭──────────────────────────────────────╮
 #│                Clear                 │
