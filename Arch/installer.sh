@@ -257,6 +257,7 @@ sed '/---script managed section---/q' current_cron > new_cron
 cat >> new_cron << EOF
 #---script managed section---
 */30 * * * * rsync -av /home/neimog/Documents/Biblioteca/ /mnt/Documents/Biblioteca
+*/60 * * * * syncup /home/neimog/Documents/Anytype /run/media/neimog/DOCS-SSD/Anytype
 0 9 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/checkupdates
 0 17 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/git-updates
 EOF
