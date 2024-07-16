@@ -54,7 +54,7 @@ recentrepos:
     - /home/neimog/Documents/Git/libsms
     - /home/neimog/Documents/Git/orchidea
 startuppopupversion: 5
-lastversion: 0.42.0
+lastversion: 0.43.1
 customcommandshistory:
     - q
     - ""
@@ -65,6 +65,7 @@ customcommandshistory:
 hidecommandlog: false
 ignorewhitespaceindiffview: false
 diffcontextsize: 3
+renamesimilaritythreshold: 50
 localbranchsortorder: recency
 remotebranchsortorder: alphabetical
 gitlogorder: topo-order
