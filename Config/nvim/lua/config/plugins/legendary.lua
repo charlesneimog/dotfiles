@@ -2,9 +2,9 @@ return {
 	"mrjones2014/legendary.nvim",
 	priority = 10000,
 	lazy = false,
-	dependencies = {
-		"folke/which-key.nvim",
-	},
+	-- dependencies = {
+	-- 	"folke/which-key.nvim",
+	-- },
 	keys = {
 		{
 			"<M-h>",
