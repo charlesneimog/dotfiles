@@ -1,8 +1,10 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/neimog/Downloads/pd4web
     - /home/neimog/Documents/MeuPatch
+    - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/libpd
+    - /home/neimog/Documents/Git/libpd/pure-data
+    - /home/neimog/Downloads/pd4web
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/Docs/Tese
@@ -19,7 +21,6 @@ recentrepos:
     - /home/neimog/Documents/Git/helmholtz_tilde
     - /home/neimog/Documents/Git/nucleomusicanova.github.io
     - /home/neimog/Documents/Git/Synthia
-    - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/grainer_tilde
     - /home/neimog/Documents/Git/pd-else
     - /home/neimog/Documents/Git/pd-else/Resources/pd.cmake
