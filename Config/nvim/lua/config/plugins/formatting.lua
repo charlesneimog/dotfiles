@@ -19,7 +19,7 @@ return {
 				json = { "prettier" },
 				markdown = { "prettier" },
 				lua = { "stylua" },
-				python = { "isort", "black", "autopep8" },
+				python = { "black", "autopep8" },
 				cpp = { "clang-format" },
 				c = { "clang-format" },
 				cmake = { "cmake-format" },
