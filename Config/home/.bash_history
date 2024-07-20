@@ -294,3 +294,60 @@ ln -s "~/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "~/.var/app/org.
 ln -s "~/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "~/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
 ln -s "/home/neimog/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so" "/home/neimog/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so"
 ls ~/.local/share/MuseSampler/lib/
+ls
+./mscore.sh 
+cd
+cd ..
+cd ..
+cd ..
+cd ..
+ls
+cd app
+ls
+cd bin
+ls
+ls
+cwd
+cdw
+ctw
+cd ..
+cd ..
+cd ..
+mscore.sh
+./mscore.sh
+ls
+cd app
+ls
+cd bin
+ls
+cat mscore.sh
+./mscore.sh
+clear
+mscore.sh
+mscore.sh
+./mscore.sh
+clear
+clear
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+ls
+cd home
+ls
+cd neimog
+ls
+ls
+cp /app/bin/mscore.sh ./mscore.sh
+ls
+run
+mscore
+clear
+mscore.sh
+mscore.sh
+mscore.sh
+clear
