@@ -351,3 +351,5 @@ mscore.sh
 mscore.sh
 mscore.sh
 clear
+mscore.sh
+clear
