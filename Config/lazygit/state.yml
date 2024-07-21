@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Downloads/pd4web
     - /home/neimog/Downloads/org.musescore.MuseScore
@@ -16,7 +17,6 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-vamp/Libraries/rt-vamp-plugin-sdk
     - /home/neimog/Documents/Git/Ideias-Roubadas-III
     - /home/neimog/Documents/Git/Docs/Tese/Projects/pd-partialtrack
-    - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/CMakeAudioHelpers
     - /home/neimog/Documents/Git/pd-partialtrack
     - /home/neimog/Documents/Git/helmholtz_tilde
