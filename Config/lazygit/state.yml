@@ -1,9 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Downloads/org.musescore.MuseScore
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/pd4web
-    - /home/neimog/Downloads/pd4web
     - /home/neimog/Documents/MeuPatch
     - /home/neimog/Documents/Git/libpd
     - /home/neimog/Documents/Git/libpd/pure-data
