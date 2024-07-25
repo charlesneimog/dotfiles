@@ -8,11 +8,11 @@ audiooutdevname1: JACK
 audiobuf: 25
 rate: 48000
 callback: 1
-audioblocksize: 0
+audioblocksize: 1024
 midiapi: 0
 nomidiin: False
-midiindev1: 0
-midiindevname1: Midi Through Port-0
+midiindev1: 1
+midiindevname1: SINCO SMK25-Private
 nomidiout: False
 midioutdev1: 0
 midioutdevname1: Midi Through Port-0
