@@ -23,7 +23,7 @@ return {
 				cpp = { "clang-format" },
 				c = { "clang-format" },
 				cmake = { "cmake-format" },
-				yaml = { "yamlfmt" },
+				yaml = { "yamlfix" },
 				bash = { "shfmt" },
 			},
 			format_on_save = {
