@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/grambilib
     - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/MeuPatch
@@ -50,7 +51,6 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-spt
     - /home/neimog/Documents/Git/SOFAlizer-for-pd
     - /home/neimog/Documents/Git/HoaLibrary-PD
-    - /home/neimog/Documents/Git/grambilib
     - /home/neimog/Documents/Git/Piece-I
     - /home/neimog/Documents/Git/pd-pt
     - /home/neimog/Documents/Git/libsms
