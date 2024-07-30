@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/audience
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/grambilib
     - /home/neimog/Documents/Git/pd4web
@@ -29,7 +30,6 @@ recentrepos:
     - /home/neimog/Documents/Git/moteto
     - /home/neimog/Documents/Git/smspd
     - /home/neimog/Documents/Git/emloris
-    - /home/neimog/Documents/Git/audience
     - /home/neimog/Documents/Git/smspd/Libraries/libsms
     - /home/neimog/Documents/Git/pd-fftconvolver/Libraries/FFTConvolver
     - /home/neimog/Documents/Git/simpl
