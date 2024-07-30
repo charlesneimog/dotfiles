@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/orchidea
     - /home/neimog/Documents/Git/audience
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/grambilib
@@ -54,7 +55,6 @@ recentrepos:
     - /home/neimog/Documents/Git/Piece-I
     - /home/neimog/Documents/Git/pd-pt
     - /home/neimog/Documents/Git/libsms
-    - /home/neimog/Documents/Git/orchidea
 startuppopupversion: 5
 lastversion: 0.43.1
 customcommandshistory:
