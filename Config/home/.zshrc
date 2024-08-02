@@ -121,3 +121,6 @@ then
     unset __conda_setup
 fi
 
+
+# Created by `pipx` on 2024-08-02 17:10:02
+export PATH="$PATH:/home/neimog/.local/bin"
