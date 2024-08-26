@@ -6,7 +6,7 @@
   "modules-left": ["wlr/taskbar"],
   "modules-center": ["hyprland/workspaces"],
   "modules-right": [
-    "custom/weather",
+    // "custom/weather",
     "network",
     "pulseaudio",
     "group/hardware",

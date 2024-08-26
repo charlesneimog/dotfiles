@@ -1,28 +1,18 @@
 /* Colors file */
-@import 'colors.css';
+@import "colors.css";
 * {
-	all: unset; 
-	font-family: "JetBrainsMono Nerd Font";
-	font-size: 10px;
-	font-weight: normal;
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 10px;
+  font-weight: normal;
   min-height: 0;
 }
 
-/* COLORS USED */
-/* font-color: @foreground */
-/* widgets-background: @background */
-/* quicklinks-background: @color1 */
-/* workspaces-background: @color1 */
-/* workspaces-acticve: @color11 */
-/* workspaces-inactive: @color3 */
-/* all-hovers: @color11 */
-
-/* TOOLTIP */
 tooltip {
-	background: @background;
-    border: 1.5px solid @color5;
-	  border-radius: 7px;
-    padding: 2px 100px;
+  background: @background;
+  border: 1.5px solid @color5;
+  border-radius: 7px;
+  padding: 2px 100px;
 }
 
 /* COMMON CONFIGS */
@@ -31,8 +21,8 @@ tooltip {
 #taskbar *,
 #quicklinks-right *,
 #quicklinks-left * {
-    border-radius: 7px;
-    color: @foreground;
+  border-radius: 7px;
+  color: @foreground;
 }
 
 #clock,
@@ -45,12 +35,12 @@ tooltip {
 #power-profiles-daemon,
 #quicklinks-right,
 #quicklinks-left {
-    color: @foreground;
-    border-radius: 7px;
-    background: @background;
-    padding: 3px 7px;
-    margin: 1px 0px 0px 3px;
-    opacity: 0.85;
+  color: @foreground;
+  border-radius: 7px;
+  background: @background;
+  padding: 3px 7px;
+  margin: 1px 0px 0px 3px;
+  opacity: 0.85;
 }
 
 /* CUSTOM CONFIGS */
@@ -123,74 +113,71 @@ tooltip {
   color: #ff0000; /* Sway palette: urgent/text */
 }
 
-
 /* quicklinks  */
 #quicklinks-right,
 #quicklinks-left {
-    background: @color1;
+  background: @color1;
 }
 #quicklinks-right {
-    margin-right: 2px;
+  margin-right: 2px;
 }
 #quicklinks-left {
-    margin-left: 2px;
+  margin-left: 2px;
 }
 #quicklinks-right *,
 #quicklinks-left * {
-    padding: 0px 5px;
-	transition: all 0.2s ease-in-out;
+  padding: 0px 5px;
+  transition: all 0.2s ease-in-out;
 }
 #quicklinks-right *:hover,
 #quicklinks-left *:hover {
-    background: @color11;
+  background: @color11;
 }
 
 /* taskbar */
 #taskbar {
-    padding: 0px;
+  padding: 0px;
 }
 #taskbar * {
-    margin: 1px 1px 1px 2px;
+  margin: 1px 1px 1px 2px;
 }
 #taskbar *:hover {
-    background: @color11;
+  background: @color11;
 }
 
 /* power-menu */
 #custom-power-menu {
-    padding-right: 4px;
-    padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 4px;
 }
 
 #power-profiles-daemon.performance {
-    padding-right: 4px;
-    padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 4px;
   color: #161320;
   background: #c44155;
 }
 
 #power-profiles-daemon.balanced {
-    padding-right: 4px;
-    padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 4px;
   color: #161320;
   background: #d6c87b;
 }
 
 #power-profiles-daemon.power-saver {
-    padding-right: 4px;
-    padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 4px;
   color: #161320;
   background: #9adc8e;
 }
 
-
-
 /* image */
 #image {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #cava {
-    background: @background;
+  background: @background;
 }
