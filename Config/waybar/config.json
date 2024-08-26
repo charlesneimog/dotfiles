@@ -3,7 +3,7 @@
   "reload_style_on_change": true,
   "width": 1920,
   "spacing": 1,
-  "modules-left": ["group/quicklinks-right", "wlr/taskbar"],
+  "modules-left": ["group/quicklinks-right", "wlr/taskbar", "tray"],
   "modules-center": ["hyprland/workspaces"],
   "modules-right": [
     "custom/weather",
@@ -42,6 +42,12 @@
     }
   },
 
+  "tray": {
+    "icon-size": 18,
+    "spacing": 15,
+    "show-passive-items": true
+  },
+
   "hyprland/window": {
     "format": "",
     "icon": true,
@@ -67,7 +73,7 @@
 
   "group/quicklinks-right": {
     "orientation": "horizontal",
-    "modules": ["power-profiles-daemon", "idle_inhibitor", "custom/power-menu"]
+    "modules": ["custom/power-menu", "idle_inhibitor", "power-profiles-daemon"]
   },
   "idle_inhibitor": {
     "format": "{icon}",
@@ -153,7 +159,7 @@
     "format": "{}",
     "interval": 300,
     "return-type": "json",
-    "exec": "curl -s 'https://wttr.in/Sao_Paulo?format=1' |jq --unbuffered --compact-output -M -R '{text:.}' &&",
+    "exec": "curl -s 'https://wttr.in/Sao_Paulo?format=1' |jq --unbuffered --compact-output -M -R '{text:.}'",
     "exec-if": "ping wttr.in -c1"
   }
 }
