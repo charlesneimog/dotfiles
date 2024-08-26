@@ -3,15 +3,14 @@
   "reload_style_on_change": true,
   "width": 1920,
   "spacing": 1,
-  "modules-left": ["wlr/taskbar"],
+  "modules-left": ["group/quicklinks-right", "wlr/taskbar"],
   "modules-center": ["hyprland/workspaces"],
   "modules-right": [
-    // "custom/weather",
+    "custom/weather",
     "network",
     "pulseaudio",
     "group/hardware",
-    "clock",
-    "group/quicklinks-right"
+    "clock"
   ],
 
   "wlr/taskbar": {
@@ -42,6 +41,7 @@
       "5": []
     }
   },
+
   "hyprland/window": {
     "format": "",
     "icon": true,
@@ -81,12 +81,6 @@
     "tooltip": true,
     "tooltip-format": " Open Wlogout!",
     "on-click": "~/.config/hypr/scripts/power-menu.sh"
-  },
-  "custom/wallpaper": {
-    "format": " ",
-    "tooltip": true,
-    "tooltip-format": " Change Wallpaper!",
-    "on-click": "~/.config/rofi/menus/swww.sh"
   },
 
   "group/settings": {
