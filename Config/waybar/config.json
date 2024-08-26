@@ -10,7 +10,8 @@
     "network",
     "pulseaudio",
     "group/hardware",
-    "clock"
+    "clock",
+    "custom/notification"
   ],
 
   "wlr/taskbar": {
@@ -135,9 +136,43 @@
     "interval": 2
   },
 
+  "custom/notification": {
+    "tooltip": false,
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "format": "{icon} ",
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "  {capacity}%",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "signal": 12,
+    "interval": 5
+  },
+
   "group/hardware": {
     "orientation": "horizontal",
-    "modules": ["cpu", "memory"]
+    "modules": ["battery", "cpu", "memory"]
   },
   "cpu": {
     "format": " {usage}%  ",
