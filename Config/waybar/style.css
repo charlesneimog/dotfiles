@@ -1,10 +1,11 @@
 /* Colors file */
 @import 'colors.css';
 * {
-	all: unset; /*this is really important to isolate waybar from gtk*/
+	all: unset; 
 	font-family: "JetBrainsMono Nerd Font";
-	font-size: 15px;
+	font-size: 10px;
 	font-weight: normal;
+  min-height: 0;
 }
 
 /* COLORS USED */
@@ -20,7 +21,7 @@
 tooltip {
 	background: @background;
     border: 1.5px solid @color5;
-	border-radius: 8px;
+	  border-radius: 7px;
     padding: 2px 100px;
 }
 
@@ -30,7 +31,7 @@ tooltip {
 #taskbar *,
 #quicklinks-right *,
 #quicklinks-left * {
-    border-radius: 8px;
+    border-radius: 7px;
     color: @foreground;
 }
 
@@ -40,19 +41,23 @@ tooltip {
 #workspaces,
 #pulseaudio,
 #taskbar,
+#custom-weather,
+#power-profiles-daemon,
 #quicklinks-right,
 #quicklinks-left {
     color: @foreground;
-    border-radius: 10px;
+    border-radius: 7px;
     background: @background;
     padding: 3px 7px;
-    margin: 4.5px;
-    opacity: 0.9;
+    margin: 1px 0px 0px 3px;
+    opacity: 0.85;
 }
 
 /* CUSTOM CONFIGS */
 
 /* workspaces */
+
+/*
 #workspaces {
     background: @color1;
     margin: 4px 5px;
@@ -63,14 +68,14 @@ tooltip {
     background: @color3;
     min-width: 25px;
     margin: 2px;
-    border-radius: 45%; /* circle */
+    border-radius: 45%; 
 	transition: all 0.2s ease-in-out;
     padding: 1px;
-    padding-left: 4px; /* because browser and filebrowser icons are NOT fully centered */
+    padding-left: 4px; 
     opacity: 0.6;
 }
 #workspaces button:nth-child(first) {
-    padding-left: 0px; /* because code icon IS fully centered */
+    padding-left: 0px; 
 }
 #workspaces button:hover {
     opacity: 0.8;
@@ -79,7 +84,7 @@ tooltip {
 #workspaces button.active { 
     background: @color11;
     min-width: 50px;
-    border-radius: 10px;
+    border-radius: 7px;
 	transition: all 0.2s ease-in-out;
     opacity: 0.9;
 }
@@ -88,16 +93,47 @@ tooltip {
 	transition: all 0.3s ease-in-out;
 }
 
+*/
+
+#workspaces button {
+  color: #ffffff;
+  font-family: "JetbrainsMono Nerd Font";
+  min-width: 25px;
+  border-radius: 7px;
+}
+#workspaces button:hover {
+  color: #000000;
+}
+
+#workspaces button.visible {
+  color: #ffffff; /* Sway palette: focused/text */
+}
+
+#workspaces button.focused {
+  color: #000000; /* Sway palette: focused/text */
+  background-color: rgba(150, 150, 150, 0.5); /* Semi-transparent white */
+}
+
+#workspaces button.active {
+  color: #ffffff; /* Sway palette: focused/text */
+  background-color: rgba(150, 150, 150, 0.5); /* Semi-transparent white */
+}
+
+#workspaces button.urgent {
+  color: #ff0000; /* Sway palette: urgent/text */
+}
+
+
 /* quicklinks  */
 #quicklinks-right,
 #quicklinks-left {
     background: @color1;
 }
 #quicklinks-right {
-    margin-right: 7px;
+    margin-right: 2px;
 }
 #quicklinks-left {
-    margin-left: 7px;
+    margin-left: 2px;
 }
 #quicklinks-right *,
 #quicklinks-left * {
@@ -114,7 +150,7 @@ tooltip {
     padding: 0px;
 }
 #taskbar * {
-    margin: 2px 3px;
+    margin: 1px 1px 1px 2px;
 }
 #taskbar *:hover {
     background: @color11;
@@ -122,10 +158,32 @@ tooltip {
 
 /* power-menu */
 #custom-power-menu {
-    color: #f7768e;
-    padding-right: 0px;
-    padding-left: 3px;
+    padding-right: 4px;
+    padding-left: 4px;
 }
+
+#power-profiles-daemon.performance {
+    padding-right: 4px;
+    padding-left: 4px;
+  color: #161320;
+  background: #c44155;
+}
+
+#power-profiles-daemon.balanced {
+    padding-right: 4px;
+    padding-left: 4px;
+  color: #161320;
+  background: #d6c87b;
+}
+
+#power-profiles-daemon.power-saver {
+    padding-right: 4px;
+    padding-left: 4px;
+  color: #161320;
+  background: #9adc8e;
+}
+
+
 
 /* image */
 #image {
