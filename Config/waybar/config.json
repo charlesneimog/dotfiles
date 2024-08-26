@@ -154,12 +154,5 @@
     "format": "󱑂 {:%R %a}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format-alt": "󰨳 {:%d %b %Y}"
-  },
-  "custom/weather": {
-    "format": "{}",
-    "interval": 300,
-    "return-type": "json",
-    "exec": "curl -s 'https://wttr.in/Sao_Paulo?format=1' |jq --unbuffered --compact-output -M -R '{text:.}'",
-    "exec-if": "ping wttr.in -c1"
   }
 }
