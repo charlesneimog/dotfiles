@@ -174,10 +174,12 @@
     "orientation": "horizontal",
     "modules": ["battery", "cpu", "memory"]
   },
+
   "cpu": {
     "format": " {usage}%  ",
     "tooltip": false
   },
+
   "memory": {
     "format": " {}%  "
   },
