@@ -22,7 +22,6 @@
     "ignore-list": ["kitty", "kitty-scratchpad"]
   },
 
-  // Hyprland
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
@@ -30,7 +29,9 @@
       "2": "",
       "3": "",
       "4": "",
-      "5": "",
+      "5": "",
+      "6": "",
+
       "urgent": ""
     },
     "persistent-workspaces": {
@@ -38,7 +39,8 @@
       "2": [],
       "3": [],
       "4": [],
-      "5": []
+      "5": [],
+      "6": []
     }
   },
 
@@ -63,12 +65,6 @@
   "group/quicklinks-left": {
     "orientation": "horizontal",
     "modules": ["image", "custom/terminal", "custom/browser", "custom/explorer"]
-  },
-  "custom/explorer": {
-    "format": " ",
-    "tooltip": true,
-    "tooltip-format": " Open Dolphin!",
-    "on-click": "dolphin"
   },
 
   "group/quicklinks-right": {
