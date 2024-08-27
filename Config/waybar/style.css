@@ -34,7 +34,7 @@ tooltip {
 #taskbar,
 #custom-weather,
 #power-profiles-daemon,
-#quicklinks-right,
+#quick-actions,
 #quicklinks-left {
   color: @foreground;
   border-radius: 7px;
@@ -83,21 +83,23 @@ tooltip {
 
 /* quicklinks  */
 #quicklinks-right,
+#quick-actions,
 #quicklinks-left {
   background: @color1;
 }
-#quicklinks-right {
+#quick-actions {
   margin-right: 2px;
 }
 #quicklinks-left {
   margin-left: 2px;
 }
-#quicklinks-right *,
+
+#quick-actions *,
 #quicklinks-left * {
   padding: 0px 2px;
   transition: all 0.2s ease-in-out;
 }
-#quicklinks-right *:hover,
+#quick-actions *:hover,
 #quicklinks-left *:hover {
   background: @color11;
 }
@@ -138,6 +140,16 @@ tooltip {
   padding-left: 4px;
   color: #161320;
   background: #9adc8e;
+}
+
+#custom-themes {
+  padding-right: 3px;
+  padding-left: 6px;
+}
+
+#custom-themes.light {
+  color: #161320;
+  background: #c44155;
 }
 
 /* image */
