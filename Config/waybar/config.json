@@ -3,7 +3,7 @@
   "reload_style_on_change": true,
   "width": 1920,
   "spacing": 1,
-  "modules-left": ["group/quick-actions", "wlr/taskbar", "tray"],
+  "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
   "modules-center": ["hyprland/workspaces"],
   "modules-right": [
     "custom/weather",
@@ -143,23 +143,23 @@
 
   "privacy": {
     "icon-spacing": 4,
-    "icon-size": 18,
+    "icon-size": 15,
     "transition-duration": 250,
     "modules": [
       {
         "type": "screenshare",
         "tooltip": true,
-        "tooltip-icon-size": 24
+        "tooltip-icon-size": 18
       },
       {
         "type": "audio-out",
         "tooltip": true,
-        "tooltip-icon-size": 24
+        "tooltip-icon-size": 18
       },
       {
         "type": "audio-in",
         "tooltip": true,
-        "tooltip-icon-size": 24
+        "tooltip-icon-size": 18
       }
     ]
   },

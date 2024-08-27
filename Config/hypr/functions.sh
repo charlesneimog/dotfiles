@@ -27,11 +27,11 @@ change_theme(){
 	if [ "$color_scheme" = "prefer-dark" ]; then
 		gsettings set org.gnome.desktop.interface color-scheme 'default'
         ACTIVE="light"
-        printf '{"text": "%s", "tooltip": "%s", "alt": "%s"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
+        printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "light"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
 	else
 		gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
         ACTIVE="dark"
-        printf '{"text": "%s", "tooltip": "%s", "alt": "%s"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
+        printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "dark"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
 	fi
 }
 
@@ -39,10 +39,10 @@ get_theme(){
 	color_scheme=$(gsettings get org.gnome.desktop.interface color-scheme | awk '{print $1}' | tr -d "'")
 	if [ "$color_scheme" = "prefer-dark" ]; then
         ACTIVE="dark"
-        printf '{"text": "%s", "tooltip": "%s", "alt": "%s"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
+        printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "dark"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
 	else
         ACTIVE="light"
-        printf '{"text": "%s", "tooltip": "%s", "alt": "%s"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
+        printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "light"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
 	fi
 }
 
