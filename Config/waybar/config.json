@@ -184,9 +184,9 @@
     "format": " {}%  "
   },
   "clock": {
-    "format": "󱑂 {:%R %a}",
+    "format": "󱑂 {:%R %a %d %b}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format-alt": "󰨳 {:%d %b %Y}"
+    "format-alt": "󰨳 {:%d %b}"
   },
   "custom/weather": {
     "format": "{}",
