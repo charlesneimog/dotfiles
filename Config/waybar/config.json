@@ -73,6 +73,7 @@
     "modules": [
       "custom/power-menu",
       "idle_inhibitor",
+      "bluetooth",
       "power-profiles-daemon",
       "custom/themes"
     ]
