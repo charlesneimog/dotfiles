@@ -8,7 +8,6 @@ return {
 		"nvim-treesitter/nvim-treesitter-context",
 		"nvim-treesitter/playground",
 	},
-	tag = "v0.9.2",
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		require("nvim-treesitter.configs").setup({
