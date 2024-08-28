@@ -9,6 +9,10 @@
   margin: 0;
 }
 
+window#waybar.empty #window {
+  background: none;
+}
+
 tooltip {
   color: #ffffff;
   background: rgba(0, 0, 0, 0.8);
