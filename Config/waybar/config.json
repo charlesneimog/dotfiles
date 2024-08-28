@@ -62,12 +62,6 @@
     }
   },
 
-  // Quicklinks
-  "group/quicklinks-left": {
-    "orientation": "horizontal",
-    "modules": ["image", "custom/terminal", "custom/browser", "custom/explorer"]
-  },
-
   "group/quick-actions": {
     "orientation": "horizontal",
     "modules": [
@@ -192,11 +186,14 @@
     "format-ethernet": "{bandwidthDownBytes}  ",
     "format-disconnected": "",
     "tooltip-format": "{ifname} via {gwaddr} 󰊗",
-    "tooltip-format-wifi": "{essid} ",
+    "tooltip-format-wifi": "{essid}  ",
     "tooltip-format-ethernet": "{ifname}  ",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
-    "interval": 2
+    "interval": 2,
+    "exec-if": "which nm-connection-editor",
+    "exec": "nm-connection-editor",
+    "on-click": "nm-connection-editor"
   },
 
   "custom/notification": {
@@ -220,22 +217,28 @@
     "escape": true
   },
 
+  "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "not-power",
+      "transition-left-to-right": false
+    },
+    "modules": ["battery", "cpu", "memory"]
+  },
+
   "battery": {
+    "on-click": "flatpak run net.nokyan.Resources",
     "states": {
       "good": 95,
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon} {capacity}%",
+    "format": "{capacity}% {icon}",
     "format-charging": "  {capacity}%",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "signal": 12,
     "interval": 5
-  },
-
-  "group/hardware": {
-    "orientation": "horizontal",
-    "modules": ["battery", "cpu", "memory"]
   },
 
   "cpu": {

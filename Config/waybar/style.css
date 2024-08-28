@@ -222,6 +222,11 @@ tooltip {
   background: rgba(0, 0, 0, 0.8);
 }
 
+#battery {
+  margin: 1px 0px 0px 3px;
+  padding-left: 3px;
+}
+
 #battery.critical:not(.charging) {
   color: red;
   text-shadow: 0 0 5px red;
