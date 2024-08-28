@@ -1,20 +1,20 @@
 return {
-	{ "AndreM222/copilot-lualine" },
+	-- { "AndreM222/copilot-lualine" },
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({
-				suggestion = { enabled = false, auto_trigger = false },
-				panel = { enabled = false },
-			})
-		end,
+		-- "zbirenbaum/copilot.lua",
+		-- cmd = "Copilot",
+		-- event = "InsertEnter",
+		-- config = function()
+		-- 	require("copilot").setup({
+		-- 		suggestion = { enabled = false, auto_trigger = false },
+		-- 		panel = { enabled = false },
+		-- 	})
+		-- end,
 	},
-	{
-		"zbirenbaum/copilot-cmp",
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-	},
+	-- {
+	-- 	"zbirenbaum/copilot-cmp",
+	-- 	config = function()
+	-- 		require("copilot_cmp").setup()
+	-- 	end,
+	-- },
 }
