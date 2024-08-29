@@ -48,9 +48,9 @@
   },
 
   "tray": {
-    "icon-size": 18,
+    "icon-size": 15,
     "spacing": 15,
-    "show-passive-items": true
+    "show-passive-items": false
   },
 
   "hyprland/window": {
