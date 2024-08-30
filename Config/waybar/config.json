@@ -1,6 +1,4 @@
 {
-  "mode": "hide",
-  "start_hidden": true,
   "font": "JetBrainsMono Nerd Font",
   "reload_style_on_change": true,
   "width": 1920,
@@ -223,17 +221,15 @@
     "orientation": "inherit",
     "drawer": {
       "transition-duration": 500,
-      "children-class": "not-power",
       "transition-left-to-right": false
     },
     "modules": ["battery", "cpu", "memory"]
   },
 
   "custom/weather": {
-    "exec": "python ~/.config/waybar/scripts/weather.py",
+    "exec": "python /home/neimog/Documents/Git/dotfiles/Config/waybar/Scripts/weather.py",
     "restart-interval": 300,
-    "return-type": "json",
-    "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/$(location_id)"
+    "return-type": "json"
   },
 
   "battery": {
@@ -263,7 +259,7 @@
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format-alt": "󰨳 {:%d %b}"
   },
-  "custom/weather": {
+  "custom/weather2": {
     "format": "{}",
     "interval": 300,
     "return-type": "json",

@@ -54,6 +54,7 @@ tooltip {
 #quick-actions,
 #bluetooth,
 #privacy,
+#custom-weather,
 #quicklinks-left {
   color: @foreground;
   border-radius: 7px;
@@ -263,6 +264,10 @@ tooltip {
   }
 }
 
+#custom-weather {
+  /* background-color: #434c5e; */
+}
+
 #custom-weather.severe {
   color: #eb937d;
 }
@@ -272,7 +277,7 @@ tooltip {
 }
 
 #custom-weather.clearNight {
-  color: #2b2b2a;
+  color: #ffffff;
 }
 
 #custom-weather.cloudyFoggyDay,
