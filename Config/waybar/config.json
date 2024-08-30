@@ -229,10 +229,17 @@
     "modules": ["battery", "cpu", "memory"]
   },
 
+  "custom/weather": {
+    "exec": "python ~/.config/waybar/scripts/weather.py",
+    "restart-interval": 300,
+    "return-type": "json",
+    "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/$(location_id)"
+  },
+
   "battery": {
     "on-click": "flatpak run net.nokyan.Resources",
     "states": {
-      "good": 95,
+      "good": 70,
       "warning": 30,
       "critical": 15
     },
