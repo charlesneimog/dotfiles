@@ -182,12 +182,9 @@
   // Network setup
   "network": {
     "format": "{ifname}",
-    "format-wifi": "{essid}  ",
-    "format-ethernet": "{bandwidthDownBytes}  ",
-    "format-disconnected": "",
-    "tooltip-format": "{ifname} via {gwaddr} 󰊗",
-    "tooltip-format-wifi": "{essid}  ",
-    "tooltip-format-ethernet": "{ifname}  ",
+    "format-wifi": "{essid} 󰤨 ",
+    "format-disconnected": " 󰤭 ",
+    "tooltip-format-wifi": "{essid} 󰤨 ",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
     "interval": 2,
