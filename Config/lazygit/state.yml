@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/audience
     - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/Moteto-v2
     - /home/neimog/Documents/Git/dotfiles
@@ -11,7 +12,6 @@ recentrepos:
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/py4pd-freesound
     - /home/neimog/Documents/Git/orchidea
-    - /home/neimog/Documents/Git/audience
     - /home/neimog/Documents/Git/grambilib
     - /home/neimog/Documents/Git/libpd
     - /home/neimog/Documents/Git/libpd/pure-data
