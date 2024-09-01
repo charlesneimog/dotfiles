@@ -204,21 +204,7 @@ config.use_fancy_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
 
 wezterm.on("update-status", function(window, _)
-	local hour = tonumber(wezterm.strftime("%H"))
-	local minutes = tonumber(wezterm.strftime("%M"))
-	local seconds = tonumber(wezterm.strftime("%S"))
-	local waterSymbol = " "
-	local lunch = " "
-	if hour == 12 and minutes == 0 then
-		lunch = "🥗  "
-	end
-	if minutes % 7 == 0 and seconds % 2 == 0 and seconds < 30 then
-		waterSymbol = "💧 "
-	end
-
 	window:set_right_status(wezterm.format({
-		{ Text = lunch },
-		{ Text = waterSymbol },
 		{ Text = wezterm.strftime(" %H:%M:%S ") },
 	}))
 end)
