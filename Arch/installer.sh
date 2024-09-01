@@ -99,8 +99,6 @@ EOF
 echo "$new_config" | sudo tee /etc/pacman.conf > /dev/null
 
 #╭──────────────────────────────────────╮
-#│             Install Paru             │
-#╰──────────────────────────────────────╯
 cd ~/Downloads/
 sudo pacman -S --needed base-devel
 git clone https://aur.archlinux.org/paru.git
@@ -212,7 +210,7 @@ done
 #╭──────────────────────────────────────╮
 #│          Hyprland Packages           │
 #╰──────────────────────────────────────╯
-packages=("waybar" "rofi" "")
+packages=("waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
@@ -302,9 +300,6 @@ sudo systemctl enable ufw
 sudo systemctl enable bluetooth.service
 ln -s /usr/bin/nvim /usr/bin/vi
 
-# Paru
-git clone https://aur.archlinux.org/paru.git
-cd paru && makepkg -si --noconfirm && cd ..
 
 # Miniconda
 mkdir -p ~/.config/miniconda3.dir
