@@ -103,8 +103,8 @@ cd ~/Downloads/
 sudo pacman -S --needed base-devel
 git clone https://aur.archlinux.org/paru.git
 cd paru
-makepkg -si
-sudo paru -S brave-bin
+makepkg -si --noconfirm
+sudo paru -Sy --noconfirm brave-bin 
 
 #╭──────────────────────────────────────╮
 #│           Version Control            │
@@ -125,10 +125,24 @@ done
 #╭──────────────────────────────────────╮
 #│     Programming and Development      │
 #╰──────────────────────────────────────╯
-packages=("cmake" "nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk", "lua-check"
+packages=("clangd" "fd" "flake8" "cmake" "nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk" "lua-check")
 
 for package in "${packages[@]}"; do
     install_package "$package"
+done
+
+
+for package in "${packages[@]}"; do
+    paru_install_package "$package"
+done
+
+#╭──────────────────────────────────────╮
+#│          Hyprland Packages           │
+#╰──────────────────────────────────────╯
+packages=("waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber")
+
+for package in "${packages[@]}"; do
+    paru_install_package "$package"
 done
 
 #╭──────────────────────────────────────╮
@@ -159,26 +173,47 @@ for package in "${packages[@]}"; do
 done
 
 #╭──────────────────────────────────────╮
-#│        OCR and Language Data         │
+#│                Fonts                 │
 #╰──────────────────────────────────────╯
-# packages=("tesseract" "tesseract-data-eng" "tesseract-data-por")
-# for package in "${packages[@]}"; do
-#     install_package "$package"
-# done
+packages=("otf-san-francisco" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "ttf-meslo")
+
+for package in "${packages[@]}"; do
+    paru_install_package "$package"
+done
+
+#╭──────────────────────────────────────╮
+#│              FlatPacks               │
+#╰──────────────────────────────────────╯
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
+packages = ("flatpak install flathub org.gnome.TextEditor" "org.gtk.Gtk3thme.adw-gtk3" "org.gtk.Gtk3theme.adw-gtk3-dark" "org.zotero.Zotero" "com.github.flxzt.rnote" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio")
+
+for package in "${packages[@]}"; do
+    flatpak_install_package "$package"
+done
+
+#╭──────────────────────────────────────╮
+#│               PACKAGES               │
+#╰──────────────────────────────────────╯
+packages=("sonic-visualiser" "muse-sounds-manager-bin" "intel-ucode")
+
+for package in "${packages[@]}"; do
+    paru_install_package "$package"
+done
+
+#╭──────────────────────────────────────╮
+#│               Servidor               │
+#╰──────────────────────────────────────╯
+packages=("nextcloud-client" "netbird")
+
+for package in "${packages[@]}"; do
+    paru_install_package "$package"
+done
+
 
 #╭──────────────────────────────────────╮
 #│    Open Pd Patches with plugdata     │
 #╰──────────────────────────────────────╯
 echo "[Default Applications]\ntext/x-puredata=plugdata.desktop" > ~/.local/share/applications/defaults.list
-
-#╭──────────────────────────────────────╮
-#│               PACKAGES               │
-#╰──────────────────────────────────────╯
-packages=("sonic-visualiser" "muse-sounds-manager-bin"  "zathura-pdf-mupdf-git" "intel-ucode")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
 
 #╭──────────────────────────────────────╮
 #│                Themes                │
@@ -197,37 +232,6 @@ cd Tela-circle-icon-theme && ./install.sh && cd ..
 gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
 rm -drf Tela-circle-icon-theme
-
-#╭──────────────────────────────────────╮
-#│            Nvim Packages             │
-#╰──────────────────────────────────────╯
-packages=("clangd" "fd" "flake8")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
-
-#╭──────────────────────────────────────╮
-#│          Hyprland Packages           │
-#╰──────────────────────────────────────╯
-packages=("waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
-
-
-#╭──────────────────────────────────────╮
-#│                Fonts                 │
-#╰──────────────────────────────────────╯
-packages=("otf-san-francisco" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "ttf-meslo")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
-
-
-
 
 #╭──────────────────────────────────────╮
 #│               Terminal               │
@@ -263,28 +267,6 @@ sudo cp ~/Documents/Scripts/notitranslation /usr/bin/
 sudo cp ~/Documents/Git/dotfiles/Arch/icons/*.svg /usr/share/icons/
 sudo cp ~/Documents/Git/dotfiles/Arch/mime/Overrides.xml /usr/share/mime/packages/
 
-#╭──────────────────────────────────────╮
-#│              FlatPacks               │
-#╰──────────────────────────────────────╯
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
-packages = ("org.zotero.Zotero" "com.github.flxzt.rnote"     "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio")
-
-for package in "${packages[@]}"; do
-    flatpak_install_package "$package"
-done
-
-flatpak install org.gtk.Gtk3theme.adw-gtk3 org.gtk.Gtk3theme.adw-gtk3-dark -y --user
-
-
-#╭──────────────────────────────────────╮
-#│          Build and compile           │
-#╰──────────────────────────────────────╯
-git clone https://github.com/charlesneimog/syncup
-cd syncup
-cmake . -B build
-cmake --build build
-sudo cmake --install build
-
 
 #╭──────────────────────────────────────╮
 #│               Tarefas                │
@@ -309,7 +291,6 @@ sudo systemctl enable ufw
 sudo systemctl enable bluetooth.service
 ln -s /usr/bin/nvim /usr/bin/vi
 
-
 # Miniconda
 mkdir -p ~/.config/miniconda3.dir
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/.config/miniconda3.dir/miniconda.sh
@@ -324,14 +305,6 @@ rm -rf ~/.config/miniconda3.dir/miniconda.sh
 rm -drf paru
 rm -drf ~/go
 
-#╭──────────────────────────────────────╮
-#│              UNINSTALL               │
-#╰──────────────────────────────────────╯
-packages=("gnome-connections" "gnome-characters" "gnome-color-manager" "gnome-contacts" "gnome-font-viewer" "gnome-remote-desktop" "gnome-software" "gnome-tour" "gnome-user-share")
-
-for package in "${packages[@]}"; do
-    sudo pacman -R "$package" --noconfirm
-done
 
 #╭──────────────────────────────────────╮
 #│            Create Symlink            │

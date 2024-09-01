@@ -14,15 +14,6 @@
     "custom/notification"
   ],
 
-  "wlr/taskbar": {
-    "format": "{icon}",
-    "icon-size": "15",
-    "on-click": "activate",
-    "on-click-right": "close",
-    "tooltip-format": "Go to {title}",
-    "ignore-list": ["kitty", "kitty-scratchpad"]
-  },
-
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
@@ -255,12 +246,5 @@
     "format": "󱑂 {:%R %a %d %b}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "format-alt": "󰨳 {:%d %b}"
-  },
-  "custom/weather2": {
-    "format": "{}",
-    "interval": 300,
-    "return-type": "json",
-    "exec": "curl -s 'https://wttr.in/Sao_Paulo?format=2' | sed 's/  */ /g' | jq --unbuffered --compact-output -M -R '{text:.}'",
-    "exec-if": "ping wttr.in -c1"
   }
 }
