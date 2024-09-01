@@ -99,6 +99,13 @@ EOF
 echo "$new_config" | sudo tee /etc/pacman.conf > /dev/null
 
 #╭──────────────────────────────────────╮
+#│           Install Browser            │
+#╰──────────────────────────────────────╯
+sudo pacman -S paru-bin
+sudo pacman -S brave-bin
+
+
+#╭──────────────────────────────────────╮
 #│           Version Control            │
 #╰──────────────────────────────────────╯
 sudo pacman -S --noconfirm git
