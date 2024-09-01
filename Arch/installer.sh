@@ -108,7 +108,6 @@ cd paru
 makepkg -si
 sudo paru -S brave-bin
 
-
 #╭──────────────────────────────────────╮
 #│           Version Control            │
 #╰──────────────────────────────────────╯
@@ -211,6 +210,19 @@ for package in "${packages[@]}"; do
 done
 
 #╭──────────────────────────────────────╮
+#│          Hyprland Packages           │
+#╰──────────────────────────────────────╯
+packages=("waybar" "rofi" "")
+
+for package in "${packages[@]}"; do
+    paru_install_package "$package"
+done
+
+
+
+
+
+#╭──────────────────────────────────────╮
 #│               Terminal               │
 #╰──────────────────────────────────────╯
 chsh -s $(which zsh)
@@ -221,8 +233,8 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-sy
 #╭──────────────────────────────────────╮
 #│               Schedule               │
 #╰──────────────────────────────────────╯
-sudo cp ~/.config/nvim/Scripts/checkupdates /usr/bin/checkupdates
-sudo cp ~/.config/nvim/Scripts/git-updates /usr/bin/git-updates
+sudo cp ~/Documents/Git/dotfiles/Scripts/checkupdates /usr/bin/checkupdates
+sudo cp ~/Documents/Git/dotfiles/Scripts/git-updates /usr/bin/git-updates
 sudo chmod +x /usr/bin/checkupdates
 sudo chmod +x /usr/bin/git-updates
 
@@ -236,13 +248,13 @@ systemctl enable --now cronie.service
 wget git.io/trans
 chmod +x ./trans
 sudo mv trans /usr/bin/
-sudo cp ~/.config/nvim/Scripts/notitranslation /usr/bin/
+sudo cp ~/Documents/Scripts/notitranslation /usr/bin/
 
 #╭──────────────────────────────────────╮
 #│              Mime types              │
 #╰──────────────────────────────────────╯
-sudo cp ~/.config/nvim/Arch/icons/*.svg /usr/share/icons/
-sudo cp ~/.config/nvim/Arch/mime/Overrides.xml /usr/share/mime/packages/
+sudo cp ~/Documents/Git/dotfiles/Arch/icons/*.svg /usr/share/icons/
+sudo cp ~/Documents/Git/dotfiles/Arch/mime/Overrides.xml /usr/share/mime/packages/
 
 #╭──────────────────────────────────────╮
 #│              FlatPacks               │
