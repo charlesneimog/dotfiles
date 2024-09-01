@@ -99,9 +99,12 @@ EOF
 echo "$new_config" | sudo tee /etc/pacman.conf > /dev/null
 
 #╭──────────────────────────────────────╮
-#│           Install Browser            │
+#│             Install Paru             │
 #╰──────────────────────────────────────╯
-sudo pacman -S paru-bin
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/paru-bin.git
+cd paru-bin
+makepkg -si
 sudo pacman -S brave-bin
 
 
