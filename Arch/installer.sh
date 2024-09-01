@@ -101,9 +101,10 @@ echo "$new_config" | sudo tee /etc/pacman.conf > /dev/null
 #╭──────────────────────────────────────╮
 #│             Install Paru             │
 #╰──────────────────────────────────────╯
+cd ~/Downloads/
 sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru-bin.git
-cd paru-bin
+git clone https://aur.archlinux.org/paru.git
+cd paru
 makepkg -si
 sudo pacman -S brave-bin
 
@@ -118,7 +119,7 @@ gh auth login
 #╭──────────────────────────────────────╮
 #│           System Utilities           │
 #╰──────────────────────────────────────╯
-packages=("power-profiles-daemon" "zsh" "flatpak" "gnome-tweaks" "xsel" "cronie" "ufw" "wget" "jq" "pass" "bluez" "bluez-utils" "blueman")
+packages=("power-profiles-daemon" "zsh" "flatpak" "xsel" "cronie" "ufw" "wget" "jq" "pass") 
 
 for package in "${packages[@]}"; do
     install_package "$package"
@@ -163,10 +164,10 @@ done
 #╭──────────────────────────────────────╮
 #│        OCR and Language Data         │
 #╰──────────────────────────────────────╯
-packages=("tesseract" "tesseract-data-eng" "tesseract-data-por")
-for package in "${packages[@]}"; do
-    install_package "$package"
-done
+# packages=("tesseract" "tesseract-data-eng" "tesseract-data-por")
+# for package in "${packages[@]}"; do
+#     install_package "$package"
+# done
 
 #╭──────────────────────────────────────╮
 #│    Open Pd Patches with plugdata     │
@@ -274,8 +275,6 @@ sed '/---script managed section---/q' current_cron > new_cron
 
 cat >> new_cron << EOF
 #---script managed section---
-*/30 * * * * syncup /home/neimog/Documents/Biblioteca/ run/media/neimog/DOCS-SSD/Biblioteca
-*/60 * * * * syncup /home/neimog/Documents/Anytype /run/media/neimog/DOCS-SSD/Anytype
 0 9 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/checkupdates
 0 17 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/git-updates
 EOF
