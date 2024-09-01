@@ -217,6 +217,15 @@ for package in "${packages[@]}"; do
 done
 
 
+#╭──────────────────────────────────────╮
+#│                Fonts                 │
+#╰──────────────────────────────────────╯
+packages=("otf-san-francisco")
+
+for package in "${packages[@]}"; do
+    paru_install_package "$package"
+done
+
 
 
 
