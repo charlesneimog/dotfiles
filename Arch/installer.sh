@@ -174,7 +174,7 @@ echo "[Default Applications]\ntext/x-puredata=plugdata.desktop" > ~/.local/share
 #╭──────────────────────────────────────╮
 #│               PACKAGES               │
 #╰──────────────────────────────────────╯
-packages=("sonic-visualiser" "muse-sounds-manager-bin" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "zathura-pdf-mupdf-git" "intel-ucode")
+packages=("sonic-visualiser" "muse-sounds-manager-bin"  "zathura-pdf-mupdf-git" "intel-ucode")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
@@ -220,7 +220,7 @@ done
 #╭──────────────────────────────────────╮
 #│                Fonts                 │
 #╰──────────────────────────────────────╯
-packages=("otf-san-francisco")
+packages=("otf-san-francisco" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "ttf-meslo")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
