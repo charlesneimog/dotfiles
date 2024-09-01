@@ -18,7 +18,6 @@ fetch_bing_wallpaper() {
     ln -s -f "${output_png}" ~/.config/rofi/images/b.png
     ln -s -f "${output_png}" ~/.config/rofi/images/a.png
     ln -s -f "${output_png}" ~/.config/rofi/images/c.png
-
 }
 
 change_theme(){

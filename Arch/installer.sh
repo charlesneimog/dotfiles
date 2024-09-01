@@ -139,7 +139,7 @@ done
 #╭──────────────────────────────────────╮
 #│          Hyprland Packages           │
 #╰──────────────────────────────────────╯
-packages=("waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack")
+packages=("waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack" "slurp" "grim" "xdg-desktop-portal-hyprland")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
