@@ -125,7 +125,7 @@ done
 #╭──────────────────────────────────────╮
 #│     Programming and Development      │
 #╰──────────────────────────────────────╯
-packages=("cmake" "nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk")
+packages=("cmake" "nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk", "lua-check"
 
 for package in "${packages[@]}"; do
     install_package "$package"
