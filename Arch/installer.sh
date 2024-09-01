@@ -210,7 +210,7 @@ done
 #╭──────────────────────────────────────╮
 #│          Hyprland Packages           │
 #╰──────────────────────────────────────╯
-packages=("waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide")
+packages=("waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
