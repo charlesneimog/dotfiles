@@ -187,10 +187,10 @@ config.font_size = 17
 config.initial_cols = 110
 config.initial_rows = 30
 
--- config.font = wezterm.font_with_fallback({
--- 	"JetBrainsMonoNerdFont",
--- 	"DengXian",
--- })
+config.font = wezterm.font_with_fallback({
+	"JetBrainsMonoNerdFont",
+	"DengXian",
+})
 -- config.font = wezterm.font("JetBrainsMonoNerdFont")
 
 -- config.hide_tab_bar_if_only_one_tab = true
