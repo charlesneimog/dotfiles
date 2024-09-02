@@ -33,7 +33,6 @@ bindsym $mod+V exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.co
 # set focused as float window
 bindsym $mod+f floating toggle
 
-
 # Inputs
 bindsym $mod+q kill
 bindsym alt+F4 kill

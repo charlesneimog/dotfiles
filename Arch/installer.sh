@@ -137,9 +137,9 @@ for package in "${packages[@]}"; do
 done
 
 #╭──────────────────────────────────────╮
-#│          Hyprland Packages           │
+#│          Hyprland and Sway           │
 #╰──────────────────────────────────────╯
-packages=("waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack" "slurp" "grim" "xdg-desktop-portal-hyprland")
+packages=("sway" "hyprland" "waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack" "slurp" "grim" "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
