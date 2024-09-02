@@ -139,7 +139,6 @@ set $gnome-schema org.gnome.desktop.interface
 
 default_border none
 default_floating_border none
-titlebar_padding 0
 titlebar_border_thickness 0
 
 # # Set Colors:           Border                   Background          Text          Indicator             Child Border
