@@ -7,10 +7,9 @@ set $term wezterm
 
 # Auto Start
 
-exec bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i ~/.config/sway/wallpaper.jpg
+exec bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i "$HOME/.config/hypr/wallpaper.png"
 exec /usr/lib/xdg-desktop-portal-gtk # theme switch
 exec autotiling-rs
-exec swaybg -i ~/.config/sway/wallpaper.jpg
 exec /usr/libexec/gsd-xsettings
 exec swaync
 exec gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
@@ -20,7 +19,7 @@ exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 
 # Gnome things
-exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
+# exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
 
 # Remove titles
 bindsym print exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
@@ -160,7 +159,7 @@ gaps outer 3
 
 
 # Commands Zenity
-bindsym $mod+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
+bindsym $mod+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
     
 
 # ╭──────────────────╮
