@@ -125,7 +125,7 @@ done
 #╭──────────────────────────────────────╮
 #│     Programming and Development      │
 #╰──────────────────────────────────────╯
-packages=("clangd" "fd" "flake8" "cmake" "nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk" "lua-check")
+packages=("clangd" "fd" "flake8" "cmake" "nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk" "lua-check" "lazygit")
 
 for package in "${packages[@]}"; do
     install_package "$package"
@@ -185,7 +185,7 @@ done
 #│              FlatPacks               │
 #╰──────────────────────────────────────╯
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
-packages = ("flatpak install flathub org.gnome.TextEditor" "org.gtk.Gtk3thme.adw-gtk3" "org.gtk.Gtk3theme.adw-gtk3-dark" "org.zotero.Zotero" "com.github.flxzt.rnote" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio")
+packages = ("flatpak install flathub org.gnome.TextEditor" "org.gtk.Gtk3thme.adw-gtk3" "org.gtk.Gtk3theme.adw-gtk3-dark" "org.zotero.Zotero" "com.github.flxzt.rnote" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio" "org.gnome.Calculator")
 
 for package in "${packages[@]}"; do
     flatpak_install_package "$package"
