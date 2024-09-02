@@ -132,6 +132,10 @@ input "type:touchpad" {
 exec_always {
     gsettings set $gnome-schema gtk-theme 'adw3'
     gsettings set $gnome-schema icon-theme 'Tela-circle'
+    exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+    swaync 
+    /usr/lib/xdg-desktop-portal-wlr
+    /usr/lib/xdg-desktop-portal-gtk 
 }
 
 
