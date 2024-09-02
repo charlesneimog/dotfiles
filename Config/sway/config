@@ -24,10 +24,9 @@ exec wl-paste --type image --watch cliphist store
 # Remove titles
 bindsym print exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
 bindsym $mod+t exec bash -c ". ~/.config/hypr/functions.sh translate_selection"
-bindsym $mod+a exec $notifycmd 'Toggled Special Workspace'
-bindsym $mod+D exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme $HOME/.config/rofi/files/launchers/type-7/style-2.rasi
+bindsym $mod+d exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
 bindsym $mod+e exec nautilus
-bindsym $mod+L exec pidof hyprlock || hyprlock
+# bindsym $mod+L exec pidof hyprlock || hyprlock
 bindsym $mod+Return exec wezterm-gui
 bindsym $mod+V exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
 
@@ -35,7 +34,6 @@ bindsym $mod+V exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.co
 # Inputs
 bindsym $mod+q kill
 bindsym alt+F4 kill
-bindsym $mod+d exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle"
 bindsym $mod+Shift+r reload
 
 # Move your focus around
@@ -134,12 +132,10 @@ exec_always {
 
 set $gnome-schema org.gnome.desktop.interface
 
-set $background #332b2b
-set $color_urgent #fb4934
-set $text_color #ffffff
-set $title_bg_unfocused #ffffff
-set $title_outline_active #ff0000
-set $title_outline_unfocused #ffffff
+default_border none
+default_floating_border none
+titlebar_padding 1
+titlebar_border_thickness 0
 
 # Set Colors:           Border                   Background          Text          Indicator             Child Border
 client.background       $background
@@ -151,7 +147,6 @@ client.urgent           $color_urgent            $color_urgent       $color_urge
 # Add gaps in between all application windows:
 gaps inner 3
 gaps outer 3
-
 
 # Commands Zenity
 bindsym $mod+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
