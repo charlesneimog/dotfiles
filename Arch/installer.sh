@@ -298,6 +298,8 @@ bash ~/.config/miniconda3.dir/miniconda.sh -b -u -p ~/.config/miniconda3.dir
 rm -rf ~/.config/miniconda3.dir/miniconda.sh
 ~/.config/miniconda3.dir/bin/conda init bash
 ~/.config/miniconda3.dir/bin/conda init zsh
+rm /home/neimog/.config/miniconda3.dir/bin/wish
+ln -s /usr/bin/wish /home/neimog/.config/miniconda3.dir/bin/wish
 
 #╭──────────────────────────────────────╮
 #│                Clear                 │
