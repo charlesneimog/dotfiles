@@ -137,12 +137,12 @@ default_floating_border none
 titlebar_padding 1
 titlebar_border_thickness 0
 
-# Set Colors:           Border                   Background          Text          Indicator             Child Border
-client.background       $background
-client.focused          $title_outline_active    $background         $text_color   $title_outline_active $title_outline_active
-client.focused_inactive $title_outline_unfocused $background         $text_color   $text_color           $title_outline_unfocused
-client.unfocused        $title_outline_unfocused $title_bg_unfocused $text_color   $title_outline_active
-client.urgent           $color_urgent            $color_urgent       $color_urgent $color_urgent         $color_urgent
+# # Set Colors:           Border                   Background          Text          Indicator             Child Border
+# client.background       $background
+# client.focused          $title_outline_active    $background         $text_color   $title_outline_active $title_outline_active
+# client.focused_inactive $title_outline_unfocused $background         $text_color   $text_color           $title_outline_unfocused
+# client.unfocused        $title_outline_unfocused $title_bg_unfocused $text_color   $title_outline_active
+# client.urgent           $color_urgent            $color_urgent       $color_urgent $color_urgent         $color_urgent
 
 # Add gaps in between all application windows:
 gaps inner 3
