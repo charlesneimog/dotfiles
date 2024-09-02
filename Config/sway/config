@@ -161,11 +161,33 @@ exec_always {
 
 set $gnome-schema org.gnome.desktop.interface
 
-default_border none
-default_floating_border none
-titlebar_border_thickness 0
+default_border pixel
+default_floating_border pixel
+titlebar_border_thickness 1
+
 gaps inner 3
 gaps outer 3
+
+gaps top 3
+gaps right 5
+gaps bottom 5
+gaps left 5
+
+set $background #332b2b
+set $color_urgent #fb4934
+set $text_color #ffffff
+set $title_bg_unfocused #ffffff
+set $title_outline_active #ff0000
+set $title_outline_unfocused #ffffff
+
+# Set Colors:           Border                   Background          Text          Indicator             Child Border
+client.background       $background
+client.focused          $title_outline_active    $background         $text_color   $title_outline_active $title_outline_active
+client.focused_inactive $title_outline_unfocused $background         $text_color   $text_color           $title_outline_unfocused
+client.unfocused        $title_outline_unfocused $title_bg_unfocused $text_color   $title_outline_active
+client.urgent           $color_urgent            $color_urgent       $color_urgent $color_urgent         $color_urgent
+
+focus_follows_mouse yes
 
 
 
@@ -178,12 +200,4 @@ assign [app_id=org.gnome.Nautilus] 3
 assign [class=plugdata|PatchWindow|PdWindow] 4
 assign [class=anytype] 5
 assign [class=org.kde.okular|evince|zathura] 6
-
-
-
-
-
-
-
-
 
