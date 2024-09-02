@@ -6,15 +6,32 @@ set $right l
 set $term wezterm
 
 # Auto Start
+
+exec bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i ~/.config/sway/wallpaper.jpg
+exec /usr/lib/xdg-desktop-portal-gtk # theme switch
 exec autotiling-rs
 exec swaybg -i ~/.config/sway/wallpaper.jpg
 exec /usr/libexec/gsd-xsettings
 exec swaync
+exec gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
 
 # Gnome things
 exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
 
 # Remove titles
+bindsym print exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
+bindsym $mod+t exec bash -c ". ~/.config/hypr/functions.sh translate_selection"
+bindsym $mod+a exec $notifycmd 'Toggled Special Workspace'
+bindsym $mod+D exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme $HOME/.config/rofi/files/launchers/type-7/style-2.rasi
+bindsym $mod+e exec nautilus
+bindsym $mod+L exec pidof hyprlock || hyprlock
+bindsym $mod+Return exec wezterm-gui
+bindsym $mod+V exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
+
 
 # Inputs
 bindsym $mod+q kill
@@ -27,6 +44,11 @@ bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
+
+
+
+
+
 
 # Som
 bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
@@ -95,7 +117,7 @@ mode "resize" {
 # Inputs
 
 bar {
-    status_command waybar
+    status_command waybar --config /home/neimog/.config/waybar/config.json # starts waybar
     mode invisible
 }
 
@@ -138,7 +160,7 @@ gaps outer 3
 
 
 # Commands Zenity
-bindsym $mod+Shift+e exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
+bindsym $mod+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
     
 
 # ╭──────────────────╮
