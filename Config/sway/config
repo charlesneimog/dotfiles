@@ -79,6 +79,20 @@ bindsym $mod+a focus parent
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
+# ╭───────────────────────────────────────╮
+# │              Auto-Start               │
+# ╰───────────────────────────────────────╯
+
+exec swayidle -w\
+    timeout 1 'swaylock -f -C ~/.config/swaylock/config'\
+    timeout 770 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -C ~/.config/swaylock/config'
+
+exec env XDG_CURRENT_DESKTOP=sway /usr/lib/xdg-desktop-portal -r
+exec env XDG_CURRENT_DESKTOP=sway /usr/lib/xdg-desktop-portal-gtk -r
+exec env XDG_CURRENT_DESKTOP=sway /usr/lib/xdg-desktop-portal-wlr
+
 mode "resize" {
     bindsym $left resize shrink width 10px
     bindsym $down resize grow height 10px
@@ -130,8 +144,6 @@ exec_always {
 
     # Internal
     exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-    /usr/lib/xdg-desktop-portal-wlr
-    /usr/lib/xdg-desktop-portal-gtk 
     /usr/libexec/gsd-xsettings
     dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
 
@@ -141,6 +153,9 @@ exec_always {
     # copy and paste
     wl-paste --type text --watch cliphist store
     wl-paste --type image --watch cliphist store
+
+    # idle, locks
+
 }
 
 
