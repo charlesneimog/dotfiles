@@ -5,35 +5,21 @@ set $up k
 set $right l
 set $term wezterm
 
-# Auto Start
 
-exec bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i "$HOME/.config/hypr/wallpaper.png"
-exec /usr/lib/xdg-desktop-portal-gtk # theme switch
-exec autotiling-rs
-exec /usr/libexec/gsd-xsettings
-exec swaync
-exec gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec wl-paste --type text --watch cliphist store
-exec wl-paste --type image --watch cliphist store
-
-# Gnome things
-# exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
-
-# Remove titles
+# ╭───────────────────────────────────────╮
+# │               COMMANDS                │
+# ╰───────────────────────────────────────╯
 bindsym print exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
 bindsym $mod+t exec bash -c ". ~/.config/hypr/functions.sh translate_selection"
 bindsym $mod+d exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
 bindsym $mod+e exec nautilus
-# bindsym $mod+L exec pidof hyprlock || hyprlock
 bindsym $mod+Return exec wezterm-gui
 bindsym $mod+V exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
 
-# set focused as float window
+# Commands Zenity
+bindsym $mod+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
 bindsym $mod+f floating toggle
 
-# Inputs
 bindsym $mod+q kill
 bindsym alt+F4 kill
 bindsym $mod+Shift+r reload
@@ -64,7 +50,6 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-#
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
 bindsym $mod+3 workspace number 3
@@ -75,6 +60,7 @@ bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 bindsym $mod+0 workspace number 10
+
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
@@ -110,7 +96,9 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-# Inputs
+ # ╭───────────────────────────────────────╮
+ # │                INPUTS                 │
+ # ╰───────────────────────────────────────╯
 
 bar {
     status_command waybar --config /home/neimog/.config/waybar/config.json # starts waybar
@@ -127,14 +115,32 @@ input "type:touchpad" {
     middle_emulation enabled
 }
 
-# Appearance and Theming
+
+ # ╭───────────────────────────────────────╮
+ # │            Execute Always             │
+ # ╰───────────────────────────────────────╯
+
 exec_always {
+    # Interface
     gsettings set $gnome-schema gtk-theme 'adw3'
     gsettings set $gnome-schema icon-theme 'Tela-circle'
-    exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+    gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
+    bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i "$HOME/.config/hypr/wallpaper.png"
     swaync 
+
+    # Internal
+    exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
     /usr/lib/xdg-desktop-portal-wlr
     /usr/lib/xdg-desktop-portal-gtk 
+    /usr/libexec/gsd-xsettings
+    dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
+
+    # ssh and others
+    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+    # copy and paste
+    wl-paste --type text --watch cliphist store
+    wl-paste --type image --watch cliphist store
 }
 
 
@@ -143,35 +149,25 @@ set $gnome-schema org.gnome.desktop.interface
 default_border none
 default_floating_border none
 titlebar_border_thickness 0
+gaps inner 5
+gaps outer 5
 
-# # Set Colors:           Border                   Background          Text          Indicator             Child Border
-# client.background       $background
-# client.focused          $title_outline_active    $background         $text_color   $title_outline_active $title_outline_active
-# client.focused_inactive $title_outline_unfocused $background         $text_color   $text_color           $title_outline_unfocused
-# client.unfocused        $title_outline_unfocused $title_bg_unfocused $text_color   $title_outline_active
-# client.urgent           $color_urgent            $color_urgent       $color_urgent $color_urgent         $color_urgent
 
-# Add gaps in between all application windows:
-gaps inner 2
-gaps outer 2
 
-# Commands Zenity
-bindsym $mod+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
-
-# ╭──────────────────╮
-# │ Workspace Rules  │
-# ╰──────────────────╯
-    # 1
+ # ╭───────────────────────────────────────╮
+ # │           Workspaces Rules            │
+ # ╰───────────────────────────────────────╯
 assign [app_id="(^qutebrowser|brave)"] 1
-
-    # 2
 assign [class=org.wezfurlong.wezterm] 2
-
-    # 3
-assign [app_id=org.gnome.Nautilus|org.pwmt.zathura|org|evince] 3
-
-    # 4
+assign [app_id=org.gnome.Nautilus] 3
 assign [class=plugdata|PatchWindow|PdWindow] 4
+assign [class=anytype] 5
+assign [class=org.kde.okular|evince|zathura] 6
+
+
+
+
+
 
 
 
