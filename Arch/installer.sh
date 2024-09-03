@@ -146,6 +146,9 @@ done
 
 sudo systemctl enable sddm.service
 sudo cp -r /home/neimog/Documents/Git/dotfiles/Config/sdmm/catppuccin-mocha /usr/share/sddm/themes/
+sudo mkdir -p /etc/sddm.conf/
+echo -e "\n[Theme]\nCurrent=catppuccin-mocha" | sudo tee -a /etc/sddm.conf/config.conf > /dev/null
+
 
 
 
