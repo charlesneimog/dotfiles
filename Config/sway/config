@@ -151,9 +151,9 @@ exec_always {
     killall xdg-desktop-portal-gtk
     killall xdg-desktop-portal-wlr
 
-    /usr/lib/xdg-desktop-portal
-    /usr/lib/xdg-desktop-portal-gtk
-    /usr/lib/xdg-desktop-portal-wlr
+    # /usr/lib/xdg-desktop-portal -r
+    /usr/lib/xdg-desktop-portal-gtk -r
+    /usr/lib/xdg-desktop-portal-wlr -r
 
     swayidle -w \
         timeout 20 'swaylock -f -C ~/.config/swaylock/config' \
