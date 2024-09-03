@@ -156,7 +156,7 @@ exec_always {
     /usr/lib/xdg-desktop-portal-wlr -r
 
     swayidle -w \
-        timeout 20 'swaylock -f -C ~/.config/swaylock/config' \
+        timeout 120 'swaylock -f -C ~/.config/swaylock/config' \
         timeout 300 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'swaylock -C ~/.config/swaylock/config'
