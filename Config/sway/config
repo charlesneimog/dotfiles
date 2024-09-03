@@ -83,15 +83,7 @@ bindsym $mod+minus scratchpad show
 # │              Auto-Start               │
 # ╰───────────────────────────────────────╯
 
-exec swayidle -w \
-    timeout 20 'swaylock -f -C ~/.config/swaylock/config' \
-    timeout 300 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -C ~/.config/swaylock/config'
 
-exec env XDG_CURRENT_DESKTOP=sway /usr/lib/xdg-desktop-portal -r
-exec env XDG_CURRENT_DESKTOP=sway /usr/lib/xdg-desktop-portal-gtk -r
-exec env XDG_CURRENT_DESKTOP=sway /usr/lib/xdg-desktop-portal-wlr
 
 mode "resize" {
     bindsym $left resize shrink width 10px
@@ -155,7 +147,16 @@ exec_always {
     wl-paste --type image --watch cliphist store
 
     # idle, locks
+    /usr/lib/xdg-desktop-portal
+    /usr/lib/xdg-desktop-portal-gtk
+    /usr/lib/xdg-desktop-portal-wlr
+    swayidle -w \
+        timeout 20 'swaylock -f -C ~/.config/swaylock/config' \
+        timeout 300 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"' \
+        before-sleep 'swaylock -C ~/.config/swaylock/config'
 
+    # cloud
     nextcloud
 }
 
