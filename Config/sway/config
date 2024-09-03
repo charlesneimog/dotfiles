@@ -107,6 +107,7 @@ mode "resize" {
 
 bar {
     status_command waybar --config /home/neimog/.config/waybar/config.json # starts waybar
+    mode invisible
 }
 
 input type:keyboard {
@@ -132,12 +133,10 @@ exec_always {
     bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i "$HOME/.config/hypr/wallpaper.png"
     swaync 
 
-
     # Internal
     exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
     /usr/libexec/gsd-xsettings
     dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
-    /usr/libexec/xdg-desktop-portal --replace
 
     # ssh and others
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -146,16 +145,9 @@ exec_always {
     wl-paste --type text --watch cliphist store
     wl-paste --type image --watch cliphist store
 
-    # idle, locks, without these kills, my theme switch don't work
-    killall xdg-desktop-portal-hyprland
-    killall xdg-desktop-portal
-    killall xdg-desktop-portal-gtk
-    killall xdg-desktop-portal-wlr
-
-    # /usr/lib/xdg-desktop-portal -r
-    /usr/lib/xdg-desktop-portal-gtk -r
-    /usr/lib/xdg-desktop-portal-wlr -r
-
+    # idle, locks
+    /usr/lib/xdg-desktop-portal-gtk
+    /usr/lib/xdg-desktop-portal-wlr
     swayidle -w \
         timeout 120 'swaylock -f -C ~/.config/swaylock/config' \
         timeout 300 'swaymsg "output * dpms off"' \
