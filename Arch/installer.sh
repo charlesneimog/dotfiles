@@ -109,18 +109,17 @@ sudo paru -Sy --noconfirm brave-bin
 #╭──────────────────────────────────────╮
 #│           Version Control            │
 #╰──────────────────────────────────────╯
-sudo pacman -S --noconfirm git
-sudo pacman -S --noconfirm github-cli
-gh auth login
 
 #╭──────────────────────────────────────╮
 #│           System Utilities           │
 #╰──────────────────────────────────────╯
-packages=("power-profiles-daemon" "zsh" "flatpak" "xsel" "cronie" "ufw" "wget" "jq" "pass") 
+packages=("power-profiles-daemon" "zsh" "flatpak" "xsel" "cronie" "ufw" "wget" "jq" "pass" "git" "github-cli") 
 
 for package in "${packages[@]}"; do
     install_package "$package"
 done
+
+gh auth login
 
 #╭──────────────────────────────────────╮
 #│     Programming and Development      │
@@ -185,7 +184,7 @@ done
 #│              FlatPacks               │
 #╰──────────────────────────────────────╯
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
-packages = ("flatpak install flathub org.gnome.TextEditor" "org.gtk.Gtk3thme.adw-gtk3" "org.gtk.Gtk3theme.adw-gtk3-dark" "org.zotero.Zotero" "com.github.flxzt.rnote" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio" "org.gnome.Calculator")
+packages = ("flatpak install flathub org.gnome.TextEditor" "org.gtk.Gtk3thme.adw-gtk3" "org.gtk.Gtk3theme.adw-gtk3-dark" "org.zotero.Zotero" "com.github.flxzt.rnote" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio" "org.gnome.Calculator" "org.gnome.Totem")
 
 for package in "${packages[@]}"; do
     flatpak_install_package "$package"

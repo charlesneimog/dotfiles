@@ -9,7 +9,6 @@ return {
 			-- refer to the configuration section below
 		},
 	},
-	{ "typicode/bg.nvim", lazy = false },
 
 	{
 		"DreamMaoMao/yazi.nvim",
