@@ -146,7 +146,7 @@ done
 
 sudo systemctl enable sddm.service
 sudo cp -r /home/neimog/Documents/Git/dotfiles/Config/sddm/catppuccin-mocha /usr/share/sddm/themes/
-sudo cp -r /home/neimog/Documents/Git/dotfiles/Config/sddm/Dexy-Color-SDDM /usr/share/sddm/themes/
+sudo cp -r /home/neimog/Documents/Git/dotfiles/Config/sddm/Dexy-Color /usr/share/sddm/themes/
 sudo bash -c 'echo -e "\n[Theme]\nCurrent=Dexy-Color" >> /etc/sddm.conf'
 sudo bash -c 'echo -e "\n[Session]\nSession=sway.desktop" >> /etc/sddm.conf'
 
