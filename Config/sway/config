@@ -83,9 +83,9 @@ bindsym $mod+minus scratchpad show
 # │              Auto-Start               │
 # ╰───────────────────────────────────────╯
 
-exec swayidle -w\
+exec swayidle -w \
     timeout 20 'swaylock -f -C ~/.config/swaylock/config' \
-    timeout 770 'swaymsg "output * dpms off"' \
+    timeout 300 'swaymsg "output * dpms off"' \
     resume 'swaymsg "output * dpms on"' \
     before-sleep 'swaylock -C ~/.config/swaylock/config'
 
@@ -156,6 +156,7 @@ exec_always {
 
     # idle, locks
 
+    nextcloud
 }
 
 
