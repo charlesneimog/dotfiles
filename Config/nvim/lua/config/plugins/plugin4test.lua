@@ -10,6 +10,7 @@ return {
 		},
 	},
 	{ "typicode/bg.nvim", lazy = false },
+
 	{
 		"DreamMaoMao/yazi.nvim",
 		dependencies = {
