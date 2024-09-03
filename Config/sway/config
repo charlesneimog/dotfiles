@@ -84,7 +84,7 @@ bindsym $mod+minus scratchpad show
 # ╰───────────────────────────────────────╯
 
 exec swayidle -w\
-    timeout 1 'swaylock -f -C ~/.config/swaylock/config' \
+    timeout 20 'swaylock -f -C ~/.config/swaylock/config' \
     timeout 770 'swaymsg "output * dpms off"' \
     resume 'swaymsg "output * dpms on"' \
     before-sleep 'swaylock -C ~/.config/swaylock/config'
@@ -165,13 +165,13 @@ default_border pixel
 default_floating_border pixel
 titlebar_border_thickness 1
 
-gaps inner 3
-gaps outer 3
+gaps inner 2
+gaps outer 2
 
 gaps top 3
-gaps right 5
+gaps right 2
 gaps bottom 5
-gaps left 5
+gaps left 2
 
 set $background #332b2b
 set $color_urgent #fb4934
@@ -188,8 +188,6 @@ client.unfocused        $title_outline_unfocused $title_bg_unfocused $text_color
 client.urgent           $color_urgent            $color_urgent       $color_urgent $color_urgent         $color_urgent
 
 focus_follows_mouse yes
-
-
 
  # ╭───────────────────────────────────────╮
  # │           Workspaces Rules            │
