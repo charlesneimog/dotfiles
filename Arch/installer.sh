@@ -138,22 +138,17 @@ done
 #╭──────────────────────────────────────╮
 #│          Hyprland and Sway           │
 #╰──────────────────────────────────────╯
-packages=("sway" "hyprland" "waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack" "slurp" "grim" "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "autotiling-rs" "swayidle" "swaylock" "qt6-svg" "qt6-declarative" "sdmm")
+packages=("sway" "hyprland" "sushi" "waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack" "slurp" "grim" "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "autotiling-rs" "swayidle" "swaylock" "qt6-svg" "qt6-declarative" "sdmm")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
 done
 
 sudo systemctl enable sddm.service
-sudo cp -r /home/neimog/Documents/Git/dotfiles/Config/sdmm/catppuccin-mocha /usr/share/sddm/themes/
-echo -e "\n[Theme]\nCurrent=catppuccin-mocha" | sudo tee -a /etc/sddm.conf >> /dev/null
-sudo bash -c 'echo -e "\n[Autologin]\nUser=neimog\nSession=sway.desktop" >> /etc/sddm.conf'
-
-
-
-
-
-
+sudo cp -r /home/neimog/Documents/Git/dotfiles/Config/sddm/catppuccin-mocha /usr/share/sddm/themes/
+sudo cp -r /home/neimog/Documents/Git/dotfiles/Config/sddm/Dexy-Color-SDDM /usr/share/sddm/themes/
+sudo bash -c 'echo -e "\n[Theme]\nCurrent=Dexy-Color" >> /etc/sddm.conf'
+sudo bash -c 'echo -e "\n[Session]\nSession=sway.desktop" >> /etc/sddm.conf'
 
 #╭──────────────────────────────────────╮
 #│              Multimedia              │
