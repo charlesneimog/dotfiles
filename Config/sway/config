@@ -5,7 +5,6 @@ set $up k
 set $right l
 set $term wezterm
 
-
 # ╭───────────────────────────────────────╮
 # │               COMMANDS                │
 # ╰───────────────────────────────────────╯
@@ -146,10 +145,16 @@ exec_always {
     wl-paste --type text --watch cliphist store
     wl-paste --type image --watch cliphist store
 
-    # idle, locks
+    # idle, locks, without these kills, my theme switch don't work
+    killall xdg-desktop-portal-hyprland
+    killall xdg-desktop-portal
+    killall xdg-desktop-portal-gtk
+    killall xdg-desktop-portal-wlr
+
     /usr/lib/xdg-desktop-portal
     /usr/lib/xdg-desktop-portal-gtk
     /usr/lib/xdg-desktop-portal-wlr
+
     swayidle -w \
         timeout 20 'swaylock -f -C ~/.config/swaylock/config' \
         timeout 300 'swaymsg "output * dpms off"' \
