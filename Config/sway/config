@@ -81,9 +81,6 @@ bindsym $mod+minus scratchpad show
 # ╭───────────────────────────────────────╮
 # │              Auto-Start               │
 # ╰───────────────────────────────────────╯
-
-
-
 mode "resize" {
     bindsym $left resize shrink width 10px
     bindsym $down resize grow height 10px
@@ -162,9 +159,12 @@ for_window [urgent=latest] focus # Focus the latest urgent window
 
 set $gnome-schema org.gnome.desktop.interface
 
-default_border pixel
-default_floating_border pixel
-titlebar_border_thickness 1
+
+default_border pixel 2
+default_floating_border pixel 2
+titlebar_border_thickness 2
+smart_borders on
+
 
 gaps inner 2
 gaps outer 1
