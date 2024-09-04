@@ -167,9 +167,9 @@ default_floating_border pixel
 titlebar_border_thickness 1
 
 gaps inner 2
-gaps outer 2
+gaps outer 1
 
-gaps top 3
+gaps top 0
 gaps right 2
 gaps bottom 5
 gaps left 2

@@ -179,7 +179,7 @@ done
 #╭──────────────────────────────────────╮
 #│                Fonts                 │
 #╰──────────────────────────────────────╯
-packages=("otf-san-francisco" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "ttf-meslo")
+packages=("otf-san-francisco" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "ttf-meslo" "noto-fonts-emoji")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
