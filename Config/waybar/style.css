@@ -33,15 +33,11 @@ tooltip {
   border-radius: 2px;
 }
 
-/* COMMON CONFIGS */
-#image,
-#mpd *,
-#taskbar *,
-#quicklinks-right *,
-#quicklinks-left * {
-  border-radius: 7px;
-  color: @foreground;
-}
+/*
+ *╭─────────────────────────────────────╮
+ *│           COMMON CONFIGS            │
+ *╰─────────────────────────────────────╯
+*/
 #clock,
 #hardware,
 #network,
@@ -51,7 +47,6 @@ tooltip {
 #taskbar,
 #custom-weather,
 #power-profiles-daemon,
-#quick-actions,
 #bluetooth,
 #privacy,
 #custom-weather,
@@ -78,6 +73,12 @@ tooltip {
   margin: 1px 3px 0px 3px;
   opacity: 0.85;
 }
+
+/*
+ *╭─────────────────────────────────────╮
+ *│             Workspaces              │
+ *╰─────────────────────────────────────╯
+*/
 
 #workspaces button {
   color: #ffffff;
@@ -107,25 +108,22 @@ tooltip {
   color: #ff0000; /* Sway palette: urgent/text */
 }
 
-/* quicklinks  */
-#quicklinks-right,
-#quick-actions,
+/*
+ *╭─────────────────────────────────────╮
+ *│             quicklinks              │
+ *╰─────────────────────────────────────╯
+*/
 #quicklinks-left {
   background: @color1;
-}
-#quick-actions {
-  margin-right: 2px;
 }
 #quicklinks-left {
   margin-left: 2px;
 }
 
-#quick-actions *,
 #quicklinks-left * {
   padding: 0px 2px;
   transition: all 0.2s ease-in-out;
 }
-#quick-actions *:hover,
 #quicklinks-left *:hover {
   background: @color11;
 }
@@ -142,7 +140,11 @@ tooltip {
   color: #e5e619;
 }
 
-/* taskbar */
+/*
+ *╭─────────────────────────────────────╮
+ *│               taskbar               │
+ *╰─────────────────────────────────────╯
+*/
 #taskbar {
   padding: 0px;
 }
@@ -151,14 +153,25 @@ tooltip {
 }
 #taskbar *:hover {
   background: @color11;
+  border-radius: 7px;
+  margin: 1px 1px 1px 2px;
 }
 
-/* power-menu */
+/*
+ *╭─────────────────────────────────────╮
+ *│            Power Bottom             │
+ *╰─────────────────────────────────────╯
+*/
 #custom-power-menu {
   padding-right: 6px;
   padding-left: 4px;
 }
 
+/*
+ *╭─────────────────────────────────────╮
+ *│              Bluetooth              │
+ *╰─────────────────────────────────────╯
+*/
 #bluetooth {
   padding-right: 6px;
   padding-left: 4px;
@@ -169,6 +182,26 @@ tooltip {
   padding-left: 4px;
   background: #ffffff;
 }
+
+/*
+ *╭─────────────────────────────────────╮
+ *│            Quick Actions            │
+ *╰─────────────────────────────────────╯
+*/
+#quick-actions {
+  color: @foreground;
+  border-radius: 7px;
+  background: @background;
+  padding: 0px 2px;
+  margin: 1px 0px 0px 1px;
+  opacity: 0.85;
+  transition: all 0.5s ease-in-out;
+}
+/*
+ *╭─────────────────────────────────────╮
+ *│            Power Profile            │
+ *╰─────────────────────────────────────╯
+*/
 
 #power-profiles-daemon {
   margin: 1px 0px 0px 3px;
@@ -199,6 +232,11 @@ tooltip {
   background: #9adc8e;
 }
 
+/*
+ *╭─────────────────────────────────────╮
+ *│          Theme |Light|Dark          │
+ *╰─────────────────────────────────────╯
+*/
 #custom-themes {
   padding-right: 3px;
   padding-left: 5px;
@@ -221,17 +259,11 @@ tooltip {
   border-radius: 5px;
 }
 
-/* image */
-#image {
-  margin: 0px;
-  padding: 0px;
-}
-
-#cava {
-  /* background: @background; */
-  background: rgba(0, 0, 0, 0.8);
-}
-
+/*
+ *╭─────────────────────────────────────╮
+ *│               Battery               │
+ *╰─────────────────────────────────────╯
+*/
 #battery {
   margin: 1px 0px 0px 3px;
   padding-left: 3px;
