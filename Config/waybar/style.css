@@ -5,8 +5,8 @@
   font-family: "JetBrainsMono Nerd Font";
   font-size: 11px;
   font-weight: normal;
-  min-height: 0;
-  margin: 0 2 0 2;
+  min-height: 0px;
+  margin: 0px 2px 0px 2px;
 }
 
 window#waybar.empty #window {

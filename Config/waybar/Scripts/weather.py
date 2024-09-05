@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import subprocess
 from pyquery import PyQuery  # install using `pip install pyquery`
 import json
 
@@ -64,11 +63,10 @@ temp_max = (
     .text()
 )
 temp_min_max = f"  {temp_min}\t\t  {temp_max}"
-# print(temp_min_max)
 
 # wind speed
 wind_speed = html_data("span[data-testid='Wind']").text().split("\n")[1]
-wind_text = f"煮  {wind_speed}"
+wind_text = f"  {wind_speed}"
 # print(wind_text)
 
 # humidity
@@ -83,6 +81,7 @@ visbility_text = f"  {visbility}"
 
 # air quality index
 air_quality_index = html_data("text[data-testid='DonutChartValue']").text()
+air_quality_text = f"  {air_quality_index}"
 # print(air_quality_index)
 
 # hourly rain prediction
@@ -102,7 +101,7 @@ tooltip_text = str.format(
     f"<small>{temp_feel_text}</small>",
     f"<big>{temp_min_max}</big>",
     f"{wind_text}\t{humidity_text}",
-    f"{visbility_text}\tAQI {air_quality_index}",
+    f"{visbility_text}\t{air_quality_text}",
     f"<i>{prediction}</i>",
 )
 
