@@ -49,6 +49,15 @@ bindsym Mod4+Shift+8 move container to workspace number 8
 bindsym Mod4+Shift+9 move container to workspace number 9
 bindsym Mod4+Shift+0 move container to workspace number 10
 
+# Move Window in the workspace
+bindsym Mod4+Shift+h move left
+bindsym Mod4+Shift+l move right
+bindsym Mod4+Shift+k move up
+bindsym Mod4+Shift+j move down
+
+# always focus on new window
+for_window [app_id=.*] focus
+
 # ╭───────────────────────────────────────╮
 # │              Auto-Start               │
 # ╰───────────────────────────────────────╯
@@ -70,12 +79,16 @@ mode "resize" {
 }
 
 # ╭───────────────────────────────────────╮
-# │                INPUTS                 │
+# │                  Bar                  │
 # ╰───────────────────────────────────────╯
+
 bar {
     status_command waybar --config /home/neimog/.config/waybar/config.json # starts waybar
     mode invisible
 }
+# ╭───────────────────────────────────────╮
+# │                INPUTS                 │
+# ╰───────────────────────────────────────╯
 
 input type:keyboard {
     xkb_layout br,
@@ -144,5 +157,5 @@ assign [app_id="(^qutebrowser|brave)"] 1
 assign [class=org.wezfurlong.wezterm] 2
 assign [app_id=org.gnome.Nautilus] 3
 assign [class=plugdata|PatchWindow|PdWindow] 4
-assign [class=anytype|com.github.flxzt.rnote] 5
+assign [app_id=anytype|com.github.flxzt.rnote|class=anytype] 5
 assign [app_id=org.kde.okular|evince|zathura] 6
