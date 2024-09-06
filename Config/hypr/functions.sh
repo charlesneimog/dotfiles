@@ -20,6 +20,24 @@ fetch_bing_wallpaper() {
     ln -s -f "${output_png}" ~/.config/rofi/images/c.png
 }
 
+fetch_random_wallpaper() {
+    local api_url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=20&mkt=pt-BR"
+    local base_url="https://www.bing.com"
+    local output="$HOME/.config/hypr/wallpaper.jpg"
+    local output_png="$HOME/.config/hypr/wallpaper.png"
+    urls=$(curl -s "$api_url" | jq -r ".images[].url")
+    random_url=$(echo "$urls" | shuf -n 1)
+    curl -L -o "$output" "${base_url}${random_url}"
+    convert "$output" "$output_png"
+    # Link the new wallpaper to rofi images
+    ln -s -f "$output_png" ~/.config/rofi/images/b.png
+    ln -s -f "$output_png" ~/.config/rofi/images/a.png
+    ln -s -f "$output_png" ~/.config/rofi/images/c.png
+
+    killall swaybg
+    swaybg -i "$output_png" 
+}
+
 change_theme(){
 	color_scheme=$(gsettings get org.gnome.desktop.interface color-scheme | awk '{print $1}' | tr -d "'")
 	# Check the value and set the GTK theme accordingly
@@ -52,6 +70,9 @@ if [ "$1" != "" ]; then
             ;;
         fetch_bing_wallpaper)
             fetch_bing_wallpaper
+            ;;
+        fetch_random_wallpaper)
+            fetch_random_wallpaper
             ;;
         change_theme)
             change_theme

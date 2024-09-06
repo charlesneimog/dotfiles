@@ -188,6 +188,7 @@ tooltip {
  *│            Quick Actions            │
  *╰─────────────────────────────────────╯
 */
+#actions,
 #quick-actions {
   color: @foreground;
   border-radius: 7px;

@@ -1,9 +1,14 @@
 {
   "font": "JetBrainsMono Nerd Font",
   "reload_style_on_change": true,
-  "width": 1920,
   "spacing": 1,
-  "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
+  "modules-left": [
+    "group/quick-actions",
+    "group/actions",
+    "wlr/taskbar",
+    "tray",
+    "privacy"
+  ],
   "modules-center": ["hyprland/workspaces", "sway/workspaces"],
   "modules-right": [
     "custom/weather",
@@ -223,9 +228,19 @@
     "modules": ["battery", "cpu", "memory"]
   },
 
+  "custom/wallpaper": {
+    "format": "󰸉",
+    "on-click": "$HOME/.config/hypr/functions.sh fetch_random_wallpaper"
+  },
+
+  "group/actions": {
+    "orientation": "inherit",
+    "modules": ["custom/wallpaper"]
+  },
+
   "custom/weather": {
     "exec": "python /home/neimog/Documents/Git/dotfiles/Config/waybar/Scripts/weather.py",
-    "restart-interval": 300,
+    "restart-interval": 600,
     "return-type": "json"
   },
 
