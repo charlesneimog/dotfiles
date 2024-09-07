@@ -10,7 +10,7 @@ bindsym Mod4+v exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.co
 
 # Commands Zenity
 bindsym Mod4+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
-bindsym Mod4+f floating toggle
+bindsym Mod4+f fullscreen toggle
 
 # Som
 bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ 
