@@ -189,7 +189,7 @@ done
 #│              FlatPacks               │
 #╰──────────────────────────────────────╯
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
-packages = ("flatpak install flathub org.gnome.TextEditor" "org.gtk.Gtk3thme.adw-gtk3" "org.gtk.Gtk3theme.adw-gtk3-dark" "org.zotero.Zotero" "com.github.flxzt.rnote" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio" "org.gnome.Calculator" "org.gnome.Totem")
+packages = ("flatpak install flathub org.gnome.TextEditor" "org.gtk.Gtk3thme.adw-gtk3" "org.gtk.Gtk3theme.adw-gtk3-dark" "org.zotero.Zotero" "com.github.flxzt.rnote" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio" "org.gnome.Calculator" "org.gnome.Totem" "org.gnome.baobab")
 
 for package in "${packages[@]}"; do
     flatpak_install_package "$package"
