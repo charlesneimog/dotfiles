@@ -1,7 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/audience
+    - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/Moteto-v2
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Nextcloud/Biblioteca/Pesquisa/2024 - OScofo
@@ -58,7 +58,7 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-pt
     - /home/neimog/Documents/Git/libsms
 startuppopupversion: 5
-lastversion: 0.43.1
+lastversion: 0.44.0
 customcommandshistory:
     - q
     - ""
