@@ -147,7 +147,7 @@ gaps left 2
 # ╭───────────────────────────────────────╮
 # │             Window Rules              │
 # ╰───────────────────────────────────────╯
-for_window [class="plugdata|PatchWindow|PdWindow"] floating enable
+for_window [class="plugdata"] floating enable
 
 
 # ╭───────────────────────────────────────╮
