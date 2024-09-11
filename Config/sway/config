@@ -148,7 +148,8 @@ gaps left 2
 # │             Window Rules              │
 # ╰───────────────────────────────────────╯
 for_window [class="plugdata"] floating enable
-
+for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
+bindsym --whole-window Ctrl+Button3 resize
 
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │
