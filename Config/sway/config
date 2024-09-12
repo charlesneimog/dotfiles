@@ -146,13 +146,26 @@ gaps bottom 5
 gaps left 2
 
 # ╭───────────────────────────────────────╮
-# │             Window Rules              │
+# │              Apps Rules               │
 # ╰───────────────────────────────────────╯
 for_window [class="plugdata"] floating enable
+
+# NautilusPreviewer
 for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
+
+# Text App
 for_window [app_id="org.gnome.TextEditor"] floating enable
+for_window [app_id="org.gnome.TextEditor"] resize set height 700 px
+for_window [app_id="org.gnome.TextEditor"] resize set width 1000 px
+
+# Calculator
+for_window [app_id="org.gnome.Calculator"] floating enable
+for_window [app_id="org.gnome.Calculator"] resize set height 50 ppt
+
+# Zenity
 for_window [app_id="zenity"] floating enable
-bindsym --whole-window Ctrl+Button3 resize
+
+# bindsym --whole-window Ctrl+Button3 resize
 
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │
