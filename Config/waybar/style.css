@@ -46,32 +46,18 @@ tooltip {
 #tray,
 #taskbar,
 #custom-weather,
-#power-profiles-daemon,
-#bluetooth,
 #privacy,
 #custom-weather,
+#actions,
+#quick-actions,
+#custom-notification,
 #quicklinks-left {
-  color: @foreground;
-  border-radius: 7px;
+  border-radius: 3px;
   background: @background;
-  padding: 3px 7px;
-  margin: 1px 0px 0px 3px;
-  opacity: 0.85;
+  padding: 0px 2px 0px 2px;
+  margin: 1px 1px 0px 1px;
+  opacity: 1;
   transition: all 0.5s ease-in-out;
-}
-
-#network.disconnected {
-  color: #ff0000;
-  padding: 0px 2px 0px 0px;
-}
-
-#custom-notification {
-  color: @foreground;
-  border-radius: 7px;
-  background: @background;
-  padding: 1px 2px 2px 8px;
-  margin: 1px 3px 0px 3px;
-  opacity: 0.85;
 }
 
 /*
@@ -88,15 +74,16 @@ tooltip {
   border-radius: 2px;
 }
 #workspaces button:hover {
-  color: #ff0000;
+  color: rgba(255, 0, 0, 0.8); /* Semi-transparent white */
 }
 
 #workspaces button.visible {
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
 }
 
 #workspaces button.focused {
-  background-color: rgba(150, 0, 0, 0.4); /* Semi-transparent white */
+  background-color: rgba(150, 0, 0, 0.3); /* Semi-transparent white */
+  color: rgba(255, 255, 255, 1); /* Semi-transparent white */
 }
 
 #workspaces button.active {
@@ -149,12 +136,12 @@ tooltip {
   padding: 0px;
 }
 #taskbar * {
-  margin: 1px 1px 1px 2px;
+  margin: 1px 2px 1px 2px;
 }
 #taskbar *:hover {
-  background: @color11;
-  border-radius: 7px;
-  margin: 1px 1px 1px 2px;
+  background: rgba(155, 155, 155, 0.8);
+  border-radius: 0px;
+  margin: 1px 2px 1px 2px;
 }
 
 /*
@@ -175,29 +162,12 @@ tooltip {
 #bluetooth {
   padding-right: 6px;
   padding-left: 4px;
-  color: #ffffff;
 }
 #bluetooth *:hover {
   padding-right: 6px;
   padding-left: 4px;
-  background: #ffffff;
 }
 
-/*
- *╭─────────────────────────────────────╮
- *│            Quick Actions            │
- *╰─────────────────────────────────────╯
-*/
-#actions,
-#quick-actions {
-  color: @foreground;
-  border-radius: 7px;
-  background: @background;
-  padding: 0px 2px;
-  margin: 1px 0px 0px 1px;
-  opacity: 0.85;
-  transition: all 0.5s ease-in-out;
-}
 /*
  *╭─────────────────────────────────────╮
  *│            Power Profile            │
@@ -207,7 +177,7 @@ tooltip {
 #power-profiles-daemon {
   margin: 1px 0px 0px 3px;
   opacity: 0.85;
-  transition: all 0.5s ease-in-out;
+  /* transition: all 0.5s ease-in-out; */
   padding-right: 5px;
   padding-left: 5px;
   border-radius: 5px;
@@ -215,22 +185,32 @@ tooltip {
 
 #power-profiles-daemon.performance {
   padding: 1px 5px 0px 5px;
-  color: #161320;
-  background: #c44155;
+  color: #ff0000;
+  background: rgba(255, 0, 0, 0.15);
 }
 
 #power-profiles-daemon.balanced {
   padding-right: 6px;
   padding-left: 4px;
-  color: #161320;
-  background: #d6c87b;
+  color: #e5e619;
+  background: rgba(229, 230, 25, 0.15);
 }
 
 #power-profiles-daemon.power-saver {
   padding-right: 6px;
   padding-left: 4px;
-  color: #161320;
-  background: #9adc8e;
+  color: rgba(16, 144, 16, 1);
+  background: rgba(16, 144, 16, 0.1);
+}
+
+/*
+ *╭─────────────────────────────────────╮
+ *│          Custom Wallpaper           │
+ *╰─────────────────────────────────────╯
+*/
+#custom-wallpaper {
+  margin: 1px 2px 1px 2px;
+  padding-right: 3px;
 }
 
 /*
@@ -247,16 +227,12 @@ tooltip {
 #custom-themes.light {
   padding-right: 3px;
   padding-left: 5px;
-  color: #ffffff;
-  background: #2a2b0d;
   border-radius: 5px;
 }
 
 #custom-themes.dark {
   padding-right: 1px;
   padding-left: 5px;
-  background: #ffffff;
-  color: #2a2b0d;
   border-radius: 5px;
 }
 
@@ -266,7 +242,7 @@ tooltip {
  *╰─────────────────────────────────────╯
 */
 #battery {
-  margin: 1px 0px 0px 3px;
+  margin: 1px 4px 0px 2px;
   padding-left: 3px;
 }
 
@@ -302,7 +278,17 @@ tooltip {
   }
 }
 
+/*
+ *╭─────────────────────────────────────╮
+ *│           Custom Weather            │
+ *╰─────────────────────────────────────╯
+*/
+
 #custom-weather {
+  padding-right: 5px;
+  padding-left: 5px;
+  margin: 1px 0px 0px 5px;
+  border-radius: 5px;
 }
 
 #custom-weather.severe {
@@ -315,22 +301,22 @@ tooltip {
 }
 
 #custom-weather.clearNight {
-  color: #ffffff;
+  color: #ffd700;
 }
 
 #custom-weather.cloudyFoggyDay,
 #custom-weather.cloudyFoggyNight {
-  color: #c2ddda;
+  color: #8f91a8;
 }
 
 #custom-weather.rainyDay,
 #custom-weather.rainyNight {
-  color: #5aaca5;
+  color: #1c53ff;
 }
 
 #custom-weather.showyIcyDay,
 #custom-weather.snowyIcyNight {
-  color: #d6e7e5;
+  color: #ffffff;
 }
 
 #custom-weather.default {

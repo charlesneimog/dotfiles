@@ -2,13 +2,7 @@
   "font": "JetBrainsMono Nerd Font",
   "reload_style_on_change": true,
   "spacing": 1,
-  "modules-left": [
-    "group/quick-actions",
-    "group/actions",
-    "wlr/taskbar",
-    "tray",
-    "privacy"
-  ],
+  "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
   "modules-center": ["hyprland/workspaces", "sway/workspaces"],
   "modules-right": [
     "custom/weather",
@@ -74,7 +68,8 @@
       "idle_inhibitor",
       "bluetooth",
       "power-profiles-daemon",
-      "custom/themes"
+      "custom/themes",
+      "custom/wallpaper"
     ]
   },
   "idle_inhibitor": {
@@ -120,10 +115,10 @@
     "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
     "tooltip": true,
     "format-icons": {
-      "default": "󱐋",
-      "performance": "󱐋",
+      "default": "󱐌",
+      "performance": "󱐌",
       "balanced": "󰗑",
-      "power-saver": ""
+      "power-saver": "󰔱"
     }
   },
 
@@ -172,8 +167,8 @@
   },
 
   "bluetooth": {
-    "format-off": "󰂲",
-    "format-on": "",
+    "format-off": " 󰂲",
+    "format-on": " ",
     "format-disabled": "󰂲",
     "format-connected": " {device_alias}",
     "format-connected-battery": " {device_alias} {device_battery_percentage}%",
@@ -229,13 +224,8 @@
   },
 
   "custom/wallpaper": {
-    "format": "󰸉",
+    "format": " 󰋪",
     "on-click": "$HOME/.config/hypr/functions.sh fetch_random_wallpaper"
-  },
-
-  "group/actions": {
-    "orientation": "inherit",
-    "modules": ["custom/wallpaper"]
   },
 
   "custom/weather": {
@@ -245,7 +235,6 @@
   },
 
   "battery": {
-    "on-click": "flatpak run net.nokyan.Resources",
     "states": {
       "good": 70,
       "warning": 30,
