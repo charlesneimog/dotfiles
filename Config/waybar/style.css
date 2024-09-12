@@ -23,8 +23,8 @@ tooltip {
 #tray menu {
   color: #ffffff;
   background: rgba(0, 0, 0, 0.8);
-  border-radius: 7px;
-  padding: 2px 10px;
+  border-radius: 3px;
+  padding: 2px 5px;
 }
 
 #tray menu menuitem:hover {
@@ -70,7 +70,7 @@ tooltip {
   color: #ffffff;
   font-family: "JetbrainsMono Nerd Font";
   min-width: 20px;
-  margin: 1px 3px 1px 3px;
+  margin: 1px 1px 1px 1px;
   border-radius: 2px;
 }
 #workspaces button:hover {
@@ -111,6 +111,13 @@ tooltip {
   padding: 0px 2px;
   transition: all 0.2s ease-in-out;
 }
+
+/*
+ *╭─────────────────────────────────────╮
+ *│               Privacy               │
+ *╰─────────────────────────────────────╯
+*/
+
 #quicklinks-left *:hover {
   background: @color11;
 }
@@ -136,12 +143,12 @@ tooltip {
   padding: 0px;
 }
 #taskbar * {
-  margin: 1px 2px 1px 2px;
+  margin: 0px 1px 0px 1px;
 }
 #taskbar *:hover {
   background: rgba(155, 155, 155, 0.8);
   border-radius: 0px;
-  margin: 1px 2px 1px 2px;
+  margin: 0px 1px 0px 1px;
 }
 
 /*
