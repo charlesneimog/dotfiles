@@ -16,7 +16,7 @@ window#waybar.empty #window {
 tooltip {
   color: #ffffff;
   background: rgba(0, 0, 0, 0.8);
-  border-radius: 7px;
+  border-radius: 3px;
   padding: 2px 100px;
 }
 
@@ -24,13 +24,12 @@ tooltip {
   color: #ffffff;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 3px;
-  padding: 2px 5px;
 }
 
 #tray menu menuitem:hover {
   background-color: rgba(20, 20, 20, 0.8);
   color: #ff0000;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 /*
@@ -71,7 +70,7 @@ tooltip {
   font-family: "JetbrainsMono Nerd Font";
   min-width: 20px;
   margin: 1px 1px 1px 1px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 #workspaces button:hover {
   color: rgba(255, 0, 0, 0.8); /* Semi-transparent white */
@@ -147,7 +146,7 @@ tooltip {
 }
 #taskbar *:hover {
   background: rgba(155, 155, 155, 0.8);
-  border-radius: 0px;
+  border-radius: 3px;
   margin: 0px 1px 0px 1px;
 }
 
@@ -187,7 +186,7 @@ tooltip {
   /* transition: all 0.5s ease-in-out; */
   padding-right: 5px;
   padding-left: 5px;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 #power-profiles-daemon.performance {
@@ -234,13 +233,13 @@ tooltip {
 #custom-themes.light {
   padding-right: 3px;
   padding-left: 5px;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 #custom-themes.dark {
   padding-right: 1px;
   padding-left: 5px;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 /*
@@ -295,7 +294,7 @@ tooltip {
   padding-right: 5px;
   padding-left: 5px;
   margin: 1px 0px 0px 5px;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 #custom-weather.severe {
@@ -303,8 +302,7 @@ tooltip {
 }
 
 #custom-weather.sunnyDay {
-  color: #ffffff;
-  background: rgba(255, 217, 102, 0.1);
+  color: #ffd700;
 }
 
 #custom-weather.clearNight {
