@@ -13,6 +13,15 @@
     "custom/notification"
   ],
 
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 15,
+    "icon-theme": "Tela-circle",
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close"
+  },
+
   "sway/workspaces": {
     "format": "{icon}",
     "format-icons": {
