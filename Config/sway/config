@@ -172,8 +172,8 @@ for_window [app_id="zenity"] floating enable
 # ╰───────────────────────────────────────╯
 
 assign [app_id="(^qutebrowser|brave)"] 1
-assign [class=org.wezfurlong.wezterm] 2
-assign [app_id=org.gnome.Nautilus] 3
-assign [class=PatchWindow|PdWindow] 4
-assign [app_id=anytype|com.github.flxzt.rnote|class=anytype] 5
-assign [app_id=org.kde.okular|evince|zathura] 6
+assign [class="org.wezfurlong.wezterm"] 2
+assign [app_id="org.gnome.Nautilus"] 3
+assign [class="PatchWindow|PdWindow"] 4
+assign [class="anytype"] 5
+assign [app_id="org.kde.okular|evince|zathura"] 6
