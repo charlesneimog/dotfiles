@@ -1,6 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/neimog/Downloads/pd-musesampler
+    - /home/neimog/Documents/Git/OScofo/Resources/pd.cmake
     - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/audience
     - /home/neimog/Documents/Git/Moteto-v2
@@ -59,7 +59,7 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-pt
     - /home/neimog/Documents/Git/libsms
 startuppopupversion: 5
-lastversion: 0.44.0
+lastversion: 0.44.1
 customcommandshistory:
     - q
     - ""

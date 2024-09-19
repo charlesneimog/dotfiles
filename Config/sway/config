@@ -50,6 +50,13 @@ bindsym Mod4+Shift+8 move container to workspace number 8, workspace number 8
 bindsym Mod4+Shift+9 move container to workspace number 9, workspace number 9
 bindsym Mod4+Shift+0 move container to workspace number 10, workspace number 10
 
+
+# always focus on new window
+bindsym Mod4+Control+Shift+Right move workspace to output right
+bindsym Mod4+Control+Shift+Left move workspace to output left
+bindsym Mod4+Control+Shift+Down move workspace to output down
+bindsym Mod4+Control+Shift+Up move workspace to output up
+
 # always focus on new window
 for_window [app_id=.*] focus
 
