@@ -1,10 +1,13 @@
 #!/bin/bash
 
 translate_selection(){
-    selected_text=$(xsel -o | tr -d '\n')
+    selected_text=$(wl-paste --primary | tr -d '\n')
+    echo "Selected text: $selected_text" >> /tmp/translate.log
     translation=$(trans -b -t pt <<< "$selected_text")
+    echo "Translation: $translation" >> /tmp/translate.log
     zenity --info --title="Output" --text="<span size=\"x-large\">$translation</span>"
 }
+
 
 fetch_bing_wallpaper() {
     local api_url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=2&mkt=pt-BR"
