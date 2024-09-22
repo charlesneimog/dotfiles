@@ -11,7 +11,7 @@ return {
 	event = "VimEnter",
 	config = function()
 		local darktheme = vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):match("dark")
-		local mytheme = require("lualine.themes.onedark")
+		local mytheme
 		if darktheme then
 			mytheme = require("lualine.themes.onedark")
 			mytheme.normal.c.bg = "#303030"

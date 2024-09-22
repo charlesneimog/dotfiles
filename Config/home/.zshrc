@@ -23,16 +23,18 @@ else
 fi
 
 
-# fzf theme
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-  --color=fg:#000000,fg+:#ff0000,bg:#f0f0f0,bg+:#ffffff
-  --color=hl:#0080ff,hl+:#0d7091,info:#000000,marker:#87ff00
-  --color=prompt:#ff0000,spinner:#af5fff,pointer:#af5fff,header:#197676
-  --color=gutter:#ffffff,border:#000000,preview-fg:#000000,preview-bg:#000000
-  --color=preview-border:#000000,preview-scrollbar:#ff0000,preview-label:#000000,label:#000000
-  --color=query:#000000,disabled:#000000
-  --border="rounded" --border-label="" --preview-window="border-rounded" --prompt="> "
-  --marker=">" --pointer="◆" --separator="─" --scrollbar="│"'
+export FZF_DEFAULT_OPTS='
+--color=fg:#000000,fg+:#ff0000,bg:#f0f0f0,bg+:#ffffff
+--color=hl:#0080ff,hl+:#0d7091,info:#000000,marker:#87ff00
+--color=prompt:#ff0000,spinner:#af5fff,pointer:#af5fff,header:#197676
+--color=gutter:#ffffff,border:#000000,preview-fg:#000000,preview-bg:#000000
+--color=preview-border:#000000,preview-scrollbar:#ff0000,preview-label:#000000,label:#000000
+--color=query:#000000,disabled:#000000
+--border="rounded" --border-label="" --preview-window="border-rounded" --prompt="> "
+--marker=">" --pointer="◆" --separator="─" --scrollbar="│"'
+
+
+
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"

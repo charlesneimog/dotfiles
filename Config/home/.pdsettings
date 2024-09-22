@@ -9,7 +9,7 @@ audiobuf: 100
 rate: 48000
 callback: 0
 audioblocksize: 1024
-midiapi: 0
+midiapi: 1
 nomidiin: True
 nomidiout: True
 path1: /home/neimog/Documents/Pd/externals
@@ -19,6 +19,6 @@ standardpath: 1
 verbose: 0
 nloadlib: 0
 defeatrt: 0
-flags: -font-weight normal -font-size 12
+flags: -font-weight normal -font-size 10
 zoom: 2
 loading: no

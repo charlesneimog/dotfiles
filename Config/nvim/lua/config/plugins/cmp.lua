@@ -134,6 +134,7 @@ return {
 			}),
 
 			sources = {
+				-- { "fittencode", group_index = 1 },
 				{
 					name = "codeium",
 					max_item_count = 3,

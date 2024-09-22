@@ -26,6 +26,7 @@ return {
 			require("true-zen").setup({})
 		end,
 	},
+
 	{
 		"gbprod/yanky.nvim",
 		dependencies = { { "kkharji/sqlite.lua", enabled = not jit.os:find("Windows") } },
@@ -61,4 +62,12 @@ return {
 			vim.keymap.set("n", "<leader>w", ":Detour<cr>")
 		end,
 	},
+	-- {
+	-- 	"luozhiya/fittencode.nvim",
+	-- 	config = function()
+	-- 		require("fittencode").setup({
+	-- 			completion_mode = "source",
+	-- 		})
+	-- 	end,
+	-- },
 }

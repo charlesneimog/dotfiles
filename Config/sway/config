@@ -7,6 +7,7 @@ bindsym Mod4+d exec killall rofi || rofi -show drun -show-icons -icon-theme "Tel
 bindsym Mod4+e exec nautilus
 bindsym Mod4+Return exec wezterm-gui
 bindsym Mod4+v exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
+bindsym Mod4+l exec zenity --list --title="External Monitor Mode" --column="Options" "option1" "option2" "option3"
 
 # Commands Zenity
 bindsym Mod4+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
@@ -20,6 +21,10 @@ bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 # Screen Brightness
 bindsym XF86MonBrightnessUp exec brightnessctl set 2%+ 
 bindsym XF86MonBrightnessDown exec brightnessctl set 2%-
+
+# Visual
+seat * xcursor_theme Phinger-cursors-dark 32
+
 
 # kill
 bindsym Mod4+q kill
@@ -50,7 +55,6 @@ bindsym Mod4+Shift+8 move container to workspace number 8, workspace number 8
 bindsym Mod4+Shift+9 move container to workspace number 9, workspace number 9
 bindsym Mod4+Shift+0 move container to workspace number 10, workspace number 10
 
-
 # always focus on new window
 bindsym Mod4+Control+Shift+Right move workspace to output right
 bindsym Mod4+Control+Shift+Left move workspace to output left
@@ -60,9 +64,24 @@ bindsym Mod4+Control+Shift+Up move workspace to output up
 # always focus on new window
 for_window [app_id=.*] focus
 
+
+# turn off screen
+
+
 # ╭───────────────────────────────────────╮
 # │              Auto-Start               │
 # ╰───────────────────────────────────────╯
+exec_always {
+    gsettings set org.gnome.desktop.interface cursor-size 24
+    gsettings set org.gnome.desktop.interface cursor-theme Vimix-cursors
+}
+
+seat seat0 xcursor_theme Vimix-cursors 24
+
+# ╭───────────────────────────────────────╮
+# │                 Modes                 │
+# ╰───────────────────────────────────────╯
+
 mode "resize" {
     bindsym h resize shrink width 10px
     bindsym j resize grow height 10px
@@ -172,7 +191,9 @@ for_window [app_id="org.gnome.Calculator"] resize set height 50 ppt
 # Zenity
 for_window [app_id="zenity"] floating enable
 
-# bindsym --whole-window Ctrl+Button3 resize
+# PureData always small in the left
+for_window [class="PdWindow"] floating enable resize set width 500 px
+for_window [class="PdPatch"] floating enable resize set width 1200 px
 
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │
@@ -180,7 +201,10 @@ for_window [app_id="zenity"] floating enable
 
 assign [app_id="(^qutebrowser|brave)"] 1
 assign [class="org.wezfurlong.wezterm"] 2
+assign [app_id="kitty"] 2
 assign [app_id="org.gnome.Nautilus"] 3
-assign [class="PatchWindow|PdWindow"] 4
+# assign [class="PatchWindow|PdWindow"] 4
 assign [class="anytype"] 5
 assign [app_id="org.kde.okular|evince|zathura"] 6
+assign [app_id="org.inkscape.Inkscape"] 7
+
