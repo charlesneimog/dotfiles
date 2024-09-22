@@ -7,6 +7,9 @@ bindsym Mod4+d exec killall rofi || rofi -show drun -show-icons -icon-theme "Tel
 bindsym Mod4+e exec nautilus
 bindsym Mod4+Return exec wezterm-gui
 bindsym Mod4+v exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
+bindsym Mod4+l exec zenity --list --title="External Monitor Mode" --column="Options" "option1" "option2" "option3"
+
+
 
 # Commands Zenity
 bindsym Mod4+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
@@ -59,6 +62,10 @@ bindsym Mod4+Control+Shift+Up move workspace to output up
 
 # always focus on new window
 for_window [app_id=.*] focus
+
+
+# turn off screen
+
 
 # ╭───────────────────────────────────────╮
 # │              Auto-Start               │
