@@ -64,7 +64,9 @@ return {
 	{
 		"luozhiya/fittencode.nvim",
 		config = function()
-			require("fittencode").setup()
+			require("fittencode").setup({
+				completion_mode = "source",
+			})
 		end,
 	},
 }
