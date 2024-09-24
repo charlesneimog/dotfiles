@@ -61,4 +61,10 @@ return {
 			vim.keymap.set("n", "<leader>w", ":Detour<cr>")
 		end,
 	},
+	{
+		"luozhiya/fittencode.nvim",
+		config = function()
+			require("fittencode").setup()
+		end,
+	},
 }
