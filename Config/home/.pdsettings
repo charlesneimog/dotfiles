@@ -1,14 +1,14 @@
-audioapi: 5
+audioapi: 4
 noaudioin: False
-audioindev1: 0 2
-audioindevname1: JACK
+audioindev1: 1 2
+audioindevname1: ALSA: sysdefault
 noaudioout: False
-audiooutdev1: 0 2
-audiooutdevname1: JACK
+audiooutdev1: 5 2
+audiooutdevname1: ALSA: default
 audiobuf: 100
 rate: 48000
 callback: 0
-audioblocksize: 1024
+audioblocksize: 64
 midiapi: 0
 nomidiin: True
 nomidiout: True
