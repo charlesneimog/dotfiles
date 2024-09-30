@@ -1,15 +1,15 @@
-audioapi: 4
+audioapi: 1
 noaudioin: False
-audioindev1: 1 2
-audioindevname1: ALSA: sysdefault
+audioindev1: 0 2
+audioindevname1: HDA Intel PCH (hardware)
 noaudioout: False
-audiooutdev1: 4 2
-audiooutdevname1: ALSA: sysdefault
+audiooutdev1: 0 2
+audiooutdevname1: HDA Intel PCH (hardware)
 audiobuf: 100
 rate: 48000
 callback: 0
 audioblocksize: 64
-midiapi: 0
+midiapi: 1
 nomidiin: True
 nomidiout: True
 path1: /home/neimog/Documents/Pd/externals
