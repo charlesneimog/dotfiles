@@ -35,3 +35,10 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 
+# Add TeX Live binaries to PATH
+export PATH="$HOME/texlive/2024/bin/x86_64-linux:$PATH"
+
+# Set TEXMFHOME for user-specific TeX files
+export TEXMFHOME="$HOME/texmf"
+
+
