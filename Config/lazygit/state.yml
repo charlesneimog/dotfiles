@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/Docs/Tese
     - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/pure-data
     - /home/neimog/Documents/Git/pd.cmake
@@ -19,7 +20,6 @@ recentrepos:
     - /home/neimog/Documents/Git/grambilib
     - /home/neimog/Documents/Git/libpd
     - /home/neimog/Documents/Git/libpd/pure-data
-    - /home/neimog/Documents/Git/Docs/Tese
     - /home/neimog/Documents/Git/py4pd/Resources/pd.cmake
     - /home/neimog/Documents/Git/syncup
     - /home/neimog/Documents/Git/pd-vamp
