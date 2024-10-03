@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/simpl
     - /home/neimog/Documents/Git/pd-partialtrack
     - /home/neimog/Documents/Git/pd-partialtrack/Resources/CMakeAudioHelpers
     - /home/neimog/Documents/Git/CMakeAudioHelpers
@@ -41,7 +42,6 @@ recentrepos:
     - /home/neimog/Documents/Git/emloris
     - /home/neimog/Documents/Git/smspd/Libraries/libsms
     - /home/neimog/Documents/Git/pd-fftconvolver/Libraries/FFTConvolver
-    - /home/neimog/Documents/Git/simpl
     - /home/neimog/Documents/Git/NmnCardial
     - /home/neimog/Documents/Git/charlesneimog.github.io
     - /home/neimog/Documents/Git/pd.build
