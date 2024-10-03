@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/pd-partialtrack
     - /home/neimog/Documents/Git/pd-partialtrack/Libraries/simpl
@@ -8,7 +9,6 @@ recentrepos:
     - /home/neimog/Documents/Git/CMakeAudioHelpers
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/Docs/Tese
-    - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/pure-data
     - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/OScofo/Resources/pd.cmake
