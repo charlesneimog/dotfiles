@@ -19,7 +19,6 @@ recentrepos:
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Nextcloud/Biblioteca/Pesquisa/2024 - OScofo
     - /home/neimog/Documents/Git/Caravana
-    - /home/neimog/Documents/Git/OM
     - /home/neimog/Documents/Git/py4pd-freesound
     - /home/neimog/Documents/Git/orchidea
     - /home/neimog/Documents/Git/grambilib
@@ -65,8 +64,8 @@ recentrepos:
 startuppopupversion: 5
 lastversion: 0.44.1
 customcommandshistory:
-    - q
     - ""
+    - q
     - minor updates related with py4pd changes
     - 'commit '
     - fix the pd.print for multiple args
