@@ -8,7 +8,7 @@ return {
 		chktex.ignore_exitcode = true
 		lint.linters_by_ft = {
 			javascript = { "eslint" },
-			html = { "tidy" },
+			html = { "htmlhint" },
 			c = { "clangtidy" },
 			lua = { "luacheck" },
 			tex = { "chktex" },
