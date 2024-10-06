@@ -1,5 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/moteto
+    - /home/neimog/Documents/Git/pd-else
     - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/Canticos-de-Silicio
     - /home/neimog/Documents/Git/OScofo
@@ -33,11 +35,9 @@ recentrepos:
     - /home/neimog/Documents/Git/nucleomusicanova.github.io
     - /home/neimog/Documents/Git/Synthia
     - /home/neimog/Documents/Git/grainer_tilde
-    - /home/neimog/Documents/Git/pd-else
     - /home/neimog/Documents/Git/pd-else/Resources/pd.cmake
     - /home/neimog/Documents/Git/OM-CKN
     - /home/neimog/Documents/Git/Ideias-Roubadas-IV
-    - /home/neimog/Documents/Git/moteto
     - /home/neimog/Documents/Git/smspd
     - /home/neimog/Documents/Git/emloris
     - /home/neimog/Documents/Git/smspd/Libraries/libsms
