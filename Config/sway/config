@@ -179,7 +179,10 @@ for_window [app_id="org.gnome.Calculator"] resize set height 50 ppt
 # Zenity
 for_window [app_id="zenity"] floating enable
 
-# bindsym --whole-window Ctrl+Button3 resize
+# PureData always small in the left
+for_window [class="PdWindow"] floating enable resize set width 500 px
+for_window [class="PdPatch"] floating enable resize set width 1200 px
+
 
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │
