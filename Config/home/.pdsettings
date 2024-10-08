@@ -1,10 +1,10 @@
 audioapi: 1
 noaudioin: False
-audioindev1: 0 2
-audioindevname1: HDA Intel PCH (hardware)
+audioindev1: 1 2
+audioindevname1: HDA Intel PCH (plug-in)
 noaudioout: False
-audiooutdev1: 0 2
-audiooutdevname1: HDA Intel PCH (hardware)
+audiooutdev1: 1 2
+audiooutdevname1: HDA Intel PCH (plug-in)
 audiobuf: 100
 rate: 48000
 callback: 0
