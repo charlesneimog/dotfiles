@@ -1,10 +1,10 @@
-audioapi: 1
+audioapi: 4
 noaudioin: False
-audioindev1: 1 2
-audioindevname1: HDA Intel PCH (plug-in)
+audioindev1: 0 2
+audioindevname1: ALSA: pipewire
 noaudioout: False
-audiooutdev1: 1 2
-audiooutdevname1: HDA Intel PCH (plug-in)
+audiooutdev1: 3 2
+audiooutdevname1: ALSA: pipewire
 audiobuf: 100
 rate: 48000
 callback: 0
