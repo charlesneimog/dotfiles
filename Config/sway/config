@@ -194,3 +194,5 @@ assign [app_id="org.gnome.Nautilus"] 3
 assign [class="PatchWindow|PdWindow"] 4
 assign [class="anytype"] 5
 assign [app_id="org.kde.okular|evince|zathura"] 6
+assign [app_id="org.inkscape.Inkscape"] 7
+
