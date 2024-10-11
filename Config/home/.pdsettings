@@ -1,14 +1,14 @@
-audioapi: 5
+audioapi: 1
 noaudioin: False
-audioindev1: 0 2
-audioindevname1: JACK
+audioindev1: 2 2
+audioindevname1: Scarlett 2i2 USB (hardware)
 noaudioout: False
-audiooutdev1: 0 2
-audiooutdevname1: JACK
+audiooutdev1: 2 2
+audiooutdevname1: Scarlett 2i2 USB (hardware)
 audiobuf: 100
 rate: 48000
 callback: 0
-audioblocksize: 1024
+audioblocksize: 64
 midiapi: 1
 nomidiin: True
 nomidiout: True
