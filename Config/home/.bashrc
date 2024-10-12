@@ -42,3 +42,6 @@ export PATH="$HOME/texlive/2024/bin/x86_64-linux:$PATH"
 export TEXMFHOME="$HOME/texmf"
 
 
+export XCURSOR_THEME=Bibata
+export XCURSOR_SIZE=32
+
