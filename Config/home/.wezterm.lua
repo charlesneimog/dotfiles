@@ -9,6 +9,7 @@ config.enable_wayland = false
 config.font_size = 15
 config.initial_cols = 110
 config.initial_rows = 30
+config.tab_bar_at_bottom = true
 
 --╭─────────────────────────────────────╮
 --│              Hot Keys               │
@@ -138,27 +139,34 @@ local function get_process_icon(tab)
 	local process_icons = {
 		["nvim"] = {
 			{ Foreground = { Color = dark_theme.ansi[3] } },
-			{ Text = " " .. wezterm.nerdfonts.custom_vim },
+			{ Text = " " .. wezterm.nerdfonts.custom_vim .. " " },
 		},
 		["zsh"] = {
 			{ Foreground = { Color = dark_theme.ansi[4] } },
-			{ Text = " " .. wezterm.nerdfonts.dev_terminal },
+			{ Text = " " .. wezterm.nerdfonts.dev_terminal .. " " },
 		},
 		["paru"] = {
 			{ Foreground = { Color = "#E6E6FA" } },
-			{ Text = " " .. wezterm.nerdfonts.linux_archlinux },
+			{ Text = " " .. wezterm.nerdfonts.linux_archlinux .. " " },
 		},
 		["git"] = {
 			{ Foreground = { Color = "#FFE5B4" } },
-			{ Text = " " .. wezterm.nerdfonts.dev_git },
+			{ Text = " " .. wezterm.nerdfonts.dev_git .. " " },
 		},
 	}
-	print(tab.active_pane.foreground_process_name)
+	local wezterm_prog = tab.active_pane.user_vars.WEZTERM_PROG
+	local process = wezterm_prog:match("^[^%s]+")
 
-	-- return wezterm.format(process_icons[process_name] or {
-	-- 	{ Foreground = { Color = dark_theme.colors.ansi[5] } },
-	-- 	{ Text = " " .. wezterm.nerdfonts.fa_linux },
-	-- })
+	if process_icons[process] then
+		return wezterm.format(process_icons[process])
+	else
+		local current_dir_url = tab.active_pane.current_working_dir
+
+		return wezterm.format({
+			{ Foreground = { Color = "#FFE5B4" } },
+			{ Text = " " },
+		})
+	end
 end
 
 --╭─────────────────────────────────────╮
@@ -182,12 +190,9 @@ wezterm.on("window-config-reloaded", function(window, _)
 end)
 
 wezterm.on("format-tab-title", function(tab)
-	local myconfig = config
 	return wezterm.format({
-		{ Attribute = { Intensity = "Bold" } },
-		{ Text = string.format(" %s", tab.tab_index + 1) },
-		"ResetAttributes",
-		{ Text = get_process_icon(tab, myconfig) },
+		{ Text = string.format(" %s:", tab.tab_index + 1) },
+		{ Text = get_process_icon(tab) },
 		{ Text = "▕" },
 	})
 end)
