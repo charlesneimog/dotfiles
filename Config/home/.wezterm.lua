@@ -132,6 +132,36 @@ config.color_schemes = {
 }
 
 --╭─────────────────────────────────────╮
+--│                Tabs                 │
+--╰─────────────────────────────────────╯
+local function get_process_icon(tab)
+	local process_icons = {
+		["nvim"] = {
+			{ Foreground = { Color = dark_theme.colors.ansi[3] } },
+			{ Text = " " .. wezterm.nerdfonts.custom_vim },
+		},
+		["zsh"] = {
+			{ Foreground = { Color = dark_theme.colors.ansi[4] } },
+			{ Text = " " .. wezterm.nerdfonts.dev_terminal },
+		},
+		["paru"] = {
+			{ Foreground = { Color = "#E6E6FA" } },
+			{ Text = " " .. wezterm.nerdfonts.linux_archlinux },
+		},
+		["git"] = {
+			{ Foreground = { Color = "#FFE5B4" } },
+			{ Text = " " .. wezterm.nerdfonts.dev_git },
+		},
+	}
+	print(tab.active_pane.foreground_process_name)
+
+	-- return wezterm.format(process_icons[process_name] or {
+	-- 	{ Foreground = { Color = dark_theme.colors.ansi[5] } },
+	-- 	{ Text = " " .. wezterm.nerdfonts.fa_linux },
+	-- })
+end
+
+--╭─────────────────────────────────────╮
 --│             Listerners              │
 --╰─────────────────────────────────────╯
 wezterm.on("update-status", function(window, _)
@@ -149,6 +179,17 @@ wezterm.on("window-config-reloaded", function(window, _)
 		overrides.color_scheme = "Light"
 	end
 	window:set_config_overrides(overrides)
+end)
+
+wezterm.on("format-tab-title", function(tab)
+	local myconfig = config
+	return wezterm.format({
+		{ Attribute = { Intensity = "Bold" } },
+		{ Text = string.format(" %s", tab.tab_index + 1) },
+		"ResetAttributes",
+		{ Text = get_process_icon(tab, myconfig) },
+		{ Text = "▕" },
+	})
 end)
 
 return config
