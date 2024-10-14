@@ -13,7 +13,6 @@ end
 
 local function get_current_working_dir(tab)
 	local current_dir = tab.active_pane.current_working_dir.file_path
-	print(current_dir)
 	local hostname = tab.active_pane.user_vars.WEZTERM_HOST
 	local HOME_DIR = string.format("file://%s%s/", hostname, os.getenv("HOME"))
 	return current_dir == HOME_DIR and " ~" or string.format(" %s", string.gsub(current_dir, "(.*/)(.*)/", "%2/"))
@@ -38,6 +37,7 @@ local function get_process_icon(tab, myconfig)
 			{ Text = " " .. wezterm.nerdfonts.dev_git },
 		},
 	}
+
 	local process_name = basename(tab.active_pane.foreground_process_name)
 	return wezterm.format(process_icons[process_name] or {
 		{ Foreground = { Color = myconfig.colors.ansi[5] } },
@@ -192,8 +192,6 @@ config.font = wezterm.font_with_fallback({
 	{ family = "Meslo LG S", scale = 1.3 },
 })
 
--- config.hide_tab_bar_if_only_one_tab = true
-getTheme(config)
 config.tab_max_width = 32
 config.visual_bell = {
 	fade_in_duration_ms = 75,
