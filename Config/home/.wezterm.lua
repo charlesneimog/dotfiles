@@ -12,20 +12,20 @@ local function basename(str)
 end
 
 local function get_current_working_dir(tab)
-	local current_dir = tab.active_pane.current_working_dir.file_path
-	local hostname = tab.active_pane.user_vars.WEZTERM_HOST
-	local HOME_DIR = string.format("file://%s%s/", hostname, os.getenv("HOME"))
-	return current_dir == HOME_DIR and " ~" or string.format(" %s", string.gsub(current_dir, "(.*/)(.*)/", "%2/"))
+	-- local current_dir = tab.active_pane.current_working_dir.file_path
+	-- local hostname = tab.active_pane.user_vars.WEZTERM_HOST
+	-- local HOME_DIR = string.format("file://%s%s/", hostname, os.getenv("HOME"))
+	-- return current_dir == HOME_DIR and " ~" or string.format(" %s", string.gsub(current_dir, "(.*/)(.*)/", "%2/"))
 end
 
 local function get_process_icon(tab, myconfig)
 	local process_icons = {
 		["nvim"] = {
-			{ Foreground = { Color = myconfig.colors.ansi[3] } },
+			-- { Foreground = { Color = myconfig.colors.ansi[3] } },
 			{ Text = " " .. wezterm.nerdfonts.custom_vim },
 		},
 		["zsh"] = {
-			{ Foreground = { Color = myconfig.colors.ansi[4] } },
+			-- { Foreground = { Color = myconfig.colors.ansi[4] } },
 			{ Text = " " .. wezterm.nerdfonts.dev_terminal },
 		},
 		["paru"] = {
@@ -40,7 +40,7 @@ local function get_process_icon(tab, myconfig)
 
 	local process_name = basename(tab.active_pane.foreground_process_name)
 	return wezterm.format(process_icons[process_name] or {
-		{ Foreground = { Color = myconfig.colors.ansi[5] } },
+		-- { Foreground = { Color = myconfig.colors.ansi[5] } },
 		{ Text = " " .. wezterm.nerdfonts.fa_linux },
 	})
 end
@@ -64,121 +64,6 @@ local function getTheme(myconfig)
 	local success, stdout, _ =
 		wezterm.run_child_process({ "gsettings", "get", "org.gnome.desktop.interface", "color-scheme" })
 	if success then
-		if stdout:match("dark") then
-			myconfig.colors = {
-				background = "#303030",
-				foreground = "#ffffff",
-				brights = {
-					"#ffffff", -- preto
-					"#DB0000", -- vermelho
-					"#339933", -- verde
-					"#F3F04E", -- amarelo
-					"#1868B8", -- azul
-					"#FF3CFF", -- rosa
-					"#6DADEF", -- azul claro
-					"#ffe100", -- branco
-				},
-				ansi = {
-					"#6a6a6a",
-					"#e05661",
-					"#1da912",
-					"#eea825",
-					"#118dc3",
-					"#9a77cf",
-					"#56b6c2",
-					"#fafafa",
-				},
-
-				cursor_bg = "#919191",
-				cursor_fg = "#ffffff",
-				selection_bg = "#494949",
-				tab_bar = {
-					background = "#303030",
-					active_tab = {
-						bg_color = "#383838",
-						fg_color = "#ffffff",
-						intensity = "Bold",
-					},
-					inactive_tab = {
-						bg_color = "#303030",
-						fg_color = "#fafafa",
-					},
-					inactive_tab_hover = {
-						bg_color = "#303030",
-						fg_color = "#8c8b8b",
-					},
-					new_tab = {
-						bg_color = "#303030",
-						fg_color = "#ff0000",
-					},
-					new_tab_hover = {
-						bg_color = "#292929",
-						fg_color = "#ff0000",
-					},
-				},
-			}
-		else
-			myconfig.colors = {
-				background = "#ffffff",
-				foreground = "#000000",
-				cursor_bg = "#000000",
-				cursor_fg = "#ffffff",
-				selection_bg = "#cccccc",
-				selection_fg = "#000000",
-				brights = {
-					"#000000", -- preto
-					"#cc0000", -- vermelho
-					"#339933", -- verde
-					"#bdb23e", -- amarelo
-					"#040499", -- azul
-					"#FF3CFF", -- rosa
-					"#0884FF", -- azul claro
-					"#ffffff", -- branco
-				},
-				ansi = {
-					"#6a6a6a",
-					"#e05661",
-					"#1da912",
-					"#eea825",
-					"#118dc3",
-					"#9a77cf",
-					"#56b6c2",
-					"#fafafa",
-				},
-				tab_bar = {
-					background = "#ffffff",
-					active_tab = {
-						bg_color = "#e7e7e7",
-						fg_color = "#000000",
-						intensity = "Bold",
-					},
-					inactive_tab = {
-						bg_color = "#ffffff",
-						fg_color = "#000000",
-					},
-					inactive_tab_hover = {
-						bg_color = "#f1f1f1",
-						fg_color = "#000000",
-					},
-				},
-			}
-			myconfig.tab_bar_style = {
-				new_tab = wezterm.format({
-					{ Background = { Color = "#ffffff" } },
-					{ Foreground = { Color = "#ff0000" } },
-					{ Text = " + " },
-				}),
-
-				new_tab_hover = wezterm.format({
-					"ResetAttributes",
-					{ Attribute = { Italic = false } },
-					{ Attribute = { Intensity = "Bold" } },
-					{ Background = { Color = "#f1f1f1" } },
-					{ Foreground = { Color = "#ff0000" } },
-					{ Text = " + " },
-				}),
-			}
-		end
 	end
 end
 
@@ -217,6 +102,126 @@ wezterm.on("format-tab-title", function(tab)
 		{ Text = get_current_working_dir(tab) },
 		{ Text = "▕" },
 	})
+end)
+
+wezterm.on("window-config-reloaded", function(window, pane)
+	local overrides = window:get_config_overrides() or {}
+	local appearance = window:get_appearance()
+	if appearance:find("Dark") then
+		myconfig.colors = {
+			background = "#303030",
+			foreground = "#ffffff",
+			brights = {
+				"#ffffff", -- preto
+				"#DB0000", -- vermelho
+				"#339933", -- verde
+				"#F3F04E", -- amarelo
+				"#1868B8", -- azul
+				"#FF3CFF", -- rosa
+				"#6DADEF", -- azul claro
+				"#ffe100", -- branco
+			},
+			ansi = {
+				"#6a6a6a",
+				"#e05661",
+				"#1da912",
+				"#eea825",
+				"#118dc3",
+				"#9a77cf",
+				"#56b6c2",
+				"#fafafa",
+			},
+
+			cursor_bg = "#919191",
+			cursor_fg = "#ffffff",
+			selection_bg = "#494949",
+			tab_bar = {
+				background = "#303030",
+				active_tab = {
+					bg_color = "#383838",
+					fg_color = "#ffffff",
+					intensity = "Bold",
+				},
+				inactive_tab = {
+					bg_color = "#303030",
+					fg_color = "#fafafa",
+				},
+				inactive_tab_hover = {
+					bg_color = "#303030",
+					fg_color = "#8c8b8b",
+				},
+				new_tab = {
+					bg_color = "#303030",
+					fg_color = "#ff0000",
+				},
+				new_tab_hover = {
+					bg_color = "#292929",
+					fg_color = "#ff0000",
+				},
+			},
+		}
+	else
+		myconfig.colors = {
+			background = "#ffffff",
+			foreground = "#000000",
+			cursor_bg = "#000000",
+			cursor_fg = "#ffffff",
+			selection_bg = "#cccccc",
+			selection_fg = "#000000",
+			brights = {
+				"#000000", -- preto
+				"#cc0000", -- vermelho
+				"#339933", -- verde
+				"#bdb23e", -- amarelo
+				"#040499", -- azul
+				"#FF3CFF", -- rosa
+				"#0884FF", -- azul claro
+				"#ffffff", -- branco
+			},
+			ansi = {
+				"#6a6a6a",
+				"#e05661",
+				"#1da912",
+				"#eea825",
+				"#118dc3",
+				"#9a77cf",
+				"#56b6c2",
+				"#fafafa",
+			},
+			tab_bar = {
+				background = "#ffffff",
+				active_tab = {
+					bg_color = "#e7e7e7",
+					fg_color = "#000000",
+					intensity = "Bold",
+				},
+				inactive_tab = {
+					bg_color = "#ffffff",
+					fg_color = "#000000",
+				},
+				inactive_tab_hover = {
+					bg_color = "#f1f1f1",
+					fg_color = "#000000",
+				},
+			},
+		}
+		myconfig.tab_bar_style = {
+			new_tab = wezterm.format({
+				{ Background = { Color = "#ffffff" } },
+				{ Foreground = { Color = "#ff0000" } },
+				{ Text = " + " },
+			}),
+
+			new_tab_hover = wezterm.format({
+				"ResetAttributes",
+				{ Attribute = { Italic = false } },
+				{ Attribute = { Intensity = "Bold" } },
+				{ Background = { Color = "#f1f1f1" } },
+				{ Foreground = { Color = "#ff0000" } },
+				{ Text = " + " },
+			}),
+		}
+	end
 end)
 
 return config
