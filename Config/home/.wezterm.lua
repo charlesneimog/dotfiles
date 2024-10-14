@@ -137,11 +137,11 @@ config.color_schemes = {
 local function get_process_icon(tab)
 	local process_icons = {
 		["nvim"] = {
-			{ Foreground = { Color = dark_theme.colors.ansi[3] } },
+			{ Foreground = { Color = dark_theme.ansi[3] } },
 			{ Text = " " .. wezterm.nerdfonts.custom_vim },
 		},
 		["zsh"] = {
-			{ Foreground = { Color = dark_theme.colors.ansi[4] } },
+			{ Foreground = { Color = dark_theme.ansi[4] } },
 			{ Text = " " .. wezterm.nerdfonts.dev_terminal },
 		},
 		["paru"] = {
