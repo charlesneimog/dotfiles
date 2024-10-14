@@ -135,6 +135,13 @@ config.color_schemes = {
 --╭─────────────────────────────────────╮
 --│                Tabs                 │
 --╰─────────────────────────────────────╯
+local function url_decode(str)
+	str = str:gsub("%%(%x%x)", function(h)
+		return string.char(tonumber(h, 16))
+	end)
+	return str
+end
+
 local function get_process_icon(tab)
 	local process_icons = {
 		["nvim"] = {
@@ -163,8 +170,10 @@ local function get_process_icon(tab)
 		return wezterm.format(process_icons[process])
 	else
 		local dir = tostring(pane["current_working_dir"])
+		dir = url_decode(dir) -- utr-8 decode
 		local last_folder = ""
 		if dir ~= nil then
+			print(dir)
 			local path = dir:gsub("file://[^/]+", "")
 			last_folder = path:match(".*/(.*)/$")
 		end
@@ -203,6 +212,20 @@ wezterm.on("format-tab-title", function(tab)
 		{ Text = get_process_icon(tab) },
 		{ Text = "▕" },
 	})
+end)
+
+wezterm.on("update-right-status", function(window, pane)
+	-- "Wed Mar 3 08:14"
+	local date = wezterm.strftime("%a %b %-d %H:%M ")
+
+	local bat = ""
+	for _, b in ipairs(wezterm.battery_info()) do
+		bat = "🔋 " .. string.format("%.0f%%", b.state_of_charge * 100)
+	end
+
+	window:set_right_status(wezterm.format({
+		{ Text = bat .. "   " .. date },
+	}))
 end)
 
 return config
