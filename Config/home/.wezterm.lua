@@ -154,17 +154,25 @@ local function get_process_icon(tab)
 			{ Text = " " .. wezterm.nerdfonts.dev_git .. " " },
 		},
 	}
-	local wezterm_prog = tab.active_pane.user_vars.WEZTERM_PROG
-	local process = wezterm_prog:match("^[^%s]+")
+	local pane = tab.active_pane
+
+	local title = pane.user_vars.WEZTERM_PROG or ""
+	local process = title:match("^[^%s]+")
 
 	if process_icons[process] then
 		return wezterm.format(process_icons[process])
 	else
-		local current_dir_url = tab.active_pane.current_working_dir
-
+		local dir = tostring(pane["current_working_dir"])
+		local last_folder = ""
+		if dir ~= nil then
+			local path = dir:gsub("file://[^/]+", "")
+			last_folder = path:match(".*/(.*)/$")
+		end
 		return wezterm.format({
-			{ Foreground = { Color = "#FFE5B4" } },
-			{ Text = " " },
+			{ Foreground = { Color = "#cc0000" } },
+			{ Text = " " .. wezterm.nerdfonts.dev_terminal },
+			"ResetAttributes",
+			{ Text = " " .. last_folder .. " " },
 		})
 	end
 end
