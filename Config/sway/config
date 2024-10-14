@@ -203,6 +203,7 @@ for_window [class="PdPatch"] floating enable resize set width 1200 px
 
 assign [app_id="(^qutebrowser|brave)"] 1
 assign [class="org.wezfurlong.wezterm"] 2
+assign [app_id="kitty"] 2
 assign [app_id="org.gnome.Nautilus"] 3
 # assign [class="PatchWindow|PdWindow"] 4
 assign [class="anytype"] 5
