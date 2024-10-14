@@ -46,6 +46,92 @@ config.use_fancy_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
 
 --╭─────────────────────────────────────╮
+--│               Themes                │
+--╰─────────────────────────────────────╯
+local dark_theme = {
+	background = "#303030",
+	foreground = "#ffffff",
+	brights = { "#ffffff", "#DB0000", "#339933", "#F3F04E", "#1868B8", "#FF3CFF", "#6DADEF", "#ffe100" },
+	ansi = { "#6a6a6a", "#e05661", "#1da912", "#eea825", "#118dc3", "#9a77cf", "#56b6c2", "#fafafa" },
+	cursor_bg = "#919191",
+	cursor_fg = "#ffffff",
+	selection_bg = "#494949",
+	tab_bar = {
+		background = "#303030",
+		active_tab = {
+			bg_color = "#383838",
+			fg_color = "#ffffff",
+			intensity = "Bold",
+		},
+		inactive_tab = {
+			bg_color = "#303030",
+			fg_color = "#fafafa",
+		},
+		inactive_tab_hover = {
+			bg_color = "#303030",
+			fg_color = "#8c8b8b",
+		},
+		new_tab = {
+			bg_color = "#303030",
+			fg_color = "#ff0000",
+		},
+		new_tab_hover = {
+			bg_color = "#292929",
+			fg_color = "#ff0000",
+		},
+	},
+}
+
+local light_theme = {
+	background = "#ffffff",
+	foreground = "#000000",
+	cursor_bg = "#000000",
+	cursor_fg = "#ffffff",
+	selection_bg = "#cccccc",
+	selection_fg = "#000000",
+	brights = { "#000000", "#cc0000", "#339933", "#bdb23e", "#040499", "#FF3CFF", "#0884FF", "#ffffff" },
+	ansi = { "#6a6a6a", "#e05661", "#1da912", "#eea825", "#118dc3", "#9a77cf", "#56b6c2", "#fafafa" },
+	tab_bar = {
+		background = "#ffffff",
+		active_tab = {
+			bg_color = "#e7e7e7",
+			fg_color = "#000000",
+			intensity = "Bold",
+		},
+		inactive_tab = {
+			bg_color = "#ffffff",
+			fg_color = "#000000",
+		},
+		inactive_tab_hover = {
+			bg_color = "#f1f1f1",
+			fg_color = "#000000",
+		},
+	},
+}
+
+config.tab_bar_style = {
+	new_tab = wezterm.format({
+		{ Background = { Color = "#ffffff" } },
+		{ Foreground = { Color = "#ff0000" } },
+		{ Text = " + " },
+	}),
+
+	new_tab_hover = wezterm.format({
+		"ResetAttributes",
+		{ Attribute = { Italic = false } },
+		{ Attribute = { Intensity = "Bold" } },
+		{ Background = { Color = "#f1f1f1" } },
+		{ Foreground = { Color = "#ff0000" } },
+		{ Text = " + " },
+	}),
+}
+
+config.color_schemes = {
+	["Dark"] = dark_theme,
+	["Light"] = light_theme,
+}
+
+--╭─────────────────────────────────────╮
 --│             Listerners              │
 --╰─────────────────────────────────────╯
 wezterm.on("update-status", function(window, _)
@@ -54,19 +140,15 @@ wezterm.on("update-status", function(window, _)
 	}))
 end)
 
-wezterm.on("window-config-reloaded", function(window, pane)
+wezterm.on("window-config-reloaded", function(window, _)
 	local overrides = window:get_config_overrides() or {}
 	local appearance = window:get_appearance()
-	local scheme
 	if appearance:find("Dark") then
-		scheme = "OneHalfDark"
+		overrides.color_scheme = "Dark"
 	else
-		scheme = "OneHalfLight"
+		overrides.color_scheme = "Light"
 	end
-	if overrides.color_scheme ~= scheme then
-		overrides.color_scheme = scheme
-		window:set_config_overrides(overrides)
-	end
+	window:set_config_overrides(overrides)
 end)
 
 return config
