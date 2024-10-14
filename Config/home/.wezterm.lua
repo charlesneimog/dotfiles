@@ -86,29 +86,12 @@ config.visual_bell = {
 config.use_fancy_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
 
-wezterm.on("update-status", function(window, _)
-	window:set_right_status(wezterm.format({
-		{ Text = wezterm.strftime(" %H:%M:%S ") },
-	}))
-end)
-
-wezterm.on("format-tab-title", function(tab)
-	local myconfig = config
-	return wezterm.format({
-		{ Attribute = { Intensity = "Bold" } },
-		{ Text = string.format(" %s", tab.tab_index + 1) },
-		"ResetAttributes",
-		{ Text = get_process_icon(tab, myconfig) },
-		{ Text = get_current_working_dir(tab) },
-		{ Text = "▕" },
-	})
-end)
-
 wezterm.on("window-config-reloaded", function(window, pane)
-	local overrides = window:get_config_overrides() or {}
 	local appearance = window:get_appearance()
+	print("appearance", appearance)
 	if appearance:find("Dark") then
-		myconfig.colors = {
+		print("Dark")
+		config.colors = {
 			background = "#303030",
 			foreground = "#ffffff",
 			brights = {
@@ -161,7 +144,7 @@ wezterm.on("window-config-reloaded", function(window, pane)
 			},
 		}
 	else
-		myconfig.colors = {
+		config.colors = {
 			background = "#ffffff",
 			foreground = "#000000",
 			cursor_bg = "#000000",
@@ -205,7 +188,7 @@ wezterm.on("window-config-reloaded", function(window, pane)
 				},
 			},
 		}
-		myconfig.tab_bar_style = {
+		config.tab_bar_style = {
 			new_tab = wezterm.format({
 				{ Background = { Color = "#ffffff" } },
 				{ Foreground = { Color = "#ff0000" } },
@@ -224,4 +207,22 @@ wezterm.on("window-config-reloaded", function(window, pane)
 	end
 end)
 
+wezterm.on("update-status", function(window, _)
+	window:set_right_status(wezterm.format({
+		{ Text = wezterm.strftime(" %H:%M:%S ") },
+	}))
+end)
+
+-- wezterm.on("format-tab-title", function(tab)
+-- 	local myconfig = config
+-- 	return wezterm.format({
+-- 		{ Attribute = { Intensity = "Bold" } },
+-- 		{ Text = string.format(" %s", tab.tab_index + 1) },
+-- 		"ResetAttributes",
+-- 		{ Text = get_process_icon(tab, myconfig) },
+-- 		{ Text = get_current_working_dir(tab) },
+-- 		{ Text = "▕" },
+-- 	})
+-- end)
+--
 return config
