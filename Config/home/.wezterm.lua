@@ -143,25 +143,34 @@ local function url_decode(str)
 end
 
 local function get_process_icon(tab)
+	local pane = tab.active_pane
+	local dir = tostring(pane["current_working_dir"])
+	dir = url_decode(dir) -- utr-8 decode
+	local last_folder = ""
+	if dir ~= nil then
+		print(dir)
+		local path = dir:gsub("file://[^/]+", "")
+		last_folder = path:match(".*/(.*)/$")
+	end
+
 	local process_icons = {
 		["nvim"] = {
 			{ Foreground = { Color = dark_theme.ansi[3] } },
-			{ Text = " " .. wezterm.nerdfonts.custom_vim .. " " },
+			{ Text = " " .. wezterm.nerdfonts.custom_vim .. " " .. last_folder },
 		},
 		["zsh"] = {
 			{ Foreground = { Color = dark_theme.ansi[4] } },
-			{ Text = " " .. wezterm.nerdfonts.dev_terminal .. " " },
+			{ Text = " " .. wezterm.nerdfonts.dev_terminal .. " " .. last_folder },
 		},
 		["paru"] = {
 			{ Foreground = { Color = "#E6E6FA" } },
-			{ Text = " " .. wezterm.nerdfonts.linux_archlinux .. " " },
+			{ Text = " " .. wezterm.nerdfonts.linux_archlinux .. " " .. last_folder },
 		},
 		["git"] = {
 			{ Foreground = { Color = "#FFE5B4" } },
-			{ Text = " " .. wezterm.nerdfonts.dev_git .. " " },
+			{ Text = " " .. wezterm.nerdfonts.dev_git .. " " .. last_folder },
 		},
 	}
-	local pane = tab.active_pane
 
 	local title = pane.user_vars.WEZTERM_PROG or ""
 	local process = title:match("^[^%s]+")
@@ -169,14 +178,6 @@ local function get_process_icon(tab)
 	if process_icons[process] then
 		return wezterm.format(process_icons[process])
 	else
-		local dir = tostring(pane["current_working_dir"])
-		dir = url_decode(dir) -- utr-8 decode
-		local last_folder = ""
-		if dir ~= nil then
-			print(dir)
-			local path = dir:gsub("file://[^/]+", "")
-			last_folder = path:match(".*/(.*)/$")
-		end
 		return wezterm.format({
 			{ Foreground = { Color = "#cc0000" } },
 			{ Text = " " .. wezterm.nerdfonts.dev_terminal },
