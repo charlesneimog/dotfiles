@@ -190,8 +190,15 @@ end
 --│             Listerners              │
 --╰─────────────────────────────────────╯
 wezterm.on("update-status", function(window, _)
+	local bat = ""
+	for _, b in ipairs(wezterm.battery_info()) do
+		bat = wezterm.nerdfonts.md_battery .. " " .. string.format("%.0f%%", b.state_of_charge * 100)
+	end
 	window:set_right_status(wezterm.format({
+		{ Foreground = { Color = "#ffffff" } },
 		{ Text = wezterm.strftime(" %H:%M:%S ") },
+		{ Text = "▕ " },
+		{ Text = bat .. "   " },
 	}))
 end)
 
@@ -212,20 +219,6 @@ wezterm.on("format-tab-title", function(tab)
 		{ Text = get_process_icon(tab) },
 		{ Text = "▕" },
 	})
-end)
-
-wezterm.on("update-right-status", function(window, pane)
-	-- "Wed Mar 3 08:14"
-	local date = wezterm.strftime("%a %b %-d %H:%M ")
-
-	local bat = ""
-	for _, b in ipairs(wezterm.battery_info()) do
-		bat = "🔋 " .. string.format("%.0f%%", b.state_of_charge * 100)
-	end
-
-	window:set_right_status(wezterm.format({
-		{ Text = bat .. "   " .. date },
-	}))
 end)
 
 return config
