@@ -1,14 +1,14 @@
-audioapi: 4
+audioapi: 5
 noaudioin: False
-audioindev1: 5 2
-audioindevname1: JACK Audio Connection Kit: Scarlett 2i2 3rd Gen Direct Scarlett 2i2 USB
+audioindev1: 0 2
+audioindevname1: JACK
 noaudioout: False
-audiooutdev1: 14 2
-audiooutdevname1: JACK Audio Connection Kit: Scarlett 2i2 3rd Gen Direct Scarlett 2i2 USB
+audiooutdev1: 0 2
+audiooutdevname1: JACK
 audiobuf: 100
 rate: 48000
 callback: 0
-audioblocksize: 64
+audioblocksize: 1024
 midiapi: 1
 nomidiin: True
 nomidiout: True
