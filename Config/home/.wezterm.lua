@@ -110,22 +110,22 @@ local light_theme = {
 	},
 }
 
-config.tab_bar_style = {
-	new_tab = wezterm.format({
-		{ Background = { Color = "#ffffff" } },
-		{ Foreground = { Color = "#ff0000" } },
-		{ Text = " + " },
-	}),
-
-	new_tab_hover = wezterm.format({
-		"ResetAttributes",
-		{ Attribute = { Italic = false } },
-		{ Attribute = { Intensity = "Bold" } },
-		{ Background = { Color = "#f1f1f1" } },
-		{ Foreground = { Color = "#ff0000" } },
-		{ Text = " + " },
-	}),
-}
+-- config.tab_bar_style = {
+-- 	new_tab = wezterm.format({
+-- 		{ Background = { Color = "#ffffff" } },
+-- 		{ Foreground = { Color = "#ff0000" } },
+-- 		{ Text = " + " },
+-- 	}),
+--
+-- 	new_tab_hover = wezterm.format({
+-- 		"ResetAttributes",
+-- 		{ Attribute = { Italic = false } },
+-- 		{ Attribute = { Intensity = "Bold" } },
+-- 		{ Background = { Color = "#f1f1f1" } },
+-- 		{ Foreground = { Color = "#ff0000" } },
+-- 		{ Text = " + " },
+-- 	}),
+-- }
 
 config.color_schemes = {
 	["Dark"] = dark_theme,
@@ -167,7 +167,7 @@ local function get_process_icon(tab)
 			{ Text = " " .. wezterm.nerdfonts.linux_archlinux .. " " .. last_folder },
 		},
 		["git"] = {
-			{ Foreground = { Color = "#FFE5B4" } },
+			{ Foreground = { Color = "#fcba03" } },
 			{ Text = " " .. wezterm.nerdfonts.dev_git .. " " .. last_folder },
 		},
 	}
@@ -195,8 +195,11 @@ wezterm.on("update-status", function(window, _)
 	for _, b in ipairs(wezterm.battery_info()) do
 		bat = wezterm.nerdfonts.md_battery .. " " .. string.format("%.0f%%", b.state_of_charge * 100)
 	end
+
+	local appearance = window:get_appearance()
+	local foreground_color = appearance:find("Dark") and "#ffffff" or "#000000"
 	window:set_right_status(wezterm.format({
-		{ Foreground = { Color = "#ffffff" } },
+		{ Foreground = { Color = foreground_color } },
 		{ Text = wezterm.strftime(" %H:%M:%S ") },
 		{ Text = "▕ " },
 		{ Text = bat .. "   " },
@@ -208,8 +211,38 @@ wezterm.on("window-config-reloaded", function(window, _)
 	local appearance = window:get_appearance()
 	if appearance:find("Dark") then
 		overrides.color_scheme = "Dark"
+		overrides.tab_bar_style = {
+			new_tab = wezterm.format({
+				{ Background = { Color = "#303030" } },
+				{ Foreground = { Color = "#ffffff" } },
+				{ Text = " + " },
+			}),
+			new_tab_hover = wezterm.format({
+				"ResetAttributes",
+				{ Attribute = { Italic = false } },
+				{ Attribute = { Intensity = "Bold" } },
+				{ Background = { Color = "#f1f1f1" } },
+				{ Foreground = { Color = "#ff0000" } },
+				{ Text = " + " },
+			}),
+		}
 	else
 		overrides.color_scheme = "Light"
+		overrides.tab_bar_style = {
+			new_tab = wezterm.format({
+				{ Background = { Color = "#ffffff" } },
+				{ Foreground = { Color = "#ff0000" } },
+				{ Text = " + " },
+			}),
+			new_tab_hover = wezterm.format({
+				"ResetAttributes",
+				{ Attribute = { Italic = false } },
+				{ Attribute = { Intensity = "Bold" } },
+				{ Background = { Color = "#f1f1f1" } },
+				{ Foreground = { Color = "#ff0000" } },
+				{ Text = " + " },
+			}),
+		}
 	end
 	window:set_config_overrides(overrides)
 end)
