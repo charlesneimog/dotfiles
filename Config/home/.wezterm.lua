@@ -110,23 +110,6 @@ local light_theme = {
 	},
 }
 
--- config.tab_bar_style = {
--- 	new_tab = wezterm.format({
--- 		{ Background = { Color = "#ffffff" } },
--- 		{ Foreground = { Color = "#ff0000" } },
--- 		{ Text = " + " },
--- 	}),
---
--- 	new_tab_hover = wezterm.format({
--- 		"ResetAttributes",
--- 		{ Attribute = { Italic = false } },
--- 		{ Attribute = { Intensity = "Bold" } },
--- 		{ Background = { Color = "#f1f1f1" } },
--- 		{ Foreground = { Color = "#ff0000" } },
--- 		{ Text = " + " },
--- 	}),
--- }
-
 config.color_schemes = {
 	["Dark"] = dark_theme,
 	["Light"] = light_theme,
