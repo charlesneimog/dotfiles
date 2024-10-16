@@ -148,9 +148,12 @@ local function get_process_icon(tab)
 	dir = url_decode(dir) -- utr-8 decode
 	local last_folder = ""
 	if dir ~= nil then
-		print(dir)
 		local path = dir:gsub("file://[^/]+", "")
 		last_folder = path:match(".*/(.*)/$")
+	end
+
+	if last_folder == nil then
+		last_folder = " "
 	end
 
 	local process_icons = {
@@ -209,6 +212,8 @@ end)
 wezterm.on("window-config-reloaded", function(window, _)
 	local overrides = window:get_config_overrides() or {}
 	local appearance = window:get_appearance()
+	local current_theme = overrides.color_scheme
+
 	if appearance:find("Dark") then
 		overrides.color_scheme = "Dark"
 		overrides.tab_bar_style = {
