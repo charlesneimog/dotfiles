@@ -111,6 +111,8 @@ end
 vim.api.nvim_create_user_command(
 	"SetMyTheme",
 	function(opts)
+		vim.env.NVIM_LISTEN_ADDRESS = vim.v.servername
+		print(vim.v.servername)
 		setmytheme(opts.args)
 	end,
 	{ nargs = 1 } -- This specifies that the command takes exactly 1 argument
@@ -119,9 +121,6 @@ vim.api.nvim_create_user_command(
 return {
 	"olimorris/onedarkpro.nvim",
 	config = function()
-		vim.env.NVIM_LISTEN_ADDRESS = vim.v.servername
-		print(vim.v.servername)
-
 		local theme = getGnomeThemeMode()
 		setmytheme(theme)
 	end,
