@@ -119,6 +119,10 @@ vim.api.nvim_create_user_command(
 return {
 	"olimorris/onedarkpro.nvim",
 	config = function()
+		local server_address = "/tmp/nvim-theme"
+		vim.fn.setenv("NVIM_LISTEN_ADDRESS", server_address)
+		vim.cmd("echo 'Neovim server started at " .. server_address .. "'")
+
 		local theme = getGnomeThemeMode()
 		setmytheme(theme)
 	end,
