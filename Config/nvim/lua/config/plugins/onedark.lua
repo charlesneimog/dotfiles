@@ -8,6 +8,18 @@ end
 
 local GnomeThemeMode = getGnomeThemeMode()
 
+local function setmytheme(switcher)
+	print(switcher)
+end
+
+vim.api.nvim_create_user_command(
+	"SetMyTheme",
+	function(opts)
+		setmytheme(opts.args)
+	end,
+	{ nargs = 1 } -- This specifies that the command takes exactly 1 argument
+)
+
 return {
 	"olimorris/onedarkpro.nvim",
 	config = function()
