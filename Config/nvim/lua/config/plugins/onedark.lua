@@ -35,6 +35,7 @@ vim.api.nvim_create_user_command(
 
 return {
 	"olimorris/onedarkpro.nvim",
+	priority = 1000,
 	config = function()
 		local theme = getGnomeThemeMode()
 		require("onedarkpro").setup({
