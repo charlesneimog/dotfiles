@@ -39,7 +39,7 @@ return {
 		local theme = getGnomeThemeMode()
 		require("onedarkpro").setup({
 			colors = {
-				onedark = { bg = "#303030", fg = "#000000", float_bg = "#2e2e2e" },
+				onedark = { bg = "#303030", fg = "#ffffff", float_bg = "#2e2e2e" },
 				onelight = { bg = "#FFFFFF", fg = "#000000", float_bg = "#fcfcfc" },
 			},
 		})
