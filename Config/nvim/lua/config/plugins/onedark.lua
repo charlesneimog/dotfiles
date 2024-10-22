@@ -34,20 +34,23 @@ vim.api.nvim_create_user_command(
 )
 
 return {
-	"olimorris/onedarkpro.nvim",
-	priority = 1000,
-	config = function()
-		local theme = getGnomeThemeMode()
-		require("onedarkpro").setup({
-			colors = {
-				onedark = { bg = "#303030", fg = "#ffffff", float_bg = "#2e2e2e" },
-				onelight = { bg = "#FFFFFF", fg = "#000000", float_bg = "#fcfcfc" },
-			},
-		})
-		if theme == "dark" then
-			vim.cmd("colorscheme onedark")
-		else
-			vim.cmd("colorscheme onelight")
-		end
-	end,
+	{
+		"olimorris/onedarkpro.nvim",
+		priority = 1000,
+		config = function()
+			local theme = getGnomeThemeMode()
+			require("onedarkpro").setup({
+				colors = {
+					onedark = { bg = "#303030", fg = "#ffffff", float_bg = "#2e2e2e" },
+					onelight = { bg = "#FFFFFF", fg = "#000000", float_bg = "#fcfcfc" },
+				},
+			})
+			if theme == "dark" then
+				vim.cmd("colorscheme onedark")
+			else
+				vim.cmd("colorscheme onelight")
+			end
+		end,
+	},
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 }
