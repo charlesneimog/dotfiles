@@ -52,5 +52,20 @@ return {
 			end
 		end,
 	},
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{
+		"catppuccin/nvim",
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				flavour = "auto",
+				background = {
+					light = "latte",
+					dark = "mocha",
+				},
+				color_overrides = {
+					mocha = { bg = "#303030", fg = "#ffffff", fg_gutter = "#ffffff" },
+				},
+			})
+		end,
+	},
 }
