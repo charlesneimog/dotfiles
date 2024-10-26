@@ -149,7 +149,7 @@ local function get_process_icon(tab)
 			{ Text = " " .. wezterm.nerdfonts.dev_terminal .. " " .. last_folder },
 		},
 		["paru"] = {
-			{ Foreground = { Color = "#E6E6FA" } },
+			{ Foreground = { Color = "#1793D1" } },
 			{ Text = " " .. wezterm.nerdfonts.linux_archlinux .. " " .. last_folder },
 		},
 		["git"] = {
