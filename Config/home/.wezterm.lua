@@ -247,6 +247,8 @@ end)
 
 wezterm.on("format-tab-title", function(tab)
 	return wezterm.format({
+
+		{ Attribute = { Intensity = "Bold" } },
 		{ Text = string.format(" %s:", tab.tab_index + 1) },
 		{ Text = get_process_icon(tab) },
 		{ Text = "▕" },
