@@ -3,13 +3,13 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 
 wezterm.warn_about_missing_glyphs = false
-
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_wayland = false
 config.font_size = 15
 config.initial_cols = 110
 config.initial_rows = 30
 config.tab_bar_at_bottom = true
+config.window_background_opacity = 0.95
 
 --╭─────────────────────────────────────╮
 --│              Hot Keys               │
