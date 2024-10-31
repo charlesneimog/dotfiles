@@ -83,6 +83,7 @@ return {
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 			require("lspconfig").ltex.setup({
+				autostart = false,
 				filetypes = { "markdown", "tex", "txt" }, -- Add other filetypes you want ltex to handle
 			})
 			require("lspconfig").clangd.setup({
