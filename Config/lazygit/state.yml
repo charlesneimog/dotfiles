@@ -34,9 +34,9 @@ recentrepos:
 startuppopupversion: 5
 lastversion: 0.44.1
 customcommandshistory:
+    - q
     - q!
     - ""
-    - q
     - minor updates related with py4pd changes
     - 'commit '
     - fix the pd.print for multiple args
