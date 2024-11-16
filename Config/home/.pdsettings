@@ -16,9 +16,9 @@ path1: /home/neimog/Documents/Pd/externals
 path2: /home/neimog/Documents/Git
 npath: 2
 standardpath: 1
-verbose: 0
+verbose: 1
 nloadlib: 0
-defeatrt: 0
+defeatrt: 1
 flags: -font-weight normal -font-size 10
 zoom: 2
 loading: no
