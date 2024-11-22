@@ -5,6 +5,9 @@ bindsym print exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/scre
 bindsym Mod4+t exec bash -c ". ~/.config/hypr/functions.sh translate_selection >> /tmp/translate.log"
 bindsym Mod4+d exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
 bindsym Mod4+e exec nautilus
+bindsym Mod1+F4 kill
+bindsym Mod1+Tab exec killall rofi || rofi -show window -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
+
 bindsym Mod4+Return exec wezterm-gui
 bindsym Mod4+v exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
 bindsym Mod4+l exec zenity --list --title="External Monitor Mode" --column="Options" "option1" "option2" "option3"
@@ -120,7 +123,13 @@ input type:keyboard {
 input "type:touchpad" {
     tap enabled
     middle_emulation enabled
+    natural_scroll enabled
 }
+
+input "type:mouse" {
+    natural_scroll enabled
+}
+
 
 # ╭───────────────────────────────────────╮
 # │            Execute Always             │
