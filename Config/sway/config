@@ -132,6 +132,9 @@ input "type:mouse" {
 
 bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next
+bindgesture swipe:up exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
+
+
 
 # ╭───────────────────────────────────────╮
 # │            Execute Always             │
