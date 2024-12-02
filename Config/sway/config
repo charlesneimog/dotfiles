@@ -168,6 +168,10 @@ exec_always {
 
     # cloud
     nextcloud
+
+    # activity watch
+    /home/neimog/.cargo/bin/aw-watcher-window-wayland
+
 }
 
 
