@@ -156,6 +156,10 @@ local function get_process_icon(tab)
 			{ Foreground = { Color = "#4B90C6" } },
 			{ Text = " " .. wezterm.nerdfonts.dev_python .. " " .. last_folder },
 		},
+		["cmake"] = {
+			{ Foreground = { Color = "#4B90C6" } },
+			{ Text = " " .. wezterm.nerdfonts.custom_cpp .. " " .. last_folder },
+		},
 		["pip"] = {
 			{ Foreground = { Color = "#4B90C6" } },
 			{ Text = " " .. wezterm.nerdfonts.dev_python .. " " .. last_folder },
