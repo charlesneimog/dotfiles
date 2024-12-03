@@ -1,6 +1,6 @@
 return {
 	"charlesneimog/ltextra.nvim",
-	dir = "~/Documents/Git/ltextra.nvim",
+	-- dir = "~/Documents/Git/ltextra.nvim",
 	keys = {
 		{
 			"aw",
