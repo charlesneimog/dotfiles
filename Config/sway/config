@@ -171,6 +171,7 @@ exec_always {
 
     # activity watch
     /home/neimog/.cargo/bin/aw-watcher-window-wayland
+    aw-qt
 
 }
 
