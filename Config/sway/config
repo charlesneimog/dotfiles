@@ -219,6 +219,8 @@ for_window [class="PdPatch"] floating enable resize set width 1200 px
 # ╰───────────────────────────────────────╯
 
 assign [app_id="(^qutebrowser|brave)"] 1
+assign [app_id="zen-alpha"] 1
+
 assign [class="org.wezfurlong.wezterm"] 2
 assign [app_id="kitty"] 2
 assign [app_id="org.gnome.Nautilus"] 3
@@ -226,4 +228,3 @@ assign [app_id="org.gnome.Nautilus"] 3
 assign [class="anytype"] 5
 assign [app_id="org.kde.okular|evince|zathura"] 6
 assign [app_id="org.inkscape.Inkscape"] 7
-
