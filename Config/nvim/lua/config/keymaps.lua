@@ -2,7 +2,7 @@ local vim = vim
 
 vim.keymap.set("n", "<leader>m", function()
 	local buffers = vim.api.nvim_list_bufs()
-	if #buffers == 2 then
+	if buffers == 2 then
 		vim.notify("Just one buffer open!", "info", { title = "Buffers", timeout = 1500 })
 		vim.cmd("bnext")
 	else
