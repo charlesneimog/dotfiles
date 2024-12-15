@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/OScofo/Libraries/tree-sitter
     - /home/neimog/Documents/Git/Canticos-de-Silicio-I
@@ -22,7 +23,6 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-partialtrack/Libraries/simpl
     - /home/neimog/Documents/Git/pd-partialtrack/Resources/CMakeAudioHelpers
     - /home/neimog/Documents/Git/Docs/Tese
-    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/Caravana
     - /home/neimog/Documents/Git/py4pd/Resources/pd.cmake
     - /home/neimog/Documents/Git/pd-vamp
