@@ -17,7 +17,7 @@ return {
 				css = { "prettier" },
 				html = { "prettier" },
 				json = { "prettier" },
-				markdown = { "prettier" },
+				-- markdown = { "prettier" },
 				lua = { "stylua" },
 				python = { "black" },
 				cpp = { "clang-format" },
