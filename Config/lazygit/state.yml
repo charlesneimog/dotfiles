@@ -1,9 +1,9 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/neimog/Documents/Git/py4pd
-    - /home/neimog/Documents/Git/py4pd-spt
-    - /home/neimog/Documents/Git/loris
     - /home/neimog/Documents/Git/OScofo
+    - /home/neimog/Documents/Git/py4pd-spt
+    - /home/neimog/Documents/Git/py4pd
+    - /home/neimog/Documents/Git/loris
     - /home/neimog/Documents/Git/pdgui
     - /home/neimog/Documents/Git/Canticos-de-Silicio-I
     - /home/neimog/Documents/Git/pd.cmake

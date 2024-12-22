@@ -8,8 +8,8 @@ audiooutdevname1: JACK
 audiobuf: 100
 rate: 48000
 callback: 0
-audioblocksize: 1024
-midiapi: 0
+audioblocksize: 128
+midiapi: 1
 nomidiin: True
 nomidiout: True
 path1: /home/neimog/Documents/Pd/externals
