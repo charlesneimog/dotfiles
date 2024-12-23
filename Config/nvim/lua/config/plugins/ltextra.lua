@@ -1,7 +1,3 @@
-local lsp_commands = require("ltex_extra")
-
-vim.notify(vim.inspect(lsp_commands))
-
 return {
 	{
 		"barreiroleo/ltex_extra.nvim",
@@ -9,9 +5,11 @@ return {
 		dependencies = { "neovim/nvim-lspconfig" }, -- LSP necessário
 		config = function()
 			local ltex_config = require("ltex_extra_config")
+			vim.notify(vim.inspect(ltex_config))
 
 			local capabilities = require("cmp_nvim_lsp").default_capabilities() -- Para autocompletar avançado (se estiver usando nvim-cmp)
 			require("ltex_extra").setup({
+
 				server_opts = {
 					capabilities = capabilities,
 					settings = {
