@@ -80,6 +80,16 @@ return {
 				},
 			}
 
+			local on_attach = function(client, bufnr)
+				if client.name == "ltex" then
+					require("ltex_extra").setup({
+						load_langs = { "en-US", "pt-BR" },
+						init_check = true,
+						path = ".ltex",
+					})
+				end
+			end
+
 			local mason_lspconfig = require("mason-lspconfig")
 			mason_lspconfig.setup({
 				ensure_installed = vim.tbl_keys(servers),
