@@ -10,10 +10,10 @@ return {
 					-- check if _ltex.addToDictionary is on the commands list
 					local commands = vim.lsp.commands
 					if commands["_ltex.addToDictionary"] then
-						local command = commands["_ltex.addToDictionary"]
-						command.callback({
-							words = vim.fn.expand("<cword>"),
-						})
+						local addToDictionary = commands["_ltex.addToDictionary"]
+
+						-- local args = command.arguments[1].words
+						addToDictionary.execute({ words = { vim.fn.expand("<cword>") } })
 					end
 				end,
 				mode = { "n" },
