@@ -109,26 +109,10 @@ alias c='clear'
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
-# Check if there is no process called "Hyprland"
-if pgrep -x "Hyprland" > /dev/null
-then
-    __conda_setup="$('/home/neimog/.config/miniconda3.dir/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh" ]; then
-        else
-        fi
-    fi
-    unset __conda_setup
-fi
-
-
-# Created by `pipx` on 2024-08-02 17:10:02
+#╭──────────────────────────────────────╮
+#│             Conda Setup              │
+#╰──────────────────────────────────────╯
 export PATH="$PATH:/home/neimog/.local/bin"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/neimog/.config/miniconda3.dir/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -140,5 +124,16 @@ else
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<<
+
+#╭──────────────────────────────────────╮
+#│                 Yazi                 │
+#╰──────────────────────────────────────╯
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
