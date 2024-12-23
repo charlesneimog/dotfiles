@@ -15,9 +15,9 @@ return {
 				background = 1,
 				callback = 1,
 				continuous = 1,
-				executable = "latexmk",
+				executable = "pdflatex",
 				options = {
-					"-pdflua",
+					-- "-pdflua",
 					-- "-pdflatex=lualatex",
 					"-shell-escape",
 					"-verbose",
