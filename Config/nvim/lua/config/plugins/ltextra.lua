@@ -1,29 +1,6 @@
-local lsp_commands = require("ltex_extra.commands-lsp")
+local lsp_commands = require("ltex_extra")
 
-function AddWordUnderCursorToDictionary()
-	local word = vim.fn.expand("<cword>")
-	if not word or word == "" then
-		vim.notify("Nenhuma palavra encontrada sob o cursor.", vim.log.levels.WARN)
-		return
-	end
-	local client = lsp_commands.catch_ltex()
-	if not client then
-		vim.notify("Cliente LTeX não encontrado.", vim.log.levels.ERROR)
-		return
-	end
-	local lang = client.config.settings.ltex.language
-	if not lang then
-		vim.notify("Idioma do LTeX não configurado.", vim.log.levels.ERROR)
-		return
-	end
-	lsp_commands.add_to_dictionary({
-		arguments = {
-			{ words = { [lang] = { word } } },
-		},
-	})
-
-	vim.notify("Palavra '" .. word .. "' adicionada ao dicionário para o idioma: " .. lang)
-end
+vim.notify(vim.inspect(lsp_commands))
 
 return {
 	{
