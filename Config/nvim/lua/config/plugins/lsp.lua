@@ -81,6 +81,7 @@ return {
 			}
 
 			local on_attach = function(client, bufnr)
+				print(client.name)
 				if client.name == "ltex" then
 					require("ltex_extra").setup({
 						load_langs = { "en-US", "pt-BR" },
