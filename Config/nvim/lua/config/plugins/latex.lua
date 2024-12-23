@@ -20,11 +20,20 @@ return {
 		event = { "BufEnter *.tex,*.bib" },
 		config = function()
 			vim.g.vimtex_compiler_latexmk = {
-				build_dir = "build",
+				backend = "nvim",
+				build_dir = ".build",
+				background = 1,
+				callback = 1,
+				continuous = 1,
+				executable = "latexmk",
 				options = {
-					"-lualatex", -- Use LuaLaTeX
-					"-synctex=1", -- Enable SyncTeX
-					"-interaction=nonstopmode", -- Non-stop mode
+					"-lualatex", -- Explicitly use LuaTeX
+					"-shell-escape", -- Allow external program calls
+					"-verbose", -- Verbose output
+					"-file-line-error", -- Show detailed error messages
+					"-synctex=1", -- Enable SyncTeX support
+					"-interaction=nonstopmode", -- Non-interactive error handling
+					"-auxdir=.build", -- Store auxiliary files in .build
 				},
 			}
 		end,
