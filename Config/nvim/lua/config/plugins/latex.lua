@@ -6,18 +6,9 @@ return {
 		"lervag/vimtex",
 		ft = { "tex", "latex", "bib" },
 		event = { "BufEnter *.tex,*.bib" },
-		keys = {
-			{
-				"<leader>vtc",
-				":VimtexCompile<CR>",
-				mode = "n",
-				desc = "Compile the current file",
-			},
-		},
 		config = function()
 			vim.g.vimtex_view_general_viewer = "xdg-open"
 			vim.g.vimtex_view_general_options = [[--unique file:@pdf\#src:@line@tex]]
-
 			vim.g.vimtex_compiler_latexmk = {
 				backend = "nvim",
 				build_dir = ".build",

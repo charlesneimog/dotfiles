@@ -18,9 +18,9 @@ return {
 		local cmp_buffer = require("cmp_buffer")
 		local compare = require("cmp.config.compare")
 		local luasnip = require("luasnip")
-		local lspkind = require("lspkind")
-		require("luasnip.loaders.from_vscode").lazy_load()
+		local vimtex = require("cmp_vimtex").setup({})
 
+		require("luasnip.loaders.from_vscode").lazy_load()
 		cmp.setup.cmdline("/", {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = {
@@ -135,6 +135,7 @@ return {
 
 			sources = {
 				-- { "fittencode", group_index = 1 },
+				{ name = "vimtext" },
 				{
 					name = "codeium",
 					max_item_count = 3,
@@ -147,7 +148,7 @@ return {
 				{ name = "luasnip" }, -- snippets
 				{ name = "buffer" }, -- text within current buffer
 				{ name = "path" }, -- file system paths
-				{ name = "vimtext" },
+
 				-- { name = "treesitter" },
 			},
 			sorting = {
