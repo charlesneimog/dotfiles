@@ -4,8 +4,18 @@ return {
 		ft = { "markdown", "tex" }, -- Especifica os tipos de arquivos
 		dependencies = { "neovim/nvim-lspconfig" }, -- LSP necessário
 		config = function()
-			local addToDict = require("ltex_extra")
-			vim.notify(vim.inspect(addToDict))
+			local function add_word_to_dictionary()
+				local params = vim.lsp.util.make_position_params()
+				vim.lsp.buf.execute_command({
+					command = "_ltex.addToDictionary",
+					arguments = { params.textDocument.uri, vim.fn.expand("<cword>") }, -- Palavra sob o cursor
+				})
+			end
+
+			-- Mapeamento da tecla 'aw' no modo normal
+			vim.api.nvim_set_keymap("n", "aw", function()
+				add_word_to_dictionary()
+			end, { noremap = true, silent = true, desc = "Adicionar palavra ao dicionário do LTeX" })
 
 			local capabilities = require("cmp_nvim_lsp").default_capabilities() -- Para autocompletar avançado (se estiver usando nvim-cmp)
 			require("ltex_extra").setup({
