@@ -2,32 +2,16 @@ local vim = vim
 
 return {
 	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim", -- Mason is a build tool for Neovim plugins
-			-- "j-hui/fidget.nvim", -- A minimal, distraction-free statusline for Neovim
 			"folke/neodev.nvim", -- Neovim development environment
 			"L3MON4D3/LuaSnip",
 			"lewis6991/foldsigns.nvim", --
 		},
-
 		keys = {
-			{
-				"<leader>rn",
-				function()
-					vim.lsp.buf.rename()
-				end,
-				mode = "n",
-				desc = "[R]ename [N]ode",
-			},
 			{
 				"<leader>v",
 				function()
@@ -38,6 +22,8 @@ return {
 			},
 		},
 		config = function()
+			require("mason").setup()
+
 			vim.diagnostic.config({
 				virtual_text = false,
 				update_in_insert = true,
@@ -72,40 +58,25 @@ return {
 							additionalRules = {
 								enablePickyRules = true,
 							},
-							dictionary = {
-								["pt-BR"] = { "Neovim", "Lua" }, -- Adicionar palavras ao dicionário
-							},
 						},
 					},
 				},
 			}
 
-			local on_attach = function(client, bufnr)
-				print(client.name)
-				if client.name == "ltex" then
-					require("ltex_extra").setup({
-						load_langs = { "en-US", "pt-BR" },
-						init_check = true,
-						path = ".ltex",
-					})
-				end
-			end
-
+			-- ??
 			local mason_lspconfig = require("mason-lspconfig")
 			mason_lspconfig.setup({
 				ensure_installed = vim.tbl_keys(servers),
 				automatic_installation = true,
 			})
-			mason_lspconfig.setup_handlers({
-				function(server_name)
-					print(server_name)
-					require("lspconfig")[server_name].setup({
-						capabilities = capabilities,
-						on_attach = on_attach, --
-						settings = servers[server_name],
-					})
-				end,
-			})
+
+			for server_name, _ in pairs(servers) do
+				require("lspconfig")[server_name].setup({
+					capabilities = capabilities,
+					on_attach = on_attach,
+					settings = servers[server_name],
+				})
+			end
 		end,
 	},
 	{
