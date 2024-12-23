@@ -12,29 +12,26 @@ return {
 					if commands["_ltex.addToDictionary"] then
 						local funcAddToDictionary = commands["_ltex.addToDictionary"]
 						local clients = vim.lsp.buf_get_clients(0)
+						local ltex_language = "pt-BR"
 						for _, client in pairs(clients) do
-							local clientName = client.name
-							if clientName == "ltex" then
+							if client.name == "ltex" then
 								local ltex_settings = client.config.settings
-								vim.print(vim.inspect(ltex_settings))
+								ltex_language = ltex_settings and ltex_settings.ltex and ltex_settings.ltex.language
+									or "pt-BR"
 							end
 						end
-
-						-- Format the arguments to match what the function expects
 						local word = vim.fn.expand("<cword>")
+						vim.notify("Language: " .. ltex_language)
 						local args = {
 							arguments = {
 								{
 									words = {
-										[vim.g.ltex_lang or "en-US"] = { word },
+										[ltex_language] = { word },
 									},
 								},
 							},
 						}
-
-						-- Execute the function with the formatted arguments
 						funcAddToDictionary(args)
-
 						print("Added word to dictionary: " .. word)
 					else
 						print("Command _ltex.addToDictionary not found")
