@@ -7,19 +7,36 @@ return {
 			{
 				"aw",
 				function()
-					-- check if _ltex.addToDictionary is on the commands list
+					-- Check if _ltex.addToDictionary is on the commands list
 					local commands = vim.lsp.commands
 					if commands["_ltex.addToDictionary"] then
-						local addToDictionary = commands["_ltex.addToDictionary"]
+						local funcAddToDictionary = commands["_ltex.addToDictionary"]
 
-						-- local args = command.arguments[1].words
-						addToDictionary.execute({ words = { vim.fn.expand("<cword>") } })
+						-- Format the arguments to match what the function expects
+						local word = vim.fn.expand("<cword>")
+						local args = {
+							arguments = {
+								{
+									words = {
+										[vim.g.ltex_lang or "en-US"] = { word },
+									},
+								},
+							},
+						}
+
+						-- Execute the function with the formatted arguments
+						funcAddToDictionary(args)
+
+						print("Added word to dictionary: " .. word)
+					else
+						print("Command _ltex.addToDictionary not found")
 					end
 				end,
 				mode = { "n" },
 				desc = "Add word to dictionary",
 			},
 		},
+
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities() -- Para autocompletar avançado (se estiver usando nvim-cmp)
 			require("ltex_extra").setup({
