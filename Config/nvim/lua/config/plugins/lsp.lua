@@ -73,7 +73,7 @@ return {
 			for server_name, _ in pairs(servers) do
 				require("lspconfig")[server_name].setup({
 					capabilities = capabilities,
-					on_attach = on_attach,
+					on_attach = on_attach, --
 					settings = servers[server_name],
 				})
 			end
