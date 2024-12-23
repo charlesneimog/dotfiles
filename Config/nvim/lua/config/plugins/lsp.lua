@@ -62,7 +62,7 @@ return {
 				pyright = {},
 				html = {},
 				lua_ls = {},
-				-- tsserver = {},
+				ltex = {},
 			}
 
 			local mason_lspconfig = require("mason-lspconfig")
