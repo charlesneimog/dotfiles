@@ -1,5 +1,8 @@
 local vim = vim
 
+--╭─────────────────────────────────────╮
+--│         LSP Configurations          │
+--╰─────────────────────────────────────╯
 local servers = {
 	clangd = {
 		cmd = {
@@ -44,22 +47,20 @@ return {
 			},
 		},
 		config = function()
-local mason = require("mason")
+			local mason = require("mason")
 			local mason_lspconfig = require("mason-lspconfig")
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local lspconfig = require("lspconfig")
 
-
-
-    mason.setup({
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
-        },
-      },
-    })
+			mason.setup({
+				ui = {
+					icons = {
+						package_installed = "✓",
+						package_pending = "➜",
+						package_uninstalled = "✗",
+					},
+				},
+			})
 
 			local capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -71,9 +72,10 @@ local mason = require("mason")
 
 			mason_lspconfig.setup_handlers({
 				function(server_name)
-					local server = servers[server_name]
-					server.capabilities = capabilities
-					lspconfig[server_name].setup(server)
+					lspconfig[server_name].setup({
+						capabilities = capabilities,
+						settings = servers[server_name],
+					})
 				end,
 			})
 		end,
