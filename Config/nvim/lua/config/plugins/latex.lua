@@ -52,18 +52,23 @@ return {
 				desc = "Add word to dictionary",
 			},
 			{
-				"hh",
+				"hh", -- Key mapping
 				function()
 					local cursor_pos = vim.api.nvim_win_get_cursor(0)
-					local line, _ = cursor_pos[1] - 1, cursor_pos[2]
+					local line = cursor_pos[1] - 1 -- Adjust because line numbers are 0-based in diagnostics
 					local diagnostics = vim.diagnostic.get(0, { lnum = line })
+
 					if #diagnostics == 0 then
 						print("No diagnostic under cursor")
 						return
 					end
+
+					-- Get the first diagnostic and its message
 					local diagnostic = diagnostics[1]
 					local message = diagnostic.message
+					local rule = diagnostic.user_data.ltex and diagnostic.user_data.ltex.rule or "UNKNOWN_RULE"
 					local lang = getCurrentLang()
+
 					local commands = vim.lsp.commands
 					if commands["_ltex.hideFalsePositives"] then
 						local funcHideFalsePositives = commands["_ltex.hideFalsePositives"]
@@ -71,19 +76,30 @@ return {
 							arguments = {
 								{
 									falsePositives = {
-										[lang] = { message },
+										[lang] = {
+											-- Create the JSON string for the rule and the message
+											'{"rule":"'
+												.. rule
+												.. '","sentence":"^'
+												.. vim.fn.escape(message, "\\")
+												.. '$"}',
+										},
 									},
+									uri = vim.uri_from_fname(vim.fn.expand("%")), -- Ensure correct URI from the current file
 								},
 							},
 						}
 						funcHideFalsePositives(args)
-						print("Ignored false positive: " .. message .. " (Language: " .. lang .. ")")
+						print(
+							"Ignored false positive: " .. message .. " (Language: " .. lang .. ", Rule: " .. rule .. ")"
+						)
 					else
+						-- If the command isn't found, notify the user
 						print("Command _ltex.hideFalsePositives not found")
 					end
 				end,
-				mode = { "n" },
-				desc = "Ignore rule",
+				mode = { "n" }, -- Normal mode
+				desc = "Ignore rule", -- Description for the keymap
 			},
 		},
 
