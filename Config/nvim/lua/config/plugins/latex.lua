@@ -18,8 +18,18 @@ return {
 		"lervag/vimtex",
 		ft = { "tex", "latex", "bib" },
 		event = { "BufEnter *.tex,*.bib" },
-		config = function() end,
+		config = function()
+			vim.g.vimtex_compiler_latexmk = {
+				build_dir = "build",
+				options = {
+					"-lualatex", -- Use LuaLaTeX
+					"-synctex=1", -- Enable SyncTeX
+					"-interaction=nonstopmode", -- Non-stop mode
+				},
+			}
+		end,
 	},
+
 	{
 		"barreiroleo/ltex_extra.nvim",
 		ft = { "markdown", "tex" },
