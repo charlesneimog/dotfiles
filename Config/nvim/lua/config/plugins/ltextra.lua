@@ -7,7 +7,13 @@ return {
 			{
 				"aw",
 				function()
-					vim.notify(vim.inspect(vim.lsp.commands))
+					-- check if _ltex.addToDictionary is on the commands list
+					local commands = vim.lsp.commands
+					if commands["_ltex.addToDictionary"] then
+						vim.lsp.buf.execute_command(commands["_ltex.addToDictionary"], {
+							words = vim.fn.expand("<cword>"),
+						})
+					end
 				end,
 				mode = { "n" },
 				desc = "Add word to dictionary",
