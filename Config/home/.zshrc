@@ -128,6 +128,8 @@ unset __conda_setup
 #╭──────────────────────────────────────╮
 #│                 Yazi                 │
 #╰──────────────────────────────────────╯
+export EDITOR=nvim
+
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
