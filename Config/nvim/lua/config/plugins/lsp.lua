@@ -44,9 +44,22 @@ return {
 			},
 		},
 		config = function()
+local mason = require("mason")
 			local mason_lspconfig = require("mason-lspconfig")
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local lspconfig = require("lspconfig")
+
+
+
+    mason.setup({
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
+      },
+    })
 
 			local capabilities = cmp_nvim_lsp.default_capabilities()
 
