@@ -7,11 +7,7 @@ return {
 			{
 				"aw",
 				function()
-					local params = vim.lsp.util.make_position_params()
-					vim.lsp.buf.execute_command({
-						command = "_ltex.addToDictionary",
-						arguments = { params.textDocument.uri, vim.fn.expand("<cword>") }, -- Palavra sob o cursor
-					})
+					vim.notify(vim.inspect(vim.lsp.commands))
 				end,
 				mode = { "n" },
 				desc = "Add word to dictionary",
