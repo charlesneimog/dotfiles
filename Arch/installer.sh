@@ -329,4 +329,10 @@ link_files "$SCRIPT_DIR/../Config/lazygit" "$HOME/.config/lazygit" false
 link_files "$SCRIPT_DIR/../Config/swaylock" "$HOME/.config/swaylock" false 
 link_files "$SCRIPT_DIR/../Config/plugdata" "$HOME/Documents/plugdata" true 
 
+#╭──────────────────────────────────────╮
+#│           Set Default Apps           │
+#╰──────────────────────────────────────╯
+xdg-mime default io.bassi.Amberol.desktop audio/x-wav
+
+
 
