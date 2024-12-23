@@ -20,9 +20,6 @@ local servers = {
 				additionalRules = {
 					enablePickyRules = true,
 				},
-				dictionary = {
-					["pt-BR"] = { "Neovim", "Lua" }, -- Adicionar palavras ao dicionário
-				},
 			},
 		},
 	},
@@ -68,13 +65,13 @@ return {
 			})
 		end,
 	},
+
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		dependencies = "williamboman/mason.nvim",
 		config = function()
 			require("mason-tool-installer").setup({
 				ensure_installed = {
-					"prettier",
 					"stylua",
 					"isort",
 					"black",
