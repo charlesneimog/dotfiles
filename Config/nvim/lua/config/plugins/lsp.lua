@@ -62,7 +62,10 @@ return {
 				pyright = {},
 				html = {},
 				lua_ls = {},
-				ltex = {},
+				ltex = {
+					autostart = true,
+					filetypes = { "markdown", "tex", "txt" }, -- Add other filetypes you want ltex to handle
+				},
 			}
 
 			local mason_lspconfig = require("mason-lspconfig")
@@ -78,21 +81,6 @@ return {
 						settings = servers[server_name],
 					})
 				end,
-			})
-
-			local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-			require("lspconfig").ltex.setup({
-				autostart = false,
-				filetypes = { "markdown", "tex", "txt" }, -- Add other filetypes you want ltex to handle
-			})
-			require("lspconfig").clangd.setup({
-				on_attach = on_attach,
-				capabilities = cmp_nvim_lsp.default_capabilities(),
-				cmd = {
-					"clangd",
-					"--offset-encoding=utf-16",
-				},
 			})
 		end,
 	},
