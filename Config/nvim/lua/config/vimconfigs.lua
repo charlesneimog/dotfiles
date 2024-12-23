@@ -39,3 +39,12 @@ function ToggleSpell()
 end
 
 vim.cmd("command! ToggleSpell :lua ToggleSpell()")
+
+vim.diagnostic.config({
+	virtual_text = false,
+	update_in_insert = true,
+	float = {
+		border = "rounded",
+		source = "always",
+	},
+})
