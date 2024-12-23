@@ -45,6 +45,14 @@ return {
 				mode = "n",
 				desc = "[V]iew [D]iagnostics",
 			},
+			{
+				"ca",
+				function()
+					vim.lsp.buf.code_action()
+				end,
+				mode = "n",
+				desc = "Code [A]ction",
+			},
 		},
 		config = function()
 			local mason = require("mason")
