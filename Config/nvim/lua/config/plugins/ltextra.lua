@@ -11,6 +11,14 @@ return {
 					local commands = vim.lsp.commands
 					if commands["_ltex.addToDictionary"] then
 						local funcAddToDictionary = commands["_ltex.addToDictionary"]
+						local clients = vim.lsp.buf_get_clients(0)
+						for _, client in pairs(clients) do
+							local clientName = client.name
+							if clientName == "ltex" then
+								local ltex_settings = client.config.settings
+								vim.print(vim.inspect(ltex_settings))
+							end
+						end
 
 						-- Format the arguments to match what the function expects
 						local word = vim.fn.expand("<cword>")
