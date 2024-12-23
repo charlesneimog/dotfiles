@@ -4,7 +4,7 @@ return {
 		ft = { "markdown", "tex" }, -- Especifica os tipos de arquivos
 		dependencies = { "neovim/nvim-lspconfig" }, -- LSP necessário
 		config = function()
-			local ltex_config = require("ltex_extra_config")
+			local ltex_config = require("ltex_extra")
 			vim.notify(vim.inspect(ltex_config))
 
 			local capabilities = require("cmp_nvim_lsp").default_capabilities() -- Para autocompletar avançado (se estiver usando nvim-cmp)
