@@ -10,7 +10,7 @@ return {
 					capabilities = capabilities,
 					settings = {
 						ltex = {
-							language = "en-US", -- Idioma principal (pode ser ajustado)
+							language = "pt-BR", -- Idioma principal (pode ser ajustado)
 							additionalLanguages = { "pt-BR" }, -- Idiomas extras
 							dictionary = {
 								["en-US"] = { "customword" },
