@@ -64,7 +64,19 @@ return {
 				lua_ls = {},
 				ltex = {
 					autostart = true,
-					filetypes = { "markdown", "tex", "txt" }, -- Add other filetypes you want ltex to handle
+					filetypes = { "markdown", "tex", "txt" },
+					settings = {
+						ltex = {
+							language = "pt-BR",
+							diagnosticSeverity = "information",
+							additionalRules = {
+								enablePickyRules = true,
+							},
+							dictionary = {
+								["pt-BR"] = { "Neovim", "Lua" }, -- Adicionar palavras ao dicionário
+							},
+						},
+					},
 				},
 			}
 
