@@ -1,5 +1,33 @@
 local vim = vim
 
+local servers = {
+	clangd = {
+		cmd = {
+			"clangd",
+			"--offset-encoding=utf-16",
+		},
+	},
+	pyright = {},
+	html = {},
+	lua_ls = {},
+	ltex = {
+		autostart = true,
+		filetypes = { "markdown", "tex", "txt" },
+		settings = {
+			ltex = {
+				language = "pt-BR",
+				diagnosticSeverity = "information",
+				additionalRules = {
+					enablePickyRules = true,
+				},
+				dictionary = {
+					["pt-BR"] = { "Neovim", "Lua" }, -- Adicionar palavras ao dicionário
+				},
+			},
+		},
+	},
+}
+
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -7,9 +35,6 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim", -- Mason is a build tool for Neovim plugins
-			"folke/neodev.nvim", -- Neovim development environment
-			"L3MON4D3/LuaSnip",
-			"lewis6991/foldsigns.nvim", --
 		},
 		keys = {
 			{
@@ -22,60 +47,23 @@ return {
 			},
 		},
 		config = function()
-			require("mason").setup()
-
-			vim.diagnostic.config({
-				virtual_text = false,
-				update_in_insert = true,
-				float = {
-					border = "rounded",
-					source = "always",
-				},
-			})
-			local symbols = { Error = "󰅙 ", Info = "󰋼 ", Hint = "󰌵 ", Warn = " " }
-			for name, icon in pairs(symbols) do
-				local hl = "DiagnosticSign" .. name
-				vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
-			end
-
-			local servers = {
-				clangd = {
-					cmd = {
-						"clangd",
-						"--offset-encoding=utf-16",
-					},
-				},
-				pyright = {},
-				html = {},
-				lua_ls = {},
-				ltex = {
-					autostart = true,
-					filetypes = { "markdown", "tex", "txt" },
-					settings = {
-						ltex = {
-							language = "pt-BR",
-							diagnosticSeverity = "information",
-							additionalRules = {
-								enablePickyRules = true,
-							},
-						},
-					},
-				},
-			}
-
-			-- use default
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local mason_lspconfig = require("mason-lspconfig")
+			local cmp_nvim_lsp = require("cmp_nvim_lsp")
+			local lspconfig = require("lspconfig")
+
+			local capabilities = cmp_nvim_lsp.default_capabilities()
+
+			-- Ensure Installed
 			mason_lspconfig.setup({
 				ensure_installed = vim.tbl_keys(servers),
 				automatic_installation = true,
 			})
+
 			mason_lspconfig.setup_handlers({
 				function(server_name)
-					require("lspconfig")[server_name].setup({
-						capabilities = capabilities,
-						settings = servers[server_name],
-					})
+					local server = servers[server_name]
+					server.capabilities = capabilities
+					lspconfig[server_name].setup(server)
 				end,
 			})
 		end,
