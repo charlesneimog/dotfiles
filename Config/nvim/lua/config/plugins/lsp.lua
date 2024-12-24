@@ -36,6 +36,7 @@ return {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim", -- Mason is a build tool for Neovim plugins
 		},
+
 		keys = {
 			{
 				"<leader>v",
@@ -54,6 +55,7 @@ return {
 				desc = "Code [A]ction",
 			},
 		},
+
 		config = function()
 			local mason = require("mason")
 			local mason_lspconfig = require("mason-lspconfig")
