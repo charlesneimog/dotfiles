@@ -1,6 +1,5 @@
 local vim = vim
 
-vim.cmd([[autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif]])
 vim.o.hlsearch = true
 vim.wo.number = true
 vim.o.mouse = ""
@@ -26,19 +25,6 @@ vim.opt.scrolloff = 8
 vim.o.termguicolors = true
 vim.o.completeopt = "menuone,noselect"
 vim.o.timeoutlen = 200
-
-vim.cmd([[highlight IndentBlanklineContextChar guifg=#BCBCBC gui=nocombine]])
-
-function ToggleSpell()
-	vim.cmd("set spell! spelllang=pt_br")
-	if vim.o.spell then
-		print("Spell checker enabled")
-	else
-		print("Spell checker disabled")
-	end
-end
-
-vim.cmd("command! ToggleSpell :lua ToggleSpell()")
 
 vim.diagnostic.config({
 	virtual_text = false,

@@ -57,29 +57,23 @@ return {
 		},
 
 		config = function()
-			local mason = require("mason")
 			local mason_lspconfig = require("mason-lspconfig")
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local lspconfig = require("lspconfig")
 
-			mason.setup({
-				ui = {
-					icons = {
-						package_installed = "✓",
-						package_pending = "➜",
-						package_uninstalled = "✗",
-					},
-				},
-			})
+			-- automatic install
+			local masonrequirements = {}
+			for _, server in ipairs(vim.tbl_keys(servers)) do
+				table.insert(masonrequirements, server)
+			end
 
-			local capabilities = cmp_nvim_lsp.default_capabilities()
-
-			-- Ensure Installed
 			mason_lspconfig.setup({
-				ensure_installed = vim.tbl_keys(servers),
+				ensure_installed = masonrequirements,
 				automatic_installation = true,
 			})
 
+			--
+			local capabilities = cmp_nvim_lsp.default_capabilities()
 			mason_lspconfig.setup_handlers({
 				function(server_name)
 					lspconfig[server_name].setup({
