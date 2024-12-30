@@ -136,6 +136,41 @@ return {
 					},
 				},
 			})
+
+			vim.api.nvim_create_user_command("LtexSetLanguage", function(args)
+				local new_lang = args.args
+				vim.notify("new_lang: " .. new_lang)
+				if not new_lang then
+					print("Usage: LtexSetLanguage <language>")
+					return
+				end
+				local available_langs = { "en-US", "en-GB", "de-DE", "es-ES", "fr-FR", "pt-BR", "auto" } -- Add more languages as needed
+				if not vim.tbl_contains(available_langs, new_lang) then
+					vim.notify("Invalid language: " .. new_lang)
+					vim.notify("Available languages: " .. table.concat(available_langs, ", "))
+					return
+				end
+				local clients = vim.lsp.get_active_clients({ name = "ltex" })
+				if #clients > 0 then
+					vim.lsp.stop_client(clients[1].id)
+				end
+				require("ltex_extra").setup({
+					server_opts = {
+						capabilities = capabilities,
+						settings = {
+							ltex = {
+								language = new_lang, -- Idioma principal (pode ser ajustado)
+								additionalLanguages = { "pt-BR", "en-US" }, -- Idiomas extras
+								hiddenFalsePositives = {},
+							},
+						},
+					},
+				})
+				vim.lsp.start({ name = "ltex" })
+			end, {
+				nargs = 1,
+				desc = "Set LTeX Language",
+			})
 		end,
 	},
 }

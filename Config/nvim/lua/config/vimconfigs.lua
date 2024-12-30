@@ -34,3 +34,6 @@ vim.diagnostic.config({
 		source = "always",
 	},
 })
+
+-- Work
+vim.cmd("autocmd BufRead,BufNewFile *.pd_lua set filetype=lua")

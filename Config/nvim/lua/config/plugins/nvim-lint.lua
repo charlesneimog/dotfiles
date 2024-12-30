@@ -14,7 +14,6 @@ return {
 			python = { "flake8" },
 			c = { "clangtidy" },
 			cpp = { "clangtidy" },
-			tex = { "vale" },
 			markdown = { "vale" },
 		}
 
