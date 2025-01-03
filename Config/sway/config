@@ -2,20 +2,26 @@
 # │               COMMANDS                │
 # ╰───────────────────────────────────────╯
 bindsym print exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
-bindsym Mod4+t exec bash -c ". ~/.config/hypr/functions.sh translate_selection >> /tmp/translate.log"
+# bindsym Mod4+t exec bash -c ". ~/.config/hypr/functions.sh translate_selection >> /tmp/translate.log"
 bindsym Mod4+d exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
 bindsym Mod4+e exec nautilus
 bindsym Mod1+F4 kill
 bindsym Mod1+Tab exec killall rofi || rofi -show window -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
-
 bindsym Mod4+Return exec wezterm-gui
 bindsym Mod4+v exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
 bindsym Mod4+l exec zenity --list --title="External Monitor Mode" --column="Options" "option1" "option2" "option3"
+bindsym Mod4+t layout tabbed
 
 # Commands Zenity
 bindsym Mod4+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
+
+
+# Windows Command
 bindsym Mod4+f fullscreen toggle
 bindsym Mod4+space floating toggle
+bindsym Mod4+c move position center
+bindsym Mod4+x exec zen-browser
+
 
 # Sound 
 bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1. @DEFAULT_AUDIO_SINK@ 5%+ 
@@ -126,21 +132,16 @@ input "type:touchpad" {
     natural_scroll enabled
 }
 
-input "type:mouse" {
-    natural_scroll enabled
-}
 
 bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next
 bindgesture swipe:up exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
 
 
-
 # ╭───────────────────────────────────────╮
-# │            Execute Always             │
+# │                Execute                │
 # ╰───────────────────────────────────────╯
-exec_always {
-    # Interface
+exec {
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
     bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i "$HOME/.config/hypr/wallpaper.png"
     swaync 
@@ -152,22 +153,29 @@ exec_always {
 
     # ssh and others
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+    /usr/lib/xdg-desktop-portal-gtk
+    /usr/lib/xdg-desktop-portal-wlr
 
+    # cloud
+    nextcloud
+}
+
+# ╭───────────────────────────────────────╮
+# │            Execute Always             │
+# ╰───────────────────────────────────────╯
+
+exec_always {
     # copy and paste
     wl-paste --type text --watch cliphist store
     wl-paste --type image --watch cliphist store
 
     # idle, locks
-    /usr/lib/xdg-desktop-portal-gtk
-    /usr/lib/xdg-desktop-portal-wlr
     swayidle -w \
         timeout 120 'swaylock -f -C ~/.config/swaylock/config' \
         timeout 300 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'swaylock -C ~/.config/swaylock/config'
 
-    # cloud
-    nextcloud
 
     # activity watch
     /home/neimog/.cargo/bin/aw-watcher-window-wayland
@@ -193,10 +201,18 @@ gaps left 2
 # ╭───────────────────────────────────────╮
 # │              Apps Rules               │
 # ╰───────────────────────────────────────╯
-for_window [class="plugdata"] floating enable
-
-# NautilusPreviewer
 for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
+for_window [app_id="zenity"] resize set height 800 px
+for_window [app_id="zenity"] resize set width 800 px
+for_window [app_id="zenity"] floating enable
+for_window [app_id="zenity"] floating enable
+for_window [app_id="zenity"] resize set 800 600
+for_window [app_id="zenity"] move position center
+for_window [app_id="zenity"] floating enable
+
+# Terminal
+for_window [class="org.wezfurlong.wezterm"] floating enable, resize set 1700 950, border none
+
 
 # Text App
 for_window [app_id="org.gnome.TextEditor"] floating enable
@@ -205,10 +221,9 @@ for_window [app_id="org.gnome.TextEditor"] resize set width 1000 px
 
 # Calculator
 for_window [app_id="org.gnome.Calculator"] floating enable
-for_window [app_id="org.gnome.Calculator"] resize set height 50 ppt
-
-# Zenity
-for_window [app_id="zenity"] floating enable
+for_window [app_id="org.gnome.Calculator"] resize set height 200 px
+for_window [app_id="org.gnome.Calculator"] resize set width 200 px
+for_window [app_id="org.gnome.Calculator"] move position 1500 20
 
 # PureData always small in the left
 for_window [class="PdWindow"] floating enable resize set width 500 px
@@ -219,12 +234,13 @@ for_window [class="PdPatch"] floating enable resize set width 1200 px
 # ╰───────────────────────────────────────╯
 
 assign [app_id="(^qutebrowser|brave)"] 1
+assign [app_id="zen-beta"] 1
 assign [app_id="zen-alpha"] 1
 
 assign [class="org.wezfurlong.wezterm"] 2
 assign [app_id="kitty"] 2
 assign [app_id="org.gnome.Nautilus"] 3
-assign [class="PatchWindow|PdWindow"] 4
+assign [class="PatchWindow|PdWindow|plugdata"] 4
 assign [class="anytype"] 5
 assign [app_id="org.kde.okular|evince|zathura"] 6
 assign [app_id="org.inkscape.Inkscape"] 7

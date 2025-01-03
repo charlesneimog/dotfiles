@@ -1,27 +1,49 @@
 local vim = vim
 
-local function getGnomeThemeMode()
-	local cmd = vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme")
-	vim.g.gnome_theme_mode = cmd:match("dark") and "dark" or "light"
-	return cmd:match("dark") and "dark" or "light"
-end
-
 local function setmytheme(switcher)
-	local lualinetheme
-	if switcher == "dark" then
-		vim.cmd("colorscheme onedark")
-		lualinetheme = require("lualine.themes.onedark")
-		lualinetheme.normal.c.bg = "#303030"
-	else
-		vim.cmd("colorscheme onelight")
-		lualinetheme = require("lualine.themes.onelight")
-		lualinetheme.normal.c.bg = "#ffffff"
+	if switcher == vim.g.wezterm_theme then
+		return
 	end
+	vim.g.wezterm_theme = switcher
+	local mytheme
+	if switcher == "dark" then
+		mytheme = require("lualine.themes.onedark")
+		mytheme.normal.c.bg = "#303030"
+	else
+		mytheme = require("lualine.themes.onelight")
+		mytheme.normal.c.bg = "#ffffff"
+	end
+
 	require("lualine").setup({
 		options = {
-			theme = lualinetheme,
+			theme = mytheme,
 		},
 	})
+	for _, kind in ipairs({ "Add", "Change", "Delete" }) do
+		local group = "Diff" .. kind
+		local bg
+		if switcher == "dark" then
+			bg = 0
+		else
+			bg = 1
+		end
+
+		local color = ""
+		if group == "DiffAdd" then
+			color = vim.api.nvim_get_hl_by_name("lualine_a_buffers_active", true)["background"]
+		elseif group == "DiffChange" then
+			color = "#E1AD0F"
+		elseif group == "DiffDelete" then
+			color = "#A90000"
+		end
+		vim.api.nvim_set_hl(0, group, { fg = color, bg = string.format("#%06X", bg) })
+	end
+
+	if switcher == "dark" then
+		vim.cmd("colorscheme onedark")
+	else
+		vim.cmd("colorscheme onelight")
+	end
 end
 
 vim.api.nvim_create_user_command(
@@ -38,7 +60,7 @@ return {
 		"olimorris/onedarkpro.nvim",
 		priority = 1000,
 		config = function()
-			local theme = getGnomeThemeMode()
+			local theme = "dark"
 			require("onedarkpro").setup({
 				colors = {
 					onedark = { bg = "#303030", fg = "#ffffff", float_bg = "#2e2e2e" },

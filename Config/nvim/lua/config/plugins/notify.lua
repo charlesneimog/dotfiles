@@ -6,7 +6,7 @@ return {
 			stages = "static",
 			fps = 60,
 			render = "compact",
-			-- top_down = false,
+			top_down = false,
 			-- background_colour = "NotifyBackground",
 		})
 		vim.notify = notify

@@ -139,3 +139,7 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+function n() {
+    nvim 
+}
+

@@ -208,14 +208,12 @@ wezterm.on("window-config-reloaded", function(window, _)
 	local overrides = window:get_config_overrides() or {}
 	local appearance = window:get_appearance()
 	local current_theme = overrides.color_scheme
-	if appearance ~= current_theme then
-		local files = wezterm.glob("/run/user/1000/*")
-		local local_theme = appearance:lower()
-		for _, file in ipairs(files) do
-			if file:match("nvim") then
-				local command = "nvim --server " .. file .. " --remote-send ':SetMyTheme " .. local_theme .. "<CR>'"
-				os.execute(command)
-			end
+	local my_theme = appearance:lower()
+	local files = wezterm.glob("/run/user/1000/*")
+	for _, file in ipairs(files) do
+		if file:match("nvim") then
+			local command = "nvim --server " .. file .. " --remote-send ':SetMyTheme " .. my_theme .. "<CR>'"
+			os.execute(command)
 		end
 	end
 
