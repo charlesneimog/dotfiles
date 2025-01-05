@@ -34,3 +34,8 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+export FZF_DEFAULT_OPTS="--height=20% --info=inline --margin=1 --padding=1 --color=hl+:#000000"
+
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/neimog/.lmstudio/bin"

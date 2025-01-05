@@ -34,7 +34,6 @@ return {
 				local package = mason_registry.get_package(mason_name)
 				if not package:is_installed() then
 					package:install()
-					vim.notify("Installing " .. linter[1] .. " for " .. ft .. ". Wait for mason message", "info")
 				end
 			else
 				vim.notify("Multiple formatters for " .. ft .. " not implemented", "info")

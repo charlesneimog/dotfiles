@@ -8,7 +8,7 @@ audiooutdevname1: JACK
 audiobuf: 100
 rate: 48000
 callback: 0
-audioblocksize: 128
+audioblocksize: 1024
 midiapi: 1
 nomidiin: True
 nomidiout: True

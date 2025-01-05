@@ -5,27 +5,38 @@ local function setmytheme(switcher)
 		return
 	end
 	vim.g.wezterm_theme = switcher
+	vim.env.WEZTERM_THEME = switcher
 	local mytheme
 	if switcher == "dark" then
 		mytheme = require("lualine.themes.onedark")
-		mytheme.normal.c.bg = "#303030"
+		mytheme.normal.c.bg = nil
 	else
 		mytheme = require("lualine.themes.onelight")
-		mytheme.normal.c.bg = "#ffffff"
+		mytheme.normal.c.bg = nil
 	end
+
+	-- vim.notify(vim.inspect(mytheme))
 
 	require("lualine").setup({
 		options = {
 			theme = mytheme,
 		},
 	})
+
+	if switcher == "dark" then
+		vim.cmd("colorscheme onedark")
+	else
+		vim.cmd("colorscheme onelight")
+	end
+
 	for _, kind in ipairs({ "Add", "Change", "Delete" }) do
 		local group = "Diff" .. kind
+
 		local bg
-		if switcher == "dark" then
-			bg = 0
+		if switcher == "light" then
+			bg = "#E6E6E6"
 		else
-			bg = 1
+			bg = "#484848"
 		end
 
 		local color = ""
@@ -36,13 +47,8 @@ local function setmytheme(switcher)
 		elseif group == "DiffDelete" then
 			color = "#A90000"
 		end
-		vim.api.nvim_set_hl(0, group, { fg = color, bg = string.format("#%06X", bg) })
-	end
 
-	if switcher == "dark" then
-		vim.cmd("colorscheme onedark")
-	else
-		vim.cmd("colorscheme onelight")
+		vim.api.nvim_set_hl(0, group, { fg = color, bg = bg })
 	end
 end
 
@@ -60,7 +66,7 @@ return {
 		"olimorris/onedarkpro.nvim",
 		priority = 1000,
 		config = function()
-			local theme = "dark"
+			local theme = vim.env.WEZTERM_THEME
 			require("onedarkpro").setup({
 				colors = {
 					onedark = { bg = "#303030", fg = "#ffffff", float_bg = "#2e2e2e" },
@@ -72,22 +78,6 @@ return {
 			else
 				vim.cmd("colorscheme onelight")
 			end
-		end,
-	},
-	{
-		"catppuccin/nvim",
-		priority = 1000,
-		config = function()
-			require("catppuccin").setup({
-				flavour = "auto",
-				background = {
-					light = "latte",
-					dark = "mocha",
-				},
-				color_overrides = {
-					mocha = { bg = "#303030", fg = "#ffffff", fg_gutter = "#ffffff" },
-				},
-			})
 		end,
 	},
 }

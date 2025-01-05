@@ -66,26 +66,29 @@ return {
 
 		--
 
-		conform.setup({
+		local setup_options = {
 			formatters_by_ft = formatters_by_ft,
 			formatters = formatters,
 			notify_on_error = true,
 			format_on_save = {
-				lsp_fallback = true,
 				timeout_ms = 5000,
-				condition = function(self, ctx)
+				async = true,
+				lsp_fallback = function()
 					return vim.g.conform_format
 				end,
 			},
-		})
-		vim.g.conform_format = true
+		}
+
 		vim.api.nvim_create_user_command("ToggleFormat", function()
 			vim.g.conform_format = not vim.g.conform_format
 			if vim.g.conform_format then
-				vim.notify("Conform formatting is now DISABLED", "info")
+				require("conform").setup(setup_options)
+				vim.notify("Formatting enabled", "info")
 			else
-				vim.notify("Conform formatting is now ENABLED", "info")
+				require("conform").setup({ format_on_save = false })
+				vim.notify("Formatting disabled", "info")
 			end
 		end, {})
+		vim.g.conform_format = true
 	end,
 }

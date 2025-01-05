@@ -118,11 +118,10 @@ local function lualine_setup()
 	end
 end
 
-vim.g.lualine_setup = lualine_setup
-
 return {
 	"nvim-lualine/lualine.nvim",
 	event = "VimEnter",
+	priority = 999,
 	config = function()
 		lualine_setup()
 	end,

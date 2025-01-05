@@ -25,4 +25,5 @@ require("lazy").setup("config.plugins", {
 })
 
 require("config.vimconfigs")
+require("config.keys")
 require("config.term")

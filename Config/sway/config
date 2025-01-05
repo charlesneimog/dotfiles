@@ -20,7 +20,7 @@ bindsym Mod4+Shift+q exec zenity --question --title="Logout" --text="Do you want
 bindsym Mod4+f fullscreen toggle
 bindsym Mod4+space floating toggle
 bindsym Mod4+c move position center
-bindsym Mod4+x exec zen-browser
+bindsym Mod4+z exec zen-browser
 
 
 # Sound 
@@ -158,6 +158,7 @@ exec {
 
     # cloud
     nextcloud
+    autotiling-rs
 }
 
 # ╭───────────────────────────────────────╮
@@ -168,6 +169,7 @@ exec_always {
     # copy and paste
     wl-paste --type text --watch cliphist store
     wl-paste --type image --watch cliphist store
+    # swaywatch
 
     # idle, locks
     swayidle -w \
@@ -175,11 +177,6 @@ exec_always {
         timeout 300 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'swaylock -C ~/.config/swaylock/config'
-
-
-    # activity watch
-    /home/neimog/.cargo/bin/aw-watcher-window-wayland
-    aw-qt
 
 }
 
@@ -234,6 +231,7 @@ for_window [class="PdPatch"] floating enable resize set width 1200 px
 # ╰───────────────────────────────────────╯
 
 assign [app_id="(^qutebrowser|brave)"] 1
+assign [app_id="zen"] 1
 assign [app_id="zen-beta"] 1
 assign [app_id="zen-alpha"] 1
 

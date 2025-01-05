@@ -1,5 +1,8 @@
 return {
-	{ "AndreM222/copilot-lualine" },
+	{
+		"AndreM222/copilot-lualine",
+		event = "BufEnter",
+	},
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
@@ -13,6 +16,7 @@ return {
 	},
 	{
 		"zbirenbaum/copilot-cmp",
+		event = "InsertEnter",
 		config = function()
 			require("copilot_cmp").setup()
 		end,

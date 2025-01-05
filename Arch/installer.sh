@@ -138,7 +138,7 @@ done
 #╭──────────────────────────────────────╮
 #│          Hyprland and Sway           │
 #╰──────────────────────────────────────╯
-packages=("sway" "hyprland" "sushi" "waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack" "slurp" "grim" "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "autotiling-rs" "swayidle" "swaylock" "qt6-svg" "qt6-declarative" "sdmm")
+packages=("sway" "hyprland" "sushi" "waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack" "slurp" "grim" "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "autotiling-rs" "swayidle" "swaylock" "qt6-svg" "qt6-declarative" "sdmm" "autotiling-rs")
 
 for package in "${packages[@]}"; do
     paru_install_package "$package"
