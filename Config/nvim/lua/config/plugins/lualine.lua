@@ -69,6 +69,26 @@ local function lualine_setup()
 						newfile = "[New]", -- Text to show for newly created file before first write
 					},
 				},
+				function()
+					local result = require("lsp-progress").progress()
+					local spinner = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
+					local truncated = ""
+					local spinner_found = false
+					for i = 1, math.min(#result, 20) do
+						truncated = truncated .. result:sub(i, i)
+						if vim.tbl_contains(spinner, result:sub(i, i)) then
+							spinner_found = true
+							break
+						end
+					end
+					if spinner_found then
+						return truncated
+					elseif #result > 20 then
+						return truncated 
+					else
+						return result
+					end
+				end,
 			},
 			lualine_x = {
 				{
@@ -98,12 +118,17 @@ local function lualine_setup()
 					end,
 				},
 			},
-			lualine_z = { mylocation, "copilot" },
+			lualine_z = {
+				mylocation,
+				"copilot",
+				function()
+					return require("codeium.virtual_text").status_string()
+				end,
+			},
 		},
 	})
 	for _, kind in ipairs({ "Add", "Change", "Delete" }) do
 		local group = "Diff" .. kind
-
 		local bg = vim.api.nvim_get_hl_by_name("lualine_b_visual", true)["background"]
 
 		local color = ""

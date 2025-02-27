@@ -64,6 +64,18 @@ return {
 			end
 		end
 
+		-- oscofo language
+		local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+		parser_config.scofo = {
+			install_info = {
+				url = "/home/neimog/Documents/Git/OScofo/Resources/tree-sitter-scofo",
+				files = { "src/parser.c" },
+				generate_requires_npm = false,
+				requires_generate_from_grammar = false,
+			},
+			filetype = "scofo.txt", -- if filetype does not match the parser name
+		}
+
 		--
 
 		local setup_options = {
@@ -89,6 +101,6 @@ return {
 				vim.notify("Formatting disabled", "info")
 			end
 		end, {})
-		vim.g.conform_format = true
+		vim.g.conform_format = false
 	end,
 }

@@ -10,6 +10,28 @@ return {
 	},
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
+		local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+
+		parser_config.scofo = {
+			install_info = {
+				url = "/home/neimog/Documents/Git/OScofo/Resources/tree-sitter-scofo",
+				files = { "src/parser.c" },
+				generate_requires_npm = false,
+				requires_generate_from_grammar = false,
+			},
+			filetype = "scofo",
+		}
+
+		vim.filetype.add({
+			pattern = {
+				[".*%.scofo%.txt"] = "scofo", -- Matches any file ending in .scofo.txt
+			},
+		})
+
+        vim.treesitter.query.set("scofo", "injections", "(comment) @comment")
+		--
+		-- vim.treesitter.query.set("scofo", "injections", "(comment) @comment")
+		--
 		require("nvim-treesitter.configs").setup({
 			auto_install = true,
 			highlight = { enable = true },

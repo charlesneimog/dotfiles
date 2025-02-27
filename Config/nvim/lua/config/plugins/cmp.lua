@@ -67,27 +67,11 @@ return {
 					ellipsis_char = "...",
 					show_labelDetails = true,
 					before = function(entry, vim_item)
-						-- ...
 						return vim_item
 					end,
 				}),
 			},
 
-			-- formatting = {
-			-- 	fields = { "abbr", "menu" },
-			-- 	format = function(entry, item)
-			-- 		item.menu = ({
-			-- 			buffer = "[Buffer]",
-			-- 			nvim_lsp = "[LSP]",
-			-- 			nvim_lua = "[API]",
-			-- 			copilot = "[Copilot]",
-			-- 			path = "[Path]",
-			-- 			rg = "[RG]",
-			-- 			luasnip = "[Snippet]",
-			-- 		})[entry.source.name]
-			-- 		return item
-			-- 	end,
-			-- },
 			window = {
 				completion = require("cmp.config.window").bordered(),
 				documentation = require("cmp.config.window").bordered(),
@@ -117,6 +101,10 @@ return {
 
 			sources = cmp.config.sources({
 				{ name = "vimtext" },
+				{
+					name = "codeium",
+					max_item_count = 1,
+				},
 				{
 					name = "copilot",
 					max_item_count = 1,
