@@ -90,6 +90,8 @@ link_files "$SCRIPT_DIR/../Config/zathura" "$HOME/.config/zathura" false
 link_files "$SCRIPT_DIR/../Config/swaync" "$HOME/.config/swaync" false 
 link_files "$SCRIPT_DIR/../Config/lazygit" "$HOME/.config/lazygit" false
 link_files "$SCRIPT_DIR/../Config/swaylock" "$HOME/.config/swaylock" false 
+link_files "$SCRIPT_DIR/../Config/formatters" "$HOME/" true 
 link_files "$SCRIPT_DIR/../Config/plugdata" "$HOME/Documents/plugdata" true 
+
 
 

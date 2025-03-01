@@ -5,11 +5,10 @@ local act = wezterm.action
 wezterm.warn_about_missing_glyphs = false
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_wayland = false
-config.font_size = 15
+config.font_size = 18
 config.initial_cols = 110
 config.initial_rows = 30
 config.tab_bar_at_bottom = true
-config.window_background_opacity = 0.94
 config.set_environment_variables = { WEZTERM_THEME = wezterm.gui.get_appearance():lower() }
 
 --╭─────────────────────────────────────╮
@@ -35,7 +34,7 @@ table.insert(config.keys, {
 --╰─────────────────────────────────────╯
 config.font = wezterm.font_with_fallback({
 	{ family = "JetBrainsMono Nerd Font", weight = "Medium" },
-	{ family = "Meslo LG S", scale = 1.3 },
+	"Noto Color Emoji",
 })
 
 config.tab_max_width = 32
@@ -269,11 +268,9 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
 	if value == "true" and name == "IS_NVIM" then
 		update_theme(window, pane)
 		local overrides = window:get_config_overrides() or {}
-		overrides.window_background_opacity = 1
 		window:set_config_overrides(overrides)
 	elseif value == "false" and name == "IS_NVIM" then
 		local overrides = window:get_config_overrides() or {}
-		overrides.window_background_opacity = 0.94
 		window:set_config_overrides(overrides)
 	end
 end)

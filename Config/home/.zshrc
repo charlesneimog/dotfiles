@@ -124,3 +124,11 @@ export FZF_DEFAULT_OPTS="--height=20% --info=inline --margin=1 --padding=1 --col
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/home/neimog/.lmstudio/bin"
+
+# pnpm
+export PNPM_HOME="/home/neimog/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

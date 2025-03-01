@@ -39,3 +39,7 @@ export FZF_DEFAULT_OPTS="--height=20% --info=inline --margin=1 --padding=1 --col
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/home/neimog/.lmstudio/bin"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
