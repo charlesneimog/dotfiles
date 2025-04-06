@@ -120,10 +120,10 @@ local function lualine_setup()
 			},
 			lualine_z = {
 				mylocation,
-				"copilot",
-				function()
-					return require("codeium.virtual_text").status_string()
-				end,
+				-- "copilot",
+				-- function()
+				-- 	return require("codeium.virtual_text").status_string()
+				-- end,
 			},
 		},
 	})

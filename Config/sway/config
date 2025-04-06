@@ -34,7 +34,6 @@ bindsym XF86MonBrightnessDown exec brightnessctl set 2%-
 # Visual
 seat * xcursor_theme Phinger-cursors-dark 32
 
-
 # kill
 bindsym Mod4+q kill
 
@@ -73,10 +72,6 @@ bindsym Mod4+Control+Shift+Up move workspace to output up
 # always focus on new window
 for_window [app_id=.*] focus
 
-
-# turn off screen
-
-
 # ╭───────────────────────────────────────╮
 # │              Auto-Start               │
 # ╰───────────────────────────────────────╯
@@ -112,11 +107,11 @@ bindsym Mod4+r mode "resize"
 # ╭───────────────────────────────────────╮
 # │                  Bar                  │
 # ╰───────────────────────────────────────╯
-
 bar {
-    status_command waybar --config /home/neimog/.config/waybar/config.json # starts waybar
+    status_command waybar --config /home/neimog/.config/waybar/config.json
     mode invisible
 }
+
 # ╭───────────────────────────────────────╮
 # │                INPUTS                 │
 # ╰───────────────────────────────────────╯
@@ -180,36 +175,43 @@ exec_always {
 
 }
 
-
-default_border pixel 2
+default_border pixel 1
 default_floating_border pixel 2
 titlebar_border_thickness 2
 smart_borders on
 client.focused #ff0000 #ffffff #000000 #ffffff #ff0000 
 focus_follows_mouse yes
 
-gaps inner 2
-gaps outer 1
-gaps top 0
-gaps right 2
-gaps bottom 5
-gaps left 2
+gaps inner 8
+gaps outer 8
+
+gaps top 2
+gaps right 8
+gaps bottom 8
+gaps left 8
 
 # ╭───────────────────────────────────────╮
-# │              Apps Rules               │
+# │            App Window Size            │
 # ╰───────────────────────────────────────╯
-for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
+# for_window [class=".*"] floating enable
+# for_window [class=".*"] resize set height 1000 px
+# for_window [class=".*"] resize set width 1850 px
+# for_window [class=".*"] move position center
+
+# Zenity
+for_window [app_id="zenity"] floating enable
 for_window [app_id="zenity"] resize set height 800 px
 for_window [app_id="zenity"] resize set width 800 px
-for_window [app_id="zenity"] floating enable
-for_window [app_id="zenity"] floating enable
-for_window [app_id="zenity"] resize set 800 600
 for_window [app_id="zenity"] move position center
-for_window [app_id="zenity"] floating enable
+
+# preview
+for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
+for_window [app_id="org.gnome.NautilusPreviewer"] resize set height 800 px
+for_window [app_id="org.gnome.NautilusPreviewer"] resize set width 800 px
+for_window [app_id="org.gnome.NautilusPreviewer"] move position center
 
 # Terminal
 for_window [class="org.wezfurlong.wezterm"] floating enable, resize set 1700 950, border none
-
 
 # Text App
 for_window [app_id="org.gnome.TextEditor"] floating enable
@@ -223,8 +225,26 @@ for_window [app_id="org.gnome.Calculator"] resize set width 200 px
 for_window [app_id="org.gnome.Calculator"] move position 1500 20
 
 # PureData always small in the left
-for_window [class="PdWindow"] floating enable resize set width 500 px
-for_window [class="PdPatch"] floating enable resize set width 1200 px
+for_window [class="PdWindow"] floating disable
+for_window [class="PdPatch"] floating disable
+for_window [class="plugdata"] resize set height 1000 px
+for_window [class="plugdata"] resize set width 1850 px
+
+# Paru Control
+for_window [app_id="org.pulseaudio.pavucontrol"] resize set height 500 px
+for_window [app_id="org.pulseaudio.pavucontrol"] resize set width 800 px
+
+# Anytype
+# for_window [class="anytype"] resize set height 900 px
+# for_window [class="anytype"] resize set width 1200 px
+
+# Python
+for_window [app_id="python3"] resize set height 800 px
+for_window [app_id="python3"] resize set width 800 px
+
+# Zotero
+for_window [app_id="Zotero"] resize set height 1050 px
+for_window [app_id="Zotero"] resize set width 1730 px
 
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │

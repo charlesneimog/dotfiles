@@ -14,7 +14,10 @@ nomidiin: True
 nomidiout: True
 path1: /home/neimog/Documents/Pd/externals
 path2: /home/neimog/Documents/Git
-npath: 2
+path3: /home/neimog/Documents/Pd/externals/pd-neimog
+path4: /home/neimog/Documents/Pd/externals/pd-neimog/Abstractions/
+path5: /home/neimog/Documents/Pd/externals/pd-neimog/Resources/Audios/
+npath: 5
 standardpath: 1
 verbose: 1
 nloadlib: 0

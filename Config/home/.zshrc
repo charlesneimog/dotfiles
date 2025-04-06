@@ -132,3 +132,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+#
+PATH=/usr/local/bin:$PATH 
+alias wish='/usr/local/bin/wish9.1'
+

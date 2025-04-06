@@ -7,6 +7,7 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 		"folke/noice.nvim",
+        "ibhagwan/fzf-lua",
 		"nvim-telescope/telescope-project.nvim",
 		"nvim-telescope/telescope-file-browser.nvim",
 		"debugloop/telescope-undo.nvim",
@@ -15,18 +16,18 @@ return {
 			keys = {
 				{ "<leader>sf", "<cmd>Telescope find_files<cr>", mode = { "i", "n" }, desc = "[S]earch [F]iles" },
 				{ "<leader>sg", "<cmd>Telescope git_files<cr>", mode = { "i", "n" }, desc = "[S]earch [G]it Files" },
-				{ "<leader>ss", "<cmd>Telescope grep_string<cr>", mode = { "i", "n" }, desc = "[S]earch [S]tring" },
+				{ "<leader>ss", "<cmd>Telescope live_grep<cr>", mode = { "i", "n" }, desc = "[S]earch [S]tring" },
+				{
+					"<leader>si",
+					require("telescope.builtin").lsp_implementations,
+					mode = { "i", "n" },
+					desc = "[S]earch [D]efiniion",
+				},
 				{
 					"<leader>sd",
 					require("telescope.builtin").lsp_definitions,
 					mode = { "i", "n" },
 					desc = "[S]earch [D]efiniion",
-				},
-				{
-					"<leader>se",
-					require("telescope.builtin").lsp_implementations,
-					mode = { "i", "n" },
-					desc = "[S]earch [I]mplementation",
 				},
 			},
 		},
@@ -66,7 +67,7 @@ return {
 					base_dirs = {
 						"~/Documents/Git",
 					},
-					hidden_files = false, -- default: false
+					hidden_files = true, 
 					theme = "dropdown",
 					order_by = "asc",
 					search_by = "title",
