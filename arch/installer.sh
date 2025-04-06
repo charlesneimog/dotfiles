@@ -318,16 +318,16 @@ rm -drf ~/go
 
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
-link_files "$SCRIPT_DIR/../Config/home" "$HOME" true
-link_files "$SCRIPT_DIR/../Config/nvim" "$HOME/.config/nvim" false
-link_files "$SCRIPT_DIR/../Config/hypr" "$HOME/.config/hypr" false
-link_files "$SCRIPT_DIR/../Config/rofi" "$HOME/.config/rofi" false
-link_files "$SCRIPT_DIR/../Config/waybar" "$HOME/.config/waybar" false
-link_files "$SCRIPT_DIR/../Config/zathura" "$HOME/.config/zathura" false
-link_files "$SCRIPT_DIR/../Config/swaync" "$HOME/.config/swaync" false 
-link_files "$SCRIPT_DIR/../Config/lazygit" "$HOME/.config/lazygit" false
-link_files "$SCRIPT_DIR/../Config/swaylock" "$HOME/.config/swaylock" false 
-link_files "$SCRIPT_DIR/../Config/plugdata" "$HOME/Documents/plugdata" true 
+link_files "$SCRIPT_DIR/../config/home" "$HOME" true
+link_files "$SCRIPT_DIR/../config/nvim" "$HOME/.config/nvim" false
+link_files "$SCRIPT_DIR/../config/hypr" "$HOME/.config/hypr" false
+link_files "$SCRIPT_DIR/../config/rofi" "$HOME/.config/rofi" false
+link_files "$SCRIPT_DIR/../config/waybar" "$HOME/.config/waybar" false
+link_files "$SCRIPT_DIR/../config/zathura" "$HOME/.config/zathura" false
+link_files "$SCRIPT_DIR/../config/swaync" "$HOME/.config/swaync" false 
+link_files "$SCRIPT_DIR/../config/lazygit" "$HOME/.config/lazygit" false
+link_files "$SCRIPT_DIR/../config/swaylock" "$HOME/.config/swaylock" false 
+link_files "$SCRIPT_DIR/../config/plugdata" "$HOME/Documents/plugdata" true 
 
 #╭──────────────────────────────────────╮
 #│           Set Default Apps           │

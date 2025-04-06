@@ -1,4 +1,4 @@
 #╭──────────────────────────────────────╮
 #│      Run Installer Arch Script       │
 #╰──────────────────────────────────────╯
-source Arch/installer.sh
+source arch/installer.sh

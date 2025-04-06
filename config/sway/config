@@ -73,17 +73,17 @@ bindsym Mod4+Control+Shift+Up move workspace to output up
 for_window [app_id=.*] focus
 
 # ╭───────────────────────────────────────╮
-# │              Auto-Start               │
+# │              auto-start               │
 # ╰───────────────────────────────────────╯
 exec_always {
     gsettings set org.gnome.desktop.interface cursor-size 24
-    gsettings set org.gnome.desktop.interface cursor-theme Vimix-cursors
+    gsettings set org.gnome.desktop.interface cursor-theme vimix-cursors
 }
 
-seat seat0 xcursor_theme Vimix-cursors 24
+seat seat0 xcursor_theme vimix-cursors 24
 
 # ╭───────────────────────────────────────╮
-# │                 Modes                 │
+# │                 modes                 │
 # ╰───────────────────────────────────────╯
 
 mode "resize" {
@@ -92,20 +92,20 @@ mode "resize" {
     bindsym k resize shrink height 10px
     bindsym l resize grow width 10px
 
-    # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+    # ditto, with arrow keys
+    bindsym left resize shrink width 10px
+    bindsym down resize grow height 10px
+    bindsym up resize shrink height 10px
+    bindsym right resize grow width 10px
 
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    # return to default mode
+    bindsym return mode "default"
+    bindsym escape mode "default"
 }
-bindsym Mod4+r mode "resize"
+bindsym mod4+r mode "resize"
 
 # ╭───────────────────────────────────────╮
-# │                  Bar                  │
+# │                  bar                  │
 # ╰───────────────────────────────────────╯
 bar {
     status_command waybar --config /home/neimog/.config/waybar/config.json
@@ -113,7 +113,7 @@ bar {
 }
 
 # ╭───────────────────────────────────────╮
-# │                INPUTS                 │
+# │                inputs                 │
 # ╰───────────────────────────────────────╯
 
 input type:keyboard {
@@ -130,21 +130,21 @@ input "type:touchpad" {
 
 bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next
-bindgesture swipe:up exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
+bindgesture swipe:up exec killall rofi || rofi -show drun -show-icons -icon-theme "tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
 
 
 # ╭───────────────────────────────────────╮
-# │                Execute                │
+# │                execute                │
 # ╰───────────────────────────────────────╯
 exec {
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
-    bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i "$HOME/.config/hypr/wallpaper.png"
+    bash -c ". ~/.config/hypr/functions.sh && fetch_bing_wallpaper" && swaybg -i "$home/.config/hypr/wallpaper.png"
     swaync 
 
-    # Internal
-    exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+    # internal
+    exec dbus-update-activation-environment --systemd wayland_display xdg_current_desktop=sway
     /usr/libexec/gsd-xsettings
-    dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
+    dbus-update-activation-environment --systemd wayland_display xdg_current_desktop &
 
     # ssh and others
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -157,7 +157,7 @@ exec {
 }
 
 # ╭───────────────────────────────────────╮
-# │            Execute Always             │
+# │            execute always             │
 # ╰───────────────────────────────────────╯
 
 exec_always {
@@ -168,10 +168,10 @@ exec_always {
 
     # idle, locks
     swayidle -w \
-        timeout 120 'swaylock -f -C ~/.config/swaylock/config' \
+        timeout 120 'swaylock -f -c ~/.config/swaylock/config' \
         timeout 300 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
-        before-sleep 'swaylock -C ~/.config/swaylock/config'
+        before-sleep 'swaylock -c ~/.config/swaylock/config'
 
 }
 
@@ -191,60 +191,58 @@ gaps bottom 8
 gaps left 8
 
 # ╭───────────────────────────────────────╮
-# │            App Window Size            │
+# │            app window size            │
 # ╰───────────────────────────────────────╯
 # for_window [class=".*"] floating enable
 # for_window [class=".*"] resize set height 1000 px
 # for_window [class=".*"] resize set width 1850 px
 # for_window [class=".*"] move position center
 
-# Zenity
+# zenity
 for_window [app_id="zenity"] floating enable
 for_window [app_id="zenity"] resize set height 800 px
 for_window [app_id="zenity"] resize set width 800 px
 for_window [app_id="zenity"] move position center
 
 # preview
-for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
-for_window [app_id="org.gnome.NautilusPreviewer"] resize set height 800 px
-for_window [app_id="org.gnome.NautilusPreviewer"] resize set width 800 px
-for_window [app_id="org.gnome.NautilusPreviewer"] move position center
+for_window [app_id="org.gnome.nautiluspreviewer"] floating enable
+for_window [app_id="org.gnome.nautiluspreviewer"] resize set height 800 px
+for_window [app_id="org.gnome.nautiluspreviewer"] resize set width 800 px
+for_window [app_id="org.gnome.nautiluspreviewer"] move position center
 
-# Terminal
+# terminal
 for_window [class="org.wezfurlong.wezterm"] floating enable, resize set 1700 950, border none
 
-# Text App
-for_window [app_id="org.gnome.TextEditor"] floating enable
-for_window [app_id="org.gnome.TextEditor"] resize set height 700 px
-for_window [app_id="org.gnome.TextEditor"] resize set width 1000 px
+# text app
+for_window [app_id="org.gnome.texteditor"] floating enable
+for_window [app_id="org.gnome.texteditor"] resize set height 700 px
+for_window [app_id="org.gnome.texteditor"] resize set width 1000 px
 
-# Calculator
-for_window [app_id="org.gnome.Calculator"] floating enable
-for_window [app_id="org.gnome.Calculator"] resize set height 200 px
-for_window [app_id="org.gnome.Calculator"] resize set width 200 px
-for_window [app_id="org.gnome.Calculator"] move position 1500 20
+# calculator
+for_window [app_id="org.gnome.calculator"] floating enable
+for_window [app_id="org.gnome.calculator"] resize set height 200 px
+for_window [app_id="org.gnome.calculator"] resize set width 200 px
+for_window [app_id="org.gnome.calculator"] move position 1500 20
 
-# PureData always small in the left
-for_window [class="PdWindow"] floating disable
-for_window [class="PdPatch"] floating disable
+# puredata always small in the left
+for_window [class="pdwindow"] floating disable
+for_window [class="pdpatch"] floating disable
 for_window [class="plugdata"] resize set height 1000 px
 for_window [class="plugdata"] resize set width 1850 px
 
-# Paru Control
+# paru control
 for_window [app_id="org.pulseaudio.pavucontrol"] resize set height 500 px
 for_window [app_id="org.pulseaudio.pavucontrol"] resize set width 800 px
 
-# Anytype
+# anytype
 # for_window [class="anytype"] resize set height 900 px
 # for_window [class="anytype"] resize set width 1200 px
 
-# Python
+# python
 for_window [app_id="python3"] resize set height 800 px
 for_window [app_id="python3"] resize set width 800 px
 
-# Zotero
-for_window [app_id="Zotero"] resize set height 1050 px
-for_window [app_id="Zotero"] resize set width 1730 px
+# zotero
 
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │
