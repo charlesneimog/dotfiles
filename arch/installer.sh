@@ -1,78 +1,4 @@
-#╭──────────────────────────────────────╮
-#│            Main Functions            │
-#╰──────────────────────────────────────╯
-install_package() {
-    local package="$1"
-
-    # Check if the package is installed
-    if ! pacman -Q "$package" &> /dev/null; then
-        echo "Installing $package..."
-        sudo pacman -S --noconfirm "$package"
-    else
-        echo "$package is already installed."
-    fi
-}
-
-# ──────────────────────────────────────
-paru_install_package() {
-    local package="$1"
-    if ! paru -Q "$package" &> /dev/null; then
-        echo "Installing $package..."
-        paru -S --noconfirm "$package"
-    else
-        echo "$package is already installed."
-    fi
-}
-
-# ──────────────────────────────────────
-flatpak_install_package() {
-    local package="$1"
-
-    # Check if the package is installed
-    if ! pacman -Q "$package" &> /dev/null; then
-        echo "Installing $package..."
-        flatpak install flathub "$package" -y --user
-            
-    else
-        echo "$package is already installed."
-    fi
-}
-
-# ──────────────────────────────────────
-link_files() {
-    local source_dir=$1
-    local target_dir=$2
-    mkdir -p "$target_dir"
-    if $3; then
-        for file in "$source_dir"/.* "$source_dir"/**/.*; do
-            echo $file
-            if [ -d "$file" ]; then
-                mkdir -p "$target_dir/$(basename "$file")"
-                local sub_dir=$(basename "$file")
-                link_files "$file" "$target_dir/$sub_dir" true
-            else 
-                if [ -f "$target_dir/$(basename "$file")" ]; then
-                    continue
-                fi
-                ln -s "$file" "$target_dir/"
-            fi
-        done
-    else
-        for file in "$source_dir"/*; do
-            echo $file
-            if [ -d "$file" ]; then
-                mkdir -p "$target_dir/$(basename "$file")"
-                local sub_dir=$(basename "$file")
-                link_files "$file" "$target_dir/$sub_dir" false
-            else 
-                if [ -f "$target_dir/$(basename "$file")" ]; then
-                    continue
-                fi
-                ln -s "$file" "$target_dir/"
-            fi
-        done
-    fi
-}
+#!/bin/bash
 
 #╭──────────────────────────────────────╮
 #│         Pacman Configuration         │
@@ -97,145 +23,51 @@ EOF
 )
 
 echo "$new_config" | sudo tee /etc/pacman.conf > /dev/null
+source ./packages.conf
 
 #╭──────────────────────────────────────╮
-cd ~/Downloads/
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si --noconfirm
-sudo paru -Sy --noconfirm brave-bin 
-
-#╭──────────────────────────────────────╮
-#│           Version Control            │
+#│             Install Paru             │
 #╰──────────────────────────────────────╯
+if ! command -v paru &> /dev/null; then
+    echo "Paru não encontrado. Instalando..."
+    cd ~/Downloads/ || exit
+    sudo pacman -S --needed --noconfirm base-devel git
+    git clone https://aur.archlinux.org/paru-bin.git
+    cd paru-bin || exit
+    makepkg -si --noconfirm
+    cd ..
+    rm -rf paru-bin
+else
+    echo "Paru já está instalado."
+fi
+
+# ╭──────────────────────────────────────╮
+# │        Paru and AUR packages         │
+# ╰──────────────────────────────────────╯
+paru -S --needed --noconfirm "${SYSTEM_UTILS[@]}"
+paru -S --needed --noconfirm "${DEV_TOOLS[@]}"
+paru -S --needed --noconfirm "${MAINTENANCE[@]}"
+paru -S --needed --noconfirm "${DESKTOP[@]}"
+paru -S --needed --noconfirm "${MEDIA[@]}"
+paru -S --needed --noconfirm "${FONTS[@]}"
+paru -S --needed --noconfirm "${TEX_PACKAGES[@]}"
+paru -S --needed --noconfirm "${FIRMWARE[@]}"
+paru -S --needed --noconfirm "${SERVER_TOOLS[@]}"
 
 #╭──────────────────────────────────────╮
-#│           System Utilities           │
-#╰──────────────────────────────────────╯
-packages=("power-profiles-daemon" "zsh" "flatpak" "xsel" "cronie" "ufw" "wget" "jq" "pass" "git" "github-cli") 
-
-for package in "${packages[@]}"; do
-    install_package "$package"
-done
-
-gh auth login
-
-#╭──────────────────────────────────────╮
-#│     Programming and Development      │
-#╰──────────────────────────────────────╯
-packages=("clangd" "fd" "flake8" "cmake" "nodejs" "npm" "neovim" "ffmpeg" "python-pip" "base-devel" "jre-openjdk" "lua-check" "lazygit")
-
-for package in "${packages[@]}"; do
-    install_package "$package"
-done
-
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
-
-#╭──────────────────────────────────────╮
-#│          Hyprland and Sway           │
-#╰──────────────────────────────────────╯
-packages=("sway" "hyprland" "sushi" "waybar" "rofi" "hypridle" "swaync" "gsettings" "polkit-gnome" "wl-clipboard" "fzf" "zoxide" "zenity" "hyprpaper" "brightnessctl" "blueman" "nm-connection-editor" "pavucontrol" "wireplumber" "pipewire-jack" "slurp" "grim" "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "autotiling-rs" "swayidle" "swaylock" "qt6-svg" "qt6-declarative" "sdmm" "autotiling-rs")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
-
-sudo systemctl enable sddm.service
-sudo cp -r /home/neimog/Documents/Git/dotfiles/Config/sddm/catppuccin-mocha /usr/share/sddm/themes/
-sudo bash -c 'echo -e "\n[Theme]\nCurrent=catppuccin-mocha" >> /etc/sddm.conf'
-sudo bash -c 'echo -e "\n[Session]\nSession=sway.desktop" >> /etc/sddm.conf'
-
-#╭──────────────────────────────────────╮
-#│              Multimedia              │
-#╰──────────────────────────────────────╯
-packages=("plugdata-bin" "puredata" "ripgrep" "inkscape" "gst-plugins-ugly" "gst-plugins-good" "gst-plugins-bad" "gst-plugins-base" "gst-libav" "gstreamer")
-
-for package in "${packages[@]}"; do
-    install_package "$package"
-done
-
-#╭──────────────────────────────────────╮
-#│   Text Processing and Typesetting    │
-#╰──────────────────────────────────────╯
-packages=("texlive-langportuguese" "texlive-basic" "texlive-bin" "texlive-binextra" "texlive-fontsrecommended") 
-
-for package in "${packages[@]}"; do
-    install_package "$package"
-done
-
-#╭──────────────────────────────────────╮
-#│     System Firmware and Updates      │
-#╰──────────────────────────────────────╯
-packages=("fwupd" "power-profiles-daemon")
-
-for package in "${packages[@]}"; do
-    install_package "$package"
-done
-
-#╭──────────────────────────────────────╮
-#│                Fonts                 │
-#╰──────────────────────────────────────╯
-packages=("otf-san-francisco" "ttf-dejavu-ib" "ttf-times-new-roman" "ttf-jetbrains-mono-nerd" "ttf-meslo" "noto-fonts-emoji")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
-
-#╭──────────────────────────────────────╮
-#│              FlatPacks               │
+#│           FLATPAK packages           │
 #╰──────────────────────────────────────╯
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
-packages = ("flatpak install flathub org.gnome.TextEditor" "org.gtk.Gtk3thme.adw-gtk3" "org.gtk.Gtk3theme.adw-gtk3-dark" "org.zotero.Zotero" "com.github.flxzt.rnote" "org.kde.okular" "org.libreoffice.LibreOffice" "org.pipewire.Helvum" "org.shotcut.Shotcut" "org.zotero.Zotero" "com.obsproject.Studio" "org.gnome.Calculator" "org.gnome.Totem" "org.gnome.baobab")
-
-for package in "${packages[@]}"; do
-    flatpak_install_package "$package"
+for app in "${FLATPAKS[@]}"; do
+    flatpak install --user --noninteractive flathub "$app"
 done
 
 #╭──────────────────────────────────────╮
-#│               PACKAGES               │
+#│               Services               │
 #╰──────────────────────────────────────╯
-packages=("sonic-visualiser" "muse-sounds-manager-bin" "intel-ucode")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
+for service in "${SERVICES[@]}"; do
+    sudo systemctl enable "$service"
 done
-
-#╭──────────────────────────────────────╮
-#│               Servidor               │
-#╰──────────────────────────────────────╯
-packages=("nextcloud-client" "netbird")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
-
-
-#╭──────────────────────────────────────╮
-#│    Open Pd Patches with plugdata     │
-#╰──────────────────────────────────────╯
-echo "[Default Applications]\ntext/x-puredata=plugdata.desktop" > ~/.local/share/applications/defaults.list
-
-#╭──────────────────────────────────────╮
-#│                Themes                │
-#╰──────────────────────────────────────╯
-packages=("adw-gtk-theme")
-
-for package in "${packages[@]}"; do
-    paru_install_package "$package"
-done
-
-sudo cp -r ./mime/* /usr/share/mime/packages/
-sudo update-mime-database /usr/share/mime/
-sudo cp -r ./icons/* /usr/share/icons/
-git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git
-cd Tela-circle-icon-theme && ./install.sh && cd ..
-gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-dark'
-gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
-rm -drf Tela-circle-icon-theme
 
 #╭──────────────────────────────────────╮
 #│               Terminal               │
@@ -248,14 +80,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-sy
 #╭──────────────────────────────────────╮
 #│               Schedule               │
 #╰──────────────────────────────────────╯
-sudo cp ~/Documents/Git/dotfiles/Scripts/checkupdates /usr/bin/checkupdates
-sudo cp ~/Documents/Git/dotfiles/Scripts/git-updates /usr/bin/git-updates
-sudo chmod +x /usr/bin/checkupdates
-sudo chmod +x /usr/bin/git-updates
-
 systemctl enable --now cronie.service
-(crontab -l ; echo "0 9 */3 * * /usr/bin/checkupdates") | crontab -
-(crontab -l ; echo "0 17 */3 * * /usr/bin/git-updates") | crontab -
 
 #╭──────────────────────────────────────╮
 #│               Scripts                │
@@ -271,22 +96,6 @@ sudo cp ~/Documents/Scripts/notitranslation /usr/bin/
 sudo cp ~/Documents/Git/dotfiles/Arch/icons/*.svg /usr/share/icons/
 sudo cp ~/Documents/Git/dotfiles/Arch/mime/Overrides.xml /usr/share/mime/packages/
 
-
-#╭──────────────────────────────────────╮
-#│               Tarefas                │
-#╰──────────────────────────────────────╯
-crontab -l > current_cron
-sed '/---script managed section---/q' current_cron > new_cron
-
-cat >> new_cron << EOF
-#---script managed section---
-0 9 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/checkupdates
-0 17 */3 * * /home/neimog/Documents/Git/dotfiles/Scripts/git-updates
-EOF
-
-crontab < new_cron
-rm -f new_cron current_cron
-
 #╭──────────────────────────────────────╮
 #│            Configurations            │
 #╰──────────────────────────────────────╯
@@ -295,44 +104,59 @@ sudo systemctl enable ufw
 sudo systemctl enable bluetooth.service
 ln -s /usr/bin/nvim /usr/bin/vi
 
-# Miniconda
-mkdir -p ~/.config/miniconda3.dir
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/.config/miniconda3.dir/miniconda.sh
-bash ~/.config/miniconda3.dir/miniconda.sh -b -u -p ~/.config/miniconda3.dir
-rm -rf ~/.config/miniconda3.dir/miniconda.sh
-~/.config/miniconda3.dir/bin/conda init bash
-~/.config/miniconda3.dir/bin/conda init zsh
-rm /home/neimog/.config/miniconda3.dir/bin/wish
-ln -s /usr/bin/wish /home/neimog/.config/miniconda3.dir/bin/wish
+# ╭──────────────────────────────────────╮
+# │              Miniconda               │
+# ╰──────────────────────────────────────╯
+CONDA_DIR="$HOME/.config/miniconda3.dir"
+CONDA_BIN="$CONDA_DIR/bin/conda"
+
+if [ -x "$CONDA_BIN" ]; then
+    echo "Miniconda já está instalado em $CONDA_DIR."
+else
+    echo "Instalando Miniconda..."
+    mkdir -p "$CONDA_DIR"
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O "$CONDA_DIR/miniconda.sh"
+    bash "$CONDA_DIR/miniconda.sh" -b -u -p "$CONDA_DIR"
+    rm -f "$CONDA_DIR/miniconda.sh"
+
+    # Inicializa para bash e zsh
+    "$CONDA_BIN" init bash
+    "$CONDA_BIN" init zsh
+
+    # Corrige o binário 'wish'
+    rm -f "$CONDA_DIR/bin/wish"
+    ln -s /usr/bin/wish "$CONDA_DIR/bin/wish"
+
+    echo "Miniconda instalado com sucesso."
+fi
 
 #╭──────────────────────────────────────╮
 #│                Clear                 │
 #╰──────────────────────────────────────╯
-rm -drf paru
+rm -drf paru-bin
 rm -drf ~/go
-
 
 #╭──────────────────────────────────────╮
 #│            Create Symlink            │
 #╰──────────────────────────────────────╯
-
-SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
-
-link_files "$SCRIPT_DIR/../config/home" "$HOME" true
-link_files "$SCRIPT_DIR/../config/nvim" "$HOME/.config/nvim" false
-link_files "$SCRIPT_DIR/../config/hypr" "$HOME/.config/hypr" false
-link_files "$SCRIPT_DIR/../config/rofi" "$HOME/.config/rofi" false
-link_files "$SCRIPT_DIR/../config/waybar" "$HOME/.config/waybar" false
-link_files "$SCRIPT_DIR/../config/zathura" "$HOME/.config/zathura" false
-link_files "$SCRIPT_DIR/../config/swaync" "$HOME/.config/swaync" false 
-link_files "$SCRIPT_DIR/../config/lazygit" "$HOME/.config/lazygit" false
-link_files "$SCRIPT_DIR/../config/swaylock" "$HOME/.config/swaylock" false 
-link_files "$SCRIPT_DIR/../config/plugdata" "$HOME/Documents/plugdata" true 
+source ~/Documents/Git/dotfiles/arch/link.sh
 
 #╭──────────────────────────────────────╮
 #│           Set Default Apps           │
 #╰──────────────────────────────────────╯
 xdg-mime default io.bassi.Amberol.desktop audio/x-wav
 
+#╭──────────────────────────────────────╮
+#│             Last Configs             │
+#╰──────────────────────────────────────╯
+gh auth login
 
-
+cd ~/Documents/Git/dotfiles
+sudo cp -r ./mime/* /usr/share/mime/packages/
+sudo update-mime-database /usr/share/mime/
+sudo cp -r ./icons/* /usr/share/icons/
+git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git
+cd Tela-circle-icon-theme && ./install.sh && cd ..
+gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
+rm -drf Tela-circle-icon-theme

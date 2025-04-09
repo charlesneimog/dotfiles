@@ -1,6 +1,9 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
+    - /home/neimog/Documents/Git/py4pd
+    - /home/neimog/Documents/Git/zotero-tts
+    - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/anytype-client
     - /home/neimog/Documents/Git/blog
     - /home/neimog/Documents/Git/pure-data
@@ -10,11 +13,9 @@ recentrepos:
     - /home/neimog/.local/share/pd4web/Externals/saf/Libraries/OpenBLAS
     - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/pd-saf/Libraries/Spatial_Audio_Framework
-    - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/Tese
     - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/Pandemonio
-    - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/pd-score
     - /home/neimog/Documents/Git/Awesome-Pd
     - /home/neimog/Documents/Git/pd-vamp
@@ -48,8 +49,8 @@ recentrepos:
 startuppopupversion: 5
 lastversion: 0.48.0
 customcommandshistory:
-    - ""
     - q
+    - ""
     - q!
     - minor updates related with py4pd changes
     - 'commit '

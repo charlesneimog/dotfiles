@@ -22,9 +22,6 @@ done
 # Get name for Bing Image of the Day
 imageName=$(curl $baseurl"HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-CA" -s | jq '.images[].copyright' --raw-output)
 
-# Save Bing image name
-echo $imageName > $HOME/.config/sway/wallpapers/bing_name.txt
-
 # Download and save Bing Image of the Day
 curl "$baseurl$wlurl" -s > $wlpath
 
@@ -35,8 +32,5 @@ killall nwg-wrapper || true
 # Set bing image of the day as wallpaper
 swaymsg "output $output bg $wlpath fill"
 
-# Display image name on bottom right of the wallpaper
-nwg-wrapper -t $HOME/.config/sway/wallpapers/bing_name.txt -c $HOME/.config/sway/scripts/bing_name.css -p right -a end -mb 10 -mr 10 &
-
 # Blur existing wallpaper to user later as a lock screen
-convert $wlpath -filter Gaussian -blur 0x8 -level 10%,90%,0.5 $lswlpath
+magick convert $wlpath -filter Gaussian -blur 0x8 -level 10%,90%,0.5 $lswlpath

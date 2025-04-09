@@ -235,7 +235,7 @@
 
   "custom/wallpaper": {
     "format": " 󰋪",
-    "on-click": "$HOME/.config/hypr/functions.sh fetch_random_wallpaper"
+    "on-click": "bash -c \"/home/neimog/.config/sway/scripts/get_bing_image.sh\" && swaybg -i \"$HOME/.config/sway/wallpapers/wallpaper.jpg\"",
   },
 
   "custom/weather": {

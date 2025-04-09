@@ -11,7 +11,8 @@ To install these dotfiles on your system, follow these steps:
 Clone this repository to your local machine:
 
 ``` bash
-mkdir -p Git
+sudo pacman -S git --noconfirm
+cd $HOME/Documents && mkdir -p Git
 git clone https://github.com/charlesneimog/dotfiles.git ~/Documents/Git/
 cd ~/Documents/Git/dotfiles
 source ./installer.sh
