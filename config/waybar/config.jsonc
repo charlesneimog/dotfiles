@@ -5,7 +5,6 @@
   "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
   "modules-center": ["hyprland/workspaces", "sway/workspaces"],
   "modules-right": [
-    "custom/weather",
     "network",
     "pulseaudio",
     "group/hardware",
@@ -78,7 +77,8 @@
       "bluetooth",
       "power-profiles-daemon",
       "custom/themes",
-      "custom/wallpaper"
+      "custom/wallpaper",
+      "custom/pacman"
     ]
   },
   "idle_inhibitor": {
@@ -132,16 +132,29 @@
     }
   },
 
+  "custom/pacman": {
+    "format": " {}",
+    "interval": 3600,                     			
+    "exec": "(checkupdates;paru -Qm | aur vercmp) | wc -l",	
+    "exec-if": "exit 0",                  			
+    // "on-click": "foot sh -c 'yay; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar", 
+    "on-click": "wezterm start -- sh -c 'paru; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
+
+    "signal": 8,
+    "tooltip": false,
+    },
+
   "custom/themes": {
-    "exec": "sleep 0.2; $HOME/.config/hypr/functions.sh get_theme",
+    "exec": "sleep 0.2; /home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh get_theme",
     "tooltip": true,
     "return-type": "json",
     "format": "{icon}",
     "format-icons": {
       "dark": " ",
-      "light": " "
+      "light": " ",
+      "": " "
     },
-    "on-click": "$HOME/.config/hypr/functions.sh change_theme",
+    "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh change_theme",
     "signal": 12,
     "interval": 60
   },
@@ -235,7 +248,7 @@
 
   "custom/wallpaper": {
     "format": " 󰋪",
-    "on-click": "bash -c \"/home/neimog/.config/sway/scripts/get_bing_image.sh\" && swaybg -i \"$HOME/.config/sway/wallpapers/wallpaper.jpg\"",
+    "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh fetch_random_wallpaper"
   },
 
   "custom/weather": {
