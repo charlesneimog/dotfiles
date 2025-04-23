@@ -13,7 +13,6 @@ bindsym Mod4+d \
 bindsym Mod4+v \
     exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
 
-bindsym Mod4+l exec zenity --list --title="External Monitor Mode" --column="Options" "This Monitor (only)" "External Monitor (only)" "Duplicate" "Extend"
 
 bindsym Mod4+e exec nautilus
 bindsym Mod1+F4 kill
@@ -21,7 +20,8 @@ bindsym Mod4+Return exec wezterm-gui
 bindsym Mod4+t layout tabbed
 
 # Commands Zenity
-bindsym Mod4+Shift+q exec zenity --question --title="Logout" --text="Do you want to proceed?" --ok-label="Yes" --cancel-label="No" && swaymsg exit || echo "User clicked No"
+bindsym Mod4+Shift+l exec bash -c '~/.config/sway/scripts/monitor_switch.py'
+
 
 # Windows Command
 bindsym Mod4+f fullscreen toggle
@@ -44,9 +44,11 @@ bindsym Mod4+q kill
 
 # programs
 bindsym Mod4+a exec bash -c "swaymsg [class=\"anytype\"] focus || anytype"
-bindsym Mod4+z exec bash -c "swaymsg [app_id=\"zen\"] focus || zen-browser"
+bindsym Mod4+b exec bash -c "swaymsg [app_id=\"zen\"] focus || zen-browser"
 bindsym Mod4+n exec bash -c "swaymsg [class=\"org.wezfurlong.wezterm\"] focus || wezterm"
 bindsym Mod4+p exec bash -c "swaymsg [class=\"PdWindow\"] focus || pd"
+bindsym Mod4+l exec bash -c "swaymsg [app_id=\"libreoffice-writer\"] focus || libreoffice"
+bindsym Mod4+z exec bash -c "swaymsg [app_id=\"Zotero\"] focus || zotero"
 
 
 # ╭───────────────────────────────────────╮
@@ -169,6 +171,7 @@ exec {
     nextcloud
     autotiling-rs
     anytype
+    blueman-applet
 }
 
 # ╭───────────────────────────────────────╮
@@ -268,6 +271,15 @@ for_window [instance="charlesneimog.pdftts"] floating enable
 for_window [instance="charlesneimog.pdftts"] move position 0 0
 assign [instance="charlesneimog.pdftts"] 4
 
+# mytools
+for_window [app_id="charlesneimog.pdftts"] floating enable
+
+for_window [app_id="pdftts.python3"] floating enable
+for_window [app_id="pdftts.python3"] resize set height 256 px
+for_window [app_id="pdftts.python3"] resize set width 300 px
+for_window [app_id="pdftts.python3"] move position 0 0
+assign [app_id="pdftts.python3"] 4
+
 #
 for_window [app_id="blueman-manager"] floating enable
 for_window [app_id="blueman-manager"] resize set height 800 px
@@ -281,6 +293,9 @@ assign [app_id="(^qutebrowser|brave)"] 1
 assign [app_id="zen"] 1
 assign [app_id="zen-beta"] 1
 assign [app_id="zen-alpha"] 1
+for_window [title="Picture-in-Picture" app_id="zen"] floating enable
+for_window [title="Picture-in-Picture" app_id="zen"] move position 0 0
+
 
 assign [class="org.wezfurlong.wezterm"] 2
 assign [app_id="kitty"] 2

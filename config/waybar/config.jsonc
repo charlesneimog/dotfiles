@@ -135,14 +135,12 @@
   "custom/pacman": {
     "format": " {}",
     "interval": 3600,                     			
-    "exec": "(checkupdates;paru -Qm | aur vercmp) | wc -l",	
+    "exec": "bash -c 'echo $(( $(checkupdates | wc -l) + $(paru -Qm | aur vercmp | wc -l) + $(flatpak remote-ls --updates | grep -c .) ))'",
     "exec-if": "exit 0",                  			
-    // "on-click": "foot sh -c 'yay; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar", 
-    "on-click": "wezterm start -- sh -c 'paru; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
-
+    "on-click": "wezterm start -- sh -c 'flatpak update -y; paru; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
     "signal": 8,
     "tooltip": false,
-    },
+},
 
   "custom/themes": {
     "exec": "sleep 0.2; /home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh get_theme",
