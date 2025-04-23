@@ -2,8 +2,10 @@
 
 import gi
 import subprocess
+
 gi.require_version("Gtk", "4.0")
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
+
 
 class MonitorModeDialog(Gtk.Application):
     def __init__(self):
@@ -18,20 +20,25 @@ class MonitorModeDialog(Gtk.Application):
 
         # Layout vertical
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        vbox.set_margin_top(15)
+        vbox.set_margin_bottom(15)
+        vbox.set_margin_start(15)
+        vbox.set_margin_end(15)
+
         self.window.set_child(vbox)
 
         # Título
-        label = Gtk.Label(label="Selecione o modo de exibição:")
-        label = Gtk.Label(label="Select display mode:")
+        label = Gtk.Label()
+        label.set_markup('<span size="large" weight="bold">Select display mode:</span>')
         label.set_wrap(True)
-        label.set_margin_bottom(6)
+        label.set_margin_bottom(5)
         vbox.append(label)
 
         options = [
             ("This monitor only", self.this_monitor),
             ("External monitor only", self.external_monitor),
             ("Duplicate", self.duplicate),
-            ("Extend", self.extend)
+            ("Extend", self.extend),
         ]
 
         for text, handler in options:
@@ -41,36 +48,59 @@ class MonitorModeDialog(Gtk.Application):
 
         self.window.present()
 
+    def get_screen_size(self):
+        display = Gdk.Display.get_default()
+        monitor = display.get_monitors()[0]
+        geometry = monitor.get_geometry()
+        return geometry.width, geometry.height
+
     def this_monitor(self, _):
-        self.run_cmds([
-            ["swaymsg", "output", "eDP-1", "enable"],
-            ["swaymsg", "output", "HDMI-A-1", "disable"]
-        ])
+        self.run_cmds(
+            [
+                ["swaymsg", "output", "eDP-1", "enable"],
+                ["swaymsg", "output", "HDMI-A-1", "disable"],
+            ]
+        )
 
     def external_monitor(self, _):
-        self.run_cmds([
-            ["swaymsg", "output", "eDP-1", "disable"],
-            ["swaymsg", "output", "HDMI-A-1", "enable"]
-        ])
+        self.run_cmds(
+            [
+                ["swaymsg", "output", "eDP-1", "disable"],
+                ["swaymsg", "output", "HDMI-A-1", "enable"],
+            ]
+        )
 
     def duplicate(self, _):
-        self.run_cmds([
-            ["swaymsg", "output", "eDP-1", "enable", "position", "0", "0"],
-            ["swaymsg", "output", "HDMI-A-1", "enable", "position", "0", "0"]
-        ])
+        self.run_cmds(
+            [
+                ["swaymsg", "output", "eDP-1", "enable", "position", "0", "0"],
+                ["swaymsg", "output", "HDMI-A-1", "enable", "position", "0", "0"],
+            ]
+        )
 
     def extend(self, _):
-        self.run_cmds([
-            ["swaymsg", "output", "eDP-1", "enable", "position", "0", "0"],
-            ["swaymsg", "output", "HDMI-A-1", "enable", "position", "1920", "0"]
-        ])
+        width = self.get_screen_size()[0]
+        self.run_cmds(
+            [
+                ["swaymsg", "output", "eDP-1", "enable", "position", "0", "0"],
+                [
+                    "swaymsg",
+                    "output",
+                    "HDMI-A-1",
+                    "enable",
+                    "position",
+                    str(width),
+                    "0",
+                ],
+            ]
+        )
 
     def run_cmds(self, cmds):
         for cmd in cmds:
             subprocess.run(cmd)
         self.quit()
 
+
 if __name__ == "__main__":
     app = MonitorModeDialog()
     app.run()
-
