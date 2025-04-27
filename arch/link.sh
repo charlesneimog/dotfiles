@@ -49,6 +49,7 @@ link_files "$SCRIPT_DIR/../config/zathura" "$HOME/.config/zathura" false
 link_files "$SCRIPT_DIR/../config/swaync" "$HOME/.config/swaync" false 
 link_files "$SCRIPT_DIR/../config/sway" "$HOME/.config/sway" false 
 link_files "$SCRIPT_DIR/../config/lazygit" "$HOME/.config/lazygit" false
+link_files "$SCRIPT_DIR/../config/yazi" "$HOME/.config/yazi" false
 link_files "$SCRIPT_DIR/../config/swaylock" "$HOME/.config/swaylock" false 
 link_files "$SCRIPT_DIR/../config/pipewire" "$HOME/.config/pipewire" false
 link_files "$SCRIPT_DIR/../config/formatters" "$HOME/" true 

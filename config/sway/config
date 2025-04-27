@@ -29,8 +29,10 @@ bindsym Mod4+space floating toggle
 bindsym Mod4+c move position center
 
 # Sound 
-bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1. @DEFAULT_AUDIO_SINK@ 5%+ 
-bindsym XF86AudioLowerVolume exec wpctl set-volume -l 1. @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioRaiseVolume exec pactl list short sinks | awk '$NF == "RUNNING" {print $1}' | xargs -I{} pactl set-sink-volume {} +5%
+bindsym XF86AudioLowerVolume exec pactl list short sinks | awk '$NF == "RUNNING" {print $1}' | xargs -I{} pactl set-sink-volume {} -5%
+bindsym XF86AudioMute exec pactl list short sinks | awk '$NF == "RUNNING" {print $1}' | xargs -I{} pactl set-sink-mute {} toggle
+
 
 # Screen Brightness
 bindsym XF86MonBrightnessUp exec brightnessctl set 2%+ 
@@ -157,6 +159,10 @@ exec {
     bash -c "/home/neimog/.config/sway/scripts/get_bing_image.sh" && swaybg -i "$HOME/.config/sway/wallpapers/wallpaper.jpg"
     swaync 
 
+    # env
+    exec --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    exec --no-startup-id systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
     # internal
     exec dbus-update-activation-environment --systemd wayland_display xdg_current_desktop=sway
     /usr/libexec/gsd-xsettings
@@ -166,6 +172,8 @@ exec {
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
     /usr/lib/xdg-desktop-portal-gtk
     /usr/lib/xdg-desktop-portal-wlr
+    systemctl --user restart xdg-desktop-portal-wlr
+
 
     # cloud
     nextcloud
@@ -284,6 +292,9 @@ assign [app_id="pdftts.python3"] 4
 for_window [app_id="blueman-manager"] floating enable
 for_window [app_id="blueman-manager"] resize set height 800 px
 for_window [app_id="blueman-manager"] resize set width 800 px
+
+# share
+for_window [app_id="hyprland-share-picker"] floating enable
 
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │

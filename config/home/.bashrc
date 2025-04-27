@@ -2,19 +2,33 @@
 export TEXMFHOME=~/.texmf
 export PATH="/home/neimog/Documents/Git/dotfiles/Scripts:$PATH"
 
+# Variables
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=sway
+export GDK_BACKEND=wayland
+export QT_QPA_PLATFORM=wayland
+export WAYLAND_DISPLAY=wayland-1
+
+# keyring
+eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
+export SSH_AUTH_SOCK
+export GPG_AGENT_INFO
+export GNOME_KEYRING_CONTROL
+export GNOME_KEYRING_PID
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
-    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-fi
-
+# if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+#     ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+# fi
+# if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
+#     source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+# fi
 
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
@@ -39,7 +53,5 @@ export FZF_DEFAULT_OPTS="--height=20% --info=inline --margin=1 --padding=1 --col
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/home/neimog/.lmstudio/bin"
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
