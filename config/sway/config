@@ -190,7 +190,10 @@ exec_always {
     # copy and paste
     wl-paste --type text --watch cliphist store
     wl-paste --type image --watch cliphist store
-    # swaywatch
+    # gnome 
+    exec sh -c 'eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg); echo $SSH_AUTH_SOCK > /run/user/1000/ssh_auth_sock'
+
+
 
     # idle, locks
     swayidle -w \
@@ -311,7 +314,11 @@ for_window [title="Picture-in-Picture" app_id="zen"] move position 0 0
 assign [class="org.wezfurlong.wezterm"] 2
 assign [app_id="kitty"] 2
 assign [app_id="org.gnome.Nautilus"] 3
-assign [class="PatchWindow|PdWindow|plugdata"] 4
+
+assign [class="PatchWindow|PdWindow|plugdata|MuseScore4"] 4
+
 assign [class="anytype"] 5
 assign [app_id="org.kde.okular|evince|zathura"] 6
-assign [app_id="org.inkscape.Inkscape"] 7
+assign [app_id="org.inkscape.Inkscape|com.github.flxzt.rnote"] 7
+
+

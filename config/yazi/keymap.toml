@@ -1,0 +1,17 @@
+[help]
+
+keymap = [
+	{ on = "<Esc>", run = "escape", desc = "Clear the filter, or hide the help" },
+	{ on = "<C-[>", run = "escape", desc = "Clear the filter, or hide the help" },
+	{ on = "<C-c>", run = "close",  desc = "Hide the help" },
+
+	# Navigation
+	{ on = "k", run = "arrow prev", desc = "Previous line" },
+	{ on = "j", run = "arrow next", desc = "Next line" },
+
+	{ on = "<Up>",   run = "arrow prev", desc = "Previous line" },
+	{ on = "<Down>", run = "arrow next", desc = "Next line" },
+
+	# Filtering
+	{ on = "f", run = "filter", desc = "Filter help items" },
+]

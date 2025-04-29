@@ -2,6 +2,12 @@ ZSH_THEME="robbyrussell"
 autoload -U promptinit && promptinit
 SSH_ENV=$HOME/.ssh/environment
 
+# Start ssh-agent if not already running
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+  eval $(ssh-agent -s)
+fi
+
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
