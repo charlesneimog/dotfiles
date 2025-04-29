@@ -2,26 +2,6 @@ ZSH_THEME="robbyrussell"
 autoload -U promptinit && promptinit
 SSH_ENV=$HOME/.ssh/environment
 
-# start the ssh-agent
-function start_agent {
-    echo "Initializing new SSH agent..."
-    # spawn ssh-agent
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
-    echo succeeded
-    chmod 600 ${SSH_ENV}
-    . ${SSH_ENV} > /dev/null
-    /usr/bin/ssh-add
-}
-
-if [ -f "${SSH_ENV}" ]; then
-     . ${SSH_ENV} > /dev/null
-     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-        start_agent;
-    }
-else
-    start_agent;
-fi
-
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -100,7 +80,6 @@ eval "$(zoxide init --cmd cd zsh)"
 #│             Conda Setup              │
 #╰──────────────────────────────────────╯
 export PATH="$PATH:/home/neimog/.local/bin"
-# source /home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh  # commented out by conda initialize
 
 #╭──────────────────────────────────────╮
 #│                 Yazi                 │
