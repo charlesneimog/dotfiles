@@ -10,13 +10,6 @@ export GDK_BACKEND=wayland
 export QT_QPA_PLATFORM=wayland
 export WAYLAND_DISPLAY=wayland-1
 
-# keyring
-eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
-export SSH_AUTH_SOCK
-export GPG_AGENT_INFO
-export GNOME_KEYRING_CONTROL
-export GNOME_KEYRING_PID
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
