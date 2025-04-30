@@ -98,25 +98,6 @@ local function lualine_setup()
 						inactive = "lualine_b_inactive",
 					},
 				},
-				{
-					function()
-						local client = vim.lsp.get_active_clients()
-						if client("copilot") then
-							local clients = " "
-							local numClients = #client
-							for i, v in ipairs(client) do
-								if v.name ~= "copilot" then
-									clients = clients .. v.name
-									if i < numClients then
-										clients = clients .. ", "
-									end
-								end
-							end
-							return clients
-						end
-						return ""
-					end,
-				},
 			},
 			lualine_z = {
 				mylocation,

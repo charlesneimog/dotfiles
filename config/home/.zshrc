@@ -1,17 +1,41 @@
 ZSH_THEME="robbyrussell"
 autoload -U promptinit && promptinit
-SSH_ENV=$HOME/.ssh/environment
-
-# Start ssh-agent if not already running
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-  eval $(ssh-agent -s)
-fi
-
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
+# ╭──────────────────────────────────────╮
+# │                 SSH                  │
+# ╰──────────────────────────────────────╯
+# SSH_ENV=$HOME/.ssh/environment
+#
+# # start the ssh-agent
+# function start_agent {
+#     echo "Initializing new SSH agent..."
+#     # spawn ssh-agent
+#     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
+#     echo succeeded
+#     chmod 600 ${SSH_ENV}
+#     . ${SSH_ENV} > /dev/null
+#     /usr/bin/ssh-add
+# }
+#
+# if [ -f "${SSH_ENV}" ]; then
+#      . ${SSH_ENV} > /dev/null
+#      ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+#         start_agent;
+#     }
+# else
+#     start_agent;
+# fi
+# eval $(gnome-keyring-daemon --start --components=ssh)
+# export SSH_AUTH_SOCK
+
+#╭──────────────────────────────────────╮
+#│                ZINIT                 │
+#╰──────────────────────────────────────╯
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 

@@ -1,11 +1,7 @@
 return {
 	"stevearc/aerial.nvim",
-	event = "VeryLazy",
+	event = "InsertEnter",
 	lazy = true,
-	-- enabled = function()
-	-- 	print(vim.inspect(vim.bo.filetype))
-	-- 	return false
-	-- end,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-tree/nvim-web-devicons",
@@ -22,7 +18,7 @@ return {
 	},
 	config = function()
 		require("aerial").setup({
-			backends = { "lsp", "markdown", "man" }, -- TODO: reactivate treesitter
+			backends = { "lsp", "markdown", "man", "treesitter" }, -- TODO: reactivate treesitter
 			on_attach = function(bufnr) end,
 		})
 		require("telescope").load_extension("aerial")

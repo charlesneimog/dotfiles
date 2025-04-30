@@ -8,7 +8,7 @@ return {
 		"nvim-treesitter/nvim-treesitter-context",
 		"nvim-treesitter/playground",
 	},
-	event = { "BufReadPre", "BufNewFile" },
+	event = "InsertEnter",
 	config = function()
 		local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 
@@ -28,7 +28,7 @@ return {
 			},
 		})
 
-        vim.treesitter.query.set("scofo", "injections", "(comment) @comment")
+		vim.treesitter.query.set("scofo", "injections", "(comment) @comment")
 		--
 		-- vim.treesitter.query.set("scofo", "injections", "(comment) @comment")
 		--

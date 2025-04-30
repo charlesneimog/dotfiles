@@ -1,9 +1,9 @@
 return {
 	"goolord/alpha-nvim",
-	-- event = "VimEnter",
-	-- lazy = true,
+	event = "VimEnter",
+	lazy = true,
 	dependencies = {
-		"nvim-telescope/telescope-project.nvim", -- Telescope Project, It's a Telescope extension to help you manage your projects
+		"nvim-telescope/telescope-project.nvim", 
 	},
 	config = function()
 		require("telescope").load_extension("project")
