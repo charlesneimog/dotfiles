@@ -20,46 +20,38 @@ function unlock_ssh {
     fi
 }
 
-function unsplash {
-    sleep 5
-    local QUERY="nature"
-    local WIDTH=1920
-    local HEIGHT=1080
-    local FILENAME=~/.config/sway/wallpapers/wallpaper.jpg
-    
-    # Prompt for Bitwarden password
-    local PASSWORD=$(zenity --password --title="Enter Password for BW Session" --timeout=120)
-    if [ -z "$PASSWORD" ]; then
-        echo "Password entry timed out."
-        return 1
+
+function get_unsplash_wallpaper {
+    QUERY="nature+sunset+dark+space+tree"  # Adiciona '-people' para evitar fotos com pessoas
+
+    WIDTH=1920
+    HEIGHT=1080
+    FILENAME="$HOME/.config/sway/wallpapers/wallpaper.jpg"
+    ACCESS_KEY="$(secret-tool lookup service wallpaperapp)"
+    if [[ -z "$ACCESS_KEY" ]]; then
+      zenity --warning \
+        --title="Token não encontrado" \
+        --text="⚠️  O token do Unsplash não foi encontrado.\n\nPor favor, salve-o usando:\n\nsecret-tool store --label=\"Wallpaper App\" service wallpaperapp" \
+        --ok-label="OK"
     fi
 
-    # Unlock Bitwarden session
-    local BW_SESSION=$(bw unlock "$PASSWORD" --raw)
-    if [ -z "$BW_SESSION" ]; then
-        echo "Failed to unlock Bitwarden session."
-        return 1
-    fi
-    
-    # Retrieve Access Key from Bitwarden
-    local ACCESS_KEY=$(bw --session "$BW_SESSION" get item 19777761-d8c9-4429-bcc1-b11800079334 | jq -r '.login.password')
-    if [ -z "$ACCESS_KEY" ]; then
-        echo "Failed to retrieve Access Key from Bitwarden."
-        return 1
-    fi
-    
     # Fetch image URL from Unsplash API
-    local API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
-    local IMAGE_URL=$(curl -s "$API_URL" | jq -r '.urls.full')
-    if [ -z "$IMAGE_URL" ]; then
+    API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
+    IMAGE_URL=$(curl -s "$API_URL" | jq -r '.urls.full')
+
+    if [ -z "$IMAGE_URL" ] || [ "$IMAGE_URL" = "null" ]; then
         echo "Failed to fetch image URL from Unsplash API."
-        return 1
+        exit 1
     fi
-    
+
     # Download image and set as wallpaper
     wget -q -O "$FILENAME" "$IMAGE_URL"
-    killall -q swaybg && swaybg -i "$FILENAME" --mode fill
+
+    # Restart swaybg with new wallpaper
+    pkill swaybg
+    swaybg -i "$FILENAME" --mode fill &
 }
+
 
 function gtk_theme {
     echo "Setting GTK theme to adwaita"
@@ -133,6 +125,8 @@ if [ "$1" != "" ]; then
         change_theme)
             change_theme
             ;;
+        unsplash)
+            get_unsplash_wallpaper;;
         get_theme)
             get_theme
             ;;

@@ -246,7 +246,7 @@
 
   "custom/wallpaper": {
     "format": " 󰋪",
-    "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh fetch_random_wallpaper"
+    "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh unsplash"
   },
 
   "custom/weather": {
