@@ -117,7 +117,7 @@
       "default": ["", " ", " "]
     },
     "max-volume": 100,
-    "on-click": "pavucontrol"
+    "on-click": "flatpak run com.saivert.pwvucontrol"
   },
 
   "power-profiles-daemon": {

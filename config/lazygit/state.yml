@@ -1,6 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
+    - /home/neimog/Documents/Git/pd-saf
     - /home/neimog/Documents/Git/moteto
     - /home/neimog/Documents/Git/anytype-client
     - /home/neimog/Documents/Git/OScofo
@@ -10,7 +11,6 @@ recentrepos:
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/zotero-tts
     - /home/neimog/Documents/Git/blog
-    - /home/neimog/Documents/Git/pd-saf
     - /home/neimog/Documents/Git/pd-neimog
     - /home/neimog/.local/share/pd4web/Externals/saf/Libraries/OpenBLAS
     - /home/neimog/Documents/Git/pd.cmake

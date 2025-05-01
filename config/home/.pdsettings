@@ -1,14 +1,14 @@
 audioapi: 4
 noaudioin: False
-audioindev1: 0 2
+audioindev1: 3 2
 audioindevname1: ALSA: pipewire
 noaudioout: False
-audiooutdev1: 4 2
+audiooutdev1: 8 2
 audiooutdevname1: ALSA: pipewire
 audiobuf: 10
 rate: 48000
 callback: 0
-audioblocksize: 64
+audioblocksize: 256
 midiapi: 0
 nomidiin: False
 midiindev1: 0

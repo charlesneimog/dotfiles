@@ -75,23 +75,8 @@ translate_selection(){
     zenity --info --title="Output" --text="<span size=\"x-large\">$translation</span>"
 }
 
-
-fetch_bing_wallpaper() {
-    local api_url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=2&mkt=pt-BR"
-    local base_url="https://www.bing.com"
-    local output="$HOME/.config/hypr/wallpaper.jpg"
-    local output_png="$HOME/.config/hypr/wallpaper.png"
-    local url_path=$(curl -s "$api_url" | jq -r ".images[0].url")
-    curl -L -o "${output}" "${base_url}${url_path}"
-    convert "${output}" "${output_png}"
-    mkdir -p ~/.config/rofi/images/
-    ln -s -f "${output_png}" ~/.config/rofi/images/b.png
-    ln -s -f "${output_png}" ~/.config/rofi/images/a.png
-    ln -s -f "${output_png}" ~/.config/rofi/images/c.png
-}
-
 fetch_random_wallpaper() {
-    local api_url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=20&mkt=pt-BR"
+    local api_url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=pt-BR"
     local base_url="https://www.bing.com"
     local output="$HOME/.config/.wallpaper.jpg"
     local output_png="$HOME/.config/.wallpaper.png"
