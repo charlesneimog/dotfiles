@@ -5,13 +5,13 @@ bindsym print \
     exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
 
 bindsym Mod4+Tab \
-    exec killall rofi || rofi -show window -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
+    exec killall rofi || rofi -show window -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/launchers/type-7/style-10.rasi
 
 bindsym Mod4+d \
-    exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/files/launchers/type-7/style-2.rasi
+    exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/launchers/type-3/style-10.rasi
 
 bindsym Mod4+v \
-    exec killall rofi || cliphist list | rofi -dmenu -theme $HOME/.config/rofi/files/launchers/type-7/style-1.rasi | cliphist decode | wl-copy
+    exec killall rofi || cliphist list | rofi -dmenu -theme /home/neimog/.config/rofi/launchers/type-7/style-2.rasi | cliphist decode | wl-copy
 
 
 bindsym Mod4+e exec nautilus
@@ -317,6 +317,7 @@ assign [app_id="kitty"] 2
 assign [app_id="org.gnome.Nautilus"] 3
 
 assign [class="PatchWindow|PdWindow|plugdata|MuseScore4"] 4
+assign [app_id="Zotero"] 4
 
 assign [class="anytype"] 5
 assign [app_id="org.kde.okular|evince|zathura"] 6
