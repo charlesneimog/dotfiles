@@ -1,37 +1,6 @@
 ZSH_THEME="robbyrussell"
 autoload -U promptinit && promptinit
-
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-
-# ╭──────────────────────────────────────╮
-# │                 SSH                  │
-# ╰──────────────────────────────────────╯
-# SSH_ENV=$HOME/.ssh/environment
-#
-# # start the ssh-agent
-# function start_agent {
-#     echo "Initializing new SSH agent..."
-#     # spawn ssh-agent
-#     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
-#     echo succeeded
-#     chmod 600 ${SSH_ENV}
-#     . ${SSH_ENV} > /dev/null
-#     /usr/bin/ssh-add
-# }
-#
-# if [ -f "${SSH_ENV}" ]; then
-#      . ${SSH_ENV} > /dev/null
-#      ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-#         start_agent;
-#     }
-# else
-#     start_agent;
-# fi
-# eval $(gnome-keyring-daemon --start --components=ssh)
-# export SSH_AUTH_SOCK
+eval "$(oh-my-posh init zsh --config $HOME/.oh-my-posh.toml)"
 
 #╭──────────────────────────────────────╮
 #│                ZINIT                 │
@@ -47,9 +16,6 @@ fi
 
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
-
-# Add in Powerlevel10k
-zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
@@ -146,18 +112,4 @@ PATH=/usr/local/bin:$PATH
 alias wish='/usr/local/bin/wish9.1'
 
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/neimog/.config/miniconda3.dir/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh" ]; then
-        . "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/neimog/.config/miniconda3.dir/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+. "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"

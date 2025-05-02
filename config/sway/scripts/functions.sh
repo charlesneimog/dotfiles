@@ -8,6 +8,7 @@ function start_agent {
     /usr/bin/ssh-add
 }
 
+
 function unlock_ssh {
     SSH_ENV=$HOME/.ssh/environment
     if [ -f "${SSH_ENV}" ]; then

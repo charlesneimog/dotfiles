@@ -1,0 +1,68 @@
+schema = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+version = 3
+
+[[blocks]]
+type = "prompt"
+alignment = "left"
+newline = true  # força uma nova linha antes do próximo bloco
+
+  # Arch Linux (simples como texto)
+  [[blocks.segments]]
+  type = "text"
+  style = "plain"
+  foreground = "blue"
+  template = "  "
+
+  # Git status
+  [[blocks.segments]]
+  type = "git"
+  style = "plain"
+  foreground = "yellow"
+  template = "{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }} "
+
+    [blocks.segments.properties]
+    fetch_status = true
+
+  [[blocks.segments]]
+  type = "git"
+  style = "plain"
+  template = "| "
+    foreground = "foreground"
+
+  # Status do comando anterior
+    [[blocks.segments]]
+    type = "exit"
+    style = "plain"
+    foreground = "red"
+    template = "{{ if ne .Code 0 }}✘ {{ .Code }} | {{ end }}"
+
+  # Caminho
+  [[blocks.segments]]
+  type = "path"
+  style = "plain"
+  foreground = "cyan"
+  template = "{{ .Path }}"
+
+    [blocks.segments.properties]
+    style = "folder"
+
+[[blocks]]
+type = "prompt"
+alignment = "left"
+newline = true
+
+  [[blocks.segments]]
+  type = "text"
+  style = "plain"
+  foreground = "green"
+  template = "❯ "
+
+[[blocks]]
+type = "rprompt"
+
+  [[blocks.segments]]
+  type = "python"
+  style = "plain"
+  foreground = "magenta"
+  template = "{{ .Venv }}"
+

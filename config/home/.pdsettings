@@ -1,10 +1,10 @@
-audioapi: 4
+audioapi: 5
 noaudioin: False
-audioindev1: 3 2
-audioindevname1: ALSA: pipewire
+audioindev1: 0 2
+audioindevname1: JACK
 noaudioout: False
-audiooutdev1: 8 2
-audiooutdevname1: ALSA: pipewire
+audiooutdev1: 0 2
+audiooutdevname1: JACK
 audiobuf: 10
 rate: 48000
 callback: 0
