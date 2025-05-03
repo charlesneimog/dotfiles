@@ -205,10 +205,15 @@ local function update_theme(window, path)
 		end
 	end
 
+
+
+
 	if appearance:find("Dark") then
 		os.execute(
 			'export FZF_DEFAULT_OPTS="--color=bg+:#383838,bg:#303030,spinner:#303030,hl:#e78284 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#ff0000 --color=marker:#babbf1,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284 --color=selected-bg:#51576d --multi"'
 		)
+	    os.execute("export OMP_GIT_SEPARATOR_COLOR=white")
+
 		overrides.color_scheme = "Dark"
 		overrides.tab_bar_style = {
 			new_tab = wezterm.format({
@@ -227,6 +232,7 @@ local function update_theme(window, path)
 		}
 	else
 		os.execute('export FZF_DEFAULT_OPTS="--color=light"')
+	    os.execute("export OMP_GIT_SEPARATOR_COLOR=black")
 		overrides.color_scheme = "Light"
 		overrides.tab_bar_style = {
 			new_tab = wezterm.format({

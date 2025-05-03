@@ -18,16 +18,16 @@ newline = true  # força uma nova linha antes do próximo bloco
   type = "git"
   style = "plain"
   foreground = "yellow"
-  template = "{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }} "
+  template = "{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} {{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }} "
 
     [blocks.segments.properties]
     fetch_status = true
 
   [[blocks.segments]]
-  type = "git"
-  style = "plain"
-  template = "| "
-    foreground = "foreground"
+    type = "git"
+    style = "plain"
+    template = "| "
+    foreground = "red"
 
   # Status do comando anterior
     [[blocks.segments]]
@@ -37,14 +37,16 @@ newline = true  # força uma nova linha antes do próximo bloco
     template = "{{ if ne .Code 0 }}✘ {{ .Code }} | {{ end }}"
 
   # Caminho
-  [[blocks.segments]]
-  type = "path"
-  style = "plain"
-  foreground = "cyan"
-  template = "{{ .Path }}"
+    [[blocks.segments]]
+        type = "path"
+        style = "plain"
+        foreground = "blue"
+        template = "{{ .AbsolutePWD }}"
+        [blocks.segments.properties]
+        mapped_locations_enabled = true
+        enable_home_symbol = true
 
-    [blocks.segments.properties]
-    style = "folder"
+
 
 [[blocks]]
 type = "prompt"
@@ -63,6 +65,6 @@ type = "rprompt"
   [[blocks.segments]]
   type = "python"
   style = "plain"
-  foreground = "magenta"
-  template = "{{ .Venv }}"
+  foreground = "cyan"
+  template = "({{ .Venv }})"
 
