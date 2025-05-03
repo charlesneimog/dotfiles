@@ -2,7 +2,8 @@
 # │               COMMANDS                │
 # ╰───────────────────────────────────────╯
 bindsym print \
-    exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
+    exec grim /tmp/screenshot.png && satty --filename /tmp/screenshot.png --fullscreen
+# grim -g "$(slurp -o -r -c '#ff0000ff')" -t ppm - | satty --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png
 
 bindsym Mod4+Tab \
     exec killall rofi || rofi -show window -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/launchers/type-7/style-10.rasi
@@ -29,18 +30,30 @@ bindsym Mod4+space floating toggle
 bindsym Mod4+c move position center
 
 # Sound 
-bindsym XF86AudioRaiseVolume exec pactl list short sinks | awk '$NF == "RUNNING" {print $1}' | xargs -I{} bash -c 'current_vol=$(pactl get-sink-volume {} | awk "{print \$5}" | sed "s/%//"); if [ "$current_vol" -lt 100 ]; then pactl set-sink-volume {} +5%; fi'
+bindsym XF86AudioRaiseVolume exec \
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  xargs -I{} bash -c '\
+    current_vol=$(pactl get-sink-volume {} | awk "{print \$5}" | sed "s/%//"); \
+    if [ "$current_vol" -lt 100 ]; then \
+      pactl set-sink-volume {} +5%; \
+    fi'
 
-bindsym XF86AudioLowerVolume exec pactl list short sinks | awk '$NF == "RUNNING" {print $1}' | xargs -I{} pactl set-sink-volume {} -5%
-bindsym XF86AudioMute exec pactl list short sinks | awk '$NF == "RUNNING" {print $1}' | xargs -I{} pactl set-sink-mute {} toggle
+bindsym XF86AudioLowerVolume exec \
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  xargs -I{} pactl set-sink-volume {} -5%
+
+bindsym XF86AudioMute exec \
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  xargs -I{} pactl set-sink-mute {} toggle
 
 
 # Screen Brightness
 bindsym XF86MonBrightnessUp exec brightnessctl set 2%+ 
 bindsym XF86MonBrightnessDown exec brightnessctl set 2%-
 
-# Visual
-seat * xcursor_theme Phinger-cursors-dark 32
 
 # kill
 bindsym Mod4+q kill
@@ -89,14 +102,6 @@ bindsym Mod4+Control+Shift+Up move workspace to output up
 # always focus on new window
 for_window [app_id=.*] focus
 
-# ╭───────────────────────────────────────╮
-# │              auto-start               │
-# ╰───────────────────────────────────────╯
-exec_always {
-    gsettings set org.gnome.desktop.interface cursor-size 24
-    gsettings set org.gnome.desktop.interface cursor-theme vimix-cursors
-}
-seat seat0 xcursor_theme McMojave 24
 
 # ╭───────────────────────────────────────╮
 # │                 modes                 │
@@ -119,14 +124,6 @@ mode "resize" {
     bindsym escape mode "default"
 }
 bindsym mod4+r mode "resize"
-
-# ╭───────────────────────────────────────╮
-# │                  bar                  │
-# ╰───────────────────────────────────────╯
-bar {
-    status_command waybar --config /home/neimog/Documents/Git/dotfiles/config/waybar/config.jsonc
-    mode invisible
-}
 
 # ╭───────────────────────────────────────╮
 # │                inputs                 │
@@ -156,6 +153,8 @@ bindgesture swipe:up exec killall rofi || rofi -show drun -show-icons -icon-them
 # │                execute                │
 # ╰───────────────────────────────────────╯
 exec {
+    gsettings set org.gnome.desktop.interface cursor-size 24
+    gsettings set org.gnome.desktop.interface cursor-theme vimix-cursors
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
     bash -c "/home/neimog/.config/sway/scripts/get_bing_image.sh" && swaybg -i "$HOME/.config/sway/wallpapers/wallpaper.jpg"
     swaync 
@@ -175,34 +174,27 @@ exec {
     /usr/lib/xdg-desktop-portal-wlr
     systemctl --user restart xdg-desktop-portal-wlr
 
+    # waybar
+    waybar --config /home/neimog/Documents/Git/dotfiles/config/waybar/config.jsonc
 
     # cloud
     nextcloud
     autotiling-rs
     anytype
     blueman-applet
-}
 
-# ╭───────────────────────────────────────╮
-# │            execute always             │
-# ╰───────────────────────────────────────╯
-
-exec_always {
     # copy and paste
     wl-paste --type text --watch cliphist store
     wl-paste --type image --watch cliphist store
-    # gnome 
+    # ssh
     exec sh -c 'eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg); echo $SSH_AUTH_SOCK > /run/user/1000/ssh_auth_sock'
 
-
-
-    # idle, locks
+    # swayidle
     swayidle -w \
         timeout 120 'hyprlock' \
         timeout 300 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'hyprlock'
-
 }
 
 default_border pixel 1
@@ -219,6 +211,8 @@ gaps top 2
 gaps right 8
 gaps bottom 8
 gaps left 8
+
+seat seat0 xcursor_theme McMojave 24
 
 # ╭───────────────────────────────────────╮
 # │            app window size            │
