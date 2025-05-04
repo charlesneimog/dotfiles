@@ -8,7 +8,7 @@ function start_agent {
     /usr/bin/ssh-add
 }
 
-
+# ──────────────────────────────────────
 function unlock_ssh {
     SSH_ENV=$HOME/.ssh/environment
     if [ -f "${SSH_ENV}" ]; then
@@ -21,9 +21,19 @@ function unlock_ssh {
     fi
 }
 
-
+# ──────────────────────────────────────
 function get_unsplash_wallpaper {
-    QUERY="nature+sunset+dark+space+tree"  # Adiciona '-people' para evitar fotos com pessoas
+    QUERY_LIST="nature+sunset+space+tree+galaxy+sky+forest+stars+mountain"
+    if [[ -z "$QUERY_LIST" ]]; then
+        echo "❌ QUERY_LIST is empty."
+        exit 1
+    fi
+    IFS='+' read -ra WORDS <<< "$QUERY_LIST"
+    if (( ${#WORDS[@]} == 0 )); then
+        echo "❌ No words found in QUERY_LIST."
+        exit 1
+    fi
+    QUERY="${WORDS[RANDOM % ${#WORDS[@]}]}"
 
     WIDTH=1920
     HEIGHT=1080
@@ -53,13 +63,14 @@ function get_unsplash_wallpaper {
     swaybg -i "$FILENAME" --mode fill &
 }
 
-
+# ──────────────────────────────────────
 function gtk_theme {
     echo "Setting GTK theme to adwaita"
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
     gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle'
 }
 
+# ──────────────────────────────────────
 translate_selection(){
     selected_text=$(wl-paste --primary | tr -d '\n')
     echo "Selected text: $selected_text" >> /tmp/translate.log
@@ -68,6 +79,7 @@ translate_selection(){
     zenity --info --title="Output" --text="<span size=\"x-large\">$translation</span>"
 }
 
+# ──────────────────────────────────────
 fetch_random_wallpaper() {
     local api_url="https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=pt-BR"
     local base_url="https://www.bing.com"
@@ -86,6 +98,7 @@ fetch_random_wallpaper() {
     swaybg -i "$output_png" 
 }
 
+# ──────────────────────────────────────
 change_theme(){
 	color_scheme=$(gsettings get org.gnome.desktop.interface color-scheme | awk '{print $1}' | tr -d "'")
 	# Check the value and set the GTK theme accordingly
@@ -100,6 +113,7 @@ change_theme(){
 	fi
 }
 
+# ──────────────────────────────────────
 get_theme(){
 	color_scheme=$(gsettings get org.gnome.desktop.interface color-scheme | awk '{print $1}' | tr -d "'")
 	if [ "$color_scheme" = "prefer-dark" ]; then
@@ -112,6 +126,7 @@ get_theme(){
 }
 
 
+# ──────────────────────────────────────
 if [ "$1" != "" ]; then
     case $1 in
         translate_selection)
