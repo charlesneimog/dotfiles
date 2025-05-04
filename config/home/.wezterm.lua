@@ -199,7 +199,6 @@ local function update_theme(window, path)
 	local files = wezterm.glob("/run/user/1000/*")
 	for _, file in ipairs(files) do
 		if file:match("nvim") then
-			-- local command = "nvim --server " .. file .. " --remote-send '<Esc>:SetMyTheme " .. my_theme .. "<CR>'"
 			local command = "nvim --server " .. file .. " --remote-send '<Cmd>SetMyTheme " .. my_theme .. "<CR>'"
 			os.execute(command)
 		end
@@ -231,7 +230,10 @@ local function update_theme(window, path)
 			}),
 		}
 	else
-		os.execute('export FZF_DEFAULT_OPTS="--color=light"')
+        os.execute(
+            'export FZF_DEFAULT_OPTS="--color=bg+:#f5f5f5,bg:#e0e0e0,spinner:#e0e0e0,hl:#ff6f61 --color=fg:#2e2e2e,header:#ff6f61,info:#ff9f4f,pointer:#ff0000 --color=marker:#6a6a6a,fg+:#2e2e2e,prompt:#ff9f4f,hl+:#ff6f61 --color=selected-bg:#d4d4d4 --multi"'
+        )
+
 	    os.execute("export OMP_GIT_SEPARATOR_COLOR=black")
 		overrides.color_scheme = "Light"
 		overrides.tab_bar_style = {

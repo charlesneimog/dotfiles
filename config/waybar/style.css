@@ -23,14 +23,16 @@ tooltip {
 
 #tray menu {
     color: #ffffff;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     border-radius: 3px;
+    padding: 10px 10px;
+    font-size: 50px;
 }
 
 #tray menu menuitem:hover {
-    background-color: rgba(20, 20, 20, 0.8);
+    background-color: rgba(50, 50, 90, 1);
     color: #ff0000;
-    border-radius: 3px;
+    border-radius: 10px;
 }
 
 /*

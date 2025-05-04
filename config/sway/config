@@ -60,7 +60,7 @@ bindsym Mod4+q kill
 
 # programs
 bindsym Mod4+a exec bash -c "swaymsg [class=\"anytype\"] focus || anytype"
-bindsym Mod4+b exec bash -c "swaymsg [app_id=\"zen\"] focus || zen-browser"
+bindsym Mod4+b exec bash -c "swaymsg [app_id=\"zen\"] focus || flatpak run app.zen_browser.zen"
 bindsym Mod4+n exec bash -c "swaymsg [class=\"org.wezfurlong.wezterm\"] focus || wezterm"
 bindsym Mod4+p exec bash -c "swaymsg [class=\"PdWindow\"] focus || pd"
 bindsym Mod4+l exec bash -c "swaymsg [app_id=\"libreoffice-writer\"] focus || libreoffice"

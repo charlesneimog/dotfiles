@@ -66,7 +66,7 @@
   "tray": {
     "icon-size": 15,
     "spacing": 5,
-    "show-passive-items": false
+    "show-passive-items": true
   },
 
   "group/quick-actions": {
@@ -265,24 +265,24 @@
     "format-charging": "  {capacity}%",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "signal": 12,
-    "interval": 5
+    "interval": 5,
     "on-click": "flatpak run net.nokyan.Resources",
   },
 
   "cpu": {
     "format": " {usage}%  ",
-    "tooltip": false
+    "tooltip": false,
     "on-click": "flatpak run net.nokyan.Resources",
   },
   "memory": {
-    "format": " {}%  "
+    "format": " {}%  ",
     "on-click": "flatpak run net.nokyan.Resources",
   },
   "clock": {
     "format": "󱑂 {:%R %a %d %b}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "timezone": "Brazil/East",
-    "format-alt": "󰨳 {:%d %b}"
+    "format-alt": "󰨳 {:%d %b}",
     "on-click": "flatpak run net.nokyan.Resources",
   }
 }
