@@ -1,14 +1,14 @@
-audioapi: 5
+audioapi: 4
 noaudioin: False
-audioindev1: 0 2
-audioindevname1: JACK
+audioindev1: 5 2
+audioindevname1: ALSA: pipewire
 noaudioout: False
-audiooutdev1: 0 2
-audiooutdevname1: JACK
+audiooutdev1: 14 2
+audiooutdevname1: ALSA: pipewire
 audiobuf: 10
 rate: 48000
 callback: 0
-audioblocksize: 256
+audioblocksize: 64
 midiapi: 0
 nomidiin: False
 midiindev1: 0
@@ -26,7 +26,8 @@ path7: /home/neimog/Documents/Pd/externals/neimog
 path8: /home/neimog/Documents/Pd/externals/neimog/Abstractions/
 path9: /home/neimog/Documents/Pd/externals/neimog/Resources/Audios/
 path10: /home/neimog/Documents/Pd/externals/neimog/lua/upic/
-npath: 10
+path11: /home/neimog/Documents/Pd/externals/saf
+npath: 11
 standardpath: 1
 verbose: 1
 nloadlib: 0

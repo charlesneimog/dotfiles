@@ -292,7 +292,11 @@ for_window [app_id="blueman-manager"] resize set height 800 px
 for_window [app_id="blueman-manager"] resize set width 800 px
 
 # share
-for_window [app_id="hyprland-share-picker"] floating enable
+for_window [app_id="hyprland-share-picker|org.gnome.Totem"] floating enable
+for_window [app_id="org.gnome.Totem"] resize set height 800 px
+for_window [app_id="org.gnome.Totem"] resize set width 800 px
+
+# focus current
 
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │
@@ -304,7 +308,6 @@ assign [app_id="zen-beta"] 1
 assign [app_id="zen-alpha"] 1
 for_window [title="Picture-in-Picture" app_id="zen"] floating enable
 for_window [title="Picture-in-Picture" app_id="zen"] move position 0 0
-
 
 assign [class="org.wezfurlong.wezterm"] 2
 assign [app_id="kitty"] 2

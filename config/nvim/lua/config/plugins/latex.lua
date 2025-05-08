@@ -17,6 +17,7 @@ return {
 	{
 		"lervag/vimtex",
 		ft = { "tex", "latex", "bib" },
+		lazy = false,
 		event = { "BufEnter *.tex,*.bib" },
 		config = function()
 			vim.g.vimtex_compiler_latexmk = {

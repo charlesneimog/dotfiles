@@ -18,7 +18,6 @@ return {
 			javascript = { "eslint_d" },
 			typescript = { "eslint_d" },
 			json = { "jsonlint" },
-			python = { "flake8" },
 			lua = { "luacheck" },
 		}
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

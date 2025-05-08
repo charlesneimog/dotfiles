@@ -9,6 +9,79 @@ function start_agent {
 }
 
 # ──────────────────────────────────────
+update_flatpak_packages() {
+    # Check for updates in Flathub
+    notify-send "Update" "Checking for updates for Flaptak"
+
+    updates=$(flatpak remote-ls --updates | grep -c .)
+    echo "$updates"
+
+    if [ "$updates" -eq 0 ]; then
+        notify-send "Update" "No updates available"
+        return 0
+    fi
+
+    local flathub_updates
+    flathub_updates=$(flatpak update -y | wc -l)
+    echo "$flathub_updates"
+
+    # If no Flathub updates, exit early
+    if [ "$flathub_updates" -eq 0 ]; then
+        notify-send "Update" "No Flathub updates available"
+        return 0
+    fi
+
+    # Update Flathub packages
+    flatpak update --noninteractive
+    if not [ $? -eq 0 ]; then
+        notify-send "Update" "Flathub update failed"
+    fi
+
+    pkill -SIGRTMIN+8 waybar
+}
+
+# ──────────────────────────────────────
+update_aur_packages() {
+    notify-send "Update" "Checking for updates in AUR"
+    pkill -SIGRTMIN+8 waybar
+    local updates
+    updates=$(( $(checkupdates | wc -l) + $(paru -Qm | aur vercmp | wc -l) ))
+    echo "$updates"
+
+    if [ "$updates" -eq 0 ]; then
+        notify-send "Update" "No updates available"
+        return 0
+    fi
+
+    local PASSWORD
+    PASSWORD=$(zenity --password --title="Authentication Required for update") || {
+        notify-send "Update" "Cancelled by user"
+        return 1
+    }
+
+    # Validate password
+    echo "$PASSWORD" | sudo -S true 2>/dev/null || {
+        notify-send "Update" "Incorrect password"
+        return 1
+    }
+
+    # Run update inside wezterm
+    bash -c "
+        echo \"$PASSWORD\" | sudo -S bash -c 'paru -Syu --noconfirm'
+        if [ \$? -eq 0 ]; then
+            notify-send 'Update' 'System packages updated'
+        else
+            notify-send 'Update' 'paru failed'
+        fi
+        echo Done - Press enter to exit
+        read
+    "
+
+    pkill -SIGRTMIN+8 waybar
+}
+
+
+# ──────────────────────────────────────
 function unlock_ssh {
     SSH_ENV=$HOME/.ssh/environment
     if [ -f "${SSH_ENV}" ]; then
@@ -23,17 +96,20 @@ function unlock_ssh {
 
 # ──────────────────────────────────────
 function get_unsplash_wallpaper {
-    QUERY_LIST="nature+sunset+space+tree+galaxy+sky+forest+stars+mountain"
+    QUERY_LIST="nature+sunset+space+tree+galaxy+sky+forest+stars+mountain+abstract"
     if [[ -z "$QUERY_LIST" ]]; then
         echo "❌ QUERY_LIST is empty."
         exit 1
     fi
+
     IFS='+' read -ra WORDS <<< "$QUERY_LIST"
     if (( ${#WORDS[@]} == 0 )); then
         echo "❌ No words found in QUERY_LIST."
         exit 1
     fi
     QUERY="${WORDS[RANDOM % ${#WORDS[@]}]}"
+
+    notify-send "🌄 Changing wallpaper... $QUERY"
 
     WIDTH=1920
     HEIGHT=1080
@@ -143,6 +219,12 @@ if [ "$1" != "" ]; then
             ;;
         unsplash)
             get_unsplash_wallpaper;;
+        update_aur_packages)
+            update_aur_packages
+            ;;
+        update_flatpak_packages)
+            update_flatpak_packages
+            ;;
         get_theme)
             get_theme
             ;;

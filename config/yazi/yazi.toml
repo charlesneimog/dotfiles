@@ -1,9 +1,7 @@
 [manager]
-
-ratio            = [ 2, 2, 5 ]
-sort_by          = "alphabetical"
-sort_sensitive   = false
-sort_reverse 	 = false
+ratio            = [ 2, 5, 3 ]
+sort_by          = "mtime"
+sort_reverse 	 = true
 sort_dir_first   = true
 sort_translit    = false
 linemode         = "none"
@@ -21,13 +19,14 @@ max_height      = 1200
 cache_dir       = ""
 image_delay     = 30
 image_filter    = "triangle"
-image_quality   = 75
+image_quality   = 90
 sixel_fraction  = 15
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 rules = [
     { name = "*.rnote", binary = true },
     { name = "*.mscz", binary = true },
+    { name = "*.pd", binary = true },
 ]
 
 [opener]
@@ -39,8 +38,35 @@ musescore = [
     {run = 'mscore "$1"', desc = "Open in Musescore", for = "linux"},
 ]
 
+pd = [
+    {run = 'pd "$1"', desc = "Open in PureData", for = "linux"},
+]
+
+targz = [
+    {run = 'tar -xvzf "$1"', desc = "Descompactar arquivos", for = "linux"},
+]
+
+video = [
+    {run = 'flatpak run org.gnome.Totem "$1"', desc = "Play videos", for = "linux"},
+]
+
+code = [
+    {run='nvim "$@"', block = true}
+]
+
 [open]
 rules = [
+    { name = "*.py", use = "code" },
+    { name = "*.mp4", use = "video" },
     { name = "*.rnote", use = "rnote" },
-    { name = "*.mscz", use = "musescore" }
+    { name = "*.mscz", use = "musescore" },
+    { name = "*.tar.gz", use = "targz" },
+    { name = "*.pd", use = "pd" },
+    { mime = "text/*", use = "code", block = true },
+    { ext = "c", use = "code", block = true },
+    { ext = "cpp", use = "code", block = true },
+    { ext = "py", use = "code", block = true },
+    { ext = "md", use = "code", block = true },
+    { ext = "toml", use = "code", block = true },
+    { ext = "lua", use = "code", block = true }
 ]

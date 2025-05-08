@@ -37,7 +37,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		-- event = "BufEnter",
+		event = "BufEnter",
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim", -- Mason is a build tool for Neovim plugins

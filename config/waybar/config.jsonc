@@ -78,7 +78,8 @@
       "power-profiles-daemon",
       "custom/themes",
       "custom/wallpaper",
-      "custom/pacman"
+      "custom/aur",
+      "custom/flathub"
     ]
   },
   "idle_inhibitor": {
@@ -88,12 +89,12 @@
       "deactivated": " "
     }
   },
-  "custom/power-menu": {
-    "format": " ",
-    "tooltip": true,
-    "tooltip-format": " Open Wlogout!",
-    "on-click": "~/.config/hypr/scripts/power-menu.sh"
-  },
+    "custom/power-menu": {
+      "format": " ",
+      "tooltip": true,
+      "tooltip-format": " Open Power Menu",
+      "on-click": "choice=$(zenity --list --title='Power Menu' --width=200 --height=250 --column='Action' Shutdown Reboot Suspend Logout Cancel); [[ $choice == Shutdown ]] && systemctl poweroff || [[ $choice == Reboot ]] && systemctl reboot || [[ $choice == Suspend ]] && systemctl suspend || [[ $choice == Logout ]] && swaymsg exit",
+    },
 
   "group/settings": {
     "orientation": "horizontal",
@@ -132,15 +133,26 @@
     }
   },
 
-  "custom/pacman": {
+  "custom/aur": {
     "format": " {}",
-    "interval": 3600,                     			
-    "exec": "bash -c 'echo $(( $(checkupdates | wc -l) + $(paru -Qm | aur vercmp | wc -l) + $(flatpak remote-ls --updates | grep -c .) ))'",
-    "exec-if": "exit 0",                  			
-    "on-click": "wezterm start -- sh -c 'flatpak update -y; paru; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
+    "interval": 21600,
+    "exec": "bash -c 'echo $(( $(checkupdates | wc -l) + $(paru -Qm | aur vercmp | wc -l) ))'",
+    "exec-if": "exit 0",
+    "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh update_aur_packages",
     "signal": 8,
-    "tooltip": false,
+    "tooltip": false
+  },
+
+"custom/flathub": {
+  "format": " {}",
+  "interval": 21600,
+  "exec": "bash -c 'echo $(( $(flatpak remote-ls --updates | grep -c .) ))'",
+  "exec-if": "exit 0",
+  "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh update_flatpak_packages",
+  "signal": 8,
+  "tooltip": false
 },
+
 
   "custom/themes": {
     "exec": "sleep 0.2; /home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh get_theme",

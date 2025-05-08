@@ -77,7 +77,8 @@ tooltip {
 #power-profiles-daemon,
 #custom-themes,
 #custom-wallpaper,
-#custom-pacman {
+#custom-flathub,
+#custom-aur {
     margin: 0px 0px;
     padding: 0px 2px;
     transition: all 0.5s ease;
@@ -89,7 +90,8 @@ tooltip {
 #power-profiles-daemon:hover,
 #custom-themes:hover,
 #custom-wallpaper:hover,
-#custom-pacman:hover {
+#custom-flathub:hover,
+#custom-aur:hover {
     color: red;
 }
 
@@ -284,9 +286,14 @@ tooltip {
     transition: all 0.2s ease;
 }
 
-#custom-pacman {
+#custom-aur {
     margin: 1px 2px 1px 2px;
-    padding-left: 10px;
+    padding-left: 8px;
+}
+
+#custom-flathub {
+    margin: 1px 2px 1px 2px;
+    padding-left: 5px;
 }
 
 /*

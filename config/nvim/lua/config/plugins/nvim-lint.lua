@@ -11,7 +11,7 @@ return {
 			javascript = { "eslint" },
 			html = { "htmlhint" },
 			lua = { "luacheck" },
-			python = { "flake8" },
+			-- python = { "flake8" },
 			c = { "clangtidy" },
 			cpp = { "clangtidy" },
 			markdown = { "vale" },

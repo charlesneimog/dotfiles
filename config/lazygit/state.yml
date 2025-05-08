@@ -1,12 +1,16 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/pd.cmake
+    - /home/neimog/Documents/Git/anytype-client
+    - /home/neimog/Documents/Git/Tese
+    - /home/neimog/Documents/Git/Espelhos-Técnicos
+    - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/pd-upic
     - /home/neimog/Documents/Git/pd-saf
+    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Downloads/eww-widgets
     - /home/neimog/Documents/Git/moteto
-    - /home/neimog/Documents/Git/anytype-client
     - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/pdftts
     - /home/neimog/Documents/Git/pure-data
@@ -16,8 +20,6 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-neimog
     - /home/neimog/.local/share/pd4web/Externals/saf/Libraries/OpenBLAS
     - /home/neimog/Documents/Git/pd-saf/Libraries/Spatial_Audio_Framework
-    - /home/neimog/Documents/Git/Tese
-    - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/Pandemonio
     - /home/neimog/Documents/Git/pd-score
     - /home/neimog/Documents/Git/Awesome-Pd
@@ -33,13 +35,11 @@ recentrepos:
     - /home/neimog/Documents/Git/loris
     - /home/neimog/Documents/Git/pd-partialtrack/Libraries/simpl
     - /home/neimog/Documents/Git/py4pd-upic
-    - /home/neimog/Documents/Git/pd-upic
     - /home/neimog/Documents/Git/py4pd-spt
     - /home/neimog/Documents/Git/pdgui
     - /home/neimog/Documents/Git/OScofo/Libraries/tree-sitter
     - /home/neimog/Documents/Git/py4pd-score
     - /home/neimog/Documents/Git/grambilib
-    - /home/neimog/Documents/Git/Espelhos-Técnicos
     - /home/neimog/Documents/Git/py4pd-orchidea
     - /home/neimog/Documents/Git/py4pd-freesound
     - /home/neimog/Documents/Git/pd4web/Sources/Libraries/pd.cmake
@@ -50,7 +50,7 @@ recentrepos:
     - /home/neimog/Documents/Git/nucleomusicanova.github.io
     - /home/neimog/Documents/Git/pd-pt
 startuppopupversion: 5
-lastversion: 0.49.0
+lastversion: 0.50.0
 customcommandshistory:
     - q
     - ""
