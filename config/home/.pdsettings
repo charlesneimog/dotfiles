@@ -5,7 +5,7 @@ audioindevname1: ALSA: pipewire
 noaudioout: False
 audiooutdev1: 14 2
 audiooutdevname1: ALSA: pipewire
-audiobuf: 10
+audiobuf: 43
 rate: 48000
 callback: 0
 audioblocksize: 64
@@ -27,7 +27,9 @@ path8: /home/neimog/Documents/Pd/externals/neimog/Abstractions/
 path9: /home/neimog/Documents/Pd/externals/neimog/Resources/Audios/
 path10: /home/neimog/Documents/Pd/externals/neimog/lua/upic/
 path11: /home/neimog/Documents/Pd/externals/saf
-npath: 11
+path12: /home/neimog/Documents/Pd/externals/neimog/lua/pd-upic
+path13: /home/neimog/Documents/Pd/externals/neimog/lua/pd-orchidea
+npath: 13
 standardpath: 1
 verbose: 1
 nloadlib: 0

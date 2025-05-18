@@ -42,4 +42,5 @@ return {
 			},
 		},
 	},
+    { 'vuciv/golf' },
 }

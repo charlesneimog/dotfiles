@@ -11,13 +11,14 @@ function start_agent {
 # ──────────────────────────────────────
 update_flatpak_packages() {
     # Check for updates in Flathub
-    notify-send "Update" "Checking for updates for Flaptak"
+    notify-send "Update" "Checking for updates for Flaptak" -t 1000
 
     updates=$(flatpak remote-ls --updates | grep -c .)
     echo "$updates"
 
     if [ "$updates" -eq 0 ]; then
         notify-send "Update" "No updates available"
+        pkill -SIGRTMIN+8 waybar
         return 0
     fi
 
@@ -27,14 +28,16 @@ update_flatpak_packages() {
 
     # If no Flathub updates, exit early
     if [ "$flathub_updates" -eq 0 ]; then
-        notify-send "Update" "No Flathub updates available"
+        notify-send "Update" "No Flathub updates available" -t 1000
+        pkill -SIGRTMIN+8 waybar
         return 0
     fi
 
+    notify-send "Update" "Updating Flaptak Apps..." -t 1000
     # Update Flathub packages
     flatpak update --noninteractive
     if not [ $? -eq 0 ]; then
-        notify-send "Update" "Flathub update failed"
+        notify-send "Update" "Flathub update failed" -t 1000
     fi
 
     pkill -SIGRTMIN+8 waybar
@@ -42,44 +45,51 @@ update_flatpak_packages() {
 
 # ──────────────────────────────────────
 update_aur_packages() {
-    notify-send "Update" "Checking for updates in AUR"
+    notify-send "Update" "Checking for updates in AUR" -t 1000
+    paru -Sy
+    pacman -Sy
+
     pkill -SIGRTMIN+8 waybar
+
     local updates
-    updates=$(( $(checkupdates | wc -l) + $(paru -Qm | aur vercmp | wc -l) ))
+    updates=$(paru -Qu 2>/dev/null | wc -l)
+
     echo "$updates"
 
     if [ "$updates" -eq 0 ]; then
-        notify-send "Update" "No updates available"
+        notify-send "Update" "No updates available" -t 1000
+        pkill -SIGRTMIN+8 waybar
         return 0
     fi
 
     local PASSWORD
     PASSWORD=$(zenity --password --title="Authentication Required for update") || {
-        notify-send "Update" "Cancelled by user"
+        notify-send "Update" "Cancelled by user" -t 1000
+        pkill -SIGRTMIN+8 waybar
         return 1
     }
 
     # Validate password
     echo "$PASSWORD" | sudo -S true 2>/dev/null || {
-        notify-send "Update" "Incorrect password"
+        notify-send "Update" "Incorrect password" -t 1000
+        pkill -SIGRTMIN+8 waybar
         return 1
     }
 
     # Run update inside wezterm
     bash -c "
-        echo \"$PASSWORD\" | sudo -S bash -c 'paru -Syu --noconfirm'
+        echo \"$PASSWORD\" | sudo -S pacman -Sy && paru -Sy && paru -Syu --noconfirm 
         if [ \$? -eq 0 ]; then
             notify-send 'Update' 'System packages updated'
+            pkill -SIGRTMIN+8 waybar
         else
             notify-send 'Update' 'paru failed'
+            pkill -SIGRTMIN+8 waybar
         fi
-        echo Done - Press enter to exit
-        read
     "
 
     pkill -SIGRTMIN+8 waybar
 }
-
 
 # ──────────────────────────────────────
 function unlock_ssh {

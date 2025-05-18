@@ -230,6 +230,7 @@ local function update_theme(window, path)
 			}),
 		}
 	else
+		os.execute('export FZF_DEFAULT_OPTS="--color=light"')
         os.execute(
             'export FZF_DEFAULT_OPTS="--color=bg+:#f5f5f5,bg:#e0e0e0,spinner:#e0e0e0,hl:#ff6f61 --color=fg:#2e2e2e,header:#ff6f61,info:#ff9f4f,pointer:#ff0000 --color=marker:#6a6a6a,fg+:#2e2e2e,prompt:#ff9f4f,hl+:#ff6f61 --color=selected-bg:#d4d4d4 --multi"'
         )
@@ -294,5 +295,6 @@ wezterm.on("format-tab-title", function(tab)
 		{ Text = "▕" },
 	})
 end)
+
 
 return config
