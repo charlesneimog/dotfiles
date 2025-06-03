@@ -1,3 +1,6 @@
 Config/hypr/wallpaper.png
 Config/hypr/wallpaper.jpg
 Config/lazygit/state.yml
+utils/.cache/clangd/index
+utils/build
+utils/compile_commands.json

@@ -43,14 +43,16 @@ tooltip {
 #clock,
 #hardware,
 #network,
+#temperature,
 #workspaces,
-#pulseaudio,
+#wireplumber,
 #tray,
 #taskbar,
 #custom-weather,
 #privacy,
 #actions,
 #quick-actions,
+#temperature,
 #custom-notification,
 #quicklinks-left {
     border-radius: 3px;
@@ -77,6 +79,7 @@ tooltip {
 #power-profiles-daemon,
 #custom-themes,
 #custom-wallpaper,
+#temperature,
 #custom-flathub,
 #custom-aur {
     margin: 0px 0px;
@@ -99,8 +102,10 @@ tooltip {
     color: red;
 }
 
+
+#temperature:hover,
 #network:hover,
-#pulseaudio:hover,
+#wireplumber:hover,
 #hardware:hover,
 #clock:hover,
 #custom-notification:hover {

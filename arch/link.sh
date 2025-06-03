@@ -48,6 +48,7 @@ link_files "$SCRIPT_DIR/../config/waybar" "$HOME/.config/waybar" false
 link_files "$SCRIPT_DIR/../config/zathura" "$HOME/.config/zathura" false
 link_files "$SCRIPT_DIR/../config/swaync" "$HOME/.config/swaync" false 
 link_files "$SCRIPT_DIR/../config/sway" "$HOME/.config/sway" false 
+link_files "$SCRIPT_DIR/../config/hypr" "$HOME/.config/hypr" false 
 link_files "$SCRIPT_DIR/../config/lazygit" "$HOME/.config/lazygit" false
 link_files "$SCRIPT_DIR/../config/yazi" "$HOME/.config/yazi" false
 link_files "$SCRIPT_DIR/../config/swaylock" "$HOME/.config/swaylock" false 

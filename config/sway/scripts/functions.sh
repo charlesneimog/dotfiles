@@ -18,7 +18,7 @@ update_flatpak_packages() {
 
     if [ "$updates" -eq 0 ]; then
         notify-send "Update" "No updates available"
-        pkill -SIGRTMIN+8 waybar
+        pkill -SIGRTMIN+9 waybar
         return 0
     fi
 
@@ -29,18 +29,18 @@ update_flatpak_packages() {
     # If no Flathub updates, exit early
     if [ "$flathub_updates" -eq 0 ]; then
         notify-send "Update" "No Flathub updates available" -t 1000
-        pkill -SIGRTMIN+8 waybar
+        pkill -SIGRTMIN+9 waybar
         return 0
     fi
 
-    notify-send "Update" "Updating Flaptak Apps..." -t 1000
     # Update Flathub packages
     flatpak update --noninteractive
     if not [ $? -eq 0 ]; then
         notify-send "Update" "Flathub update failed" -t 1000
     fi
 
-    pkill -SIGRTMIN+8 waybar
+    notify-send "Update" "Apps Updated..." -t 1000
+    pkill -SIGRTMIN+9 waybar
 }
 
 # ──────────────────────────────────────

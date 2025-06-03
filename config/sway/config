@@ -166,6 +166,7 @@ bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next
 bindgesture swipe:up exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/launchers/type-3/style-10.rasi
 
+
 # ╭───────────────────────────────────────╮
 # │                execute                │
 # ╰───────────────────────────────────────╯
@@ -202,8 +203,10 @@ exec {
     # copy and paste
     wl-paste --type text --watch cliphist store
     wl-paste --type image --watch cliphist store
-    # ssh
-    exec sh -c 'eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg); echo $SSH_AUTH_SOCK > /run/user/1000/ssh_auth_sock'
+
+    # keyring
+    dbus-update-activation-environment --all
+    gnome-keyring-daemon --start --components=secrets
 
     # swayidle
     swayidle -w --ignore-fullscreen \
@@ -211,6 +214,8 @@ exec {
         timeout 300 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
         before-sleep 'swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --fade-in 0.3 --ring-color 2e3440 --key-hl-color 88c0d0 --line-color 00000000 --inside-color 3b4252 --separator-color 00000000 --text-color d8dee9 --grace 2'
+
+
 }
 
 default_border pixel 1
@@ -313,6 +318,9 @@ for_window [app_id="org.gnome.Totem"] resize set width 800 px
 for_window [app_id="org.gnome.Totem"] resize set width 800 px
 
 # floating windows zen
+
+for_window [app_id="zen" title=".*Extension: \(Bitwarden Password Manager\).*"] floating enable
+
 for_window [app_id="zen" title="Picture-in-Picture"] floating enable
 for_window [app_id="zen" title="Picture-in-Picture"] sticky enable
 for_window [app_id="zen" title="Picture-in-Picture"] resize set width 400 px

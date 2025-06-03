@@ -5,8 +5,9 @@
   "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
   "modules-center": ["hyprland/workspaces", "sway/workspaces"],
   "modules-right": [
+    "temperature",
     "network",
-    "pulseaudio",
+    "wireplumber",
     "group/hardware",
     "clock",
     "custom/notification"
@@ -106,20 +107,13 @@
     "format-icons": ["", "", ""]
   },
 
-  "pulseaudio": {
-    "format": "{volume}% {icon}",
-    "format-bluetooth": "{volume}% {icon} {format_source}",
-    "format-bluetooth-muted": " {icon} {format_source}",
-    "max-volume": 100,
-    "format-muted": " 󰝟  {format_source}",
-    "format-source": "{volume}% ",
-    "format-source-muted": "",
-    "format-icons": {
-      "default": ["", " ", " "]
+    "wireplumber": {
+        "format": "{volume}% {icon} ",
+        "format-muted": "",
+        "format-icons": ["", "", ""],
+        "on-click": "flatpak run com.saivert.pwvucontrol"
+
     },
-    "max-volume": 100,
-    "on-click": "flatpak run com.saivert.pwvucontrol"
-  },
 
   "power-profiles-daemon": {
     "format": "{icon}",
@@ -275,7 +269,7 @@
     "format-charging": "  {capacity}%",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "signal": 12,
-    "interval": 5,
+    "interval": 60,
   },
 
   "cpu": {
@@ -287,11 +281,13 @@
     "format": " {}%  ",
     "on-click": "flatpak run net.nokyan.Resources",
   },
-  "clock": {
-    "format": "󱑂 {:%R %a %d %b}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "timezone": "Brazil/East",
-    "format-alt": "󰨳 {:%d %b}",
-    "on-click": "flatpak run net.nokyan.Resources",
-  }
+"clock": {
+  "format": "󱑂 {:%H:%M:%S %a %d %b}",
+  "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+  "timezone": "Brazil/East",
+  "format-alt": "󰨳 {:%d %b}",
+  "on-click": "flatpak run net.nokyan.Resources",
+  "interval": 1
+}
+
 }

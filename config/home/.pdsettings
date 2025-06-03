@@ -1,21 +1,19 @@
-audioapi: 4
+audioapi: 5
 noaudioin: False
-audioindev1: 5 2
-audioindevname1: ALSA: pipewire
+audioindev1: 0 2
+audioindevname1: JACK
 noaudioout: False
-audiooutdev1: 14 2
-audiooutdevname1: ALSA: pipewire
+audiooutdev1: 0 2
+audiooutdevname1: JACK
 audiobuf: 43
 rate: 48000
 callback: 0
-audioblocksize: 64
+audioblocksize: 128
 midiapi: 0
 nomidiin: False
 midiindev1: 0
 midiindevname1: Midi Through Port-0
-nomidiout: False
-midioutdev1: 0
-midioutdevname1: Midi Through Port-0
+nomidiout: True
 path1: /home/neimog/Documents/Pd/externals
 path2: /home/neimog/Documents/Git
 path3: /home/neimog/Documents/Pd/externals/pd-neimog
