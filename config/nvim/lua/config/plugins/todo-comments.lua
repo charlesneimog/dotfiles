@@ -32,8 +32,9 @@ return {
 		signs = true, -- show icons in the signs column
 		sign_priority = 8, -- sign priority
 		highlight = {
-			multiline = false,
+			multiline = true,
 			pattern = [[.*<(KEYWORDS)\s*:]],
+			max_line_len = 150,
 		},
 		colors = {
 			neimogFIX = { "neimogFIX", "#DB463B" },

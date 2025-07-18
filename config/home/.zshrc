@@ -139,4 +139,3 @@ export PATH="/home/neimog/.pixi/bin:$PATH"
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /home/neimog/.dart-cli-completion/zsh-config.zsh ]] && . /home/neimog/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
-

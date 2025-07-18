@@ -1,0 +1,363 @@
+//╭─────────────────────────────────────╮
+//│          Input and Output           │
+//╰─────────────────────────────────────╯
+input {
+    keyboard {
+        xkb {
+            layout "br"
+        }
+        numlock
+    }
+    touchpad {
+        tap
+        natural-scroll
+        disabled-on-external-mouse
+    }
+
+     tablet {
+        map-to-output "eDP-1"
+    }
+
+    focus-follows-mouse max-scroll-amount="70%"
+    warp-mouse-to-focus mode="center-xy-always"
+}
+
+output "eDP-1" {
+    mode "1920x1080@60.00"
+    scale 1
+}
+
+switch-events {
+    lid-close { spawn "notify-send" "The laptop lid is closed!"; }
+    lid-open { spawn "notify-send" "The laptop lid is open!"; }
+}
+
+//╭─────────────────────────────────────╮
+//│             Environment             │
+//╰─────────────────────────────────────╯
+environment {
+    DISPLAY ":0"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    MOZ_ENABLE_WAYLAND "1"
+
+    QT_QPA_PLATFORMTHEME "qt5ct"
+    QT_QPA_PLATFORM "wayland;xcb"
+    QT_AUTO_SCREEN_SCALE_FACTOR "1"
+    QT_WAYLAND_DISABLE_WINDOW_DECORATION "1"
+
+    GDK_BACKEND "wayland"
+    XDG_CURRENT_DESKTOP "Niri"
+    XDG_SESSION_TYPE "wayland"
+    XDG_SESSION_DESKTOP "Niri"
+
+    PULSE_SERVER "/tmp/pulse-socket"
+}
+
+
+
+//╭─────────────────────────────────────╮
+//│                Look                 │
+//╰─────────────────────────────────────╯
+prefer-no-csd
+
+layout {
+    gaps 5
+    center-focused-column "on-overflow"
+    always-center-single-column
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    
+    default-column-width { 
+        proportion 0.6; 
+    }
+
+    focus-ring {
+        width 3
+        active-color "#3399ff55"      // Vivid medium blue
+        inactive-color "#222222"    // Deep charcoal (near black)
+        urgent-color "#ff3333"      // Bright red for urgency
+    }
+
+    border {
+        width 2
+        active-color "#3399ff88"    // Deep blue with full opacity
+        inactive-color "#1a1a1a"    // Almost black
+        urgent-color "#cc0000"      // Strong urgent red
+    }
+
+    struts {
+        left 10
+        right 10
+        top 10
+        bottom 10
+    }
+
+    shadow {
+        // on
+        softness 10
+        spread 5
+        offset x=0 y=2
+        draw-behind-window true
+        color "#00ccdd70"
+    }
+
+}
+
+overview {
+    zoom 0.5
+    backdrop-color "#3d5063ff"
+
+    workspace-shadow {
+        softness 300
+        spread 10
+        offset x=0 y=60
+        color "#00000050"
+    }
+}
+
+cursor {
+    xcursor-theme "McMojave"
+    xcursor-size 24
+    hide-when-typing
+    hide-after-inactive-ms 1000
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+animations {
+    slowdown 0.5
+}
+
+//╭─────────────────────────────────────╮
+//│               StartUp               │
+//╰─────────────────────────────────────╯
+spawn-at-startup "waybar"
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "nextcloud"
+spawn-at-startup "anytype"
+spawn-at-startup "blueman-applet"
+spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
+spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
+spawn-at-startup "sh" "-c" "dbus-update-activation-environment --all"
+spawn-at-startup "sh" "-c" "gnome-keyring-daemon --start --components=secrets"
+
+spawn-at-startup "/usr/lib/xdg-desktop-portal"
+spawn-at-startup "/usr/lib/xdg-desktop-portal-gtk"
+spawn-at-startup "/usr/lib/xdg-desktop-portal-gnome"
+spawn-at-startup "sh" "-c" "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh unsplash"
+
+
+
+//╭─────────────────────────────────────╮
+//│                Binds                │
+//╰─────────────────────────────────────╯
+
+binds {
+    Mod+Return hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm-gui"; }
+    Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "sh" "-c" "killall rofi || rofi -show drun -show-icons -theme /home/neimog/.config/rofi/launchers/type-3/style-10.rasi"; }
+    Mod+V hotkey-overlay-title="Run Rofi Copy menu" { spawn "sh" "-c" "killall rofi || cliphist list | rofi -dmenu -theme /home/neimog/.config/rofi/launchers/type-7/style-2.rasi | cliphist decode | wl-copy";}
+
+    // Apps
+    Mod+A hotkey-overlay-title="Open Anytype" { spawn "anytype";}
+    Mod+B hotkey-overlay-title="Open Zen Browser" { spawn "flatpak" "run" "app.zen_browser.zen";}
+    Mod+Z hotkey-overlay-title="Open Zotero" { spawn "zotero";}
+    Mod+E hotkey-overlay-title="Open Nautilus: nautilus" { spawn "nautilus"; }
+
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "sh" "-c" "swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --fade-in 0.3 --ring-color 2e3440 --key-hl-color 88c0d0 --line-color 00000000 --inside-color 3b4252 --separator-color 00000000 --text-color d8dee9 --grace 2"; }
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    XF86MonBrightnessUp     allow-when-locked=true { spawn "brightnessctl" "s" "5%+"; }
+    XF86MonBrightnessDown   allow-when-locked=true { spawn "brightnessctl" "s" "5%-"; }
+
+    Mod+O repeat=false { toggle-overview; }
+
+    Alt+F4 { close-window; }
+    Mod+Q { close-window; }
+
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+    Mod+J     { focus-window-down; }
+    Mod+K     { focus-window-up; }
+    Mod+L     { focus-column-right; }
+
+    Mod+Ctrl+Left  { move-column-left; }
+    Mod+Ctrl+Down  { move-window-down; }
+    Mod+Ctrl+Up    { move-window-up; }
+    Mod+Ctrl+Right { move-column-right; }
+    Mod+Ctrl+H     { move-column-left; }
+    Mod+Ctrl+J     { move-window-down; }
+    Mod+Ctrl+K     { move-window-up; }
+    Mod+Ctrl+L     { move-column-right; }
+
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End  { move-column-to-last; }
+
+    Mod+Shift+Left  { focus-monitor-left; }
+    Mod+Shift+Down  { focus-monitor-down; }
+    Mod+Shift+Up    { focus-monitor-up; }
+    Mod+Shift+Right { focus-monitor-right; }
+    Mod+Shift+H     { focus-monitor-left; }
+    Mod+Shift+J     { focus-monitor-down; }
+    Mod+Shift+K     { focus-monitor-up; }
+
+    // Workspaes
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+
+    // Workspaces move
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    // Resize
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Ctrl+R { reset-window-height; }
+
+    // Maximize
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Ctrl+F { expand-column-to-available-width; }
+
+    // Center
+    Mod+C { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+
+    // Finer height adjustments when in column with other windows.
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+Space       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+W { toggle-column-tabbed-display; }
+
+    Print { spawn "sh" "-c" "grim /tmp/screenshot.png && satty --filename /tmp/screenshot.png --fullscreen"; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Mod+Shift+Q { quit; }
+
+    Mod+Shift+P { power-off-monitors; }
+}
+
+//╭─────────────────────────────────────╮
+//│            Windows Rules            │
+//╰─────────────────────────────────────╯
+workspace "1" 
+workspace "2" 
+workspace "3" 
+workspace "4" 
+workspace "5" 
+
+// Size
+window-rule {
+    match app-id="(^PdWindow)"
+    default-column-width { proportion 0.40; }
+}
+
+window-rule {
+    match app-id="(^com.nextcloud.desktopclient.nextcloud)"
+    match is-floating=true
+}
+
+window-rule {
+  match app-id="org.gnome.texteditor"
+  open-floating true
+  default-column-width { fixed 1000 ;}
+  default-window-height { fixed 700 ;}
+}
+
+window-rule {
+    match app-id="(^plugdata)"
+    open-floating true
+}
+
+// Position
+window-rule {
+    match app-id="(^qutebrowser|zen)"
+    open-on-workspace "1"
+    default-column-width { proportion 0.85; }
+}
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    open-on-workspace "2"
+    open-floating true
+    default-column-width { fixed 1700 ;}
+    default-window-height { fixed 950 ;}
+}
+
+window-rule {
+    match app-id="(^org.gnome.Nautilus)"
+    open-on-workspace "3"
+}
+
+window-rule {
+    match app-id="(^PatchWindow|PdWindow|plugdata|MuseScore4)"
+    open-on-workspace "4"
+}
+
+window-rule {
+    match app-id="(^anytype)"
+    open-on-workspace "5"
+    default-column-width { fixed 1700 ;}
+    default-window-height { fixed 950 ;}
+}
+
+window-rule {
+    match app-id="(^org.kde.okular|evince|zathura)"
+    open-on-workspace "6"
+}
+
+window-rule {
+    match app-id="(^org.inkscape.Inkscape|com.github.flxzt.rnote)"
+    open-on-workspace "7"
+}
+
+window-rule {
+  match app-id="(^org.pulseaudio.pavucontrol)"
+  default-column-width { fixed 800 ;}
+  default-window-height { fixed 500; }
+  open-floating true
+}
+
+//╭─────────────────────────────────────╮
+//│             Layer rules             │
+//╰─────────────────────────────────────╯
+// Put swaybg inside the overview backdrop.
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop false
+}
+

@@ -9,7 +9,7 @@ bindsym Mod4+Tab \
     exec killall rofi || rofi -show window -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/launchers/type-7/style-10.rasi
 
 bindsym Mod4+d \
-    exec killall rofi || rofi -show drun -show-icons -icon-theme "Tela-circle" -theme /home/neimog/.config/rofi/launchers/type-3/style-10.rasi
+    exec killall rofi || rofi -show drun -show-icons -theme /home/neimog/.config/rofi/launchers/type-3/style-10.rasi
 
 bindsym Mod4+v \
     exec killall rofi || cliphist list | rofi -dmenu -theme /home/neimog/.config/rofi/launchers/type-7/style-2.rasi | cliphist decode | wl-copy
@@ -183,7 +183,6 @@ exec {
 
     # internal
     exec dbus-update-activation-environment --systemd wayland_display xdg_current_desktop=sway
-    /usr/libexec/gsd-xsettings
     dbus-update-activation-environment --systemd wayland_display xdg_current_desktop &
 
     # ssh and others
@@ -209,29 +208,29 @@ exec {
     gnome-keyring-daemon --start --components=secrets
 
     # swayidle
-    swayidle -w --ignore-fullscreen \
-        timeout 60 'playerctl pause && swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --fade-in 0.3 --ring-color 2e3440 --key-hl-color 88c0d0 --line-color 00000000 --inside-color 3b4252 --separator-color 00000000 --text-color d8dee9 --grace 2'
-        timeout 300 'swaymsg "output * dpms off"' \
-        resume 'swaymsg "output * dpms on"' \
-        before-sleep 'swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --fade-in 0.3 --ring-color 2e3440 --key-hl-color 88c0d0 --line-color 00000000 --inside-color 3b4252 --separator-color 00000000 --text-color d8dee9 --grace 2'
+    swayidle -w \
+      timeout 380 'playerctl pause && swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --fade-in 0.3 --ring-color 2e3440 --key-hl-color 88c0d0 --line-color 00000000 --inside-color 3b4252 --separator-color 00000000 --text-color d8dee9 --grace 2' \
+      timeout 300 'swaymsg "output * dpms off"' \
+      resume 'swaymsg "output * dpms on"' \
+      before-sleep 'swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --fade-in 0.3 --ring-color 2e3440 --key-hl-color 88c0d0 --line-color 00000000 --inside-color 3b4252 --separator-color 00000000 --text-color d8dee9 --grace 2'
 
 
 }
 
-default_border pixel 1
+default_border pixel 2
 default_floating_border pixel 2
 titlebar_border_thickness 2
 smart_borders on
 client.focused #ff0000 #ffffff #000000 #ffffff #ff0000 
 focus_follows_mouse yes
 
-gaps inner 8
-gaps outer 8
+gaps inner 6
+gaps outer 6
 
 gaps top 2
-gaps right 8
-gaps bottom 8
-gaps left 8
+gaps right 6
+gaps bottom 6
+gaps left 6
 
 seat seat0 xcursor_theme McMojave 24
 
@@ -318,9 +317,8 @@ for_window [app_id="org.gnome.Totem"] resize set width 800 px
 for_window [app_id="org.gnome.Totem"] resize set width 800 px
 
 # floating windows zen
-
+for_window [class="DialogWindow"] floating enable
 for_window [app_id="zen" title=".*Extension: \(Bitwarden Password Manager\).*"] floating enable
-
 for_window [app_id="zen" title="Picture-in-Picture"] floating enable
 for_window [app_id="zen" title="Picture-in-Picture"] sticky enable
 for_window [app_id="zen" title="Picture-in-Picture"] resize set width 400 px
@@ -333,10 +331,10 @@ for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
 for_window [app_id="com.nextcloud.desktopclient.nextcloud"] resize set width 500 px
 for_window [app_id="com.nextcloud.desktopclient.nextcloud"] resize set height 500 px
 
+
 # ╭───────────────────────────────────────╮
 # │           Workspaces Rules            │
 # ╰───────────────────────────────────────╯
-
 assign [app_id="(^qutebrowser|zen)"] 1
 
 assign [class="org.wezfurlong.wezterm"] 2

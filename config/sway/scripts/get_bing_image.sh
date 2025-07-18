@@ -34,3 +34,4 @@ swaymsg "output $output bg $wlpath fill"
 
 # Blur existing wallpaper to user later as a lock screen
 magick convert $wlpath -filter Gaussian -blur 0x8 -level 10%,90%,0.5 $lswlpath
+

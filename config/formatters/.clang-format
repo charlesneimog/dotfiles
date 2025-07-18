@@ -1,9 +1,18 @@
 IndentWidth: 4
 ColumnLimit: 100
 UseTab: Never
-BraceWrapping:
-  AfterControlStatement: Always
 InsertBraces: true
-AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: true
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: false
+BraceWrapping:
+  AfterControlStatement: false
+  BeforeElse: true
+  AfterFunction: false
+  AfterNamespace: false
+  AfterClass: false
+  BeforeCatch: true
+  BeforeLambdaBody: false
 SortIncludes: false
 

@@ -1,16 +1,18 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/pd-saf
     - /home/neimog/Documents/Git/pd4web
-    - /home/neimog/Documents/Git/charlesneimog.github.io
-    - /home/neimog/Documents/Git/pd-neimog
+    - /home/neimog/Documents/Git/nanovg
+    - /home/neimog/Documents/Git/pdweb
+    - /home/neimog/Documents/Git/pd-lgui
+    - /home/neimog/Documents/Git/anytype-client
+    - /home/neimog/Documents/Git/pd-neimog/Sources/lua/pd-upic
     - /home/neimog/Documents/Git/pd.cmake
-    - /home/neimog/Downloads/flathub
+    - /home/neimog/Documents/Git/pd-neimog
+    - /home/neimog/Documents/Git/pd-saf
+    - /home/neimog/Documents/Git/charlesneimog.github.io
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/pd-else
-    - /home/neimog/Documents/Git/anytype-client
-    - /home/neimog/Documents/Git/Canticos-de-Silicio-I
     - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/pd-orchidea
     - /home/neimog/Documents/Git/Presentations
@@ -43,7 +45,6 @@ recentrepos:
     - /home/neimog/Documents/Git/grambilib
     - /home/neimog/Documents/Git/py4pd-orchidea
     - /home/neimog/Documents/Git/py4pd-freesound
-    - /home/neimog/Documents/Git/pd4web/Sources/Libraries/pd.cmake
     - /home/neimog/Documents/Git/pd-partialtrack/Resources/pd.cmake
     - /home/neimog/Documents/Git/pd-partialtrack/Resources/CMakeAudioHelpers
     - /home/neimog/Documents/Git/Caravana
@@ -51,7 +52,7 @@ recentrepos:
     - /home/neimog/Documents/Git/nucleomusicanova.github.io
     - /home/neimog/Documents/Git/pd-pt
 startuppopupversion: 5
-lastversion: 0.51.1
+lastversion: 0.53.0
 customcommandshistory:
     - q
     - ""

@@ -8,11 +8,11 @@ audiooutdevname1: JACK
 audiobuf: 43
 rate: 48000
 callback: 0
-audioblocksize: 128
+audioblocksize: 1024
 midiapi: 0
 nomidiin: False
-midiindev1: 0
-midiindevname1: Midi Through Port-0
+midiindev1: 2
+midiindevname1: SINCO SMK25-Master
 nomidiout: True
 path1: /home/neimog/Documents/Pd/externals
 path2: /home/neimog/Documents/Git

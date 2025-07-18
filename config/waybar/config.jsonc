@@ -3,8 +3,9 @@
   "reload_style_on_change": true,
   "spacing": 1,
   "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
-  "modules-center": ["hyprland/workspaces", "sway/workspaces"],
+  "modules-center": ["hyprland/workspaces", "sway/workspaces", "niri/workspaces"],
   "modules-right": [
+        // "keyboard-state",
     "temperature",
     "network",
     "wireplumber",
@@ -43,6 +44,18 @@
     }
   },
 
+  "niri/workspaces": {
+	"format": "{icon}",
+	"format-icons": {
+        "1": "󰖟",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+	}
+},
+
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
@@ -80,10 +93,12 @@
       "custom/themes",
       "custom/wallpaper",
       "custom/aur",
-      "custom/flathub"
+      "custom/flathub",
+      "systemd-failed-units",
     ]
   },
   "idle_inhibitor": {
+    "timeout": 30,
     "format": "{icon}",
     "format-icons": {
       "activated": " ",
@@ -144,6 +159,12 @@
       "signal": 9,
       "tooltip": false
     },
+    "systemd-failed-units": {
+	"hide-on-ok": true, // Do not hide if there is zero failed units.
+	"format": "✗ {nr_failed}",
+	"system": true, 
+	"user": true,
+},
 
 
   "custom/themes": {
@@ -213,9 +234,9 @@
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
     "interval": 2,
-    "exec-if": "which nm-connection-editor",
+    "exec-if": "which nm-connection-editor && which nm-applet",
     "exec": "nm-connection-editor",
-    "on-click": "nm-connection-editor"
+    "on-click": "nm-applet"
   },
 
   "custom/notification": {
@@ -271,6 +292,15 @@
     "signal": 12,
     "interval": 60,
   },
+    "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": "{name} {icon}",
+    "format-icons": {
+        "locked": "",
+        "unlocked": ""
+    }
+},
 
   "cpu": {
     "format": " {usage}%  ",
