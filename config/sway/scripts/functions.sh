@@ -1,4 +1,25 @@
-function start_agent {
+
+# ──────────────────────────────────────
+increase_volume() {
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  while read -r sink; do
+    current_vol=$(pactl get-sink-volume "$sink" | awk '{print $5}' | sed 's/%//')
+    if [ "$current_vol" -lt 100 ]; then
+      pactl set-sink-volume "$sink" +5%
+    fi
+  done
+}
+
+# ──────────────────────────────────────
+decrease_volume() {
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  xargs -I{} pactl set-sink-volume {} -5%
+}
+
+# ──────────────────────────────────────
+start_agent() {
     echo "Initializing new SSH agent..."
     # spawn ssh-agent
     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
@@ -215,6 +236,13 @@ get_theme(){
 # ──────────────────────────────────────
 if [ "$1" != "" ]; then
     case $1 in
+        decrease_volume)
+            decrease_volume 
+            ;;
+        increase_volume)
+            increase_volume 
+            ;;
+
         translate_selection)
             translate_selection
             ;;

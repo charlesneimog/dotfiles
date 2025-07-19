@@ -73,7 +73,6 @@ return {
 		config = function()
 			local mason_lspconfig = require("mason-lspconfig")
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
-			local lspconfig = require("lspconfig")
 
 			-- automatic install
 			local masonrequirements = {}
@@ -86,16 +85,7 @@ return {
 				automatic_installation = true,
 			})
 
-			--
-			local capabilities = cmp_nvim_lsp.default_capabilities()
-			-- mason_lspconfig.setup_handlers({
-			-- 	function(server_name)
-			-- 		lspconfig[server_name].setup({
-			-- 			capabilities = capabilities,
-			-- 			settings = servers[server_name],
-			-- 		})
-			-- 	end,
-			-- })
+			cmp_nvim_lsp.default_capabilities()
 		end,
 	},
 }

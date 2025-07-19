@@ -1,5 +1,24 @@
 #!/bin/bash
 
+increase_volume() {
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  while read -r sink; do
+    current_vol=$(pactl get-sink-volume "$sink" | awk '{print $5}' | sed 's/%//')
+    if [ "$current_vol" -lt 100 ]; then
+      pactl set-sink-volume "$sink" +5%
+    fi
+  done
+}
+
+decrease_volume() {
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  xargs -I{} pactl set-sink-volume {} -5%
+}
+
+
+
 translate_selection(){
     selected_text=$(wl-paste --primary | tr -d '\n')
     echo "Selected text: $selected_text" >> /tmp/translate.log
@@ -68,6 +87,12 @@ get_theme(){
 
 if [ "$1" != "" ]; then
     case $1 in
+        decrease_volume)
+            decrease_volume 
+            ;;
+        increase_volume)
+            increase_volume 
+            ;;
         translate_selection)
             translate_selection
             ;;
