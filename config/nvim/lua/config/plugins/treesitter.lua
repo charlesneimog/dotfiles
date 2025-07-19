@@ -46,6 +46,7 @@ return {
 				"javascript",
 				"vim",
 				"bash",
+                "kdl",
 				-- "html",
 				"regex",
 				"markdown",

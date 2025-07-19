@@ -26,6 +26,7 @@ return {
 			cpp = { "clang-format" },
 			c = { "clang-format" },
 			cmake = { "cmake_format" },
+
 		}
 		local formatters = {}
 		local mason_conform = {

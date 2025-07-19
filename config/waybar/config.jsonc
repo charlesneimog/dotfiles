@@ -146,7 +146,7 @@
       "format": " {}",
       "interval": 1800,
       "exec": "bash -c 'paru -Qu 2>/dev/null | wc -l'",
-      "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh update_aur_packages",
+      "on-click": "$HOME/.functions.sh update_aur_packages",
       "signal": 8,
       "tooltip": false
     },
@@ -154,21 +154,21 @@
     "custom/flathub": {
       "format": " {}",
       "interval": 1800,
-      "exec": "bash -c 'echo $(( $(flatpak remote-ls --updates | grep -c .) ))'",
-      "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh update_flatpak_packages",
+      "exec": "bash -c 'flatpak update --assumeno | grep -E \"^\\s*[0-9]+\\.\" | wc -l'",
+      "on-click": "$HOME/.functions.sh update_flatpak_packages",
       "signal": 9,
       "tooltip": false
     },
-    "systemd-failed-units": {
-	"hide-on-ok": true, // Do not hide if there is zero failed units.
-	"format": "✗ {nr_failed}",
-	"system": true, 
-	"user": true,
-},
 
+    "systemd-failed-units": {
+        "hide-on-ok": true, // Do not hide if there is zero failed units.
+        "format": "✗ {nr_failed}",
+        "system": true, 
+        "user": true,
+    },
 
   "custom/themes": {
-    "exec": "sleep 0.2; /home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh get_theme",
+    "exec": "sleep 0.2; $HOME/.functions.sh get_theme",
     "tooltip": false,
     "return-type": "json",
     "format": "{icon}",
@@ -177,7 +177,7 @@
       "light": " ",
       "": " "
     },
-    "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh change_theme",
+    "on-click":"$HOME/.functions.sh change_theme",
     "signal": 12,
     "interval": 60
   },
@@ -271,14 +271,9 @@
 
   "custom/wallpaper": {
     "format": " 󰋪",
-    "on-click": "/home/neimog/Documents/Git/dotfiles/config/sway/scripts/functions.sh unsplash"
+    "on-click": "$HOME/.functions.sh unsplash"
   },
 
-  "custom/weather": {
-    "exec": "python /home/neimog/Documents/Git/dotfiles/Config/waybar/Scripts/weather.py",
-    "restart-interval": 600,
-    "return-type": "json"
-  },
 
   "battery": {
     "states": {

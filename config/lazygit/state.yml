@@ -1,8 +1,11 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Downloads/gpu_tilde
+    - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/nanovg
+    - /home/neimog/Documents/Git/pure-data
+    - /home/neimog/Documents/Git/pd4web
     - /home/neimog/Documents/Git/pdweb
     - /home/neimog/Documents/Git/pd-lgui
     - /home/neimog/Documents/Git/anytype-client
@@ -13,7 +16,6 @@ recentrepos:
     - /home/neimog/Documents/Git/charlesneimog.github.io
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/pd-else
-    - /home/neimog/Documents/Git/OScofo
     - /home/neimog/Documents/Git/pd-orchidea
     - /home/neimog/Documents/Git/Presentations
     - /home/neimog/Documents/Git/Awesome-Pd
@@ -21,7 +23,6 @@ recentrepos:
     - /home/neimog/Documents/Git/Espelhos-Técnicos
     - /home/neimog/Documents/Git/moteto
     - /home/neimog/Documents/Git/pdftts
-    - /home/neimog/Documents/Git/pure-data
     - /home/neimog/Documents/Git/pd-lua
     - /home/neimog/Documents/Git/zotero-tts
     - /home/neimog/Documents/Git/blog

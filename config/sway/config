@@ -39,6 +39,7 @@ bindsym XF86AudioRaiseVolume exec \
       pactl set-sink-volume {} +5%; \
     fi'
 
+
 bindsym XF86AudioLowerVolume exec \
   pactl list short sinks | \
   awk '$NF == "RUNNING" {print $1}' | \

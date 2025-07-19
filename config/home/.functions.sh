@@ -1,4 +1,108 @@
-function start_agent {
+
+# ──────────────────────────────────────
+clipboard_rofi() {
+    if pgrep -x rofi > /dev/null; then
+        killall rofi
+    else
+        cliphist list | \
+            rofi -dmenu -theme "$HOME/.config/rofi/launchers/type-7/style-2.rasi" | \
+            cliphist decode | wl-copy
+    fi
+}
+
+# ──────────────────────────────────────
+launch_rofi() {
+    if pgrep -x rofi > /dev/null; then
+        killall rofi
+    else
+        rofi -show drun \
+             -show-icons \
+             -icon-theme 'Tela-circle' \
+             -theme "$HOME/.config/rofi/launchers/type-3/style-10.rasi"
+    fi
+}
+
+# ──────────────────────────────────────
+startup_services() {
+    export DISPLAY=":0"
+    export ELECTRON_OZONE_PLATFORM_HINT="auto"
+    export MOZ_ENABLE_WAYLAND="1"
+    export QT_QPA_PLATFORMTHEME="qt5ct"
+    export QT_QPA_PLATFORM="wayland;xcb"
+    export QT_AUTO_SCREEN_SCALE_FACTOR="1"
+    export QT_WAYLAND_DISABLE_WINDOW_DECORATION="1"
+    export GDK_BACKEND="wayland"
+    export XDG_SESSION_TYPE="wayland"
+    export XDG_CURRENT_DESKTOP="gnome"
+    export XDG_SESSION_DESKTOP="gnome"
+
+    # Custom function
+    sh -c "$HOME/.functions.sh unsplash" &
+
+    # Panel
+    waybar &
+
+    # Portals
+    /usr/lib/xdg-desktop-portal-gtk &
+    /usr/lib/xdg-desktop-portal-gnome &
+
+    # Services
+    sh -c "wl-paste --type text --watch cliphist store" &
+    sh -c "wl-paste --type image --watch cliphist store" &
+    sh -c "dbus-update-activation-environment --all" &
+    sh -c "gnome-keyring-daemon --start --components=secrets" &
+
+    # Apps
+    xwayland-satellite &
+    nextcloud &
+    anytype &
+    blueman-applet &
+}
+
+# ──────────────────────────────────────
+screenshot() {
+    grim /tmp/screenshot.png && satty --filename /tmp/screenshot.png --fullscreen
+}
+
+# ──────────────────────────────────────
+lock_screen() {
+    swaylock --screenshots \
+             --clock \
+             --indicator \
+             --indicator-radius 100 \
+             --indicator-thickness 7 \
+             --effect-blur 7x5 \
+             --fade-in 0.3 \
+             --ring-color 2e3440 \
+             --key-hl-color 88c0d0 \
+             --line-color 00000000 \
+             --inside-color 3b4252 \
+             --separator-color 00000000 \
+             --text-color d8dee9 \
+             --grace 2
+}
+
+# ──────────────────────────────────────
+increase_volume() {
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  while read -r sink; do
+    current_vol=$(pactl get-sink-volume "$sink" | awk '{print $5}' | sed 's/%//')
+    if [ "$current_vol" -lt 100 ]; then
+      pactl set-sink-volume "$sink" +5%
+    fi
+  done
+}
+
+# ──────────────────────────────────────
+decrease_volume() {
+  pactl list short sinks | \
+  awk '$NF == "RUNNING" {print $1}' | \
+  xargs -I{} pactl set-sink-volume {} -5%
+}
+
+# ──────────────────────────────────────
+start_agent() {
     echo "Initializing new SSH agent..."
     # spawn ssh-agent
     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
@@ -10,36 +114,25 @@ function start_agent {
 
 # ──────────────────────────────────────
 update_flatpak_packages() {
-    # Check for updates in Flathub
-    notify-send "Update" "Checking for updates for Flaptak" -t 1000
+    notify-send "Update" "Checking for updates for Flatpak" -t 1000
 
-    updates=$(flatpak remote-ls --updates | grep -c .)
+    # Count updates without installing
+    updates=$(yes n | flatpak update 2>&1 | grep -E '^\s*[0-9]+\.' | wc -l)
     echo "$updates"
 
     if [ "$updates" -eq 0 ]; then
-        notify-send "Update" "No updates available"
+        notify-send "Update" "No updates available" -t 1000
         pkill -SIGRTMIN+9 waybar
         return 0
     fi
 
-    local flathub_updates
-    flathub_updates=$(flatpak update -y | wc -l)
-    echo "$flathub_updates"
-
-    # If no Flathub updates, exit early
-    if [ "$flathub_updates" -eq 0 ]; then
-        notify-send "Update" "No Flathub updates available" -t 1000
-        pkill -SIGRTMIN+9 waybar
-        return 0
-    fi
-
-    # Update Flathub packages
-    flatpak update --noninteractive
-    if not [ $? -eq 0 ]; then
+    # Run the actual update non-interactively
+    if flatpak update --noninteractive; then
+        notify-send "Update" "Apps updated" -t 1000
+    else
         notify-send "Update" "Flathub update failed" -t 1000
     fi
 
-    notify-send "Update" "Apps Updated..." -t 1000
     pkill -SIGRTMIN+9 waybar
 }
 
@@ -106,7 +199,10 @@ function unlock_ssh {
 
 # ──────────────────────────────────────
 function get_unsplash_wallpaper {
-    QUERY_LIST="nature+sunset+space+tree+galaxy+sky+forest+stars+mountain+abstract"
+    # QUERY_LIST="nature+sunset+space+galaxy+nebula+tree+sky+forest+stars+mountain+abstract+minimal+landscape+fog+ocean+cityscape+desert+night+storm+ice+aurora+volcano+geometry+architecture+macro+satellite+moon+planet+fractal+technology+future+cyberpunk"
+    QUERY_LIST="abstract+minimal+geometry+fractal+surreal+chaos+order+symmetry+asymmetry+structure+pattern+form+void+contrast+monochrome+gradient+lines+shapes+texture+flow+motion+energy+signal+data+grid+network+vortex+topography+depth+illusion+perspective+isometric+metaphysical+future+cyberpunk+dream"
+
+
     if [[ -z "$QUERY_LIST" ]]; then
         echo "❌ QUERY_LIST is empty."
         exit 1
@@ -213,33 +309,38 @@ get_theme(){
 
 
 # ──────────────────────────────────────
-if [ "$1" != "" ]; then
-    case $1 in
-        translate_selection)
-            translate_selection
-            ;;
-        fetch_bing_wallpaper)
-            fetch_bing_wallpaper
-            ;;
-        fetch_random_wallpaper)
-            fetch_random_wallpaper
-            ;;
-        change_theme)
-            change_theme
-            ;;
-        unsplash)
-            get_unsplash_wallpaper;;
-        update_aur_packages)
-            update_aur_packages
-            ;;
-        update_flatpak_packages)
-            update_flatpak_packages
-            ;;
-        get_theme)
-            get_theme
-            ;;
-        *)
-            echo "Invalid argument"
-            ;;
-    esac
-fi
+dispatch() {
+    local cmd="$1"
+    shift
+
+    declare -A commands=(
+        [clipboard_rofi]=clipboard_rofi
+        [launch_rofi]=launch_rofi
+        [startup_services]=startup_services
+        [screenshot]=screenshot
+        [lock_screen]=lock_screen
+        [decrease_volume]=decrease_volume
+        [increase_volume]=increase_volume
+        [translate_selection]=translate_selection
+        [fetch_bing_wallpaper]=fetch_bing_wallpaper
+        [fetch_random_wallpaper]=fetch_random_wallpaper
+        [change_theme]=change_theme
+        [unsplash]=get_unsplash_wallpaper
+        [update_aur_packages]=update_aur_packages
+        [update_flatpak_packages]=update_flatpak_packages
+        [get_theme]=get_theme
+    )
+
+    if [[ -n "${commands[$cmd]}" ]]; then
+        "${commands[$cmd]}" "$@"
+    else
+        echo "Invalid command: $cmd" >&2
+        echo "Available commands: ${!commands[@]}" >&2
+        notify-send "Invalid command: $cmd"
+        return 1
+    fi
+}
+
+# Call dispatch only if argument is provided
+[[ -n "$1" ]] && dispatch "$@"
+

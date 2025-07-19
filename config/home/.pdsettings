@@ -9,10 +9,10 @@ audiobuf: 43
 rate: 48000
 callback: 0
 audioblocksize: 1024
-midiapi: 0
+midiapi: 1
 nomidiin: False
-midiindev1: 2
-midiindevname1: SINCO SMK25-Master
+midiindev1: 0
+midiindevname1: ALSA MIDI device #1
 nomidiout: True
 path1: /home/neimog/Documents/Pd/externals
 path2: /home/neimog/Documents/Git
@@ -30,7 +30,8 @@ path13: /home/neimog/Documents/Pd/externals/neimog/lua/pd-orchidea
 npath: 13
 standardpath: 1
 verbose: 1
-nloadlib: 0
+loadlib1: theme
+nloadlib: 1
 defeatrt: 1
 flags: -font-weight normal -font-size 10
 zoom: 2
