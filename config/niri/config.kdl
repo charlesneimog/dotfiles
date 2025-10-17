@@ -57,22 +57,26 @@ layout {
     gaps 10
     // center-focused-column "on-overflow"
     preset-column-widths {
+        proportion 0.2
         proportion 0.3
         proportion 0.5
         proportion 0.6
+        proportion 0.8
+        proportion 1.0
     }
     default-column-width {
         proportion 0.5 
     }
     focus-ring {
-        width 2
-        active-color "#ff000055"
+        width 4
+        // active-color "#ff0000aa"
+        active-gradient from="#f00f" to="#0f05" angle=45 in="oklch longer hue"
     }
     border {
-        width 2
-        active-color "#ff0000aa"
-        inactive-color "#00ffff44"
-        urgent-color "#cc0000"
+        width 0
+        active-color "#ffffff33"
+        inactive-color "#00000000"
+        urgent-color "#cc0000aa"
     }
     struts {
         left 2
@@ -98,6 +102,7 @@ cursor {
     hide-when-typing
     hide-after-inactive-ms 1000
 }
+
 hotkey-overlay {
     skip-at-startup
 }
@@ -148,15 +153,13 @@ animations {
 //╰─────────────────────────────────────╯
 spawn-at-startup "/usr/lib/xdg-desktop-portal-gnome"
 spawn-at-startup "/usr/lib/xdg-desktop-portal-gtk"
-
 spawn-at-startup "sh" "-c" "$HOME/.functions.sh startup_services"
 
 //╭─────────────────────────────────────╮
 //│                Binds                │
 //╰─────────────────────────────────────╯
 binds {
-    Mod+Shift+BackSlash { show-hotkey-overlay; }
-
+    Alt+Space { show-hotkey-overlay; }
 
     Mod+Return hotkey-overlay-title="Open a Terminal: wezterm" {
         spawn "wezterm-gui"
@@ -388,13 +391,6 @@ window-rule {
 
 window-rule {
     match app-id="org.gnome.texteditor"
-    open-floating true
-    default-column-width {
-        fixed 1000
-    }
-    default-window-height {
-        fixed 700
-    }
 }
 window-rule {
     match app-id="(^plugdata)"
@@ -406,13 +402,13 @@ window-rule {
     match app-id="(^qutebrowser|zen)"
     open-on-workspace "1"
     default-column-width {
-        proportion 0.85
+        proportion 1.0
     }
 }
 window-rule {
     match app-id="^org\\.wezfurlong\\.wezterm$"
     open-on-workspace "2"
-    open-floating true
+    open-focused true
     default-column-width {
         fixed 1700
     }
@@ -476,13 +472,6 @@ window-rule {
 
 window-rule {
     match app-id="(^org.pulseaudio.pavucontrol)"
-    default-column-width {
-        fixed 800
-    }
-    default-window-height {
-        fixed 500
-    }
-    open-floating true
 }
 
 window-rule {

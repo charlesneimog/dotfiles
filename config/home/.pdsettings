@@ -1,18 +1,18 @@
-audioapi: 5
+audioapi: 6
 noaudioin: False
 audioindev1: 0 2
-audioindevname1: JACK
+audioindevname1: PipeWire
 noaudioout: False
 audiooutdev1: 0 2
-audiooutdevname1: JACK
-audiobuf: 43
-rate: 48000
+audiooutdevname1: PipeWire
+audiobuf: 64
+rate: 44100
 callback: 0
-audioblocksize: 1024
-midiapi: 1
+audioblocksize: 256
+midiapi: 0
 nomidiin: False
 midiindev1: 0
-midiindevname1: ALSA MIDI device #1
+midiindevname1: ?
 nomidiout: True
 path1: /home/neimog/Documents/Pd/externals
 path2: /home/neimog/Documents/Git
@@ -27,7 +27,9 @@ path10: /home/neimog/Documents/Pd/externals/neimog/lua/upic/
 path11: /home/neimog/Documents/Pd/externals/saf
 path12: /home/neimog/Documents/Pd/externals/neimog/lua/pd-upic
 path13: /home/neimog/Documents/Pd/externals/neimog/lua/pd-orchidea
-npath: 13
+path14: /home/neimog/Documents/Pd/externals/neimog/vst/
+path15: /home/neimog/Documents/Pd/externals/neimog/vst3/
+npath: 15
 standardpath: 1
 verbose: 1
 loadlib1: theme

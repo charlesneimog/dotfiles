@@ -45,4 +45,4 @@ if [ -z "$pdf_file" ]; then
 fi
 
 # Run the command with obtained values
-ocrmypdf -l ${selected_languages[@]} --jobs 4 --deskew --force-ocr "$pdf_file" "$output_file" 
+ocrmypdf -l ${selected_languages[@]} --jobs 6 --deskew --force-ocr "$pdf_file" "$output_file" 

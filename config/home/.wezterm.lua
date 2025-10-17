@@ -5,9 +5,7 @@ local act = wezterm.action
 wezterm.warn_about_missing_glyphs = false
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_wayland = false
-config.font_size = 18
-config.initial_cols = 110
-config.initial_rows = 30
+config.font_size = 16
 config.tab_bar_at_bottom = true
 config.set_environment_variables = { WEZTERM_THEME = wezterm.gui.get_appearance():lower() }
 
@@ -37,7 +35,7 @@ config.font = wezterm.font_with_fallback({
 	"Noto Color Emoji",
 })
 
-config.tab_max_width = 32
+config.tab_max_width = 45
 config.visual_bell = {
 	fade_in_duration_ms = 75,
 	fade_out_duration_ms = 75,

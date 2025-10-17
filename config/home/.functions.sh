@@ -1,4 +1,5 @@
 
+
 # ──────────────────────────────────────
 clipboard_rofi() {
     if pgrep -x rofi > /dev/null; then
@@ -114,26 +115,33 @@ start_agent() {
 
 # ──────────────────────────────────────
 update_flatpak_packages() {
-    notify-send "Update" "Checking for updates for Flatpak" -t 1000
-
-    # Count updates without installing
+    local updates
     updates=$(yes n | flatpak update 2>&1 | grep -E '^\s*[0-9]+\.' | wc -l)
     echo "$updates"
-
     if [ "$updates" -eq 0 ]; then
-        notify-send "Update" "No updates available" -t 1000
         pkill -SIGRTMIN+9 waybar
         return 0
     fi
 
-    # Run the actual update non-interactively
     if flatpak update --noninteractive; then
-        notify-send "Update" "Apps updated" -t 1000
+        notify-send "Update" "Apps updated successfully" -t 1000
     else
         notify-send "Update" "Flathub update failed" -t 1000
     fi
 
     pkill -SIGRTMIN+9 waybar
+}
+
+# ──────────────────────────────────────
+check_flatpak_updates() {
+    local updates count
+    updates=$(flatpak remote-ls --updates --columns=application)
+    count=$(echo "$updates" | grep -v '^$' | wc -l)
+    if [ "$count" -gt 0 ]; then
+        notify-send "Flatpak Updates Available" "$(echo "$updates" | head -n 10)"
+        update_flatpak_packages
+    fi
+    echo "$count"
 }
 
 # ──────────────────────────────────────
@@ -202,6 +210,7 @@ function get_unsplash_wallpaper {
     # QUERY_LIST="nature+sunset+space+galaxy+nebula+tree+sky+forest+stars+mountain+abstract+minimal+landscape+fog+ocean+cityscape+desert+night+storm+ice+aurora+volcano+geometry+architecture+macro+satellite+moon+planet+fractal+technology+future+cyberpunk"
     QUERY_LIST="abstract+minimal+geometry+fractal+surreal+chaos+order+symmetry+asymmetry+structure+pattern+form+void+contrast+monochrome+gradient+lines+shapes+texture+flow+motion+energy+signal+data+grid+network+vortex+topography+depth+illusion+perspective+isometric+metaphysical+future+cyberpunk+dream"
 
+    # QUERY_LIST="abstract"
 
     if [[ -z "$QUERY_LIST" ]]; then
         echo "❌ QUERY_LIST is empty."
@@ -327,7 +336,10 @@ dispatch() {
         [change_theme]=change_theme
         [unsplash]=get_unsplash_wallpaper
         [update_aur_packages]=update_aur_packages
+
+        [check_flatpak_updates]=check_flatpak_updates
         [update_flatpak_packages]=update_flatpak_packages
+
         [get_theme]=get_theme
     )
 

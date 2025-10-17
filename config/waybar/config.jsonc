@@ -154,7 +154,8 @@
     "custom/flathub": {
       "format": " {}",
       "interval": 1800,
-      "exec": "bash -c 'flatpak update --assumeno | grep -E \"^\\s*[0-9]+\\.\" | wc -l'",
+      "exec": "bash -c 'flatpak remote-ls --updates --columns=application | wc -l'",
+      "exec": "$HOME/.functions.sh check_flatpak_updates",
       "on-click": "$HOME/.functions.sh update_flatpak_packages",
       "signal": 9,
       "tooltip": false
@@ -285,7 +286,11 @@
     "format-charging": "  {capacity}%",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "signal": 12,
-    "interval": 60,
+    "interval": 15,
+    "events": {
+        "on-discharging-warning": "notify-send -u normal -i battery-low 'Low Battery'",
+        "on-discharging-critical": "notify-send -u critical -i battery-caution 'Very Low Battery' 'Please charge immediately.'",
+    },
   },
     "keyboard-state": {
     "numlock": true,
