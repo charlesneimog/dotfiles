@@ -3,7 +3,7 @@
     "reload_style_on_change": true,
     "spacing": 1,
     "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
-    "modules-center": ["niri/workspaces"],
+    "modules-center": ["hyprland/workspaces", "sway/workspaces", "niri/workspaces"],
     "modules-right": ["temperature", "network", "wireplumber", "group/hardware", "clock", "custom/notification"],
 
     "wlr/taskbar": {
@@ -101,7 +101,7 @@
         "format": " ",
         "tooltip": true,
         "tooltip-format": " Open Power Menu",
-        "on-click": "$HOME/.functions.sh launch_powermenu"
+        "on-click": "choice=$(zenity --list --title='Power Menu' --width=200 --height=250 --column='Action' Shutdown Reboot Suspend Logout Cancel); [[ $choice == Shutdown ]] && systemctl poweroff || [[ $choice == Reboot ]] && systemctl reboot || [[ $choice == Suspend ]] && systemctl suspend || [[ $choice == Logout ]] && swaymsg exit"
     },
 
     "group/settings": {
@@ -135,7 +135,7 @@
 
     "custom/aur": {
         "format": " {}",
-        "interval": 21600,
+        "interval": 1800,
         "exec": "bash -c 'paru -Qu 2>/dev/null | wc -l'",
         "on-click": "$HOME/.functions.sh update_aur_packages",
         "signal": 8,
@@ -144,7 +144,7 @@
 
     "custom/flathub": {
         "format": " {}",
-        "interval": 21600,
+        "interval": 1800,
         "exec": "bash -c 'flatpak remote-ls --updates --columns=application | wc -l'",
         "exec": "$HOME/.functions.sh check_flatpak_updates",
         "on-click": "$HOME/.functions.sh update_flatpak_packages",

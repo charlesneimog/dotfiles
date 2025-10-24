@@ -24,6 +24,11 @@ launch_rofi() {
 }
 
 # ──────────────────────────────────────
+launch_powermenu() {
+    bash -c "/home/neimog/.config/rofi/powermenu/type-2/powermenu.sh"
+}
+
+# ──────────────────────────────────────
 startup_services() {
     export DISPLAY=":0"
     export ELECTRON_OZONE_PLATFORM_HINT="auto"
@@ -325,6 +330,8 @@ dispatch() {
     declare -A commands=(
         [clipboard_rofi]=clipboard_rofi
         [launch_rofi]=launch_rofi
+        [launch_powermenu]=launch_powermenu
+
         [startup_services]=startup_services
         [screenshot]=screenshot
         [lock_screen]=lock_screen

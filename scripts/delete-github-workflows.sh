@@ -1,6 +1,6 @@
 OWNER=charlesneimog
 REPO=pd4web
-WORKFLOW_ID=Libraries-Updates.yml
+WORKFLOW_ID=Copilot
 
 # list workflows
 gh api -X GET /repos/$OWNER/$REPO/actions/workflows | jq '.workflows[] | .name,.id'

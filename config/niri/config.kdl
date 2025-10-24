@@ -154,6 +154,7 @@ animations {
 spawn-at-startup "/usr/lib/xdg-desktop-portal-gnome"
 spawn-at-startup "/usr/lib/xdg-desktop-portal-gtk"
 spawn-at-startup "sh" "-c" "$HOME/.functions.sh startup_services"
+spawn-at-startup "/usr/bin/kanshi"
 
 //╭─────────────────────────────────────╮
 //│                Binds                │
@@ -478,6 +479,15 @@ window-rule {
     match app-id="(^Charlesneimog.pdftts)"
     default-floating-position x=0 y=0 relative-to="top-left"
     open-floating true
+}
+
+window-rule {
+    match title="^Picture-in-Picture$"
+    open-floating true
+    open-focused true             // força foco na abertura
+    default-column-width { fixed 480; }
+    default-window-height { fixed 270; }
+    default-floating-position x=20 y=20 relative-to="top-left"
 }
 
 //╭─────────────────────────────────────╮

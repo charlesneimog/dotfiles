@@ -42,6 +42,7 @@ tooltip {
 */
 #clock,
 #hardware,
+#idle_inhibitor,
 #network,
 #temperature,
 #workspaces,
@@ -117,7 +118,6 @@ tooltip {
  *│             Workspaces              │
  *╰─────────────────────────────────────╯
 */
-
 #workspaces {
     border-radius: 4px;
     padding: 0px 5px 0px 5px;
@@ -174,7 +174,6 @@ tooltip {
  *│               Privacy               │
  *╰─────────────────────────────────────╯
 */
-
 #quicklinks-left *:hover {
     background: @color11;
 }
@@ -240,10 +239,12 @@ tooltip {
     color: rgba(255, 255, 155, 0.8);
 }
 
-#bluetooth *:hover {
+#bluetooth.disabled{
     padding-right: 6px;
-    padding-left: 4px;
+    padding-left: 6px;
+    color: rgba(255, 0, 0, 1);
 }
+
 
 /*
  *╭─────────────────────────────────────╮
