@@ -25,9 +25,8 @@ output "eDP-1" {
 }
 
 switch-events {
-    lid-close {
-        spawn "sh" "-c" "$HOME/.functions.sh lock_screen"
-    }
+    lid-close { spawn "xset" "dpms" "force" "off";}
+    lid-open { spawn "xset" "dpms" "force" "on";}
 }
 
 //╭─────────────────────────────────────╮
@@ -424,6 +423,7 @@ window-rule {
 window-rule {
     match app-id="(^PatchWindow|PdWindow|plugdata|MuseScore4)"
     open-on-workspace "4"
+    open-focused true 
 }
 
 window-rule {
@@ -453,6 +453,7 @@ window-rule {
 window-rule {
     match app-id="(^anytype)"
     open-on-workspace "5"
+    open-floating true
     default-column-width {
         fixed 1700
     }
@@ -484,7 +485,6 @@ window-rule {
 window-rule {
     match title="^Picture-in-Picture$"
     open-floating true
-    open-focused true             // força foco na abertura
     default-column-width { fixed 480; }
     default-window-height { fixed 270; }
     default-floating-position x=20 y=20 relative-to="top-left"
