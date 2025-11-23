@@ -6,19 +6,10 @@ local function lualine_setup()
 		local total_lines = vim.fn.line("$")
 		return string.format("%3d-%-2d", line, total_lines)
 	end
-	local darktheme = vim.g.wezterm_theme
-	local mytheme
-	if darktheme == "dark" then
-		mytheme = require("lualine.themes.onedark")
-		mytheme.normal.c.bg = "#303030"
-	else
-		mytheme = require("lualine.themes.onelight")
-		mytheme.normal.c.bg = "#ffffff"
-	end
 
 	require("lualine").setup({
 		options = {
-			theme = mytheme,
+			theme = "catppuccin",
 			icons_enabled = true,
 			component_separators = { left = "", right = "" },
 			section_separators = { left = "", right = "" },
@@ -84,7 +75,7 @@ local function lualine_setup()
 					if spinner_found then
 						return truncated
 					elseif #result > 20 then
-						return truncated 
+						return truncated
 					else
 						return result
 					end
@@ -108,20 +99,6 @@ local function lualine_setup()
 			},
 		},
 	})
-	for _, kind in ipairs({ "Add", "Change", "Delete" }) do
-		local group = "Diff" .. kind
-		local bg = vim.api.nvim_get_hl_by_name("lualine_b_visual", true)["background"]
-
-		local color = ""
-		if group == "DiffAdd" then
-			color = vim.api.nvim_get_hl_by_name("lualine_a_buffers_active", true)["background"]
-		elseif group == "DiffChange" then
-			color = "#E1AD0F"
-		elseif group == "DiffDelete" then
-			color = "#A90000"
-		end
-		vim.api.nvim_set_hl(0, group, { fg = color, bg = string.format("#%06X", bg) })
-	end
 end
 
 return {

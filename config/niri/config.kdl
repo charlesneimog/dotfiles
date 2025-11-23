@@ -67,9 +67,9 @@ layout {
         proportion 0.5 
     }
     focus-ring {
-        width 4
+        width 5
         // active-color "#ff0000aa"
-        active-gradient from="#f00f" to="#0f05" angle=45 in="oklch longer hue"
+        active-gradient from="#f00f" to="#0f05" angle=23 in="oklch longer hue"
     }
     border {
         width 0
@@ -78,10 +78,10 @@ layout {
         urgent-color "#cc0000aa"
     }
     struts {
-        left 2
-        right 2
-        top 2
-        bottom 2
+        left 20
+        right 20
+        top 0
+        bottom 0
     }
 }
 
@@ -153,7 +153,7 @@ animations {
 spawn-at-startup "/usr/lib/xdg-desktop-portal-gnome"
 spawn-at-startup "/usr/lib/xdg-desktop-portal-gtk"
 spawn-at-startup "sh" "-c" "$HOME/.functions.sh startup_services"
-spawn-at-startup "/usr/bin/kanshi"
+// spawn-at-startup "/usr/bin/kanshi"
 
 //╭─────────────────────────────────────╮
 //│                Binds                │
@@ -344,10 +344,10 @@ binds {
 
     // Finer height adjustments when in column with other windows.
     Mod+Shift+Minus {
-        set-window-height "-10%"
+        set-window-height "-5%"
     }
     Mod+Shift+Equal {
-        set-window-height "+10%"
+        set-window-height "+5%"
     }
     Mod+Space {
         toggle-window-floating
@@ -415,6 +415,7 @@ window-rule {
     default-window-height {
         fixed 950
     }
+    open-floating true
 }
 window-rule {
     match app-id="(^org.gnome.Nautilus)"

@@ -3,11 +3,12 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 
 wezterm.warn_about_missing_glyphs = false
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 config.enable_wayland = false
-config.font_size = 16
+config.font_size = 14
 config.tab_bar_at_bottom = true
 config.set_environment_variables = { WEZTERM_THEME = wezterm.gui.get_appearance():lower() }
+config.window_background_opacity = 1
 
 --╭─────────────────────────────────────╮
 --│              Hot Keys               │
@@ -43,78 +44,10 @@ config.visual_bell = {
 }
 config.use_fancy_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
+config.color_scheme = "Catppuccin Latte"
 
 --╭─────────────────────────────────────╮
---│               Themes                │
---╰─────────────────────────────────────╯
-local dark_theme = {
-	background = "#303030",
-	foreground = "#ffffff",
-	brights = { "#ffffff", "#DB0000", "#339933", "#F3F04E", "#1868B8", "#FF3CFF", "#6DADEF", "#ffe100" },
-	ansi = { "#6a6a6a", "#e05661", "#1da912", "#eea825", "#118dc3", "#9a77cf", "#56b6c2", "#fafafa" },
-	cursor_bg = "#919191",
-	cursor_fg = "#ffffff",
-	selection_bg = "#494949",
-	tab_bar = {
-		background = "rgba(0,0,0,0)",
-		active_tab = {
-			bg_color = "rgba(0,0,0,0)",
-			fg_color = "#ffffff",
-			intensity = "Bold",
-		},
-		inactive_tab = {
-			bg_color = "rgba(0,0,0,0)",
-			fg_color = "#fafafa",
-		},
-		inactive_tab_hover = {
-			bg_color = "#303030",
-			fg_color = "#8c8b8b",
-		},
-		new_tab = {
-			bg_color = "#303030",
-			fg_color = "#ff0000",
-		},
-		new_tab_hover = {
-			bg_color = "#292929",
-			fg_color = "#ff0000",
-		},
-	},
-}
-
-local light_theme = {
-	background = "#ffffff",
-	foreground = "#000000",
-	cursor_bg = "#000000",
-	cursor_fg = "#ffffff",
-	selection_bg = "#cccccc",
-	selection_fg = "#000000",
-	brights = { "#000000", "#cc0000", "#339933", "#bdb23e", "#040499", "#FF3CFF", "#0884FF", "#ffffff" },
-	ansi = { "#6a6a6a", "#e05661", "#1da912", "#eea825", "#118dc3", "#9a77cf", "#56b6c2", "#fafafa" },
-	tab_bar = {
-		background = "rgba(0,0,0,0)",
-		active_tab = {
-			bg_color = "#f1f1f1",
-			fg_color = "#000000",
-			intensity = "Bold",
-		},
-		inactive_tab = {
-			bg_color = "#ffffff",
-			fg_color = "#000000",
-		},
-		inactive_tab_hover = {
-			bg_color = "#f1f1f1",
-			fg_color = "#000000",
-		},
-	},
-}
-
-config.color_schemes = {
-	["Dark"] = dark_theme,
-	["Light"] = light_theme,
-}
-
---╭─────────────────────────────────────╮
---│                Tabs                 │
+--│          Helper Functions           │
 --╰─────────────────────────────────────╯
 local function url_decode(str)
 	str = str:gsub("%%(%x%x)", function(h)
@@ -123,6 +56,9 @@ local function url_decode(str)
 	return str
 end
 
+--╭─────────────────────────────────────╮
+--│            Process Icon             │
+--╰─────────────────────────────────────╯
 local function get_process_icon(tab)
 	local pane = tab.active_pane
 	local dir = tostring(pane["current_working_dir"])
@@ -143,11 +79,11 @@ local function get_process_icon(tab)
 			{ Text = " " .. " " .. last_folder },
 		},
 		["nvim"] = {
-			{ Foreground = { Color = dark_theme.ansi[3] } },
+			-- { Foreground = { Color = dark_theme.ansi[3] } },
 			{ Text = " " .. wezterm.nerdfonts.custom_vim .. " " .. last_folder },
 		},
 		["zsh"] = {
-			{ Foreground = { Color = dark_theme.ansi[4] } },
+			-- { Foreground = { Color = dark_theme.ansi[4] } },
 			{ Text = " " .. wezterm.nerdfonts.dev_terminal .. " " .. last_folder },
 		},
 		["paru"] = {
@@ -179,7 +115,6 @@ local function get_process_icon(tab)
 		return wezterm.format(process_icons[process])
 	else
 		return wezterm.format({
-			{ Foreground = { Color = "#cc0000" } },
 			{ Text = " " .. wezterm.nerdfonts.dev_terminal },
 			"ResetAttributes",
 			{ Text = " " .. last_folder .. " " },
@@ -188,9 +123,9 @@ local function get_process_icon(tab)
 end
 
 --╭─────────────────────────────────────╮
---│             Listerners              │
+--│            Theme Update             │
 --╰─────────────────────────────────────╯
-local function update_theme(window, path)
+local function update_theme(window, _)
 	local overrides = window:get_config_overrides() or {}
 	local appearance = window:get_appearance()
 	local my_theme = appearance:lower()
@@ -202,75 +137,68 @@ local function update_theme(window, path)
 		end
 	end
 
-
-
-
 	if appearance:find("Dark") then
-		os.execute(
-			'export FZF_DEFAULT_OPTS="--color=bg+:#383838,bg:#303030,spinner:#303030,hl:#e78284 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#ff0000 --color=marker:#babbf1,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284 --color=selected-bg:#51576d --multi"'
-		)
-	    os.execute("export OMP_GIT_SEPARATOR_COLOR=white")
-
-		overrides.color_scheme = "Dark"
-		overrides.tab_bar_style = {
-			new_tab = wezterm.format({
-				{ Background = { Color = "rgba(0,0,0,0)" } },
-				{ Foreground = { Color = "#ffffff" } },
-				{ Text = " + " },
-			}),
-			new_tab_hover = wezterm.format({
-				"ResetAttributes",
-				{ Attribute = { Italic = false } },
-				{ Attribute = { Intensity = "Bold" } },
-				{ Background = { Color = "rgba(0,0,0,0)" } },
-				{ Foreground = { Color = "#ff0000" } },
-				{ Text = " + " },
-			}),
-		}
+		overrides.color_scheme = "Catppuccin Mocha"
 	else
-		os.execute('export FZF_DEFAULT_OPTS="--color=light"')
-        os.execute(
-            'export FZF_DEFAULT_OPTS="--color=bg+:#f5f5f5,bg:#e0e0e0,spinner:#e0e0e0,hl:#ff6f61 --color=fg:#2e2e2e,header:#ff6f61,info:#ff9f4f,pointer:#ff0000 --color=marker:#6a6a6a,fg+:#2e2e2e,prompt:#ff9f4f,hl+:#ff6f61 --color=selected-bg:#d4d4d4 --multi"'
-        )
-
-	    os.execute("export OMP_GIT_SEPARATOR_COLOR=black")
-		overrides.color_scheme = "Light"
-		overrides.tab_bar_style = {
-			new_tab = wezterm.format({
-				{ Background = { Color = "#ffffff" } },
-				{ Foreground = { Color = "#ff0000" } },
-				{ Text = " + " },
-			}),
-			new_tab_hover = wezterm.format({
-				"ResetAttributes",
-				{ Attribute = { Italic = false } },
-				{ Attribute = { Intensity = "Bold" } },
-				{ Background = { Color = "#ffffff" } },
-				{ Foreground = { Color = "#ff0000" } },
-				{ Text = " + " },
-			}),
-		}
+		overrides.color_scheme = "Catppuccin Latte"
 	end
+
+	local colors = wezterm.color.get_builtin_schemes()[overrides.color_scheme]
+	overrides.colors = overrides.colors or {}
+	overrides.colors.tab_bar = overrides.colors.tab_bar or {}
+	overrides.colors.tab_bar.background = colors.background
+
 	window:set_config_overrides(overrides)
 end
 
--- ──────────────────────────────────────────
-wezterm.on("update-status", function(window, _)
+--╭─────────────────────────────────────╮
+--│        Neovim Theme Listener        │
+--╰─────────────────────────────────────╯
+wezterm.on("update-status", function(window, pane)
 	local bat = ""
 	for _, b in ipairs(wezterm.battery_info()) do
 		bat = wezterm.nerdfonts.md_battery .. " " .. string.format("%.0f%%", b.state_of_charge * 100)
 	end
-
 	local appearance = window:get_appearance()
-	local foreground_color = appearance:find("Dark") and "#ffffff" or "#000000"
+
+	local color_scheme
+	if appearance:find("Dark") then
+		color_scheme = "Catppuccin Mocha"
+	else
+		color_scheme = "Catppuccin Latte"
+	end
+
+	local colors = wezterm.color.get_builtin_schemes()[color_scheme]
+	-- local cwd_uri = pane:get_current_working_dir()
+	-- local cwd = cwd_uri.file_path
+	-- cwd = cwd:gsub("/home/neimog", " ~")
+
 	window:set_right_status(wezterm.format({
-		{ Foreground = { Color = foreground_color } },
+		{ Background = { Color = colors.background } },
+		{ Foreground = { Color = colors.foreground } },
+		-- { Text = cwd },
+		{ Text = "▕ " },
 		{ Text = wezterm.strftime(" %H:%M:%S ") },
 		{ Text = "▕ " },
 		{ Text = bat .. "   " },
 	}))
 end)
 
+-- ─────────────────────────────────────
+wezterm.on("window-config-reloaded", function(window, pane)
+	update_theme(window, pane)
+end)
+
+-- ─────────────────────────────────────
+wezterm.on("format-tab-title", function(tab)
+	return wezterm.format({
+		{ Text = string.format(" %s:", tab.tab_index + 1) },
+		{ Text = get_process_icon(tab) },
+		{ Text = "▕" },
+	})
+end)
+
+-- ─────────────────────────────────────
 wezterm.on("user-var-changed", function(window, pane, name, value)
 	if value == "true" and name == "IS_NVIM" then
 		update_theme(window, pane)
@@ -281,18 +209,5 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
 		window:set_config_overrides(overrides)
 	end
 end)
-
-wezterm.on("window-config-reloaded", function(window, pane)
-	update_theme(window, pane)
-end)
-
-wezterm.on("format-tab-title", function(tab)
-	return wezterm.format({
-		{ Text = string.format(" %s:", tab.tab_index + 1) },
-		{ Text = get_process_icon(tab) },
-		{ Text = "▕" },
-	})
-end)
-
 
 return config

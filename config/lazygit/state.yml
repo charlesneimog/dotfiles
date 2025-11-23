@@ -1,14 +1,15 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/pdf-tts-reader
-    - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/pd-bhack
     - /home/neimog/Documents/Git/charlesneimog.github.io
-    - /home/neimog/Documents/Git/Awesome-PD
-    - /home/neimog/Downloads/audience
-    - /home/neimog/Documents/Git/kodaly-p5js-ml5
-    - /home/neimog/Downloads/liturgia-e-sonoridade
+    - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/newsite
     - /home/neimog/Documents/Git/pd.cmake
+    - /home/neimog/Documents/Git/LocalReader
+    - /home/neimog/Documents/Git/nanovg
+    - /home/neimog/Documents/Git/Awesome-PD
+    - /home/neimog/Documents/Git/kodaly-p5js-ml5
     - /home/neimog/Documents/Git/pdftts
     - /home/neimog/Documents/Git/pd-neimog
     - /home/neimog/Documents/Git/pd-neimog/Sources/py4pd
@@ -24,7 +25,6 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-neimog/Sources/patcherize
     - /home/neimog/Documents/Git/loris
     - /home/neimog/Documents/Git/pd-lua
-    - /home/neimog/Documents/Git/nanovg
     - /home/neimog/Documents/Git/pdweb
     - /home/neimog/Documents/Git/pd-lgui
     - /home/neimog/Documents/Git/anytype-client
@@ -56,7 +56,7 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-pt
 startuppopupversion: 5
 didshowhunkstaginghint: true
-lastversion: 0.55.1
+lastversion: 0.56.0
 customcommandshistory:
     - q
     - ""

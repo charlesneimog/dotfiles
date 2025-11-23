@@ -1,6 +1,5 @@
-[manager]
-
-prepend_keymap = [
-    { on = "<C-d>", run = '''shell 'ripdrag "$@" -x 2>/dev/null &' --confirm''', desc = "Drag and drop" },
-]
+[[mgr.prepend_keymap]]
+on   = [ "n" ]
+run  = "shell --block 'nvim .'"
+desc = "Open current directory in neovim (nvim .)"
 

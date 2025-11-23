@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 ratio            = [ 2, 5, 3 ]
 sort_by          = "mtime"
 sort_reverse 	 = true
@@ -54,6 +54,11 @@ code = [
     {run='nvim "$@"', block = true}
 ]
 
+nvim_dir = [
+    { run = 'nvim "$PWD"', block = true, desc = "Open directory in nvim" }
+]
+
+
 [open]
 rules = [
     { name = "*.py", use = "code" },
@@ -63,6 +68,7 @@ rules = [
     { name = "*.tar.gz", use = "targz" },
     { name = "*.pd", use = "pd" },
     { mime = "text/*", use = "code", block = true },
+    { mime = "inode/directory", use = "nvimdir" },
     { ext = "c", use = "code", block = true },
     { ext = "cpp", use = "code", block = true },
     { ext = "py", use = "code", block = true },

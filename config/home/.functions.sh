@@ -212,8 +212,8 @@ function unlock_ssh {
 
 # ──────────────────────────────────────
 function get_unsplash_wallpaper {
-    # QUERY_LIST="nature+sunset+space+galaxy+nebula+tree+sky+forest+stars+mountain+abstract+minimal+landscape+fog+ocean+cityscape+desert+night+storm+ice+aurora+volcano+geometry+architecture+macro+satellite+moon+planet+fractal+technology+future+cyberpunk"
-    QUERY_LIST="abstract+minimal+geometry+fractal+surreal+chaos+order+symmetry+asymmetry+structure+pattern+form+void+contrast+monochrome+gradient+lines+shapes+texture+flow+motion+energy+signal+data+grid+network+vortex+topography+depth+illusion+perspective+isometric+metaphysical+future+cyberpunk+dream"
+    QUERY_LIST="minimal+nature+forest+trees+mist+fog+leaves+branch+stone+rocks+river+lake+reflection+desert+dunes+sand+mountain+grass+moss+texture"
+
 
     # QUERY_LIST="abstract"
 
