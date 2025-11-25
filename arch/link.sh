@@ -56,3 +56,4 @@ link_files "$SCRIPT_DIR/../config/pipewire" "$HOME/.config/pipewire" false
 link_files "$SCRIPT_DIR/../config/formatters" "$HOME/" true 
 link_files "$SCRIPT_DIR/../config/plugdata" "$HOME/Documents/plugdata" true 
 link_files "$SCRIPT_DIR/../config/niri" "$HOME/.config/niri" false
+link_files "$SCRIPT_DIR/../config/ghostty" "$HOME/.config/ghostty" false

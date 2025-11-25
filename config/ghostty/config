@@ -1,0 +1,9 @@
+theme = "light:Catppuccin Latte,dark:Catppuccin Mocha"
+
+font-size = 18
+font-family = "JetBrainsMonoNL NFM Medium"
+
+background-opacity = 1
+gtk-titlebar = false
+
+keybind = shift+y=text:yazi\r

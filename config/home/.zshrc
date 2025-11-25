@@ -33,8 +33,6 @@ zinit snippet OMZP::command-not-found
 autoload -Uz compinit && compinit
 zinit cdreplay -q
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Keybindings
 bindkey -e
@@ -71,7 +69,9 @@ alias cat='bat --paging=never'
 
 
 # Shell integrations
-eval "$(fzf --zsh)"
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
 eval "$(zoxide init --cmd cd zsh)"
 
 #╭──────────────────────────────────────╮
@@ -92,32 +92,12 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-# Dark
-export FZF_DEFAULT_OPTS="--color=bg+:#383838,bg:#303030,spinner:#303030,hl:#e78284 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#ff0000 --color=marker:#babbf1,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284 --color=selected-bg:#51576d --multi"
-
-# This setting also does not set the output color of this matching character
-export FZF_DEFAULT_OPTS="--height=20% --info=inline --margin=1 --padding=1 --color=hl+:#000000"
-
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/home/neimog/.lmstudio/bin"
-
-# pnpm
-export PNPM_HOME="/home/neimog/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
 # pnpm end
-#
 PATH=/usr/local/bin:$PATH 
 alias wish='/usr/local/bin/wish9.1'
 
 
-# . "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"  # commented out by conda initialize
-
 # >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/neimog/.config/miniconda3.dir/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -130,10 +110,8 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+ibus-daemon -drx
 
-
-
-export PATH="/home/neimog/.pixi/bin:$PATH"
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall

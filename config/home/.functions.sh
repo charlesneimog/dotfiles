@@ -212,10 +212,10 @@ function unlock_ssh {
 
 # ──────────────────────────────────────
 function get_unsplash_wallpaper {
-    QUERY_LIST="minimal+nature+forest+trees+mist+fog+leaves+branch+stone+rocks+river+lake+reflection+desert+dunes+sand+mountain+grass+moss+texture"
+    QUERY_LIST="rocks+lake+desert+dunes+mountain"
 
-
-    # QUERY_LIST="abstract"
+    # Paleta “Cappuccino Mocha” aproximada + azul
+    COLORS=("black" "black_and_white" "blue")
 
     if [[ -z "$QUERY_LIST" ]]; then
         echo "❌ QUERY_LIST is empty."
@@ -227,23 +227,28 @@ function get_unsplash_wallpaper {
         echo "❌ No words found in QUERY_LIST."
         exit 1
     fi
-    QUERY="${WORDS[RANDOM % ${#WORDS[@]}]}"
 
-    notify-send "🌄 Changing wallpaper... $QUERY"
+    # Escolhe keyword e cor aleatória
+    QUERY="${WORDS[RANDOM % ${#WORDS[@]}]}"
+    COLOR="${COLORS[RANDOM % ${#COLORS[@]}]}"
+
+    notify-send "🌄 Changing wallpaper... $QUERY, color: $COLOR"
 
     WIDTH=1920
     HEIGHT=1080
     FILENAME="$HOME/.config/sway/wallpapers/wallpaper.jpg"
     ACCESS_KEY="$(secret-tool lookup service wallpaperapp)"
+
     if [[ -z "$ACCESS_KEY" ]]; then
-      zenity --warning \
-        --title="Token não encontrado" \
-        --text="⚠️  O token do Unsplash não foi encontrado.\n\nPor favor, salve-o usando:\n\nsecret-tool store --label=\"Wallpaper App\" service wallpaperapp" \
-        --ok-label="OK"
+        zenity --warning \
+            --title="Token não encontrado" \
+            --text="⚠️  O token do Unsplash não foi encontrado.\n\nPor favor, salve-o usando:\n\nsecret-tool store --label=\"Wallpaper App\" service wallpaperapp" \
+            --ok-label="OK"
+        exit 1
     fi
 
     # Fetch image URL from Unsplash API
-    API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
+    API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&color=$COLOR&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
     IMAGE_URL=$(curl -s "$API_URL" | jq -r '.urls.full')
 
     if [ -z "$IMAGE_URL" ] || [ "$IMAGE_URL" = "null" ]; then
@@ -302,10 +307,20 @@ change_theme(){
 		gsettings set org.gnome.desktop.interface color-scheme 'default'
         ACTIVE="light"
         printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "light"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
+        for file in /run/user/1000/*; do
+            if [[ "$file" == *nvim* ]]; then
+                nvim --server "$file" --remote-send "<Cmd>SetMyTheme \"light\"<CR>" >/dev/null 2>&1 &
+            fi
+        done
 	else
 		gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
         ACTIVE="dark"
         printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "dark"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
+        for file in /run/user/1000/*; do
+            if [[ "$file" == *nvim* ]]; then
+                nvim --server "$file" --remote-send "<Cmd>SetMyTheme \"dark\" <CR>" >/dev/null 2>&1 &
+            fi
+        done
 	fi
 }
 

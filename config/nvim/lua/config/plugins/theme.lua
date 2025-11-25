@@ -2,9 +2,6 @@ local vim = vim
 
 -- ─────────────────────────────────────
 local function setmytheme(switcher)
-	if switcher == vim.g.wezterm_theme then
-		return
-	end
 	vim.g.wezterm_theme = switcher
 	vim.env.WEZTERM_THEME = switcher
 	if switcher == "dark" then
@@ -35,9 +32,9 @@ return {
 				light = "latte",
 				dark = "mocha",
 			},
-			transparent_background = false,
+			transparent_background = true,
 			float = {
-				transparent = false,
+				transparent = true,
 				solid = false,
 			},
 			show_end_of_buffer = false,
@@ -75,21 +72,50 @@ return {
 					background = true,
 				},
 			},
-			color_overrides = {},
+			color_overrides = {
+				latte = {
+					bg = "#ff0000",
+				},
+				frappe = {},
+				macchiato = {},
+				mocha = {},
+			},
+
 			custom_highlights = {},
 			default_integrations = true,
 			auto_integrations = false,
 			integrations = {
+				aerial = true,
+				alpha = true,
 				cmp = true,
+				indent_blankline = {
+					enabled = true,
+				},
 				gitsigns = true,
 				nvimtree = true,
 				notify = true,
+				noice = true,
+				mason = true,
 				mini = {
 					enabled = true,
 					indentscope_color = "",
 				},
+				telescope = {
+					enabled = true,
+				},
+				lsp_trouble = true,
+				which_key = true,
 			},
 		})
+
+		if vim.loop.os_uname().sysname == "Linux" then
+			local theme = vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null")
+			if theme:match("'prefer%-dark'") then
+				vim.cmd.colorscheme("catppuccin-mocha")
+			else
+				vim.cmd.colorscheme("catppuccin-latte")
+			end
+		end
 	end,
 	priority = 1000,
 }

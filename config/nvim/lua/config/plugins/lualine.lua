@@ -1,5 +1,4 @@
-local vim = vim
-
+-- ─────────────────────────────────────
 local function lualine_setup()
 	local function mylocation()
 		local line = vim.fn.line(".")
@@ -36,13 +35,8 @@ local function lualine_setup()
 				"branch",
 				{
 					"diff",
-					colored = true,
+					colored = false,
 					symbols = { added = "+", modified = "~", removed = "-" },
-					diff_color = {
-						added = "DiffAdd", -- Changes the diff's added color
-						modified = "DiffChange", -- Changes the diff's modified color
-						removed = "DiffDelete", -- Changes the diff's removed color you
-					},
 				},
 				"diagnostics",
 			},
@@ -92,15 +86,12 @@ local function lualine_setup()
 			},
 			lualine_z = {
 				mylocation,
-				-- "copilot",
-				-- function()
-				-- 	return require("codeium.virtual_text").status_string()
-				-- end,
 			},
 		},
 	})
 end
 
+-- ─────────────────────────────────────
 return {
 	"nvim-lualine/lualine.nvim",
 	event = "VimEnter",

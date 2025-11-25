@@ -8,15 +8,20 @@ config.enable_wayland = false
 config.font_size = 14
 config.tab_bar_at_bottom = true
 config.set_environment_variables = { WEZTERM_THEME = wezterm.gui.get_appearance():lower() }
-config.window_background_opacity = 1
+config.window_background_opacity = 0.95
 
 --╭─────────────────────────────────────╮
 --│              Hot Keys               │
 --╰─────────────────────────────────────╯
 config.keys = {}
-for i = 1, 8 do
+for i = 1, 10 do
+    local key = tostring(i)
+    if i == 10 then
+        key = "0"
+    end
+
 	table.insert(config.keys, {
-		key = tostring(i),
+		key = key,
 		mods = "ALT",
 		action = act.ActivateTab(i - 1),
 	})
@@ -73,17 +78,31 @@ local function get_process_icon(tab)
 		last_folder = " "
 	end
 
+	local appearance = "Light"
+	if wezterm.gui then
+		appearance = wezterm.gui.get_appearance()
+	end
+
+	local color_scheme
+	if appearance:find("Dark") then
+		color_scheme = "Catppuccin Mocha"
+	else
+		color_scheme = "Catppuccin Latte"
+	end
+
+	local colors = wezterm.color.get_builtin_schemes()[color_scheme]
+
 	local process_icons = {
 		["ssh"] = {
-			{ Foreground = { Color = "#AA00F2" } },
+			{ Foreground = { Color = colors.ansi[2] } },
 			{ Text = " " .. " " .. last_folder },
 		},
 		["nvim"] = {
-			-- { Foreground = { Color = dark_theme.ansi[3] } },
+			{ Foreground = { Color = colors.ansi[3] } },
 			{ Text = " " .. wezterm.nerdfonts.custom_vim .. " " .. last_folder },
 		},
 		["zsh"] = {
-			-- { Foreground = { Color = dark_theme.ansi[4] } },
+			{ Foreground = { Color = colors.ansi[4] } },
 			{ Text = " " .. wezterm.nerdfonts.dev_terminal .. " " .. last_folder },
 		},
 		["paru"] = {
@@ -146,7 +165,21 @@ local function update_theme(window, _)
 	local colors = wezterm.color.get_builtin_schemes()[overrides.color_scheme]
 	overrides.colors = overrides.colors or {}
 	overrides.colors.tab_bar = overrides.colors.tab_bar or {}
-	overrides.colors.tab_bar.background = colors.background
+	overrides.colors.tab_bar.background = "rgba(0,0,0,0)"
+	overrides.colors.tab_bar.active_tab = {
+		bg_color = "rgba(0,0,0,0)",
+		fg_color = colors.ansi[1],
+		intensity = "Bold",
+	}
+	overrides.colors.tab_bar.inactive_tab = {
+		bg_color = "rgba(0,0,0,0)",
+		fg_color = colors.foreground,
+		intensity = "Normal",
+	}
+	overrides.colors.tab_bar.new_tab = {
+		bg_color = colors.background,
+		fg_color = colors.foreground,
+	}
 
 	window:set_config_overrides(overrides)
 end
@@ -154,7 +187,7 @@ end
 --╭─────────────────────────────────────╮
 --│        Neovim Theme Listener        │
 --╰─────────────────────────────────────╯
-wezterm.on("update-status", function(window, pane)
+wezterm.on("update-status", function(window, _)
 	local bat = ""
 	for _, b in ipairs(wezterm.battery_info()) do
 		bat = wezterm.nerdfonts.md_battery .. " " .. string.format("%.0f%%", b.state_of_charge * 100)
@@ -169,10 +202,6 @@ wezterm.on("update-status", function(window, pane)
 	end
 
 	local colors = wezterm.color.get_builtin_schemes()[color_scheme]
-	-- local cwd_uri = pane:get_current_working_dir()
-	-- local cwd = cwd_uri.file_path
-	-- cwd = cwd:gsub("/home/neimog", " ~")
-
 	window:set_right_status(wezterm.format({
 		{ Background = { Color = colors.background } },
 		{ Foreground = { Color = colors.foreground } },
@@ -192,9 +221,9 @@ end)
 -- ─────────────────────────────────────
 wezterm.on("format-tab-title", function(tab)
 	return wezterm.format({
-		{ Text = string.format(" %s:", tab.tab_index + 1) },
+		{ Text = string.format("  %s", tab.tab_index + 1) },
 		{ Text = get_process_icon(tab) },
-		{ Text = "▕" },
+		{ Text = "▕ " },
 	})
 end)
 

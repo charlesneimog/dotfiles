@@ -32,19 +32,33 @@ switch-events {
 //╭─────────────────────────────────────╮
 //│             Environment             │
 //╰─────────────────────────────────────╯
+// environment {
+//     DISPLAY ":0"
+//     ELECTRON_OZONE_PLATFORM_HINT "auto"
+//     MOZ_ENABLE_WAYLAND "1"
+//     QT_QPA_PLATFORMTHEME "qt5ct"
+//     QT_QPA_PLATFORM "wayland;xcb"
+//     QT_AUTO_SCREEN_SCALE_FACTOR "1"
+//     QT_WAYLAND_DISABLE_WINDOW_DECORATION "1"
+//     GDK_BACKEND "wayland"
+//     XDG_SESSION_TYPE "wayland"
+//     XDG_CURRENT_DESKTOP "gnome"
+//     XDG_SESSION_DESKTOP "gnome"
+//     GTK_IM_MODULE "wayland:ibus"
+// }
 environment {
-    DISPLAY ":0"
     ELECTRON_OZONE_PLATFORM_HINT "auto"
     MOZ_ENABLE_WAYLAND "1"
     QT_QPA_PLATFORMTHEME "qt5ct"
     QT_QPA_PLATFORM "wayland;xcb"
     QT_AUTO_SCREEN_SCALE_FACTOR "1"
     QT_WAYLAND_DISABLE_WINDOW_DECORATION "1"
-    GDK_BACKEND "wayland"
     XDG_SESSION_TYPE "wayland"
     XDG_CURRENT_DESKTOP "gnome"
     XDG_SESSION_DESKTOP "gnome"
+    GTK_IM_MODULE "simple"
 }
+
 
 //╭─────────────────────────────────────╮
 //│                Look                 │
@@ -162,7 +176,7 @@ binds {
     Alt+Space { show-hotkey-overlay; }
 
     Mod+Return hotkey-overlay-title="Open a Terminal: wezterm" {
-        spawn "wezterm-gui"
+        spawn "ghostty"
     }
     Mod+D hotkey-overlay-title="Run an Application: rofi" {
         spawn "bash" "-c" "$HOME/.functions.sh launch_rofi"
@@ -417,6 +431,20 @@ window-rule {
     }
     open-floating true
 }
+
+window-rule {
+    match app-id="(^com.mitchellh.ghostty)"
+    open-on-workspace "2"
+    open-focused true
+    default-column-width {
+        fixed 1700
+    }
+    default-window-height {
+        fixed 950
+    }
+    open-floating true
+}
+
 window-rule {
     match app-id="(^org.gnome.Nautilus)"
     open-on-workspace "3"

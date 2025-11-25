@@ -5,7 +5,7 @@ audioindevname1: JACK
 noaudioout: False
 audiooutdev1: 0 2
 audiooutdevname1: JACK
-audiobuf: 64
+audiobuf: 100
 rate: 48000
 callback: 0
 audioblocksize: 1024
