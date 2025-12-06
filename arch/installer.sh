@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm -dfr ~/.config/niri
+rm -dfr ~/.config/waybar
+
 #╭──────────────────────────────────────╮
 #│         Pacman Configuration         │
 #╰──────────────────────────────────────╯

@@ -13,10 +13,10 @@ link_files() {
                 local sub_dir=$(basename "$file")
                 link_files "$file" "$target_dir/$sub_dir" true
             else 
-                # remove existing file first
                 if [ -e "$target_dir/$(basename "$file")" ]; then
                     rm -f "$target_dir/$(basename "$file")"
                 fi
+                mkdir -p "$target_dir"
                 ln -sf "$file" "$target_dir/"
             fi
         done
@@ -31,6 +31,7 @@ link_files() {
                 if [ -e "$target_dir/$(basename "$file")" ]; then
                     rm -f "$target_dir/$(basename "$file")"
                 fi
+                mkdir -p "$target_dir"
                 ln -sf "$file" "$target_dir/"
 
             fi
