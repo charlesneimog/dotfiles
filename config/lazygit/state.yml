@@ -1,62 +1,9 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/pd-bhack
-    - /home/neimog/Documents/Git/charlesneimog.github.io
-    - /home/neimog/Documents/Git/pd4web
-    - /home/neimog/Documents/Git/newsite
-    - /home/neimog/Documents/Git/pd.cmake
-    - /home/neimog/Documents/Git/LocalReader
-    - /home/neimog/Documents/Git/nanovg
-    - /home/neimog/Documents/Git/Awesome-PD
-    - /home/neimog/Documents/Git/kodaly-p5js-ml5
-    - /home/neimog/Documents/Git/pdftts
-    - /home/neimog/Documents/Git/pd-neimog
-    - /home/neimog/Documents/Git/pd-neimog/Sources/py4pd
-    - /home/neimog/Documents/Git/pd-onnx/libonnx
-    - /home/neimog/Documents/Git/pd-onnx
-    - /home/neimog/Documents/Git/pd-neimog/Sources/pd-saf
-    - /home/neimog/Documents/Git/pd-neimog/Sources/lua/pd-upic
-    - /home/neimog/Documents/Git/pd-neimog/Sources/lua/pd-orchidea
-    - /home/neimog/Documents/Git/OScofo
-    - /home/neimog/Documents/Git/the-kitchen-routing-system
-    - /home/neimog/Documents/Git/New-Piece
-    - /home/neimog/Documents/Git/pure-data
-    - /home/neimog/Documents/Git/pd-neimog/Sources/patcherize
-    - /home/neimog/Documents/Git/loris
-    - /home/neimog/Documents/Git/pd-lua
-    - /home/neimog/Documents/Git/pdweb
-    - /home/neimog/Documents/Git/pd-lgui
-    - /home/neimog/Documents/Git/anytype-client
-    - /home/neimog/Documents/Git/pd-orchidea
-    - /home/neimog/Documents/Git/Presentations
-    - /home/neimog/Documents/Git/moteto
-    - /home/neimog/Documents/Git/zotero-tts
-    - /home/neimog/Documents/Git/blog
-    - /home/neimog/Documents/Git/pd-score
-    - /home/neimog/Documents/Git/pd-vamp
-    - /home/neimog/Documents/Git/pd-ambi
-    - /home/neimog/Documents/Git/pd-fftease
-    - /home/neimog/Documents/Git/pd-musesampler
-    - /home/neimog/Documents/Git/pd-partialtrack
-    - /home/neimog/Documents/Git/pd-loris
-    - /home/neimog/Documents/Git/pd-partialtrack/Libraries/simpl
-    - /home/neimog/Documents/Git/py4pd-upic
-    - /home/neimog/Documents/Git/py4pd-spt
-    - /home/neimog/Documents/Git/pdgui
-    - /home/neimog/Documents/Git/OScofo/Libraries/tree-sitter
-    - /home/neimog/Documents/Git/py4pd-score
-    - /home/neimog/Documents/Git/grambilib
-    - /home/neimog/Documents/Git/py4pd-orchidea
-    - /home/neimog/Documents/Git/py4pd-freesound
-    - /home/neimog/Documents/Git/pd-partialtrack/Resources/pd.cmake
-    - /home/neimog/Documents/Git/pd-partialtrack/Resources/CMakeAudioHelpers
-    - /home/neimog/Documents/Git/pd-vamp/Libraries/rt-vamp-plugin-sdk
-    - /home/neimog/Documents/Git/nucleomusicanova.github.io
-    - /home/neimog/Documents/Git/pd-pt
 startuppopupversion: 5
 didshowhunkstaginghint: true
-lastversion: 0.56.0
+lastversion: 0.57.0
 customcommandshistory:
     - q
     - ""

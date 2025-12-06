@@ -1,5 +1,30 @@
-/* Colors file */
-@import "colors.css";
+@define-color rosewater #f5e0dc;
+@define-color flamingo #f2cdcd;
+@define-color pink #f5c2e7;
+@define-color mauve #cba6f7;
+@define-color red #f38ba8;
+@define-color maroon #eba0ac;
+@define-color peach #fab387;
+@define-color yellow #f9e2af;
+@define-color green #a6e3a1;
+@define-color teal #94e2d5;
+@define-color sky #89dceb;
+@define-color sapphire #74c7ec;
+@define-color blue #89b4fa;
+@define-color lavender #b4befe;
+@define-color text #cdd6f4;
+@define-color subtext1 #bac2de;
+@define-color subtext0 #a6adc8;
+@define-color overlay2 #9399b2;
+@define-color overlay1 #7f849c;
+@define-color overlay0 #6c7086;
+@define-color surface2 #585b70;
+@define-color surface1 #45475a;
+@define-color surface0 #313244;
+@define-color base #1e1e2e;
+@define-color mantle #181825;
+@define-color crust #11111b;
+
 * {
     all: unset;
     font-family: "JetBrainsMono Nerd Font";
@@ -10,28 +35,27 @@
 }
 
 window#waybar.empty #window {
-    /* background: none; */
-    background: #383c4a;
+    background: @surface0;
 }
 
 tooltip {
-    color: #ffffff;
-    background: rgba(0, 0, 0, 0.8);
+    color: @text;
+    background: @surface1;
     border-radius: 3px;
     padding: 2px 100px;
 }
 
 #tray menu {
-    color: #ffffff;
-    background: rgba(0, 0, 0, 0.9);
+    color: @text;
+    background: @surface0;
     border-radius: 3px;
     padding: 10px 10px;
     font-size: 50px;
 }
 
 #tray menu menuitem:hover {
-    background-color: rgba(50, 50, 90, 1);
-    color: #ff0000;
+    background: @surface0;
+    color: @red;
     border-radius: 10px;
 }
 
@@ -48,16 +72,16 @@ tooltip {
 #workspaces,
 #wireplumber,
 #tray,
+#backlight,
 #taskbar,
 #custom-weather,
 #privacy,
 #actions,
 #quick-actions,
-#temperature,
 #custom-notification,
 #quicklinks-left {
     border-radius: 3px;
-    background: rgba(30, 30, 30, 0.75);
+    background: rgba(49, 50, 68, 0.7);
     padding: 0px 2px 0px 2px;
     margin: 1px 5px 0px 5px;
     opacity: 1;
@@ -73,14 +97,12 @@ tooltip {
  *│             Hover                   │
  *╰─────────────────────────────────────╯
 */
-
 #custom-power-menu,
 #idle_inhibitor,
 #bluetooth,
 #power-profiles-daemon,
 #custom-themes,
 #custom-wallpaper,
-#temperature,
 #custom-flathub,
 #custom-aur {
     margin: 0px 0px;
@@ -96,13 +118,12 @@ tooltip {
 #custom-wallpaper:hover,
 #custom-flathub:hover,
 #custom-aur:hover {
-    color: red;
+    color: @red;
 }
 
 #tray:hover {
-    color: red;
+    color: @red;
 }
-
 
 #temperature:hover,
 #network:hover,
@@ -110,7 +131,7 @@ tooltip {
 #hardware:hover,
 #clock:hover,
 #custom-notification:hover {
-    color: red;
+    color: @red;
 }
 
 /*
@@ -124,32 +145,31 @@ tooltip {
 }
 
 #workspaces button {
-    color: #ffffff;
+    color: @text;
     font-family: "JetbrainsMono Nerd Font";
     min-width: 20px;
     margin: 1px 1px 1px 1px;
     border-radius: 3px;
 }
 #workspaces button:hover {
-    color: rgba(255, 58, 0, 0.8); /* Semi-transparent white */
+    color: @red;
 }
 
 #workspaces button.visible {
-    color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+    color: @subtext1;
 }
 
 #workspaces button.focused {
-    background-color: rgba(0, 128, 255, 0.3); /* Semi-transparent white */
-    color: rgba(255, 255, 255, 0.9);
+    background-color: @base;
 }
 
 #workspaces button.active {
-    color: #000000; /* Sway palette: focused/text */
-    background-color: rgba(250, 250, 250, 0.5); /* Semi-transparent white */
+    color: @base;
+    background-color: @subtext1;
 }
 
 #workspaces button.urgent {
-    color: #ff0000; /* Sway palette: urgent/text */
+    color: @red;
 }
 
 /*
@@ -158,7 +178,7 @@ tooltip {
  *╰─────────────────────────────────────╯
 */
 #quicklinks-left {
-    background: @color1;
+    background: @surface0;
 }
 #quicklinks-left {
     margin-left: 2px;
@@ -171,6 +191,20 @@ tooltip {
 
 /*
  *╭─────────────────────────────────────╮
+ *│                 Idle                │
+ *╰─────────────────────────────────────╯
+*/
+#idle_inhibitor.activated {
+    color: @red;
+    background: none;
+}
+
+#idle_inhibitor.deactivated {
+    background: none;
+}
+
+/*
+ *╭─────────────────────────────────────╮
  *│               Privacy               │
  *╰─────────────────────────────────────╯
 */
@@ -179,15 +213,15 @@ tooltip {
 }
 
 #privacy-item.audio-in {
-    color: #ff0000;
+    color: @red;
 }
 
 #privacy-item.audio-out {
-    color: #008000;
+    color: @green;
 }
 
 #privacy-item.screenshare {
-    color: #e5e619;
+    color: @yellow;
 }
 
 /*
@@ -202,13 +236,13 @@ tooltip {
     margin: 0px 1px 0px 1px;
 }
 #taskbar *:hover {
-    background: rgba(155, 155, 155, 0.8);
+    background: @surface2;
     border-radius: 3px;
     margin: 0px 1px 0px 1px;
 }
 
 #tray*:hover {
-    background: rgba(155, 155, 155, 0.8);
+    background: @surface2;
     border-radius: 3px;
     margin: 0px 1px 0px 1px;
 }
@@ -219,7 +253,7 @@ tooltip {
  *╰─────────────────────────────────────╯
 */
 #custom-power-menu {
-    padding-right: 6px;
+    padding-right: 8px;
     padding-left: 4px;
 }
 
@@ -236,15 +270,14 @@ tooltip {
 #bluetooth.connected {
     padding-right: 6px;
     padding-left: 4px;
-    color: rgba(255, 255, 155, 0.8);
+    color: @yellow;
 }
 
-#bluetooth.disabled{
+#bluetooth.disabled {
     padding-right: 6px;
     padding-left: 6px;
-    color: rgba(255, 0, 0, 1);
+    color: @red;
 }
-
 
 /*
  *╭─────────────────────────────────────╮
@@ -255,7 +288,6 @@ tooltip {
 #power-profiles-daemon {
     margin: 1px 0px 0px 3px;
     opacity: 0.85;
-    /* transition: all 0.5s ease-in-out; */
     padding-right: 5px;
     padding-left: 5px;
     border-radius: 3px;
@@ -263,22 +295,21 @@ tooltip {
 
 #power-profiles-daemon.performance {
     padding: 1px 5px 0px 5px;
-    color: #ff0000;
-    background: rgba(255, 0, 0, 0.15);
+    color: @red;
+    /* background: rgba(255, 0, 0, 0.15); */
 }
 
 #power-profiles-daemon.balanced {
     padding-right: 6px;
     padding-left: 4px;
-    color: #e5e619;
-    background: rgba(229, 230, 25, 0.15);
+    color: @blue;
+    /* background: rgba(229, 230, 25, 0.15); */
 }
 
 #power-profiles-daemon.power-saver {
     padding-right: 6px;
     padding-left: 4px;
-    color: rgba(16, 144, 16, 1);
-    background: rgba(16, 144, 16, 0.1);
+    color: @green;
 }
 
 /*
@@ -317,11 +348,11 @@ tooltip {
     padding-right: 3px;
     padding-left: 5px;
     border-radius: 3px;
-    color: #e5e619;
+    color: @yellow;
 }
 
 #custom-themes.dark {
-    color: #add8e6;
+    color: @blue;
     padding-right: 1px;
     padding-left: 5px;
     border-radius: 3px;
@@ -338,16 +369,16 @@ tooltip {
 }
 
 #battery.good {
-    color: #49a435;
+    color: @green;
 }
 
 #battery.warning {
-    color: #e5e619;
+    color: @yellow;
 }
 
 #battery.critical:not(.charging) {
-    color: red;
-    text-shadow: 0 0 5px red;
+    color: @red;
+    text-shadow: 0 0 5px;
     animation-name: blink;
     animation-duration: 0.3s;
     animation-timing-function: linear;
@@ -355,12 +386,12 @@ tooltip {
     animation-direction: alternate;
 }
 #battery.charging {
-    color: #49a435;
+    color: @green;
 }
 
 @keyframes blink {
     from {
-        color: red;
+        color: @red;
     }
     to {
         color: transparent; /* Blinking effect by making the text disappear */
@@ -376,39 +407,23 @@ tooltip {
 */
 
 #custom-weather {
-    padding-right: 5px;
-    padding-left: 5px;
-    margin: 1px 0px 0px 5px;
     border-radius: 3px;
+    padding: 0px 2px 0px 4px;
+    margin: 1px 2px 0px 2px;
 }
 
-#custom-weather.severe {
-    color: #eb937d;
+#custom-weather.sol {
+    color: @yellow;
 }
 
-#custom-weather.sunnyDay {
-    color: #ffd700;
+#custom-weather.chuva {
+    color: @blue;
 }
 
-#custom-weather.clearNight {
-    color: #ffd700;
+#custom-weather.vento {
+    color: @blue;
 }
 
-#custom-weather.cloudyFoggyDay,
-#custom-weather.cloudyFoggyNight {
-    color: #b6b6b8;
-}
-
-#custom-weather.rainyDay,
-#custom-weather.rainyNight {
-    color: #31aed4;
-}
-
-#custom-weather.showyIcyDay,
-#custom-weather.snowyIcyNight {
-    color: #ffffff;
-}
-
-#custom-weather.default {
-    color: #dbd9d8;
+#custom-weather.vento {
+    color: @blue;
 }

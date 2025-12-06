@@ -1,42 +1,46 @@
-#╭──────────────────────────────────────╮
-#│              FUNCTIONS               │
-#╰──────────────────────────────────────╯
 link_files() {
-    local source_dir=$1
-    local target_dir=$2
-    mkdir -p "$target_dir"
-    if $3; then
-        for file in "$source_dir"/.* "$source_dir"/**/.*; do
-            echo $file
-            if [ -d "$file" ]; then
-                mkdir -p "$target_dir/$(basename "$file")"
-                local sub_dir=$(basename "$file")
-                link_files "$file" "$target_dir/$sub_dir" true
-            else 
-                if [ -e "$target_dir/$(basename "$file")" ]; then
-                    rm -f "$target_dir/$(basename "$file")"
-                fi
-                mkdir -p "$target_dir"
-                ln -sf "$file" "$target_dir/"
-            fi
-        done
-    else
-        for file in "$source_dir"/*; do
-            echo $file
-            if [ -d "$file" ]; then
-                mkdir -p "$target_dir/$(basename "$file")"
-                local sub_dir=$(basename "$file")
-                link_files "$file" "$target_dir/$sub_dir" false
-            else 
-                if [ -e "$target_dir/$(basename "$file")" ]; then
-                    rm -f "$target_dir/$(basename "$file")"
-                fi
-                mkdir -p "$target_dir"
-                ln -sf "$file" "$target_dir/"
+    src=$1
+    dst=$2
 
+    # Ensure destination root exists
+    mkdir -p "$dst" || {
+        echo "ERROR: Cannot create directory $dst"
+        return 1
+    }
+
+    find "$src" -mindepth 1 | while IFS= read -r item; do
+        rel=${item#"$src/"}              # relative path
+        target="$dst/$rel"               # where it will be linked
+
+        if [ -d "$item" ]; then
+            # Create directory in destination
+            mkdir -p "$target" || {
+                echo "ERROR: Cannot create directory $target"
+            }
+        else
+            # Ensure parent directory exists
+            mkdir -p "$(dirname "$target")" || {
+                echo "ERROR: Cannot create parent directory for $target"
+                continue
+            }
+
+            # Remove existing file/dir/symlink
+            if [ -e "$target" ] || [ -L "$target" ]; then
+                rm -rf "$target" || {
+                    echo "ERROR: Cannot remove existing $target"
+                    continue
+                }
             fi
-        done
-    fi
+
+            # Create symlink
+            ln -s "$item" "$target" || {
+                echo "ERROR: Failed to link $item → $target"
+                continue
+            }
+
+            echo "Linked: $item → $target"
+        fi
+    done
 }
 
 #╭──────────────────────────────────────╮

@@ -26,7 +26,7 @@ EOF
 )
 
 echo "$new_config" | sudo tee /etc/pacman.conf > /dev/null
-source ./packages.conf
+source ./arch/packages.conf
 mkdir -p /home/neimog/Downloads
 
 #╭──────────────────────────────────────╮
@@ -44,6 +44,9 @@ if ! command -v paru &> /dev/null; then
 else
     echo "Paru já está instalado."
 fi
+
+git config --global user.name "Charles K. Neimog"
+git config --global user.email "charlesneimog@outlook.com"
 
 # ╭──────────────────────────────────────╮
 # │        Paru and AUR packages         │
@@ -110,7 +113,8 @@ sudo cp ~/Documents/Git/dotfiles/Arch/mime/Overrides.xml /usr/share/mime/package
 sudo ufw enable
 sudo systemctl enable ufw
 sudo systemctl enable bluetooth.service
-ln -s /usr/bin/nvim /usr/bin/vi
+sudo ln -s /usr/bin/nvim /usr/bin/vi
+sudo ln -s /usr/bin/nvim /usr/bin/nano
 
 # ╭──────────────────────────────────────╮
 # │              Miniconda               │
@@ -159,6 +163,9 @@ xdg-mime default io.bassi.Amberol.desktop audio/x-wav
 #╰──────────────────────────────────────╯
 gh auth login
 
+#╭──────────────────────────────────────╮
+#│                 Mime                 │
+#╰──────────────────────────────────────╯
 cd ~/Documents/Git/dotfiles
 sudo cp -r ./mime/* /usr/share/mime/packages/
 sudo update-mime-database /usr/share/mime/
@@ -168,3 +175,11 @@ cd Tela-circle-icon-theme && ./install.sh && cd ..
 gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
 rm -drf Tela-circle-icon-theme
+
+#╭──────────────────────────────────────╮
+#│         Login and LockScreen         │
+#╰──────────────────────────────────────╯
+sudo bash -c 'echo -e "[Theme]\nCurrent=catppuccin-mocha-blue" > /etc/sddm.conf.d/theme.conf'
+wget -O ~./.avatar.png https://avatars.githubusercontent.com/u/31707161?v=4
+
+

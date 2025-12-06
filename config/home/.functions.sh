@@ -45,9 +45,6 @@ startup_services() {
     # Custom function
     sh -c "$HOME/.functions.sh unsplash" &
 
-    # Panel
-    waybar &
-
     # Portals
     /usr/lib/xdg-desktop-portal-gtk &
     /usr/lib/xdg-desktop-portal-gnome &
@@ -72,20 +69,7 @@ screenshot() {
 
 # ──────────────────────────────────────
 lock_screen() {
-    swaylock --screenshots \
-             --clock \
-             --indicator \
-             --indicator-radius 100 \
-             --indicator-thickness 7 \
-             --effect-blur 7x5 \
-             --fade-in 0.3 \
-             --ring-color 2e3440 \
-             --key-hl-color 88c0d0 \
-             --line-color 00000000 \
-             --inside-color 3b4252 \
-             --separator-color 00000000 \
-             --text-color d8dee9 \
-             --grace 2
+    hyprlock
 }
 
 # ──────────────────────────────────────
@@ -277,31 +261,19 @@ EOT
 
 # ──────────────────────────────────────
 function get_unsplash_wallpaper {
-    QUERY_LIST="rocks+lake+desert+dunes+mountain"
+    # Base keywords
+    BASE_KEYWORDS=("rocks" "lake" "desert" "dunes" "mountain" "abstract+dark" "abstract+blue+dark" "wallpaper")
 
-    # Paleta “Cappuccino Mocha” aproximada + azul
-    COLORS=("black" "black_and_white" "blue")
+    # Randomly choose 1-2 keywords from the base keywords
+    NUM_KEYWORDS=$((1 + RANDOM % 1))
+    QUERY=$(printf "%s+" $(shuf -n $NUM_KEYWORDS -e "${BASE_KEYWORDS[@]}"))
+    QUERY="${QUERY%+}"  # Remove trailing '+'
 
-    if [[ -z "$QUERY_LIST" ]]; then
-        echo "❌ QUERY_LIST is empty."
-        exit 1
-    fi
-
-    IFS='+' read -ra WORDS <<< "$QUERY_LIST"
-    if (( ${#WORDS[@]} == 0 )); then
-        echo "❌ No words found in QUERY_LIST."
-        exit 1
-    fi
-
-    # Escolhe keyword e cor aleatória
-    QUERY="${WORDS[RANDOM % ${#WORDS[@]}]}"
-    COLOR="${COLORS[RANDOM % ${#COLORS[@]}]}"
-
-    notify-send "🌄 Changing wallpaper... $QUERY, color: $COLOR"
+    notify-send "🌄 Changing wallpaper... $QUERY"
 
     WIDTH=1920
     HEIGHT=1200
-    FILENAME="$HOME/.config/sway/wallpapers/wallpaper.jpg"
+    FILENAME="$HOME/.wallpaper.jpg"
     ACCESS_KEY="$(secret-tool lookup service wallpaperapp)"
 
     if [[ -z "$ACCESS_KEY" ]]; then
@@ -313,10 +285,10 @@ function get_unsplash_wallpaper {
     fi
 
     # Fetch image URL from Unsplash API
-    API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&color=$COLOR&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
+    API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
     IMAGE_URL=$(curl -s "$API_URL" | jq -r '.urls.full')
 
-    if [ -z "$IMAGE_URL" ] || [ "$IMAGE_URL" = "null" ]; then
+    if [[ -z "$IMAGE_URL" ]] || [[ "$IMAGE_URL" = "null" ]]; then
         echo "Failed to fetch image URL from Unsplash API."
         exit 1
     fi
@@ -391,16 +363,27 @@ change_theme(){
 
 # ──────────────────────────────────────
 get_theme(){
-	color_scheme=$(gsettings get org.gnome.desktop.interface color-scheme | awk '{print $1}' | tr -d "'")
-	if [ "$color_scheme" = "prefer-dark" ]; then
-        ACTIVE="dark"
-        printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "dark"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
-	else
-        ACTIVE="light"
-        printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "light"}\n' "$ACTIVE" "$ACTIVE" "$ACTIVE"
-	fi
-}
+    color_scheme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
 
+    case "$color_scheme" in
+        prefer-dark)
+            ACTIVE="dark"
+            CLASS="dark"
+            ;;
+        prefer-light)
+            ACTIVE="light"
+            CLASS="light"
+            ;;
+        default|*)
+            # GNOME usa Adwaita Light como padrão
+            ACTIVE="light"
+            CLASS="light"
+            ;;
+    esac
+
+    printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "%s"}\n' \
+        "$ACTIVE" "$ACTIVE" "$ACTIVE" "$CLASS"
+}
 
 # ──────────────────────────────────────
 dispatch() {
@@ -420,7 +403,7 @@ dispatch() {
         fetch_bing_wallpaper)  fetch_bing_wallpaper "$@" ;;
         fetch_random_wallpaper) fetch_random_wallpaper "$@" ;;
         change_theme)          change_theme "$@" ;;
-        unsplash)              get_unsplash_wallpaper_mac "$@" ;;  # macOS function
+        unsplash)              get_unsplash_wallpaper "$@" ;;  # macOS function
         update_aur_packages)   update_aur_packages "$@" ;;
         check_flatpak_updates) check_flatpak_updates "$@" ;;
         update_flatpak_packages) update_flatpak_packages "$@" ;;
@@ -436,8 +419,3 @@ dispatch() {
 
 # Call dispatch only if argument is provided
 [[ -n "$1" ]] && dispatch "$@"
-
-
-# Call dispatch only if argument is provided
-[[ -n "$1" ]] && dispatch "$@"
-

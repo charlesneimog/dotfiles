@@ -2,9 +2,9 @@
     "font": "JetBrainsMono Nerd Font",
     "reload_style_on_change": true,
     "spacing": 1,
-    "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
+    "modules-left": ["group/quick-actions", "custom/weather","wlr/taskbar", "tray", "privacy"],
     "modules-center": ["niri/workspaces"],
-    "modules-right": ["temperature", "network", "wireplumber", "group/hardware", "clock", "custom/notification"],
+    "modules-right": ["temperature", "network", "backlight", "wireplumber", "group/hardware", "clock", "custom/notification"],
 
     "wlr/taskbar": {
         "format": "{icon}",
@@ -13,6 +13,14 @@
         "tooltip-format": "{title}",
         "on-click": "activate",
         "on-click-middle": "close"
+    },
+
+    "custom/weather": {
+        "format": "{}°",
+        "tooltip": true,
+        "interval": 3600,
+        "exec": "wttrbar --location \"São Paulo\" --nerd --lang pt",
+        "return-type": "json"
     },
 
     "sway/workspaces": {
@@ -75,6 +83,12 @@
         "show-passive-items": true
     },
 
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", ""]
+    },
+
     "group/quick-actions": {
         "orientation": "horizontal",
         "modules": [
@@ -86,7 +100,7 @@
             "custom/wallpaper",
             "custom/aur",
             "custom/flathub",
-            "systemd-failed-units"
+            "systemd-failed-units",
         ]
     },
     "idle_inhibitor": {

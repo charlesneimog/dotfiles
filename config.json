@@ -86,7 +86,8 @@
             "custom/wallpaper",
             "custom/aur",
             "custom/flathub",
-            "systemd-failed-units"
+            "systemd-failed-units",
+            "custom/weather"
         ]
     },
     "idle_inhibitor": {
