@@ -24,6 +24,7 @@ EOF
 
 echo "$new_config" | sudo tee /etc/pacman.conf > /dev/null
 source ./packages.conf
+mkdir -p /home/neimog/Downloads
 
 #╭──────────────────────────────────────╮
 #│             Install Paru             │
@@ -70,11 +71,15 @@ for service in "${SERVICES[@]}"; do
 done
 
 #╭──────────────────────────────────────╮
+#│               NetBird                │
+#╰──────────────────────────────────────╯
+curl -fsSL https://pkgs.netbird.io/install.sh | sh
+
+#╭──────────────────────────────────────╮
 #│               Terminal               │
 #╰──────────────────────────────────────╯
 chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone git@github.com:charlesneimog/dotfiles.git ~/.config/nvim
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 #╭──────────────────────────────────────╮

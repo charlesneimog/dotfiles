@@ -211,6 +211,71 @@ function unlock_ssh {
 }
 
 # ──────────────────────────────────────
+#!/bin/bash
+function get_unsplash_wallpaper_mac {
+    # --- Config ---
+    QUERY_LIST="rocks+lake+desert+dunes+mountain"
+    COLORS=("black" "black_and_white" "blue")
+    WIDTH=1920
+    HEIGHT=1080
+    WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+    WALLPAPER_FILE="$WALLPAPER_DIR/wallpaper.jpg"
+    API_KEY_SERVICE="wallpaperapp"
+
+    mkdir -p "$WALLPAPER_DIR"
+
+    # --- Retrieve API key from Keychain ---
+    ACCESS_KEY=$(security find-generic-password -s "$API_KEY_SERVICE" -w 2>/dev/null)
+    if [[ -z "$ACCESS_KEY" ]]; then
+        osascript -e "display alert \"Unsplash API key not found\" message \"Save your Unsplash API key in Keychain with name '$API_KEY_SERVICE'\""
+        echo "Save your API key in Keychain: security add-generic-password -a $USER -s $API_KEY_SERVICE -w <your_key>"
+        return 1
+    fi
+
+    # --- Split QUERY_LIST using macOS-compatible method ---
+    OLD_IFS="$IFS"
+    IFS='+'
+    set -- $QUERY_LIST  # $1, $2, ... contain the queries
+    IFS="$OLD_IFS"
+
+    # --- Pick random query ---
+    COUNT=$#
+    INDEX=$(( RANDOM % COUNT + 1 ))
+    QUERY=$(eval echo \$$INDEX)
+
+    # --- Pick random color ---
+    COLOR_INDEX=$(( RANDOM % ${#COLORS[@]} ))
+    COLOR="${COLORS[$COLOR_INDEX]}"
+
+    # --- Notify ---
+    osascript -e "display notification \"Changing wallpaper to '$QUERY' with color '$COLOR'\" with title \"Unsplash Wallpaper\""
+
+    # --- Fetch image URL from Unsplash ---
+    API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&color=$COLOR&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
+    IMAGE_URL=$(curl -s "$API_URL" | /usr/bin/env jq -r '.urls.full')
+
+    if [[ -z "$IMAGE_URL" ]] || [[ "$IMAGE_URL" == "null" ]]; then
+        echo "Failed to fetch image URL from Unsplash API."
+        return 1
+    fi
+
+    # --- Download image ---
+    curl -s -L -o "$WALLPAPER_FILE" "$IMAGE_URL"
+
+    # --- Set wallpaper on all desktops ---
+    osascript <<EOT
+tell application "System Events"
+    repeat with d in desktops
+        set picture of d to "$WALLPAPER_FILE"
+    end repeat
+end tell
+EOT
+
+    echo "Wallpaper set: $QUERY ($COLOR)"
+}
+
+
+# ──────────────────────────────────────
 function get_unsplash_wallpaper {
     QUERY_LIST="rocks+lake+desert+dunes+mountain"
 
@@ -235,7 +300,7 @@ function get_unsplash_wallpaper {
     notify-send "🌄 Changing wallpaper... $QUERY, color: $COLOR"
 
     WIDTH=1920
-    HEIGHT=1080
+    HEIGHT=1200
     FILENAME="$HOME/.config/sway/wallpapers/wallpaper.jpg"
     ACCESS_KEY="$(secret-tool lookup service wallpaperapp)"
 
@@ -342,38 +407,36 @@ dispatch() {
     local cmd="$1"
     shift
 
-    declare -A commands=(
-        [clipboard_rofi]=clipboard_rofi
-        [launch_rofi]=launch_rofi
-        [launch_powermenu]=launch_powermenu
-
-        [startup_services]=startup_services
-        [screenshot]=screenshot
-        [lock_screen]=lock_screen
-        [decrease_volume]=decrease_volume
-        [increase_volume]=increase_volume
-        [translate_selection]=translate_selection
-        [fetch_bing_wallpaper]=fetch_bing_wallpaper
-        [fetch_random_wallpaper]=fetch_random_wallpaper
-        [change_theme]=change_theme
-        [unsplash]=get_unsplash_wallpaper
-        [update_aur_packages]=update_aur_packages
-
-        [check_flatpak_updates]=check_flatpak_updates
-        [update_flatpak_packages]=update_flatpak_packages
-
-        [get_theme]=get_theme
-    )
-
-    if [[ -n "${commands[$cmd]}" ]]; then
-        "${commands[$cmd]}" "$@"
-    else
-        echo "Invalid command: $cmd" >&2
-        echo "Available commands: ${!commands[@]}" >&2
-        notify-send "Invalid command: $cmd"
-        return 1
-    fi
+    case "$cmd" in
+        clipboard_rofi)        clipboard_rofi "$@" ;;
+        launch_rofi)           launch_rofi "$@" ;;
+        launch_powermenu)      launch_powermenu "$@" ;;
+        startup_services)      startup_services "$@" ;;
+        screenshot)            screenshot "$@" ;;
+        lock_screen)           lock_screen "$@" ;;
+        decrease_volume)       decrease_volume "$@" ;;
+        increase_volume)       increase_volume "$@" ;;
+        translate_selection)   translate_selection "$@" ;;
+        fetch_bing_wallpaper)  fetch_bing_wallpaper "$@" ;;
+        fetch_random_wallpaper) fetch_random_wallpaper "$@" ;;
+        change_theme)          change_theme "$@" ;;
+        unsplash)              get_unsplash_wallpaper_mac "$@" ;;  # macOS function
+        update_aur_packages)   update_aur_packages "$@" ;;
+        check_flatpak_updates) check_flatpak_updates "$@" ;;
+        update_flatpak_packages) update_flatpak_packages "$@" ;;
+        get_theme)             get_theme "$@" ;;
+        *) 
+            echo "Invalid command: $cmd" >&2
+            echo "Available commands: clipboard_rofi launch_rofi launch_powermenu startup_services screenshot lock_screen decrease_volume increase_volume translate_selection fetch_bing_wallpaper fetch_random_wallpaper change_theme unsplash update_aur_packages check_flatpak_updates update_flatpak_packages get_theme" >&2
+            osascript -e "display notification \"Invalid command: $cmd\" with title \"Dispatch Error\""
+            return 1
+            ;;
+    esac
 }
+
+# Call dispatch only if argument is provided
+[[ -n "$1" ]] && dispatch "$@"
+
 
 # Call dispatch only if argument is provided
 [[ -n "$1" ]] && dispatch "$@"

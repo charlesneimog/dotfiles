@@ -108,9 +108,19 @@ return {
 			},
 		})
 
-		if vim.loop.os_uname().sysname == "Linux" then
+		local sysname = vim.loop.os_uname().sysname
+		if sysname == "Linux" then
 			local theme = vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null")
 			if theme:match("'prefer%-dark'") then
+				vim.cmd.colorscheme("catppuccin-mocha")
+			else
+				vim.cmd.colorscheme("catppuccin-latte")
+			end
+		elseif sysname == "Darwin" then
+			local handle = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null")
+			local result = handle:read("*a")
+			handle:close()
+			if result:match("Dark") then
 				vim.cmd.colorscheme("catppuccin-mocha")
 			else
 				vim.cmd.colorscheme("catppuccin-latte")

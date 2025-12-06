@@ -6,7 +6,7 @@ local vim = vim
 local servers = {
 	clangd = {
 		cmd = {
-			"clangd",
+			vim.fn.expand("~/.local/share/nvim/mason/bin/clangd"),
 			"--offset-encoding=utf-16",
 		},
 	},

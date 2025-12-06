@@ -1,14 +1,23 @@
 local vim = vim
 
+local is_mac = vim.loop.os_uname().sysname == "Darwin"
+if is_mac then
+    vim.g.cmdkey = "D-"
+else
+    vim.g.cmdkey = "C-"
+end
+
 -- Salvar arquivo
-vim.keymap.set({ "i", "v", "n" }, "<C-s>", "<Esc>:w<CR>", { desc = "Salvar arquivo" })
-vim.keymap.set({ "i", "v" }, "<C-c>", '"+y', { desc = "Copiar para o clipboard" })
-vim.keymap.set({ "i", "v" }, "<C-v>", '"+p', { desc = "Colar do clipboard" })
-vim.keymap.set({ "n", "v" }, "<C-a>", "ggVG", { desc = "Selecionar tudo" })
+vim.keymap.set({ "i", "v", "n" }, "<" .. vim.g.cmdkey .. "s>", "<Esc>:w<CR>", { desc = "Salvar arquivo" })
+vim.keymap.set({ "i", "v" }, "<" .. vim.g.cmdkey .. "c>", '"+y', { desc = "Copiar para o clipboard" })
+vim.keymap.set({ "i", "v" }, "<" .. vim.g.cmdkey .. "v>", '"+p', { desc = "Colar do clipboard" })
+vim.keymap.set({ "n", "v" }, "<" .. vim.g.cmdkey .. "a>", "ggVG", { desc = "Selecionar tudo" })
+
 vim.keymap.set({ "n", "v" }, "<TAB>", ">gv", { desc = "Indentar" })
 vim.keymap.set({ "n", "v" }, "<S-TAB>", "<gv", { desc = "Desindentar" })
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Sair do modo de inserção" })
 vim.keymap.set("i", "JK", "<Esc>", { desc = "Sair do modo de inserção" })
+
 vim.keymap.set("n", "<leader>m", function()
 	local buffers = vim.api.nvim_list_bufs()
 	if #buffers == 2 then
