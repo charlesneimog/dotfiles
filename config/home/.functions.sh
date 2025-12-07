@@ -60,6 +60,7 @@ startup_services() {
     nextcloud &
     anytype &
     blueman-applet &
+    waybar &
 }
 
 # ──────────────────────────────────────

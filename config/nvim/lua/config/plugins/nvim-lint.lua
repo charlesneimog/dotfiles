@@ -10,8 +10,6 @@ return {
 		local linters = {
 			javascript = { "eslint" },
 			html = { "htmlhint" },
-			-- lua = { "luac" },
-			-- python = { "flake8" },
 			c = { "clangtidy" },
 			cpp = { "clangtidy" },
 			markdown = { "vale" },
@@ -20,7 +18,6 @@ return {
 		local mason_lint = {
 			clangtidy = "clangd",
 			eslint = "eslint_d",
-            -- lua = "luaformatter"
 		}
 
 		local mason_registry = require("mason-registry")

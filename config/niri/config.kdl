@@ -149,10 +149,7 @@ animations {
 //╭─────────────────────────────────────╮
 //│               StartUp               │
 //╰─────────────────────────────────────╯
-spawn-at-startup "/usr/lib/xdg-desktop-portal-gnome"
-spawn-at-startup "/usr/lib/xdg-desktop-portal-gtk"
 spawn-at-startup "sh" "-c" "$HOME/.functions.sh startup_services"
-spawn-at-startup "/usr/bin/waybar"
 
 //╭─────────────────────────────────────╮
 //│                Binds                │

@@ -1,6 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
+    - /home/neimog/Documents/Git/pd-lua
 startuppopupversion: 5
 didshowhunkstaginghint: true
 lastversion: 0.57.0
