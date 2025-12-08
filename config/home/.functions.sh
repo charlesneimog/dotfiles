@@ -1,6 +1,3 @@
-
-
-# ──────────────────────────────────────
 clipboard_rofi() {
     if pgrep -x rofi > /dev/null; then
         killall rofi
@@ -42,18 +39,16 @@ startup_services() {
     export XDG_CURRENT_DESKTOP="gnome"
     export XDG_SESSION_DESKTOP="gnome"
 
-    # Custom function
-    sh -c "$HOME/.functions.sh unsplash" &
-
     # Portals
+    hyprpaper &
     /usr/lib/xdg-desktop-portal-gtk &
     /usr/lib/xdg-desktop-portal-gnome &
 
     # Services
-    sh -c "wl-paste --type text --watch cliphist store" &
-    sh -c "wl-paste --type image --watch cliphist store" &
-    sh -c "dbus-update-activation-environment --all" &
-    sh -c "gnome-keyring-daemon --start --components=secrets" &
+    wl-paste --type text --watch cliphist store &
+    wl-paste --type image --watch cliphist store &
+    dbus-update-activation-environment --all &
+    gnome-keyring-daemon --start --components=secrets &
 
     # Apps
     xwayland-satellite &
@@ -61,6 +56,7 @@ startup_services() {
     anytype &
     blueman-applet &
     waybar &
+    hypridle &
 }
 
 # ──────────────────────────────────────
@@ -297,9 +293,9 @@ function get_unsplash_wallpaper {
     # Download image and set as wallpaper
     wget -q -O "$FILENAME" "$IMAGE_URL"
 
-    # Restart swaybg with new wallpaper
-    pkill swaybg
-    swaybg -i "$FILENAME" --mode fill &
+    # Restart with new wallpaper
+    pkill hyprpaper
+    hyprpaper
 }
 
 # ──────────────────────────────────────
@@ -333,8 +329,8 @@ fetch_random_wallpaper() {
     ln -s -f "$output_png" ~/.config/rofi/images/a.png
     ln -s -f "$output_png" ~/.config/rofi/images/c.png
 
-    killall swaybg
-    swaybg -i "$output_png" 
+    killall hyprpaper
+    hyprpaper
 }
 
 # ──────────────────────────────────────

@@ -375,11 +375,23 @@ workspace "5"
 
 // Size
 window-rule {
-    match app-id="(^PdWindow)"
-    default-column-width {
-        proportion 0.4
-    }
+    match app-id="^PatchWindow$"
+    open-floating true
+    tiled-state false
+        default-floating-position x=32 y=32 relative-to="top-left"
 }
+
+window-rule {
+    match app-id="^Menu$"
+    open-floating true
+    tiled-state false
+}
+
+window-rule {
+    match app-id="^PdWindow$"
+    // open-floating true
+}
+
 window-rule {
     match app-id="(^com.nextcloud.desktopclient.nextcloud)"
     match is-floating=true

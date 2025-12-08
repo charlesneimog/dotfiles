@@ -61,6 +61,8 @@ paru -S --needed --noconfirm "${TEX_PACKAGES[@]}"
 paru -S --needed --noconfirm "${FIRMWARE[@]}"
 paru -S --needed --noconfirm "${SERVER_TOOLS[@]}"
 
+sudo chown $USER /sys/class/leds/platform::kbd_backlight/brightness
+
 #╭──────────────────────────────────────╮
 #│           FLATPAK packages           │
 #╰──────────────────────────────────────╯

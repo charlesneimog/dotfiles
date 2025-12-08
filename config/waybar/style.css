@@ -417,13 +417,17 @@ tooltip {
 }
 
 #custom-weather.chuva {
-    color: @blue;
+    color: @teal;
 }
 
 #custom-weather.vento {
-    color: @blue;
+    color: @sky;
 }
 
-#custom-weather.vento {
-    color: @blue;
+#custom-weather.parcialmente_nublado {
+    color: @overlay2;
+}
+
+#custom-weather.céu_limpo {
+    color: @green;
 }

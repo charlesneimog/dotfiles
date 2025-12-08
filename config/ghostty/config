@@ -7,3 +7,8 @@ background-opacity = 1
 gtk-titlebar = false
 
 keybind = shift+y=text:yazi\r
+
+# Window
+window-theme = system
+window-decoration = none
+gtk-titlebar = false
