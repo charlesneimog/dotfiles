@@ -431,3 +431,17 @@ tooltip {
 #custom-weather.céu_limpo {
     color: @green;
 }
+
+#custom-weather.possibilidade_de_chuva_irregular{
+    color: #6B85A0;
+}
+
+#custom-weather.encoberto{
+    color: @text;
+    background: @overlay0;
+}
+
+#custom-weather.chuva_moderada_ou_forte_com_trovoada{
+    color: @blue;
+    background: @overlay0;
+}

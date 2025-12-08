@@ -376,14 +376,14 @@ workspace "5"
 // Size
 window-rule {
     match app-id="^PatchWindow$"
-    open-floating true
+    // open-floating true
     tiled-state false
         default-floating-position x=32 y=32 relative-to="top-left"
 }
 
 window-rule {
     match app-id="^Menu$"
-    open-floating true
+    // open-floating true
     tiled-state false
 }
 
