@@ -259,7 +259,28 @@ EOT
 # ──────────────────────────────────────
 function get_unsplash_wallpaper {
     # Base keywords
-    BASE_KEYWORDS=("rocks" "lake" "desert" "dunes" "mountain" "abstract+dark" "abstract+blue+dark" "wallpaper")
+    # BASE_KEYWORDS=("rocks" "lake" "desert" "dunes" "mountain" "abstract+dark" "abstract+blue+dark" "wallpaper")
+    # BASE_KEYWORDS=("abstract+dark" "abstract+blue+dark" "wallpaper") 
+    BASE_KEYWORDS=(
+        "space+nebula"
+        "space+stars"
+        "galaxy+stars"
+        "nebula+purple"
+        "nebula+blue"
+        "cosmos+deep+space"
+        "astronomy+stars"
+        "universe+dark"
+        "abstract+space"
+        "abstract+nebula"
+        "abstract+cosmic"
+        "abstract+dark"
+        "abstract+blue+dark"
+        "gradient+abstract"
+        "geometry+abstract"
+        "texture+abstract"
+        "minimalism+abstract"
+    )
+
 
     # Randomly choose 1-2 keywords from the base keywords
     NUM_KEYWORDS=$((1 + RANDOM % 1))

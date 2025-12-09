@@ -215,7 +215,8 @@
         "format": " {}%",
         "interval": 10,
         "on-scroll-up": "brightnessctl set 5%+",
-        "on-scroll-down": "brightnessctl set 5%-"
+        "on-scroll-down": "brightnessctl set 5%-",
+        "signal": 13
     },
 
     "bluetooth": {
@@ -281,12 +282,12 @@
 
     "battery": {
         "states": {
-            "good": 100,
-            "warning": 15,
+            "good": 80,
+            "warning": 20,
             "critical": 5
         },
-        "format": "{capacity}% {icon}",
-        "format-charging": "  {capacity}%",
+        "format": "{power} - {capacity}% {icon}",
+        "format-charging": "{power:.1f}w |  {capacity}%",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
         "signal": 12,
         "interval": 15,
