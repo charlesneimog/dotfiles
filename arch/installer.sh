@@ -61,7 +61,12 @@ paru -S --needed --noconfirm "${TEX_PACKAGES[@]}"
 paru -S --needed --noconfirm "${FIRMWARE[@]}"
 paru -S --needed --noconfirm "${SERVER_TOOLS[@]}"
 
+#╭──────────────────────────────────────╮
+#│             Permissions              │
+#╰──────────────────────────────────────╯
 sudo chown $USER /sys/class/leds/platform::kbd_backlight/brightness
+sudo usermod -aG docker $USER
+
 
 #╭──────────────────────────────────────╮
 #│           FLATPAK packages           │

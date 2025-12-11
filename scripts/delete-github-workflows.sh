@@ -1,6 +1,6 @@
 OWNER=charlesneimog
 REPO=pd4web
-WORKFLOW_ID=Copilot
+WORKFLOW_ID=copilot-swe-agent
 
 # list workflows
 gh api -X GET /repos/$OWNER/$REPO/actions/workflows | jq '.workflows[] | .name,.id'

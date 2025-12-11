@@ -2,7 +2,7 @@
     "font": "JetBrainsMono Nerd Font",
     "reload_style_on_change": true,
     "spacing": 1,
-    "modules-left": ["group/quick-actions", "custom/weather","wlr/taskbar", "tray", "privacy"],
+    "modules-left": ["group/quick-actions", "custom/weather", "tray", "wlr/taskbar", "privacy"],
     "modules-center": ["niri/workspaces"],
     "modules-right": ["temperature", "network", "backlight", "wireplumber", "group/hardware", "clock", "custom/notification"],
 
@@ -286,11 +286,13 @@
             "warning": 20,
             "critical": 5
         },
-        "format": "{power} - {capacity}% {icon}",
+        "format": "{capacity}% {icon}",
         "format-charging": "{power:.1f}w |  {capacity}%",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
         "signal": 12,
         "interval": 15,
+        "tooltip": true,
+        "tooltip-format": "Capacity: {capacity}%\nPower draw: {power:.1f} W\nTime: {time}\nStatus: {timeTo}\nCycles: {cycles}\nHealth: {health}%",
         "events": {
             "on-discharging-warning": "notify-send -u normal -i battery-low 'Low Battery'",
             "on-discharging-critical": "notify-send -u critical -i battery-caution 'Very Low Battery' 'Please charge immediately.'"
@@ -309,12 +311,15 @@
 
     "cpu": {
         "format": " {usage}%  ",
-        "tooltip": false,
+        "tooltip": true,
+        "tooltip-format": "CPU Load (1 min): {load}\nUsage: {usage}%\nAvg Frequency: {avg_frequency} GHz\nMax Frequency: {max_frequency} GHz\nMin Frequency: {min_frequency} GHz\nPer-Core Usage:\n{usageN}\nPer-Core Icon:\n{iconN}",
         "on-click": "flatpak run net.nokyan.Resources"
     },
 
     "memory": {
         "format": " {}%  ",
+        "tooltip-format": "Memory Usage: {percentage}%\nUsed: {used} GiB / Total: {total} GiB\nAvailable: {avail} GiB\n\nSwap Usage: {swapPercentage}%\nUsed: {swapUsed} GiB / Total: {swapTotal} GiB\nAvailable: {swapAvail} GiB",
+        "tooltip": true,
         "on-click": "flatpak run net.nokyan.Resources"
     },
 

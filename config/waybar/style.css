@@ -405,43 +405,63 @@ tooltip {
  *│           Custom Weather            │
  *╰─────────────────────────────────────╯
 */
-
 #custom-weather {
     border-radius: 3px;
-    padding: 0px 2px 0px 4px;
-    margin: 1px 2px 0px 2px;
+    padding: 0px 4px;
+    margin: 1px 2px;
 }
 
+/* Sunny */
 #custom-weather.sol {
     color: @yellow;
+    background: rgba(249, 226, 175, 0.2); /* yellow with transparency */
 }
 
+/* Rain */
 #custom-weather.chuva {
-    color: @teal;
+    color: @blue;
+    background: rgba(137, 180, 250, 0.2);
 }
 
-#custom-weather.vento {
+/* Light rain */
+#custom-weather.chuva_fraca {
     color: @sky;
+    background: rgba(137, 220, 235, 0.15);
 }
 
+/* Windy */
+#custom-weather.vento {
+    color: @teal;
+    background: rgba(148, 226, 213, 0.2);
+}
+
+/* Partly cloudy */
 #custom-weather.parcialmente_nublado {
     color: @overlay2;
+    background: rgba(147, 153, 178, 0.15);
 }
 
+/* Clear sky */
 #custom-weather.céu_limpo {
     color: @green;
+    background: rgba(166, 227, 161, 0.2);
 }
 
-#custom-weather.possibilidade_de_chuva_irregular{
-    color: #6B85A0;
+/* Chance of irregular rain */
+#custom-weather.possibilidade_de_chuva_irregular {
+    color: @sapphire;
+    background: rgba(116, 199, 236, 0.2);
 }
 
-#custom-weather.encoberto{
+/* Overcast */
+#custom-weather.encoberto {
     color: @text;
-    background: @overlay0;
+    background: rgba(108, 112, 134, 0.2);
 }
 
-#custom-weather.chuva_moderada_ou_forte_com_trovoada{
+/* Moderate/heavy rain with thunder */
+#custom-weather.chuva_moderada_ou_forte_com_trovoada {
     color: @blue;
-    background: @overlay0;
+    background: rgba(137, 180, 250, 0.25);
 }
+

@@ -261,58 +261,63 @@ function get_unsplash_wallpaper {
     # Base keywords
     # BASE_KEYWORDS=("rocks" "lake" "desert" "dunes" "mountain" "abstract+dark" "abstract+blue+dark" "wallpaper")
     # BASE_KEYWORDS=("abstract+dark" "abstract+blue+dark" "wallpaper") 
-    BASE_KEYWORDS=(
-        "space+nebula"
-        "space+stars"
-        "galaxy+stars"
-        "nebula+purple"
-        "nebula+blue"
-        "cosmos+deep+space"
-        "astronomy+stars"
-        "universe+dark"
-        "abstract+space"
-        "abstract+nebula"
-        "abstract+cosmic"
-        "abstract+dark"
-        "abstract+blue+dark"
-        "gradient+abstract"
-        "geometry+abstract"
-        "texture+abstract"
-        "minimalism+abstract"
-    )
+    /home/neimog/.config/miniconda3.dir/bin/python /home/neimog/Documents/Git/dotfiles/scripts/random-wallpapers.py --output ~/.wallpaper.png
 
+    pkill hyprpaper
+    hyprpaper
 
-    # Randomly choose 1-2 keywords from the base keywords
-    NUM_KEYWORDS=$((1 + RANDOM % 1))
-    QUERY=$(printf "%s+" $(shuf -n $NUM_KEYWORDS -e "${BASE_KEYWORDS[@]}"))
-    QUERY="${QUERY%+}"  # Remove trailing '+'
-
-    notify-send "🌄 Changing wallpaper... $QUERY"
-
-    WIDTH=1920
-    HEIGHT=1200
-    FILENAME="$HOME/.wallpaper.jpg"
-    ACCESS_KEY="$(secret-tool lookup service wallpaperapp)"
-
-    if [[ -z "$ACCESS_KEY" ]]; then
-        zenity --warning \
-            --title="Token não encontrado" \
-            --text="⚠️  O token do Unsplash não foi encontrado.\n\nPor favor, salve-o usando:\n\nsecret-tool store --label=\"Wallpaper App\" service wallpaperapp" \
-            --ok-label="OK"
-        exit 1
-    fi
-
-    # Fetch image URL from Unsplash API
-    API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
-    IMAGE_URL=$(curl -s "$API_URL" | jq -r '.urls.full')
-
-    if [[ -z "$IMAGE_URL" ]] || [[ "$IMAGE_URL" = "null" ]]; then
-        echo "Failed to fetch image URL from Unsplash API."
-        exit 1
-    fi
-
-    # Download image and set as wallpaper
-    wget -q -O "$FILENAME" "$IMAGE_URL"
+    # BASE_KEYWORDS=(
+    #     "space+nebula"
+    #     "space+stars"
+    #     "galaxy+stars"
+    #     "nebula+purple"
+    #     "nebula+blue"
+    #     "cosmos+deep+space"
+    #     "astronomy+stars"
+    #     "universe+dark"
+    #     "abstract+space"
+    #     "abstract+nebula"
+    #     "abstract+cosmic"
+    #     "abstract+dark"
+    #     "abstract+blue+dark"
+    #     "gradient+abstract"
+    #     "geometry+abstract"
+    #     "texture+abstract"
+    #     "minimalism+abstract"
+    # )
+    #
+    #
+    # # Randomly choose 1-2 keywords from the base keywords
+    # NUM_KEYWORDS=$((1 + RANDOM % 1))
+    # QUERY=$(printf "%s+" $(shuf -n $NUM_KEYWORDS -e "${BASE_KEYWORDS[@]}"))
+    # QUERY="${QUERY%+}"  # Remove trailing '+'
+    #
+    # notify-send "🌄 Changing wallpaper... $QUERY"
+    #
+    # WIDTH=1920
+    # HEIGHT=1200
+    # FILENAME="$HOME/.wallpaper.jpg"
+    # ACCESS_KEY="$(secret-tool lookup service wallpaperapp)"
+    #
+    # if [[ -z "$ACCESS_KEY" ]]; then
+    #     zenity --warning \
+    #         --title="Token não encontrado" \
+    #         --text="⚠️  O token do Unsplash não foi encontrado.\n\nPor favor, salve-o usando:\n\nsecret-tool store --label=\"Wallpaper App\" service wallpaperapp" \
+    #         --ok-label="OK"
+    #     exit 1
+    # fi
+    #
+    # # Fetch image URL from Unsplash API
+    # API_URL="https://api.unsplash.com/photos/random?query=$QUERY&orientation=landscape&client_id=$ACCESS_KEY&w=$WIDTH&h=$HEIGHT"
+    # IMAGE_URL=$(curl -s "$API_URL" | jq -r '.urls.full')
+    #
+    # if [[ -z "$IMAGE_URL" ]] || [[ "$IMAGE_URL" = "null" ]]; then
+    #     echo "Failed to fetch image URL from Unsplash API."
+    #     exit 1
+    # fi
+    #
+    # # Download image and set as wallpaper
+    # wget -q -O "$FILENAME" "$IMAGE_URL"
 
     # Restart with new wallpaper
     pkill hyprpaper
