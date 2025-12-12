@@ -106,7 +106,7 @@ tooltip {
 #custom-flathub,
 #custom-aur {
     margin: 0px 0px;
-    padding: 0px 2px;
+    padding: 0px 0px;
     transition: all 0.5s ease;
 }
 
@@ -148,24 +148,16 @@ tooltip {
     color: @text;
     font-family: "JetbrainsMono Nerd Font";
     min-width: 20px;
-    margin: 1px 1px 1px 1px;
-    border-radius: 3px;
+    margin: 0px 0px 0px 0px;
 }
 #workspaces button:hover {
-    color: @red;
-}
-
-#workspaces button.visible {
-    color: @subtext1;
-}
-
-#workspaces button.focused {
-    background-color: @base;
+    color: @text;
+    background: @red;
 }
 
 #workspaces button.active {
-    color: @base;
-    background-color: @subtext1;
+    color: @red;
+    background-color: @subtext2;
 }
 
 #workspaces button.urgent {
@@ -189,6 +181,10 @@ tooltip {
     transition: all 0.2s ease-in-out;
 }
 
+#wireplumber.muted{
+    color: @red;
+}
+
 /*
  *╭─────────────────────────────────────╮
  *│                 Idle                │
@@ -197,9 +193,11 @@ tooltip {
 #idle_inhibitor.activated {
     color: @red;
     background: none;
+
 }
 
 #idle_inhibitor.deactivated {
+    color: @green;
     background: none;
 }
 
@@ -263,19 +261,18 @@ tooltip {
  *╰─────────────────────────────────────╯
 */
 #bluetooth {
-    padding-right: 6px;
-    padding-left: 4px;
 }
 
 #bluetooth.connected {
     padding-right: 6px;
-    padding-left: 4px;
+    padding-left: 6px;
     color: @yellow;
 }
 
 #bluetooth.disabled {
     padding-right: 6px;
     padding-left: 6px;
+    margin: 0px 0px 0px 4px;
     color: @red;
 }
 

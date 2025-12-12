@@ -130,7 +130,7 @@
 
     "wireplumber": {
         "format": "{volume}% {icon} ",
-        "format-muted": "",
+        "format-muted": "Muted ",
         "format-icons": ["", "", ""],
         "on-click": "flatpak run com.saivert.pwvucontrol"
     },
