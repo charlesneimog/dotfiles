@@ -50,7 +50,7 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 link_files "$SCRIPT_DIR/../config/home" "$HOME" true
 link_files "$SCRIPT_DIR/../config/nvim" "$HOME/.config/nvim" false
-link_files "$SCRIPT_DIR/../config/rofi/files" "$HOME/.config/rofi" false
+link_files "$SCRIPT_DIR/../config/rofi" "$HOME/.config/rofi" false
 link_files "$SCRIPT_DIR/../config/waybar" "$HOME/.config/waybar" false
 link_files "$SCRIPT_DIR/../config/zathura" "$HOME/.config/zathura" false
 link_files "$SCRIPT_DIR/../config/swaync" "$HOME/.config/swaync" false 

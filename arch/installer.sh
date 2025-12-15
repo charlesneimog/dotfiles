@@ -30,43 +30,44 @@ source ./arch/packages.conf
 mkdir -p /home/neimog/Downloads
 
 #╭──────────────────────────────────────╮
-#│             Install Paru             │
+#│             Install yay              │
 #╰──────────────────────────────────────╯
-if ! command -v paru &> /dev/null; then
-    echo "Paru não encontrado. Instalando..."
+if ! command -v yay  &> /dev/null; then
+    echo "yay  não encontrado. Instalando..."
     cd ~/Downloads/ || exit
     sudo pacman -S --needed --noconfirm base-devel git
-    git clone https://aur.archlinux.org/paru-bin.git
-    cd paru-bin || exit
+
+    git clone https://aur.archlinux.org/yay.git
+    cd yay || exit
     makepkg -si --noconfirm
+
     cd ..
-    rm -rf paru-bin
+    rm -rf yay
 else
-    echo "Paru já está instalado."
+    echo "yay já está instalado."
 fi
 
 git config --global user.name "Charles K. Neimog"
 git config --global user.email "charlesneimog@outlook.com"
 
 # ╭──────────────────────────────────────╮
-# │        Paru and AUR packages         │
+# │        yay  and AUR packages         │
 # ╰──────────────────────────────────────╯
-paru -S --needed --noconfirm "${SYSTEM_UTILS[@]}"
-paru -S --needed --noconfirm "${DEV_TOOLS[@]}"
-paru -S --needed --noconfirm "${MAINTENANCE[@]}"
-paru -S --needed --noconfirm "${DESKTOP[@]}"
-paru -S --needed --noconfirm "${MEDIA[@]}"
-paru -S --needed --noconfirm "${FONTS[@]}"
-paru -S --needed --noconfirm "${TEX_PACKAGES[@]}"
-paru -S --needed --noconfirm "${FIRMWARE[@]}"
-paru -S --needed --noconfirm "${SERVER_TOOLS[@]}"
+yay  -S --needed --noconfirm "${SYSTEM_UTILS[@]}"
+yay  -S --needed --noconfirm "${DEV_TOOLS[@]}"
+yay  -S --needed --noconfirm "${MAINTENANCE[@]}"
+yay  -S --needed --noconfirm "${DESKTOP[@]}"
+yay  -S --needed --noconfirm "${MEDIA[@]}"
+yay  -S --needed --noconfirm "${FONTS[@]}"
+yay  -S --needed --noconfirm "${TEX_PACKAGES[@]}"
+yay  -S --needed --noconfirm "${FIRMWARE[@]}"
+yay  -S --needed --noconfirm "${SERVER_TOOLS[@]}"
 
 #╭──────────────────────────────────────╮
 #│             Permissions              │
 #╰──────────────────────────────────────╯
 sudo chown $USER /sys/class/leds/platform::kbd_backlight/brightness
 sudo usermod -aG docker $USER
-
 
 #╭──────────────────────────────────────╮
 #│           FLATPAK packages           │
@@ -96,11 +97,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 #╭──────────────────────────────────────╮
-#│               Schedule               │
-#╰──────────────────────────────────────╯
-systemctl enable --now cronie.service
-
-#╭──────────────────────────────────────╮
 #│               Scripts                │
 #╰──────────────────────────────────────╯
 wget git.io/trans
@@ -118,8 +114,6 @@ sudo cp ~/Documents/Git/dotfiles/Arch/mime/Overrides.xml /usr/share/mime/package
 #│            Configurations            │
 #╰──────────────────────────────────────╯
 sudo ufw enable
-sudo systemctl enable ufw
-sudo systemctl enable bluetooth.service
 sudo ln -s /usr/bin/nvim /usr/bin/vi
 sudo ln -s /usr/bin/nvim /usr/bin/nano
 
@@ -152,7 +146,7 @@ fi
 #╭──────────────────────────────────────╮
 #│                Clear                 │
 #╰──────────────────────────────────────╯
-rm -drf paru-bin
+rm -drf yay -bin
 rm -drf ~/go
 
 #╭──────────────────────────────────────╮
@@ -164,11 +158,6 @@ source ~/Documents/Git/dotfiles/arch/link.sh
 #│           Set Default Apps           │
 #╰──────────────────────────────────────╯
 xdg-mime default io.bassi.Amberol.desktop audio/x-wav
-
-#╭──────────────────────────────────────╮
-#│             Last Configs             │
-#╰──────────────────────────────────────╯
-gh auth login
 
 #╭──────────────────────────────────────╮
 #│                 Mime                 │
@@ -190,3 +179,5 @@ sudo bash -c 'echo -e "[Theme]\nCurrent=catppuccin-mocha-blue" > /etc/sddm.conf.
 wget -O ~./.avatar.png https://avatars.githubusercontent.com/u/31707161?v=4
 
 
+# Login
+gh auth login

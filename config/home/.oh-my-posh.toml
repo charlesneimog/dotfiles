@@ -1,69 +1,50 @@
-schema = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
-version = 3
+version = 4
 
 [[blocks]]
-type = "prompt"
-alignment = "left"
-newline = true  # força uma nova linha antes do próximo bloco
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
 
-# Arch Linux (simples como texto)
-[[blocks.segments]]
-type = "text"
-style = "plain"
-foreground = "blue"
-template = "  "
+  [[blocks.segments]]
+    template = '  '
+    foreground = 'blue'
+    type = 'text'
+    style = 'plain'
 
-# Git status
-[[blocks.segments]]
-type = "git"
-style = "plain"
-foreground = "green"
-template = "{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }} "
+  [[blocks.segments]]
+    template = '{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }} '
+    foreground = 'green'
+    type = 'git'
+    style = 'plain'
 
-[blocks.segments.properties]
-fetch_status = true
+  [[blocks.segments]]
+    template = '{{ .AbsolutePWD }}'
+    foreground = 'blue'
+    type = 'path'
+    style = 'plain'
 
-
-#╭──────────────────────────────────────╮
-#│               Caminho                │
-#╰──────────────────────────────────────╯
-[[blocks.segments]]
-type = "path"
-style = "plain"
-foreground = "blue"
-template = "{{ .AbsolutePWD }}"
-
-[blocks.segments.properties]
-mapped_locations_enabled = true
-enable_home_symbol = true
-
-#╭──────────────────────────────────────╮
-#│      Status do comando anterior      │
-#╰──────────────────────────────────────╯
-[[blocks.segments]]
-type = "exit"
-style = "plain"
-foreground = "red"
-template = " {{ if ne .Code 0 }}✘ {{ .Code }} {{ end }}"
-
-# New Line
-[[blocks]]
-type = "prompt"
-alignment = "left"
-newline = true
-
-[[blocks.segments]]
-type = "text"
-style = "plain"
-foreground = "green"
-template = "❯ "
+  [[blocks.segments]]
+    template = ' {{ if ne .Code 0 }}✘ {{ .Code }} {{ end }}'
+    foreground = 'red'
+    type = 'exit'
+    style = 'plain'
 
 [[blocks]]
-type = "rprompt"
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
 
-[[blocks.segments]]
-type = "python"
-style = "plain"
-foreground = "cyan"
-template = "({{ .Venv }})"
+  [[blocks.segments]]
+    template = '❯ '
+    foreground = 'green'
+    type = 'text'
+    style = 'plain'
 
+[[blocks]]
+  type = 'rprompt'
+
+  [[blocks.segments]]
+    template = '({{ .Venv }})'
+    foreground = 'cyan'
+    type = 'python'
+    style = 'plain'

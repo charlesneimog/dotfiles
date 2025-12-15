@@ -99,7 +99,7 @@
         }
     },
     "custom/power-menu": {
-        "format": " ",
+        "format": "",
         "tooltip": true,
         "tooltip-format": " Open Power Menu",
         "on-click": "choice=$(zenity --list --title='Power Menu' --width=200 --height=250 --column='Action' Shutdown Reboot Suspend Logout Cancel); [[ $choice == Shutdown ]] && systemctl poweroff || [[ $choice == Reboot ]] && systemctl reboot || [[ $choice == Suspend ]] && systemctl suspend || [[ $choice == Logout ]] && swaymsg exit"
@@ -166,9 +166,9 @@
         "return-type": "json",
         "format": "{icon}",
         "format-icons": {
-            "dark": " ",
-            "light": " ",
-            "": " "
+            "dark": "",
+            "light": "",
+            "": ""
         },
         "on-click": "$HOME/.functions.sh change_theme",
         "signal": 12,
@@ -206,8 +206,8 @@
     },
 
     "bluetooth": {
-        "format-off": " 󰂲",
-        "format-on": " ",
+        "format-off": "󰂲",
+        "format-on": "",
         "format-disabled": "󰂲",
         "format-connected": " {device_alias}",
         "format-connected-battery": " {device_alias} {device_battery_percentage}%",
@@ -262,7 +262,7 @@
     },
 
     "custom/wallpaper": {
-        "format": " 󰋪",
+        "format": "󰋪",
         "on-click": "$HOME/.functions.sh unsplash"
     },
 
@@ -294,13 +294,13 @@
     },
 
     "cpu": {
-        "format": " {usage}%  ",
+        "format": "{usage}%  ",
         "tooltip": false,
         "on-click": "flatpak run net.nokyan.Resources"
     },
 
     "memory": {
-        "format": " {}%  ",
+        "format": "{}%  ",
         "on-click": "flatpak run net.nokyan.Resources"
     },
 

@@ -3,7 +3,7 @@ clipboard_rofi() {
         killall rofi
     else
         cliphist list | \
-            rofi -dmenu -theme "$HOME/.config/rofi/launchers/type-7/style-2.rasi" | \
+            rofi -dmenu -theme "$HOME/.config/rofi/clipboard.rasi" | \
             cliphist decode | wl-copy
     fi
 }
@@ -16,7 +16,7 @@ launch_rofi() {
         rofi -show drun \
              -show-icons \
              -icon-theme 'Tela-circle' \
-             -theme "$HOME/.config/rofi/launchers/type-3/style-10.rasi"
+             -theme "$HOME/.config/rofi/launcher.rasi"
     fi
 }
 

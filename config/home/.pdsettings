@@ -19,8 +19,10 @@ path2: /home/neimog/Documents/Pd/externals
 npath: 2
 standardpath: 1
 verbose: 1
-nloadlib: 0
+loadlib1: else
+loadlib2: pdlua
+nloadlib: 2
 defeatrt: 1
 flags: -font-weight normal -font-size 10
-zoom: 2
+zoom: 1
 loading: no

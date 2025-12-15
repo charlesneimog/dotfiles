@@ -2,9 +2,9 @@ lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/pd4web
-    - /home/neimog/Downloads/pure-data
+    - /home/neimog/Documents/Git/pd-saf
+    - /home/neimog/Downloads/Spatial_Audio_Framework
     - /home/neimog/Documents/Git/gaiasense
-    - /home/neimog/Downloads/BiA
     - /home/neimog/Documents/Git/pd-lua
 startuppopupversion: 5
 didshowhunkstaginghint: true
