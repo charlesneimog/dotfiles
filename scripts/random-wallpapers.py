@@ -60,7 +60,7 @@ CATPUCCIN_PALETTE = [
 ]
 
 # Cores de fundo (tons mais escuros da paleta)
-BACKGROUND_COLORS = ["#000000", "#1e1e2e", "#181825", "#11111b"]
+BACKGROUND_COLORS = ["#1e1e2e", "#181825", "#11111b"]
 
 # Estilos de arte disponíveis
 ART_STYLES = [
@@ -80,6 +80,14 @@ ART_STYLES = [
     "strange_attractor",
     "delaunay_flow",
 ]
+
+STYLE_WEIGHTS = {
+    "lissajous3d": 4,
+    "strange_attractor": 10,
+    "mesh_sphere_squeezed": 3,
+    "mesh_sphere": 3,
+    "mesh_sphere_squeezed": 3,
+}
 
 
 class AntiAliasedRenderer:
@@ -114,8 +122,15 @@ class AntiAliasedRenderer:
         pg.draw.line(self.surf, color, start, end, max(1, int(width)))
 
 
-class AbstractCircleArt:
-    def __init__(self, width=1900, height=1200, supersample=2.0, antialias=True):
+class MathArt:
+    def __init__(
+        self,
+        width=1900,
+        height=1200,
+        supersample=2.0,
+        antialias=True,
+        background_texture="medium",
+    ):
         # Target dimensions are the requested output size; render dimensions honor supersampling.
         self.target_width = int(width)
         self.target_height = int(height)
@@ -130,6 +145,8 @@ class AbstractCircleArt:
         self.canvas.fill((0, 0, 0, 255))
         self.antialias = antialias
         self.aa = AntiAliasedRenderer(self.canvas, supersample)
+        self.background_texture_mode = background_texture
+        self.last_palette = None
 
     def to_render_coords(self, x, y):
         return int(x * self.supersample), int(y * self.supersample)
@@ -137,13 +154,81 @@ class AbstractCircleArt:
     def to_render_size(self, v):
         return int(v * self.supersample)
 
-    def generate_background(self, bg_color=None):
-        """Gera fundo com gradiente ou cor sólida"""
-        if bg_color is None:
-            bg_color = random.choice(BACKGROUND_COLORS)
+    def apply_vignette_noise(self, bg_color=None, strength=0.6, noise=6):
+        """Fast vignette + fine noise using NumPy (no per-pixel Python loops)."""
+        base = pg.Color(bg_color or random.choice(BACKGROUND_COLORS))
+        self.canvas.fill((base.r, base.g, base.b, 255))
 
+        px = pg.surfarray.pixels3d(self.canvas)
+
+        x = np.linspace(-1.0, 1.0, self.width, dtype=np.float32)
+        y = np.linspace(-1.0, 1.0, self.height, dtype=np.float32)
+        dist = np.sqrt(x[None, :] ** 2 + y[:, None] ** 2).T  # shape: (width, height)
+        dist = np.clip(dist / dist.max(), 0.0, 1.0)
+        mask = 1.0 - strength * (dist * dist)
+
+        noise_arr = np.random.randint(-noise, noise + 1, (self.width, self.height, 1))
+        scaled = px.astype(np.float32) * mask[..., None] + noise_arr
+        np.clip(scaled, 0, 255, out=scaled)
+        px[:] = scaled.astype(np.uint8)
+
+        del px
+
+    def apply_palette_texture(self, palette, mode="medium", rng=None):
+        """
+        Overlay a subtle palette-based texture to avoid flat backgrounds.
+
+        mode: "none" | "light" | "medium" | "heavy"
+        rng : optional numpy.random.Generator for reproducibility
+        """
+        if mode == "none" or not palette:
+            return
+
+        print("doing it")
+        rng = rng or np.random.default_rng()
+
+        SETTINGS = {
+            "light":  (0.03, (42, 96), 0.9),
+            "medium": (0.06, (90, 170), 0.7),
+            "heavy":  (0.11, (140, 220), 0.5),
+        }
+
+        density, (a_lo, a_hi), scale = SETTINGS.get(mode, SETTINGS["medium"])
+
+        palette_rgb = np.asarray(
+            [(c.r, c.g, c.b) for c in map(pg.Color, palette)],
+            dtype=np.uint8,
+        )
+        if palette_rgb.size == 0:
+            return
+
+        w, h = self.width, self.height
+        layer = pg.Surface((w, h), pg.SRCALPHA, 32)
+
+        px = pg.surfarray.pixels3d(layer)
+        alpha = pg.surfarray.pixels_alpha(layer)
+
+        mask = rng.random((w, h)) < density
+        count = int(mask.sum())
+        if count:
+            idx = rng.integers(0, len(palette_rgb), size=count)
+            px[mask] = palette_rgb[idx]
+            alpha[mask] = rng.integers(a_lo, a_hi, size=count)
+
+        del px, alpha  # unlock surface
+
+        if scale != 1.0:
+            sw = max(1, int(w * scale))
+            sh = max(1, int(h * scale))
+            if sw != w or sh != h:
+                layer = pg.transform.smoothscale(layer, (sw, sh))
+                layer = pg.transform.smoothscale(layer, (w, h))
+
+        self.canvas.blit(layer, (0, 0))
+
+
+    def apply_color(self, bg_color):
         base = pg.Color(bg_color)
-        ss = self.supersample
         if random.random() < 0.4:
             for y in range(self.height):
                 t = y / self.height
@@ -155,6 +240,20 @@ class AbstractCircleArt:
                 pg.draw.line(self.canvas, (r, g, b, 255), (0, y), (self.width, y))
         else:
             self.canvas.fill((base.r, base.g, base.b, 255))
+
+    def generate_background(self, bg_color=None, palette=None, texture_mode=None):
+        """Gera fundo com gradiente/cor sólida e textura da paleta"""
+        if bg_color is None:
+            bg_color = random.choice(BACKGROUND_COLORS)
+
+        active_palette = palette or self.last_palette or CATPUCCIN_PALETTE
+        mode = texture_mode or self.background_texture_mode
+
+        r_noise = random.randint(4, 20)
+        raw_str = random.uniform(0.5, 4)
+        self.apply_vignette_noise(bg_color, strength=raw_str, noise=r_noise)
+        self.apply_palette_texture(active_palette, mode=mode)
+
 
     def draw_concentric_circles(self, palette, complexity=8, max_size=400):
         """Círculos concêntricos"""
@@ -444,8 +543,7 @@ class AbstractCircleArt:
         t = 0.0
         last = None
         col = rgb_palette[
-            (int(t / math.tau * len(rgb_palette)) + color_shift)
-            % len(rgb_palette)
+            (int(t / math.tau * len(rgb_palette)) + color_shift) % len(rgb_palette)
         ]
         while t <= math.tau + 1e-6:
             x = (R + r * math.cos(q * t)) * math.cos(p * t)
@@ -1171,7 +1269,11 @@ class AbstractCircleArt:
                 int(base_col[2] * shade),
                 int(150 + 90 * (1.0 - dist)),
             )
-            poly = [(int(p1[0]), int(p1[1])), (int(p2[0]), int(p2[1])), (int(p3[0]), int(p3[1]))]
+            poly = [
+                (int(p1[0]), int(p1[1])),
+                (int(p2[0]), int(p2[1])),
+                (int(p3[0]), int(p3[1])),
+            ]
             pg.draw.polygon(layer, fill, poly)
 
         # Outline pass for clarity
@@ -1232,9 +1334,9 @@ class AbstractCircleArt:
                 dz = (
                     c
                     + a * pz
-                    - (pz ** 3) / 3.0
-                    - (px ** 2 + py ** 2) * (1 + e * pz)
-                    + f * pz * (px ** 3)
+                    - (pz**3) / 3.0
+                    - (px**2 + py**2) * (1 + e * pz)
+                    + f * pz * (px**3)
                 )
             return dx, dy, dz
 
@@ -1329,9 +1431,13 @@ class AbstractCircleArt:
             end = (int(px[i + 1]), int(py[i + 1]))
 
             if self.antialias:
-                self.aa.draw_aa_line(pg.Color(*base_color, alpha), start, end, thickness)
+                self.aa.draw_aa_line(
+                    pg.Color(*base_color, alpha), start, end, thickness
+                )
             else:
-                pg.draw.line(self.canvas, (*base_color, alpha), start, end, int(thickness))
+                pg.draw.line(
+                    self.canvas, (*base_color, alpha), start, end, int(thickness)
+                )
 
     def generate_art(
         self,
@@ -1340,6 +1446,7 @@ class AbstractCircleArt:
         complexity=15,
         max_size=300,
         layers=2,
+        background_texture=None,
         output_file=None,
     ):
         """
@@ -1356,9 +1463,14 @@ class AbstractCircleArt:
         if palette is None:
             palette = CATPUCCIN_PALETTE
 
+        self.last_palette = palette
+        if background_texture is not None:
+            self.background_texture_mode = background_texture
+
         # Escolher estilo se 'random'
         if style == "random":
-            style = random.choice(ART_STYLES)
+            weights = [STYLE_WEIGHTS.get(s, 1) for s in ART_STYLES]
+            style = random.choices(ART_STYLES, weights=weights, k=1)[0]
 
         # Garantir valores dentro dos limites
         complexity = max(5, min(30, complexity))
@@ -1372,7 +1484,7 @@ class AbstractCircleArt:
         print(f"  Layers: {layers}")
 
         # Gerar fundo
-        self.generate_background()
+        self.generate_background(palette=palette, texture_mode=self.background_texture_mode)
 
         # Lista de métodos de desenho
         draw_methods = {
@@ -1498,6 +1610,13 @@ Examples:
         help="Supersample factor (default: 2.0)",
     )
     parser.add_argument(
+        "--background-texture",
+        type=str,
+        choices=["none", "light", "medium", "heavy"],
+        default="medium",
+        help="Palette-based background texture intensity",
+    )
+    parser.add_argument(
         "--quality",
         type=str,
         choices=["low", "medium", "high", "ultra"],
@@ -1553,8 +1672,12 @@ def main():
         ss = args.supersample
 
     # Criar gerador de arte
-    art_generator = AbstractCircleArt(
-        width=args.width, height=args.height, supersample=ss, antialias=args.antialias
+    art_generator = MathArt(
+        width=args.width,
+        height=args.height,
+        supersample=ss,
+        antialias=args.antialias,
+        background_texture=args.background_texture,
     )
 
     # Gerar arte
@@ -1564,12 +1687,13 @@ def main():
         complexity=args.complexity,
         max_size=args.size,
         layers=args.layers,
+        background_texture=args.background_texture,
         output_file=args.output,
     )
 
     print(f"\nArt generated successfully!")
     print(f"File: {output_file}")
-    print(f"Size: {args.width}x{args.height} (4K)")
+    print(f"Size: {args.width}x{args.height}")
 
 
 if __name__ == "__main__":

@@ -100,19 +100,11 @@ return {
 			}),
 
 			sources = cmp.config.sources({
-				{ name = "vimtext" },
-				{
-					name = "codeium",
-					max_item_count = 1,
-				},
-				{
-					name = "copilot",
-					max_item_count = 1,
-				},
 				{ name = "luasnip" },
 				{ name = "buffer" },
 				{ name = "path" },
 				{ name = "nvim_lsp" },
+				{ name = "vimtext" },
 			}),
 
 			sorting = {

@@ -12,3 +12,6 @@ keybind = shift+y=text:yazi\r
 window-theme = system
 window-decoration = none
 gtk-titlebar = false
+gtk-single-instance = true
+#gtk-toolbar-style = raised-border
+#gtk-titlebar-style = tabs

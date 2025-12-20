@@ -56,7 +56,7 @@ startup_services() {
     anytype &
     blueman-applet &
     waybar &
-    hypridle &
+    # hypridle &
 }
 
 # ──────────────────────────────────────
@@ -116,6 +116,36 @@ update_flatpak_packages() {
     fi
 
     pkill -SIGRTMIN+9 waybar
+    pkill -SIGRTMIN+8 waybar
+}
+
+# ──────────────────────────────────────
+get_flatpak_waybar_icon() {
+    local updates
+    local tooltip
+    local class
+    local text
+
+    tooltip=$(flatpak remote-ls --updates 2>/dev/null)
+    updates=$(printf "%s\n" "$tooltip" | sed '/^\s*$/d' | wc -l)
+
+    if [ "$updates" -eq 0 ]; then
+        class="noupdates"
+        text=""
+        tooltip="No Flatpak updates"
+    elif [ "$updates" -gt 10 ]; then
+        class="morethen10updates"
+        text=" $updates"
+    else
+        class="updates"
+        text=" $updates"
+    fi
+
+    # JSON-safe tooltip
+    tooltip=$(printf "%s" "$tooltip" | sed ':a;N;$!ba;s/\n/\\n/g; s/"/\\"/g')
+
+    printf '{"text":"%s","tooltip":"%s","alt":"%s","class":"%s"}\n' \
+        "$text" "$tooltip" "$updates" "$class"
 }
 
 # ──────────────────────────────────────
@@ -128,6 +158,34 @@ check_flatpak_updates() {
         update_flatpak_packages
     fi
     echo "$count"
+}
+
+# ──────────────────────────────────────
+get_aur_waybar_icon() {
+    local updates
+    local tooltip
+    local class
+    local text
+
+    tooltip=$(paru -Qu 2>/dev/null)
+    updates=$(printf "%s\n" "$tooltip" | sed '/^\s*$/d' | wc -l)
+    if [ "$updates" -eq 0 ]; then
+        class="noupdates"
+        text=""
+        tooltip="No AUR updates"
+    elif [ "$updates" -gt 10 ]; then
+        class="morethen10updates"
+        text=" $updates"
+    else
+        class="updates"
+        text=" $updates"
+    fi
+
+    # Escape newlines and quotes for JSON
+    tooltip=$(printf "%s" "$tooltip" | sed ':a;N;$!ba;s/\n/\\n/g; s/"/\\"/g')
+    printf '{"text":"%s","tooltip":"%s","alt":"%s","class":"%s"}\n' \
+        "$text" "$tooltip" "$updates" "$class"
+    pkill -SIGRTMIN+9 waybar
 }
 
 # ──────────────────────────────────────
@@ -175,6 +233,8 @@ update_aur_packages() {
         fi
     "
 
+    printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "%s"}\n' \
+        "$ACTIVE" "$ACTIVE" "$ACTIVE" "$CLASS"
     pkill -SIGRTMIN+8 waybar
 }
 
@@ -428,7 +488,9 @@ dispatch() {
         change_theme)          change_theme "$@" ;;
         unsplash)              get_unsplash_wallpaper "$@" ;;  # macOS function
         update_aur_packages)   update_aur_packages "$@" ;;
+        get_aur_waybar_icon)   get_aur_waybar_icon "$@" ;;
         check_flatpak_updates) check_flatpak_updates "$@" ;;
+        get_flatpak_waybar_icon)   get_flatpak_waybar_icon "$@" ;;
         update_flatpak_packages) update_flatpak_packages "$@" ;;
         get_theme)             get_theme "$@" ;;
         *) 

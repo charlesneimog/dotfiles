@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Ask for package name
+read -p "Enter package name: " PACKAGE_NAME
+
+# Ask for version
+read -p "Enter version: " VERSION
+
+# Run the docker command
+docker run --rm -ti --user $(id -u) --volume $(pwd):/deken registry.git.iem.at/pd/deken \
+    deken package --version "$VERSION" "$PACKAGE_NAME"
+
+docker run --rm -ti --user $(id -u) --env DEKEN_USERNAME=charlesneimog --volume $(pwd):/deken registry.git.iem.at/pd/deken \
+    deken upload *.dek

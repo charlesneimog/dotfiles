@@ -2,8 +2,17 @@ lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
     - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/charlesneimog.github.io
+    - /home/neimog/Documents/Git/pure-data
+    - /home/neimog/Documents/Git/pd-bhack
+    - /home/neimog/Documents/Git/pd-upic
+    - /home/neimog/Documents/Git/pd-orchidea
+    - /home/neimog/Downloads/libonnx
+    - /home/neimog/Documents/Git/onsetsds_tilde
+    - /home/neimog/Documents/Git/pd-xlab
+    - /home/neimog/Documents/Git/pd-else
+    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/pd-saf
-    - /home/neimog/Downloads/Spatial_Audio_Framework
     - /home/neimog/Documents/Git/gaiasense
     - /home/neimog/Documents/Git/pd-lua
 startuppopupversion: 5

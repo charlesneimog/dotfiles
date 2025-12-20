@@ -137,7 +137,7 @@
     "custom/aur": {
         "format": " {}",
         "interval": 1800,
-        "exec": "bash -c 'paru -Qu 2>/dev/null | wc -l'",
+        "exec": "$HOME/.functions.sh get_aur_waybar_icon",
         "on-click": "$HOME/.functions.sh update_aur_packages",
         "signal": 8,
         "tooltip": false
@@ -146,8 +146,7 @@
     "custom/flathub": {
         "format": " {}",
         "interval": 1800,
-        "exec": "bash -c 'flatpak remote-ls --updates --columns=application | wc -l'",
-        "exec": "$HOME/.functions.sh check_flatpak_updates",
+        "exec": "$HOME/.functions.sh get_flatpak_waybar_icon",
         "on-click": "$HOME/.functions.sh update_flatpak_packages",
         "signal": 9,
         "tooltip": false

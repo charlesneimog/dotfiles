@@ -24,10 +24,7 @@ output "eDP-1" {
     scale 1
 }
 
-switch-events {
-    lid-close { spawn "hyprlock";}
-    lid-open { spawn "niri" "msg" "output" "eDP-1" "on";}
-}
+switch-events {}
 
 //╭─────────────────────────────────────╮
 //│             Environment             │
@@ -106,44 +103,45 @@ hotkey-overlay {
 }
 
 animations {
-    slowdown 1.5 
-    workspace-switch {
-        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    slowdown 1.0
+    window-open {
+        duration-ms 100
+        curve "ease-out-quad"
+        custom-shader r"
+            float map(float value, float min1, float max1, float min2, float max2) {
+                return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+            }
+                vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+                float cur = niri_clamped_progress;
+                if (coords_geo.x > cur) {
+                    return vec4(0.0);
+                }
+                vec3 coord = vec3(map(coords_geo.x,0.0, cur, 0.0, 1.0 ), coords_geo.y, coords_geo.z);
+                return texture2D(niri_tex, (niri_geo_to_tex * coord).st);
+            }
+        "
     }
-     window-open {
-        duration-ms 150
-        curve "ease-out-expo"
-    }
-
     window-close {
-        duration-ms 150
+        duration-ms 300
         curve "ease-out-quad"
+        custom-shader r"
+            float map(float value, float min1, float max1, float min2, float max2) {
+                return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+            }
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                float cur = 1.0-niri_clamped_progress;
+                if (coords_geo.x > cur) {
+                    return vec4(0.0);
+                }
+                vec3 coord = vec3(map(coords_geo.x,0.0, cur, 0.0, 1.0), coords_geo.y, coords_geo.z);
+                return texture2D(niri_tex, (niri_geo_to_tex * coord).st);
+            }
+        "
+    }
+    workspace-switch {
+        spring damping-ratio=0.96 stiffness=1000 epsilon=0.0001
     }
 
-    horizontal-view-movement {
-        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
-    }
-
-    window-movement {
-        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
-    }
-
-    window-resize {
-        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
-    }
-
-    config-notification-open-close {
-        spring damping-ratio=0.6 stiffness=1000 epsilon=0.001
-    }
-
-    screenshot-ui-open {
-        duration-ms 200
-        curve "ease-out-quad"
-    }
-
-    overview-open-close {
-        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
-    }
 }
 
 //╭─────────────────────────────────────╮
@@ -162,6 +160,9 @@ binds {
     }
     Mod+D hotkey-overlay-title="Run an Application: rofi" {
         spawn "bash" "-c" "$HOME/.functions.sh launch_rofi"
+    }
+    Mod+P hotkey-overlay-title="Run an Application: rofi" {
+        spawn "bash" "-c" "$HOME/.functions.sh unsplash"
     }
     Mod+V hotkey-overlay-title="Run Rofi Copy menu" {
         spawn "bash" "-c" "$HOME/.functions.sh clipboard_rofi"
@@ -201,6 +202,10 @@ binds {
     XF86MonBrightnessDown allow-when-locked=true {
         spawn "brightnessctl" "s" "5%-"
     }
+    XF86Calculator {
+        spawn "flatpak" "run" "org.gnome.Calculator"
+    }
+
     Mod+O repeat=false {
         toggle-overview
     }
@@ -357,6 +362,13 @@ binds {
     Print {
         spawn "bash" "-c" "$HOME/.functions.sh screenshot"
     }
+    Mod+Shift+S {
+        spawn "bash" "-c" "$HOME/.functions.sh screenshot"
+    }
+    XF86Favorites {
+        spawn "nautilus"
+    }
+
     Mod+Shift+Q {
         quit
     }
@@ -512,6 +524,15 @@ window-rule {
     default-window-height { fixed 270; }
     default-floating-position x=20 y=20 relative-to="top-left"
 }
+
+window-rule {
+    match app-id="(^org.gnome.Calculator)"
+    open-floating true
+    default-column-width { fixed 480; }
+    default-window-height { fixed 270; }
+    default-floating-position x=20 y=20 relative-to="top-left"
+}
+
 
 //╭─────────────────────────────────────╮
 //│             Layer rules             │

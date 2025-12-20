@@ -30,38 +30,38 @@ source ./arch/packages.conf
 mkdir -p /home/neimog/Downloads
 
 #╭──────────────────────────────────────╮
-#│             Install yay              │
+#│             Install paru              │
 #╰──────────────────────────────────────╯
-if ! command -v yay  &> /dev/null; then
-    echo "yay  não encontrado. Instalando..."
+if ! command -v paru  &> /dev/null; then
+    echo "paru  não encontrado. Instalando..."
     cd ~/Downloads/ || exit
     sudo pacman -S --needed --noconfirm base-devel git
 
-    git clone https://aur.archlinux.org/yay.git
-    cd yay || exit
+    git clone https://aur.archlinux.org/paru.git
+    cd paru || exit
     makepkg -si --noconfirm
 
     cd ..
-    rm -rf yay
+    rm -rf paru
 else
-    echo "yay já está instalado."
+    echo "paru já está instalado."
 fi
 
 git config --global user.name "Charles K. Neimog"
 git config --global user.email "charlesneimog@outlook.com"
 
 # ╭──────────────────────────────────────╮
-# │        yay  and AUR packages         │
+# │        paru  and AUR packages         │
 # ╰──────────────────────────────────────╯
-yay  -S --needed --noconfirm "${SYSTEM_UTILS[@]}"
-yay  -S --needed --noconfirm "${DEV_TOOLS[@]}"
-yay  -S --needed --noconfirm "${MAINTENANCE[@]}"
-yay  -S --needed --noconfirm "${DESKTOP[@]}"
-yay  -S --needed --noconfirm "${MEDIA[@]}"
-yay  -S --needed --noconfirm "${FONTS[@]}"
-yay  -S --needed --noconfirm "${TEX_PACKAGES[@]}"
-yay  -S --needed --noconfirm "${FIRMWARE[@]}"
-yay  -S --needed --noconfirm "${SERVER_TOOLS[@]}"
+paru  -S --needed --noconfirm "${SYSTEM_UTILS[@]}"
+paru  -S --needed --noconfirm "${DEV_TOOLS[@]}"
+paru  -S --needed --noconfirm "${MAINTENANCE[@]}"
+paru  -S --needed --noconfirm "${DESKTOP[@]}"
+paru  -S --needed --noconfirm "${MEDIA[@]}"
+paru  -S --needed --noconfirm "${FONTS[@]}"
+paru  -S --needed --noconfirm "${TEX_PACKAGES[@]}"
+paru  -S --needed --noconfirm "${FIRMWARE[@]}"
+paru  -S --needed --noconfirm "${SERVER_TOOLS[@]}"
 
 #╭──────────────────────────────────────╮
 #│             Permissions              │
@@ -146,7 +146,7 @@ fi
 #╭──────────────────────────────────────╮
 #│                Clear                 │
 #╰──────────────────────────────────────╯
-rm -drf yay -bin
+rm -drf paru -bin
 rm -drf ~/go
 
 #╭──────────────────────────────────────╮
@@ -168,8 +168,13 @@ sudo update-mime-database /usr/share/mime/
 sudo cp -r ./icons/* /usr/share/icons/
 git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git
 cd Tela-circle-icon-theme && ./install.sh && cd ..
+
+sudo flatpak mask org.gtk.Gtk3theme.adw-gtk3 --system
+sudo flatpak mask org.gtk.Gtk3theme.adw-gtk3-dark --system
+
 gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
+sudo flatpak override --filesystem=xdg-data/themes
 rm -drf Tela-circle-icon-theme
 
 #╭──────────────────────────────────────╮

@@ -4,7 +4,7 @@
     "spacing": 1,
     "modules-left": ["group/quick-actions", "custom/weather", "tray", "wlr/taskbar", "privacy"],
     "modules-center": ["niri/workspaces"],
-    "modules-right": ["temperature", "network", "backlight", "wireplumber", "group/hardware", "clock", "custom/notification"],
+    "modules-right": ["network", "backlight", "wireplumber", "group/hardware", "clock", "custom/notification"],
 
     "wlr/taskbar": {
         "format": "{icon}",
@@ -20,6 +20,7 @@
         "tooltip": true,
         "interval": 1300,
         "exec": "wttrbar --location \"São Paulo\" --nerd --lang pt",
+        "on-click": "xdg-open \"https://meteostat.net/en/place/br/sao-paulo?s=83779&t=2025-12-03/2025-12-10\"",
         "return-type": "json"
     },
 
@@ -45,40 +46,19 @@
     },
 
     "niri/workspaces": {
-        "format": "{icon}",
+        "format": "<b>{icon}</b>",
         "format-icons": {
-            "1": "󰖟",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": ""
-        }
-    },
-
-    "hyprland/workspaces": {
-        "format": "{icon}",
-        "format-icons": {
-            "1": "󰖟",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "urgent": ""
-        },
-        "persistent-workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": []
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6"
         }
     },
 
     "tray": {
-        "icon-size": 15,
+        "icon-size": 12,
         "spacing": 5,
         "show-passive-items": true
     },
@@ -91,7 +71,6 @@
             "bluetooth",
             "power-profiles-daemon",
             "custom/themes",
-            "custom/wallpaper",
             "custom/aur",
             "custom/flathub",
             "systemd-failed-units",
@@ -101,15 +80,14 @@
         "timeout": 30,
         "format": "{icon} ",
         "format-icons": {
-            "activated": "󰮔",
+            "activated": " 󰮔",
             "deactivated": ""
         }
     },
     "custom/powermenu": {
-        "format": "",
+        "format": "󰣇",
         "tooltip": true,
-        "tooltip-format": " Open Power Menu",
-        "on-click": "$HOME/.functions.sh launch_powermenu"
+        "on-click": "ghostty -e bash -c 'fastfetch && sleep 5'"
     },
 
     "group/settings": {
@@ -135,29 +113,30 @@
         "tooltip": true,
         "format-icons": {
             "default": "󰗑",
-            "performance": "󱐌",
+            "performance": "󰠠",
             "balanced": "󰗑",
             "power-saver": "󰔱"
         }
     },
 
     "custom/aur": {
-        "format": " {}",
-        "interval": 21600,
-        "exec": "bash -c 'paru -Qu 2>/dev/null | wc -l'",
-        "on-click": "$HOME/.functions.sh update_aur_packages",
+        "format": "{text}",
+        "interval": 43200,
+        "exec": "$HOME/.functions.sh get_aur_waybar_icon",
+        "on-click": "ghostty -e bash -lc \"paru -Syu --noconfirm && sudo pacman -Scc --noconfirm && pkill -SIGRTMIN+8 waybar\"",
         "signal": 8,
-        "tooltip": false
+        "tooltip": true,
+        "return-type": "json"
     },
 
     "custom/flathub": {
-        "format": " {}",
-        "interval": 21600,
-        "exec": "bash -c 'flatpak remote-ls --updates --columns=application | wc -l'",
-        "exec": "$HOME/.functions.sh check_flatpak_updates",
+        "format": "{text}",
+        "interval": 43200,
+        "exec": "$HOME/.functions.sh get_flatpak_waybar_icon",
         "on-click": "$HOME/.functions.sh update_flatpak_packages",
         "signal": 9,
-        "tooltip": false
+        "tooltip": true,
+        "return-type": "json"
     },
 
     "systemd-failed-units": {
@@ -168,14 +147,13 @@
     },
 
     "custom/themes": {
-        "exec": "sleep 0.2; $HOME/.functions.sh get_theme",
+        "exec": "$HOME/.functions.sh get_theme",
         "tooltip": false,
         "return-type": "json",
-        "format": " {icon} ",
+        "format": "{icon} ",
         "format-icons": {
-            "dark": "",
-            "light": "",
-            "": ""
+            "dark": "",
+            "light": ""
         },
         "on-click": "$HOME/.functions.sh change_theme",
         "signal": 12,
@@ -208,8 +186,8 @@
         "tooltip": false,
         "format": " {}%",
         "interval": 10,
-        "on-scroll-up": "brightnessctl set 5%+",
-        "on-scroll-down": "brightnessctl set 5%-",
+        "on-scroll-down": "brightnessctl set 1%+",
+        "on-scroll-up": "brightnessctl set 1%-",
         "signal": 13
     },
 
@@ -217,6 +195,7 @@
         "format-off": "󰂲",
         "format-on": "",
         "format-disabled": "󰂲",
+        "format-connected": " {device_battery_percentage}% {device_alias}",
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
@@ -232,9 +211,7 @@
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 50,
         "interval": 2,
-        "exec-if": "which nm-connection-editor && which nm-applet",
-        "exec": "nm-connection-editor",
-        "on-click": "nm-applet"
+        "on-click": "nm-connection-editor"
     },
 
     "custom/notification": {
@@ -264,10 +241,11 @@
             "transition-duration": 500,
             "transition-left-to-right": false
         },
-        "modules": ["battery", "cpu", "memory"]
+        "modules": ["battery", "cpu", "memory", "temperature"]
     },
 
     "custom/wallpaper": {
+        "exec": "$HOME/.functions.sh unsplash &",
         "format": "󰋪",
         "on-click": "$HOME/.functions.sh unsplash"
     },
@@ -317,10 +295,22 @@
 
     "clock": {
         "format": "󱑂 {:%H:%M:%S %a %d %b}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": "<span size='11000'>{calendar}</span>",
+        "calendar": {
+            "mode"          : "month",
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "on-click-right": "mode",
+            "format": {
+                "months":   "<span size='11000' color='#a5b4fc'><b>{}</b></span>",   // lavender
+                "days":     "<span size='11000' color='#e5e7eb'><b>{}</b></span>",   // text
+                "weekdays": "<span size='11000' color='#facc15'>{}</span>",   // yellow
+                "weeks":    "<span size='11000' color='#22d3ee'><b>W{}</b></span>",       // teal
+                "today":    "<span size='11000' color='#f472b6'><b><u>{}</u></b></span>" // maroon
+            }
+        },
         "timezone": "Brazil/East",
-        "format-alt": "󰨳 {:%d %b}",
-        "on-click": "flatpak run net.nokyan.Resources",
+        "on-click": "flatpak run org.gnome.Calendar",
         "interval": 1
     }
 }

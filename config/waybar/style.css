@@ -1,43 +1,56 @@
-@define-color rosewater #f5e0dc;
-@define-color flamingo #f2cdcd;
-@define-color pink #f5c2e7;
-@define-color mauve #cba6f7;
-@define-color red #f38ba8;
-@define-color maroon #eba0ac;
-@define-color peach #fab387;
-@define-color yellow #f9e2af;
-@define-color green #a6e3a1;
-@define-color teal #94e2d5;
-@define-color sky #89dceb;
-@define-color sapphire #74c7ec;
-@define-color blue #89b4fa;
-@define-color lavender #b4befe;
-@define-color text #cdd6f4;
-@define-color subtext1 #bac2de;
-@define-color subtext0 #a6adc8;
-@define-color overlay2 #9399b2;
-@define-color overlay1 #7f849c;
-@define-color overlay0 #6c7086;
-@define-color surface2 #585b70;
-@define-color surface1 #45475a;
-@define-color surface0 #313244;
-@define-color base #1e1e2e;
-@define-color mantle #181825;
-@define-color crust #11111b;
+@define-color rosewater #e2f3ff;
+@define-color flamingo #c5e8ff;
+@define-color pink #d7d3ff;
+@define-color mauve #b8c7ff;
+@define-color red #fb7185;
+@define-color maroon #f472b6;
+@define-color peach #fca5a5;
+@define-color yellow #facc15;
+@define-color green #34d399;
+@define-color teal #22d3ee;
+@define-color sky #7dd3fc;
+@define-color sapphire #38bdf8;
+@define-color blue #60a5fa;
+@define-color lavender #a5b4fc;
+@define-color text #e5e7eb;
+@define-color subtext1 #cbd5e1;
+@define-color subtext0 #94a3b8;
+@define-color overlay2 #64748b;
+@define-color overlay1 #4b5563;
+@define-color overlay0 #334155;
+@define-color surface2 #1f2a3a;
+@define-color surface1 #162032;
+@define-color surface0 #0f172a;
+@define-color base #0c111b;
+@define-color mantle #0a0f19;
+@define-color crust #070c14;
+
+@define-color red_a rgba(251, 113, 133, 0.1);
+@define-color maroon_a rgba(244, 114, 182, 0.1);
+@define-color peach_a rgba(252, 165, 165, 0.1);
+@define-color yellow_a rgba(250, 204, 21, 0.1);
+@define-color green_a rgba(52, 211, 153, 0.1);
+@define-color teal_a rgba(34, 211, 238, 0.1);
+@define-color sky_a rgba(125, 211, 252, 0.1);
+@define-color sapphire_a rgba(56, 189, 248, 0.1);
+@define-color blue_a rgba(96, 165, 250, 0.1);
+@define-color lavender_a rgba(165, 180, 252, 0.1);
 
 * {
     all: unset;
     font-family: "JetBrainsMono Nerd Font";
     font-size: 10px;
     font-weight: normal;
-    min-height: 16px;
+    min-height: 14px;
     margin: 0px 0px 0px 0px;
+    letter-spacing: 0.25px;
 }
 
 tooltip {
     color: @text;
-    background: @crust;
-    border-radius: 3px;
+    background: @surface1;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 tooltip label {
@@ -53,35 +66,49 @@ tooltip label {
 #hardware,
 #idle_inhibitor,
 #network,
-#temperature,
 #workspaces,
 #wireplumber,
 #bluetooth,
-#battery,
 #tray,
 #backlight,
-#taskbar,
 #privacy,
 #actions,
-#quick-actions,
 #custom-notification,
 #custom-weather,
 #custom-flathub,
-#custom-themes,
 #custom-aur,
 #custom-power-menu,
-#idle_inhibitor,
-#bluetooth,
-#power-profiles-daemon,
 #custom-themes,
+#power-profiles-daemon,
 #custom-wallpaper,
 #custom-flathub,
 #custom-powermenu {
     transition: all 0.5s ease-in-out;
-    border-radius: 2px;
-    padding: 0px 2px 0px 0px;
-    margin: 0px 2px 0px 0px;
-    min-width: 18px;
+    border-radius: 4px;
+    padding: 0px 5px;
+    margin: 0px 2px;
+    min-width: 14px;
+    background: @surface1;
+
+}
+
+/* Center single-icon modules for consistent alignment */
+#custom-powermenu,
+#idle_inhibitor,
+#custom-themes,
+#power-profiles-daemon,
+#bluetooth {
+    box-shadow: 0 0px 22px rgba(0, 0, 0, 0.32);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#cpu,
+#battery,
+#memory,
+#temperature {
+    box-shadow: 0 0px 22px rgba(0, 0, 0, 0.32);
+    padding: 0px 4px;
 }
 
 /*
@@ -104,8 +131,39 @@ tooltip label {
 #clock:hover,
 #idle_inhibitor:hover,
 #custom-notification:hover {
-    /* background: @text; */
+    color: @sapphire;
+    background: @surface1;
+}
+
+#tray {
+    background: @surface1;
+    margin: 0px 10px;
+}
+
+#tray menu {
+    background: linear-gradient(135deg, rgba(125, 211, 252, 0.48), rgba(52, 211, 153, 0.54));
+    background-color: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(125, 211, 252, 0.22);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
+    border-radius: 4px;
+    padding: 0px 6px;
+    margin-top: 4px;
+    color: @text;
+}
+
+#tray menuitem {
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+#tray menuitem:hover {
+    background: rgba(96, 165, 250, 0.16);
+    color: @text;
+}
+
+#tray > .needs-attention {
     color: @red;
+    text-shadow: 0 0 8px rgba(251, 113, 133, 0.4);
 }
 
 /*
@@ -114,13 +172,66 @@ tooltip label {
  *╰─────────────────────────────────────╯
 */
 #quick-actions,
-#wheater,
+#custom-wheater,
 #tray,
-#taskbar,
 #privacy {
-    background: @surface0;
-    border-radius: 2px;
-    margin: 0px 6px;
+    border-radius: 4px;
+    margin: 0px 4px;
+}
+
+/* Clock styled to match workspaces/taskbar */
+#clock {
+    background: @surface1;
+    border-radius: 4px;
+    padding: 0px 6px;
+    box-shadow: 0 0px 18px rgba(0, 0, 0, 0.28);
+    font-feature-settings: "tnum";
+    color: @text;
+}
+
+/* Taskbar styled to mirror workspaces */
+#taskbar {
+    background: @blue_a;
+    border-radius: 4px;
+    margin: 0px 5px;
+}
+
+#taskbar button {
+    color: @subtext1;
+    background: transparent;
+    border-radius: 4px;
+    padding: 0px 2px;
+    margin: 0px 0px;
+    transition: all 0.5s ease;
+}
+
+#taskbar button:hover {
+    color: @text;
+    background: rgba(96, 165, 250, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.28);
+}
+
+#taskbar button.active {
+    color: @text;
+    background-color: rgba(34, 211, 238, 0.18);
+}
+
+#taskbar button.minimized {
+    color: @overlay1;
+    background: rgba(51, 65, 85, 0.16);
+}
+
+#taskbar button.maximized,
+#taskbar button.fullscreen {
+    color: @text;
+    background: rgba(52, 211, 153, 0.2);
+    box-shadow: inset 0 0 0 0px rgba(52, 211, 153, 0.3);
+}
+
+#taskbar.empty {
+    color: @overlay0;
+    box-shadow: none;
+    padding: 2px 6px;
 }
 
 /*
@@ -129,48 +240,33 @@ tooltip label {
  *╰─────────────────────────────────────╯
 */
 #workspaces {
-    background: @surface0;
-    border-radius: 2px;
-    padding: 0px 2px 0px 2px;
+    background: @surface1;
+
 }
 
 #workspaces button {
-    color: @text;
+    color: @subtext1;
     font-family: "JetbrainsMono Nerd Font";
     min-width: 18px;
     margin: 0px 0px 0px 0px;
+    padding: 1px 2px;
+    transition: all 0.25s ease;
+    border-radius: 4px;
 }
 
 #workspaces button.active {
-    color: @red;
-    background-color: @subtext2;
+    color: @text;
+    background-color: rgba(34, 211, 238, 0.15);
+    border-radius: 4px;
 }
 
 #workspaces button:hover {
-    color: #ff0000;
+    color: @text;
+    background: rgba(96, 165, 250, 0.22);
 }
 
 #workspaces button.urgent {
     color: @red;
-}
-
-/*
- *╭─────────────────────────────────────╮
- *│            Modules Right            │
- *╰─────────────────────────────────────╯
-*/
-
-#temperature,
-#network,
-#backlight,
-#wireplumber,
-#hardware,
-#clock,
-#custom-notification {
-    background: @surface0;
-    border-radius: 2px;
-    margin: 0px 4px;
-    padding: 0px 2px;
 }
 
 /*
@@ -181,6 +277,7 @@ tooltip label {
 
 #wireplumber.muted {
     color: @red;
+    text-shadow: 0 0 8px rgba(251, 113, 133, 0.4);
 }
 
 /*
@@ -189,11 +286,17 @@ tooltip label {
  *╰─────────────────────────────────────╯
 */
 #idle_inhibitor.activated {
-    color: @red;
+    color: @blue;
+    background: @blue_a;
+    padding: 0px 5px 0px 3px;
+    animation-name: none;
 }
 
 #idle_inhibitor.deactivated {
-    color: @green;
+    color: @peach;
+    background: @peach_a;
+    padding: 0px 5px 0px 6px;
+    animation-name: none;
 }
 
 /*
@@ -226,11 +329,30 @@ tooltip label {
 }
 
 #bluetooth.connected {
-    color: @yellow;
+    color: @green;
+    background: @green_a;
 }
 
 #bluetooth.disabled {
     color: @red;
+    background: @red_a;
+}
+
+#bluetooth.on {
+    color: @yellow;
+    background: @yellow_a;
+}
+
+/*
+ *╭─────────────────────────────────────╮
+ *│             Power Menu              │
+ *╰─────────────────────────────────────╯
+*/
+#custom-powermenu {
+    background: rgb(0, 43, 66);
+    color: rgb(21, 148, 207);
+    padding: 0px 5px 0px 3px;
+    border-radius: 4px;
 }
 
 /*
@@ -240,14 +362,18 @@ tooltip label {
 */
 #power-profiles-daemon.performance {
     color: @red;
+    background: @red_a;
 }
 
 #power-profiles-daemon.balanced {
-    color: @blue;
+    color: @lavender;
+    background: @lavender_a;
+    padding: 0px 5px 0px 3px;
 }
 
 #power-profiles-daemon.power-saver {
     color: @green;
+    background: @green_a;
 }
 
 /*
@@ -256,12 +382,35 @@ tooltip label {
  *╰─────────────────────────────────────╯
 */
 #custom-wallpaper {
+    color: @text;
+    background: linear-gradient(135deg, rgba(125, 211, 252, 0.12), rgba(52, 211, 153, 0.08));
+    box-shadow:
+        0 0 0 1px rgba(96, 165, 250, 0.24),
+        0 8px 20px rgba(7, 12, 20, 0.45);
 }
 
+#custom-flathub,
 #custom-aur {
+    color: @text;
+    background: @green_a;
 }
 
-#custom-flathub {
+#custom-flathub.noupdates,
+#custom-aur.noupdates {
+    color: @green;
+    background: @green_a;
+}
+
+#custom-flathub.updates,
+#custom-aur.updates {
+    color: @yellow;
+    background: @yellow_a;
+}
+
+#custom-flathub.morethen10updates,
+#custom-aur.morethen10updates {
+    color: @red;
+    background: @red_a;
 }
 
 /*
@@ -274,10 +423,14 @@ tooltip label {
 
 #custom-themes.light {
     color: @yellow;
+    background: @yellow_a;
+    padding: 0px 2px 0px 5px;
 }
 
 #custom-themes.dark {
     color: @blue;
+    background: @blue_a;
+    padding: 0px 1px 0px 6px;
 }
 
 /*
@@ -290,10 +443,12 @@ tooltip label {
 
 #battery.good {
     color: @green;
+    background: @green_a;
 }
 
 #battery.warning {
     color: @yellow;
+    background: @yellow_a;
 }
 
 #battery.critical:not(.charging) {
@@ -307,6 +462,7 @@ tooltip label {
 }
 #battery.charging {
     color: @green;
+    background: @green_a;
 }
 
 @keyframes blink {
@@ -326,59 +482,73 @@ tooltip label {
  *╰─────────────────────────────────────╯
 */
 #custom-weather {
-    padding: 0px 8px;
+    padding: 0px 6px;
+    box-shadow: 0 8px 24px rgba(7, 12, 20, 0.5);
+    border-radius: 4px;
+}
+
+#custom-weather.tooltip {
+    padding: 0px 6px;
+    box-shadow: 0 8px 24px rgba(7, 12, 20, 0.5);
+    border-radius: 20px;
 }
 
 /* Sunny */
 #custom-weather.sol {
     color: @yellow;
-    background: rgba(249, 226, 175, 0.2); /* yellow with transparency */
+    background: rgba(250, 204, 21, 0.12); /* yellow with transparency */
 }
 
 /* Rain */
 #custom-weather.chuva {
-    color: @blue;
-    background: rgba(137, 180, 250, 0.2);
+    color: @sapphire;
+    background: rgba(56, 189, 248, 0.12);
 }
 
 /* Light rain */
 #custom-weather.chuva_fraca {
     color: @sky;
-    background: rgba(137, 220, 235, 0.15);
+    background: rgba(125, 211, 252, 0.1);
 }
 
 /* Windy */
 #custom-weather.vento {
     color: @teal;
-    background: rgba(148, 226, 213, 0.2);
+    background: rgba(34, 211, 238, 0.12);
 }
 
 /* Partly cloudy */
 #custom-weather.parcialmente_nublado {
     color: @overlay2;
-    background: rgba(147, 153, 178, 0.15);
+    background: rgba(100, 116, 139, 0.12);
 }
 
 /* Clear sky */
 #custom-weather.céu_limpo {
     color: @green;
-    background: rgba(166, 227, 161, 0.2);
+    background: rgba(52, 211, 153, 0.12);
+}
+
+/* Cloudy */
+#custom-weather.nublado {
+    color: @subtext0;
+    background: rgba(128, 163, 184, 0.12);
 }
 
 /* Chance of irregular rain */
 #custom-weather.possibilidade_de_chuva_irregular {
     color: @sapphire;
-    background: rgba(116, 199, 236, 0.2);
+    background: rgba(56, 189, 248, 0.12);
 }
 
 /* Overcast */
 #custom-weather.encoberto {
-    color: @text;
-    background: rgba(108, 112, 134, 0.2);
+    color: @subtext1;
+    background: rgba(75, 85, 99, 0.12);
 }
 
 /* Moderate/heavy rain with thunder */
 #custom-weather.chuva_moderada_ou_forte_com_trovoada {
     color: @blue;
-    background: rgba(137, 180, 250, 0.25);
+    background: rgba(96, 165, 250, 0.2);
 }
