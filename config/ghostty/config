@@ -6,7 +6,7 @@ font-family = "JetBrainsMonoNL NFM Medium"
 background-opacity = 1
 gtk-titlebar = false
 
-keybind = shift+y=text:yazi\r
+keybind = shift+z=text:yazi\r
 
 # Window
 window-theme = system

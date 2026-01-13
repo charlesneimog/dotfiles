@@ -2,9 +2,9 @@
     "font": "JetBrainsMono Nerd Font",
     "reload_style_on_change": true,
     "spacing": 1,
-    "modules-left": ["group/quick-actions", "wlr/taskbar", "tray", "privacy"],
-    "modules-center": ["hyprland/workspaces", "sway/workspaces", "niri/workspaces"],
-    "modules-right": ["temperature", "network", "wireplumber", "group/hardware", "clock", "custom/notification"],
+    "modules-left": ["group/quick-actions", "custom/weather", "tray", "wlr/taskbar", "privacy"],
+    "modules-center": ["niri/workspaces"],
+    "modules-right": ["network", "backlight", "wireplumber", "group/hardware", "clock", "custom/notification"],
 
     "wlr/taskbar": {
         "format": "{icon}",
@@ -13,6 +13,15 @@
         "tooltip-format": "{title}",
         "on-click": "activate",
         "on-click-middle": "close"
+    },
+
+    "custom/weather": {
+        "format": "{}°",
+        "tooltip": true,
+        "interval": 900,
+        "exec": "wttrbar --location \"$(curl -s https://ipinfo.io/json | jq -r .city)\" --nerd --lang pt",
+        "on-click": "wttrbar --location \"$(curl -s https://ipinfo.io/json | jq -r .city)\" --nerd --lang pt",
+        "return-type": "json"
     },
 
     "sway/workspaces": {
@@ -37,40 +46,19 @@
     },
 
     "niri/workspaces": {
-        "format": "{icon}",
+        "format": "<b>{icon}</b>",
         "format-icons": {
-            "1": "󰖟",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": ""
-        }
-    },
-
-    "hyprland/workspaces": {
-        "format": "{icon}",
-        "format-icons": {
-            "1": "󰖟",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "6": "",
-            "urgent": ""
-        },
-        "persistent-workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": []
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6"
         }
     },
 
     "tray": {
-        "icon-size": 15,
+        "icon-size": 12,
         "spacing": 5,
         "show-passive-items": true
     },
@@ -78,31 +66,28 @@
     "group/quick-actions": {
         "orientation": "horizontal",
         "modules": [
-            "custom/power-menu",
+            "custom/powermenu",
             "idle_inhibitor",
             "bluetooth",
             "power-profiles-daemon",
             "custom/themes",
-            "custom/wallpaper",
             "custom/aur",
             "custom/flathub",
             "systemd-failed-units",
-            "custom/weather"
         ]
     },
     "idle_inhibitor": {
         "timeout": 30,
-        "format": "{icon}",
+        "format": "{icon} ",
         "format-icons": {
-            "activated": " ",
-            "deactivated": " "
+            "activated": " 󰮔",
+            "deactivated": ""
         }
     },
-    "custom/power-menu": {
-        "format": "",
+    "custom/powermenu": {
+        "format": "󰣇",
         "tooltip": true,
-        "tooltip-format": " Open Power Menu",
-        "on-click": "choice=$(zenity --list --title='Power Menu' --width=200 --height=250 --column='Action' Shutdown Reboot Suspend Logout Cancel); [[ $choice == Shutdown ]] && systemctl poweroff || [[ $choice == Reboot ]] && systemctl reboot || [[ $choice == Suspend ]] && systemctl suspend || [[ $choice == Logout ]] && swaymsg exit"
+        "on-click": "ghostty -e bash -c 'fastfetch && sleep 5'"
     },
 
     "group/settings": {
@@ -117,7 +102,7 @@
 
     "wireplumber": {
         "format": "{volume}% {icon} ",
-        "format-muted": "",
+        "format-muted": "Muted ",
         "format-icons": ["", "", ""],
         "on-click": "flatpak run com.saivert.pwvucontrol"
     },
@@ -127,29 +112,31 @@
         "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
         "tooltip": true,
         "format-icons": {
-            "default": "󱐌",
-            "performance": "󱐌",
+            "default": "󰗑",
+            "performance": "󰠠",
             "balanced": "󰗑",
             "power-saver": "󰔱"
         }
     },
 
     "custom/aur": {
-        "format": " {}",
-        "interval": 1800,
+        "format": "{text}",
+        "interval": 43200,
         "exec": "$HOME/.functions.sh get_aur_waybar_icon",
-        "on-click": "$HOME/.functions.sh update_aur_packages",
+        "on-click": "ghostty -e bash -lc \"paru -Scc --noconfirm && paru -Syu --noconfirm && sudo pacman -Scc --noconfirm && pkill -SIGRTMIN+8 waybar\"",
         "signal": 8,
-        "tooltip": false
+        "tooltip": true,
+        "return-type": "json"
     },
 
     "custom/flathub": {
-        "format": " {}",
-        "interval": 1800,
+        "format": "{text}",
+        "interval": 43200,
         "exec": "$HOME/.functions.sh get_flatpak_waybar_icon",
         "on-click": "$HOME/.functions.sh update_flatpak_packages",
         "signal": 9,
-        "tooltip": false
+        "tooltip": true,
+        "return-type": "json"
     },
 
     "systemd-failed-units": {
@@ -160,14 +147,13 @@
     },
 
     "custom/themes": {
-        "exec": "sleep 0.2; $HOME/.functions.sh get_theme",
+        "exec": "$HOME/.functions.sh get_theme",
         "tooltip": false,
         "return-type": "json",
-        "format": "{icon}",
+        "format": "{icon} ",
         "format-icons": {
-            "dark": "",
-            "light": "",
-            "": ""
+            "dark": "",
+            "light": ""
         },
         "on-click": "$HOME/.functions.sh change_theme",
         "signal": 12,
@@ -200,16 +186,16 @@
         "tooltip": false,
         "format": " {}%",
         "interval": 10,
-        "on-scroll-up": "brightnessctl set 5%+",
-        "on-scroll-down": "brightnessctl set 5%-"
+        "on-scroll-down": "brightnessctl set 1%+",
+        "on-scroll-up": "brightnessctl set 1%-",
+        "signal": 13
     },
 
     "bluetooth": {
         "format-off": "󰂲",
         "format-on": "",
         "format-disabled": "󰂲",
-        "format-connected": " {device_alias}",
-        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        "format-connected": " {device_battery_percentage}% {device_alias}",
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
@@ -220,14 +206,12 @@
     "network": {
         "format": "{ifname}",
         "format-wifi": "{essid} 󰤨 ",
-        "format-disconnected": " 󰤭 ",
-        "tooltip-format-wifi": "{essid} 󰤨 ",
+        "format-disconnected": "󰤭",
+        "tooltip-format-wifi": "{essid} 󰤨",
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 50,
         "interval": 2,
-        "exec-if": "which nm-connection-editor && which nm-applet",
-        "exec": "nm-connection-editor",
-        "on-click": "nm-applet"
+        "on-click": "iwgtk"
     },
 
     "custom/notification": {
@@ -242,7 +226,7 @@
             "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
             "dnd-inhibited-none": ""
         },
-        "format": "{icon} ",
+        "format": "{icon}",
         "return-type": "json",
         "exec-if": "which swaync-client",
         "exec": "swaync-client -swb",
@@ -257,25 +241,28 @@
             "transition-duration": 500,
             "transition-left-to-right": false
         },
-        "modules": ["battery", "cpu", "memory"]
+        "modules": ["battery", "cpu", "memory", "temperature"]
     },
 
     "custom/wallpaper": {
+        "exec": "$HOME/.functions.sh unsplash &",
         "format": "󰋪",
         "on-click": "$HOME/.functions.sh unsplash"
     },
 
     "battery": {
         "states": {
-            "good": 100,
-            "warning": 15,
+            "good": 80,
+            "warning": 20,
             "critical": 5
         },
         "format": "{capacity}% {icon}",
-        "format-charging": "  {capacity}%",
+        "format-charging": "{power:.1f}w |  {capacity}%",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
         "signal": 12,
         "interval": 15,
+        "tooltip": true,
+        "tooltip-format": "Capacity: {capacity}%\nPower draw: {power:.1f} W\nTime: {time}\nStatus: {timeTo}\nCycles: {cycles}\nHealth: {health}%",
         "events": {
             "on-discharging-warning": "notify-send -u normal -i battery-low 'Low Battery'",
             "on-discharging-critical": "notify-send -u critical -i battery-caution 'Very Low Battery' 'Please charge immediately.'"
@@ -293,22 +280,37 @@
     },
 
     "cpu": {
-        "format": "{usage}%  ",
-        "tooltip": false,
+        "format": " {usage}% ",
+        "tooltip": true,
+        "tooltip-format": "CPU Load (1 min): {load}\nUsage: {usage}%\nAvg Frequency: {avg_frequency} GHz\nMax Frequency: {max_frequency} GHz\nMin Frequency: {min_frequency} GHz\nPer-Core Usage:\n{usageN}\nPer-Core Icon:\n{iconN}",
         "on-click": "flatpak run net.nokyan.Resources"
     },
 
     "memory": {
-        "format": "{}%  ",
+        "format": " {}% ",
+        "tooltip-format": "Memory Usage: {percentage}%\nUsed: {used} GiB / Total: {total} GiB\nAvailable: {avail} GiB\n\nSwap Usage: {swapPercentage}%\nUsed: {swapUsed} GiB / Total: {swapTotal} GiB\nAvailable: {swapAvail} GiB",
+        "tooltip": true,
         "on-click": "flatpak run net.nokyan.Resources"
     },
 
     "clock": {
         "format": "󱑂 {:%H:%M:%S %a %d %b}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": "<span size='11000'>{calendar}</span>",
+        "calendar": {
+            "mode"          : "month",
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "on-click-right": "mode",
+            "format": {
+                "months":   "<span size='11000' color='#a5b4fc'><b>{}</b></span>",   // lavender
+                "days":     "<span size='11000' color='#e5e7eb'><b>{}</b></span>",   // text
+                "weekdays": "<span size='11000' color='#facc15'>{}</span>",   // yellow
+                "weeks":    "<span size='11000' color='#22d3ee'><b>W{}</b></span>",       // teal
+                "today":    "<span size='11000' color='#f472b6'><b><u>{}</u></b></span>" // maroon
+            }
+        },
         "timezone": "Brazil/East",
-        "format-alt": "󰨳 {:%d %b}",
-        "on-click": "flatpak run net.nokyan.Resources",
+        "on-click": "flatpak run org.gnome.Calendar",
         "interval": 1
     }
 }

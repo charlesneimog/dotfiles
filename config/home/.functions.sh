@@ -27,20 +27,6 @@ launch_powermenu() {
 
 # ──────────────────────────────────────
 startup_services() {
-    export DISPLAY=":0"
-    export ELECTRON_OZONE_PLATFORM_HINT="auto"
-    export MOZ_ENABLE_WAYLAND="1"
-    export QT_QPA_PLATFORMTHEME="qt5ct"
-    export QT_QPA_PLATFORM="wayland;xcb"
-    export QT_AUTO_SCREEN_SCALE_FACTOR="1"
-    export QT_WAYLAND_DISABLE_WINDOW_DECORATION="1"
-    export GDK_BACKEND="wayland"
-    export XDG_SESSION_TYPE="wayland"
-    export XDG_CURRENT_DESKTOP="gnome"
-    export XDG_SESSION_DESKTOP="gnome"
-
-    # Portals
-    hyprpaper &
     /usr/lib/xdg-desktop-portal-gtk &
     /usr/lib/xdg-desktop-portal-gnome &
 
@@ -56,7 +42,14 @@ startup_services() {
     anytype &
     blueman-applet &
     waybar &
-    # hypridle &
+    hypridle &
+    swaybg --image ~/.wallpaper.png &
+
+    org.gnome.Calendar --gapplication-service &
+    org.gnome.clocks --gapplication-service &
+    focusservice > /home/neimog/focus.log 2>&1 &
+
+    io.anytype.anytype &
 }
 
 # ──────────────────────────────────────
@@ -126,7 +119,17 @@ get_flatpak_waybar_icon() {
     local class
     local text
 
-    tooltip=$(flatpak remote-ls --updates 2>/dev/null)
+    tooltip=$(
+        flatpak remote-ls --updates --columns=name,version 2>/dev/null |
+        awk '
+            { names[NR]=$1; vers[NR]=$2; if (length($1)>max) max=length($1) }
+            END {
+                for (i=1; i<=NR; i++)
+                    printf "%-*s  v%s\n", max, names[i], vers[i]
+            }
+        '
+    )
+
     updates=$(printf "%s\n" "$tooltip" | sed '/^\s*$/d' | wc -l)
 
     if [ "$updates" -eq 0 ]; then
@@ -167,8 +170,25 @@ get_aur_waybar_icon() {
     local class
     local text
 
-    tooltip=$(paru -Qu 2>/dev/null)
+    tooltip=$(
+        paru -Qu 2>/dev/null |
+        awk '
+            {
+                name=$1
+                new=$NF
+                names[NR]=name
+                vers[NR]=new
+                if (length(name) > max) max = length(name)
+            }
+            END {
+                for (i=1; i<=NR; i++)
+                    printf "%-*s  v%s\n", max, names[i], vers[i]
+            }
+        '
+    )
+
     updates=$(printf "%s\n" "$tooltip" | sed '/^\s*$/d' | wc -l)
+
     if [ "$updates" -eq 0 ]; then
         class="noupdates"
         text=""
@@ -181,10 +201,12 @@ get_aur_waybar_icon() {
         text=" $updates"
     fi
 
-    # Escape newlines and quotes for JSON
+    # JSON-safe tooltip
     tooltip=$(printf "%s" "$tooltip" | sed ':a;N;$!ba;s/\n/\\n/g; s/"/\\"/g')
+
     printf '{"text":"%s","tooltip":"%s","alt":"%s","class":"%s"}\n' \
         "$text" "$tooltip" "$updates" "$class"
+
     pkill -SIGRTMIN+9 waybar
 }
 
@@ -318,14 +340,19 @@ EOT
 
 # ──────────────────────────────────────
 function get_unsplash_wallpaper {
+    /home/neimog/.config/miniconda3.dir/bin/python /home/neimog/Documents/Git/dotfiles/scripts/random-wallpapers.py --output ~/.wallpaper.png
+
+    pkill swaybg
+
+    # update sddm image
+    magick ~/.wallpaper.png ~/.wallpaper.jpg
+    cp ~/.wallpaper.jpg /usr/share/sddm/themes/silent/backgrounds/smoky.jpg
+
+    swaybg --image ~/.wallpaper.png
+
     # Base keywords
     # BASE_KEYWORDS=("rocks" "lake" "desert" "dunes" "mountain" "abstract+dark" "abstract+blue+dark" "wallpaper")
     # BASE_KEYWORDS=("abstract+dark" "abstract+blue+dark" "wallpaper") 
-    /home/neimog/.config/miniconda3.dir/bin/python /home/neimog/Documents/Git/dotfiles/scripts/random-wallpapers.py --output ~/.wallpaper.png
-
-    pkill hyprpaper
-    hyprpaper
-
     # BASE_KEYWORDS=(
     #     "space+nebula"
     #     "space+stars"
@@ -380,8 +407,6 @@ function get_unsplash_wallpaper {
     # wget -q -O "$FILENAME" "$IMAGE_URL"
 
     # Restart with new wallpaper
-    pkill hyprpaper
-    hyprpaper
 }
 
 # ──────────────────────────────────────
@@ -415,8 +440,8 @@ fetch_random_wallpaper() {
     ln -s -f "$output_png" ~/.config/rofi/images/a.png
     ln -s -f "$output_png" ~/.config/rofi/images/c.png
 
-    killall hyprpaper
-    hyprpaper
+    killall swaybg
+    swaybg --image ~/.wallpaper.png
 }
 
 # ──────────────────────────────────────

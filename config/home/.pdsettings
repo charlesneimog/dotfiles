@@ -8,18 +8,27 @@ audiooutdevname1: JACK
 audiobuf: 100
 rate: 48000
 callback: 0
-audioblocksize: 2048
+audioblocksize: 1024
 midiapi: 0
 nomidiin: False
 midiindev1: 0
-midiindevname1: ?
+midiindevname1: Midi Through Port-0
 nomidiout: True
 path1: /home/neimog/Documents/Git
 path2: /home/neimog/Documents/Pd/externals
-npath: 2
+path3: /home/neimog/Documents/Pd/externals/xlab
+path4: /home/neimog/Documents/Pd/externals/xlab/sf/
+path5: /home/neimog/Documents/Pd/externals/xlab/vst/
+path6: /home/neimog/Documents/Pd/externals/xlab/vst3/
+path7: /home/neimog/Documents/Pd/externals/xlab/Abstractions/
+path8: /home/neimog/Documents/Pd/externals/xlab/Resources/Audios/
+path9: /home/neimog/Documents/Pd/externals/xlab/lua/pd-upic
+path10: /home/neimog/Documents/Pd/externals/xlab/lua/pd-orchidea
+npath: 10
 standardpath: 1
 verbose: 1
-nloadlib: 0
+loadlib1: build
+nloadlib: 1
 defeatrt: 1
 flags: -font-weight normal -font-size 10
 zoom: 2

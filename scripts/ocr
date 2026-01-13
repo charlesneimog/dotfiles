@@ -45,4 +45,5 @@ if [ -z "$pdf_file" ]; then
 fi
 
 # Run the command with obtained values
-ocrmypdf -l ${selected_languages[@]} --jobs 6 --deskew --force-ocr "$pdf_file" "$output_file" 
+# If the PDF already contains OCR/text, skip re-OCR on those pages
+ocrmypdf -l ${selected_languages[@]} --jobs 6 --deskew --skip-text "$pdf_file" "$output_file"

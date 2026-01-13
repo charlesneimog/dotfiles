@@ -1,20 +1,26 @@
 cmake_minimum_required(VERSION 3.25)
 project(myutils)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+option(HAKATIME OFF)
+option(NIRIUSE ON)
 
 # ╭──────────────────────────────────────╮
-# │               HakaTime               │
+# │                 CPM                  │
 # ╰──────────────────────────────────────╯
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBSECRET REQUIRED IMPORTED_TARGET libsecret-1)
+set(CPM_FILE ${CMAKE_BINARY_DIR}/CPM.cmake)
+set(CPM_VERSION "0.42.0")
+if(NOT EXISTS "${CPM_FILE}")
+    file(DOWNLOAD "https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_VERSION}/CPM.cmake" ${CPM_FILE})
+endif()
+include(${CPM_FILE})
 
-add_executable(hakatime hakatime.cpp)
-
-target_link_libraries(hakatime PRIVATE PkgConfig::LIBSECRET)
-target_include_directories(hakatime PRIVATE ${LIBSECRET_INCLUDE_DIRS})
-target_link_libraries(hakatime PRIVATE ${LIBSECRET_LIBRARIES})
-target_compile_options(hakatime PRIVATE ${LIBSECRET_CFLAGS_OTHER})
-
-find_package(nlohmann_json REQUIRED)
-target_link_libraries(hakatime PRIVATE nlohmann_json::nlohmann_json)
-
+# ╭──────────────────────────────────────╮
+# │               NIRIUSE                │
+# ╰──────────────────────────────────────╯
+cpmaddpackage("gh:nlohmann/json@3.12.0")
+add_executable(niriuse niriuse.cpp)
+target_link_libraries(niriuse PRIVATE nlohmann_json)
