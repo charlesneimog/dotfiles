@@ -24,7 +24,11 @@ output "eDP-1" {
     scale 1
 }
 
-switch-events {}
+switch-events {
+    // lid-open {
+    //     spawn "systemctl" "suspend"
+    // }
+}
 
 //╭─────────────────────────────────────╮
 //│             Environment             │
@@ -442,19 +446,16 @@ window-rule {
     match app-id="(^com.mitchellh.ghostty)"
     open-on-workspace "2"
     open-focused true
-    default-column-width {
-        fixed 1700
-    }
-    default-window-height {
-        fixed 950
-    }
-    open-floating true
+        default-column-width { proportion 0.9; }
 }
 
 window-rule {
-    match app-id="(^org.gnome.Nautilus)"
+    // match app-id="(^org.gnome.Nautilus)"
+    match app-id="^org.gnome.Nautilus$"
     open-on-workspace "3"
 }
+
+
 window-rule {
     match app-id="(^PatchWindow|PdWindow|plugdata|MuseScore4)"
     open-on-workspace "4"
@@ -511,11 +512,6 @@ window-rule {
     match app-id="(^org.pulseaudio.pavucontrol)"
 }
 
-window-rule {
-    match app-id="(^Charlesneimog.pdftts)"
-    default-floating-position x=0 y=0 relative-to="top-left"
-    open-floating true
-}
 
 window-rule {
     match title="^Picture-in-Picture$"
@@ -533,6 +529,10 @@ window-rule {
     default-floating-position x=20 y=20 relative-to="top-left"
 }
 
+window-rule {
+    match title="(^Quick Format Citation)"
+    open-floating true
+}
 
 //╭─────────────────────────────────────╮
 //│             Layer rules             │

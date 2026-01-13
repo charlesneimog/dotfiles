@@ -23,11 +23,6 @@ image_quality   = 90
 sixel_fraction  = 15
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
-rules = [
-    { name = "*.rnote", binary = true },
-    { name = "*.mscz", binary = true },
-    { name = "*.pd", binary = true },
-]
 
 [opener]
 rnote = [
@@ -39,7 +34,7 @@ musescore = [
 ]
 
 pd = [
-    {run = 'pd "$1"', desc = "Open in PureData", for = "linux"},
+    {run = 'pd "$@"', desc = "Open in PureData", for = "linux"},
 ]
 
 targz = [
@@ -58,17 +53,9 @@ nvim_dir = [
     { run = 'nvim "$PWD"', block = true, desc = "Open directory in nvim" }
 ]
 
-
 [open]
-rules = [
-    { name = "*.py", use = "code" },
-    { name = "*.mp4", use = "video" },
-    { name = "*.rnote", use = "rnote" },
-    { name = "*.mscz", use = "musescore" },
-    { name = "*.tar.gz", use = "targz" },
-    { name = "*.pd", use = "pd" },
-    { mime = "text/*", use = "code", block = true },
-    { mime = "inode/directory", use = "nvimdir" },
+rules= [
+    { url = "*.pd", use = "pd" },
     { ext = "c", use = "code", block = true },
     { ext = "cpp", use = "code", block = true },
     { ext = "py", use = "code", block = true },

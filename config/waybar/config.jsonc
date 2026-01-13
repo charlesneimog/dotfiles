@@ -18,9 +18,9 @@
     "custom/weather": {
         "format": "{}°",
         "tooltip": true,
-        "interval": 1300,
-        "exec": "wttrbar --location \"São Paulo\" --nerd --lang pt",
-        "on-click": "xdg-open \"https://meteostat.net/en/place/br/sao-paulo?s=83779&t=2025-12-03/2025-12-10\"",
+        "interval": 900,
+        "exec": "wttrbar --location \"$(curl -s https://ipinfo.io/json | jq -r .city)\" --nerd --lang pt",
+        "on-click": "wttrbar --location \"$(curl -s https://ipinfo.io/json | jq -r .city)\" --nerd --lang pt",
         "return-type": "json"
     },
 
@@ -123,7 +123,7 @@
         "format": "{text}",
         "interval": 43200,
         "exec": "$HOME/.functions.sh get_aur_waybar_icon",
-        "on-click": "ghostty -e bash -lc \"paru -Syu --noconfirm && sudo pacman -Scc --noconfirm && pkill -SIGRTMIN+8 waybar\"",
+        "on-click": "ghostty -e bash -lc \"paru -Scc --noconfirm && paru -Syu --noconfirm && sudo pacman -Scc --noconfirm && pkill -SIGRTMIN+8 waybar\"",
         "signal": 8,
         "tooltip": true,
         "return-type": "json"
@@ -211,7 +211,7 @@
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 50,
         "interval": 2,
-        "on-click": "nm-connection-editor"
+        "on-click": "iwgtk"
     },
 
     "custom/notification": {

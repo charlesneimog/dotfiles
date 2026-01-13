@@ -3,3 +3,11 @@ on   = [ "n" ]
 run  = "shell --block 'nvim .'"
 desc = "Open current directory in neovim (nvim .)"
 
+[[mgr.prepend_keymap]]
+on = "<Space>"
+run = "shell --orphan 'sushi %h'"
+desc = "Preview with sushi"
+
+[[mgr.prepend_keymap]]
+on = "D"
+run = "shell -- dragon -x -i -T %h"

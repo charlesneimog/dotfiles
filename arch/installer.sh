@@ -60,8 +60,6 @@ paru  -S --needed --noconfirm "${DESKTOP[@]}"
 paru  -S --needed --noconfirm "${MEDIA[@]}"
 paru  -S --needed --noconfirm "${FONTS[@]}"
 paru  -S --needed --noconfirm "${TEX_PACKAGES[@]}"
-paru  -S --needed --noconfirm "${FIRMWARE[@]}"
-paru  -S --needed --noconfirm "${SERVER_TOOLS[@]}"
 
 #╭──────────────────────────────────────╮
 #│             Permissions              │
@@ -180,9 +178,18 @@ rm -drf Tela-circle-icon-theme
 #╭──────────────────────────────────────╮
 #│         Login and LockScreen         │
 #╰──────────────────────────────────────╯
-sudo bash -c 'echo -e "[Theme]\nCurrent=catppuccin-mocha-blue" > /etc/sddm.conf.d/theme.conf'
+sudo bash -c 'echo -e "[Theme]\nCurrent=silent" > /etc/sddm.conf'
 wget -O ~./.avatar.png https://avatars.githubusercontent.com/u/31707161?v=4
+sudo cp /home/neimog/.avatar.png /usr/share/sddm/faces/tmp_face
+sudo mogrify -gravity center -crop 1:1 +repage /usr/share/sddm/faces/tmp_face
+sudo mogrify -resize 256x256 /usr/share/sddm/faces/tmp_face
+sudo mv /usr/share/sddm/faces/tmp_face /usr/share/sddm/faces/neimog.face.icon
+sudo chown neimog:neimog /usr/share/sddm/themes/silent/backgrounds/smoky.jpg
+sudo chmod u+rw /usr/share/sddm/themes/silent/backgrounds/smoky.jpg
 
 
-# Login
+#╭──────────────────────────────────────╮
+#│                Login                 │
+#╰──────────────────────────────────────╯
 gh auth login
+netbird login

@@ -1,15 +1,20 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
+    - /home/neimog/Documents/Git/LocalReader
     - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/mar_tilde
+    - /home/neimog/Documents/Git/py4pd
+    - /home/neimog/Documents/Git/anytype-client
+    - /home/neimog/Documents/Git/pd-bhack
+    - /home/neimog/Documents/Git/pd-xlab
+    - /home/neimog/Documents/Git/pv~
+    - /home/neimog/Documents/Git/OScofo
+    - /home/neimog/Documents/Git/onsetsds_tilde
     - /home/neimog/Documents/Git/charlesneimog.github.io
     - /home/neimog/Documents/Git/pure-data
-    - /home/neimog/Documents/Git/pd-bhack
     - /home/neimog/Documents/Git/pd-upic
     - /home/neimog/Documents/Git/pd-orchidea
-    - /home/neimog/Downloads/libonnx
-    - /home/neimog/Documents/Git/onsetsds_tilde
-    - /home/neimog/Documents/Git/pd-xlab
     - /home/neimog/Documents/Git/pd-else
     - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/pd-saf
@@ -17,7 +22,7 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-lua
 startuppopupversion: 5
 didshowhunkstaginghint: true
-lastversion: 0.57.0
+lastversion: 0.58.1
 customcommandshistory:
     - q
     - ""

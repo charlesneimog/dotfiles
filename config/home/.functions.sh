@@ -40,7 +40,6 @@ startup_services() {
     export XDG_SESSION_DESKTOP="gnome"
 
     # Portals
-    hyprpaper &
     /usr/lib/xdg-desktop-portal-gtk &
     /usr/lib/xdg-desktop-portal-gnome &
 
@@ -56,7 +55,9 @@ startup_services() {
     anytype &
     blueman-applet &
     waybar &
-    # hypridle &
+    swaybg --image ~/.wallpaper.png &
+
+    hypridle &
 }
 
 # ──────────────────────────────────────
@@ -318,14 +319,19 @@ EOT
 
 # ──────────────────────────────────────
 function get_unsplash_wallpaper {
+    /home/neimog/.config/miniconda3.dir/bin/python /home/neimog/Documents/Git/dotfiles/scripts/random-wallpapers.py --output ~/.wallpaper.png
+
+    pkill swaybg
+
+    # update sddm image
+    magick ~/.wallpaper.png ~/.wallpaper.jpg
+    cp ~/.wallpaper.jpg /usr/share/sddm/themes/silent/backgrounds/smoky.jpg
+
+    swaybg --image ~/.wallpaper.png
+
     # Base keywords
     # BASE_KEYWORDS=("rocks" "lake" "desert" "dunes" "mountain" "abstract+dark" "abstract+blue+dark" "wallpaper")
     # BASE_KEYWORDS=("abstract+dark" "abstract+blue+dark" "wallpaper") 
-    /home/neimog/.config/miniconda3.dir/bin/python /home/neimog/Documents/Git/dotfiles/scripts/random-wallpapers.py --output ~/.wallpaper.png
-
-    pkill hyprpaper
-    hyprpaper
-
     # BASE_KEYWORDS=(
     #     "space+nebula"
     #     "space+stars"
@@ -380,8 +386,6 @@ function get_unsplash_wallpaper {
     # wget -q -O "$FILENAME" "$IMAGE_URL"
 
     # Restart with new wallpaper
-    pkill hyprpaper
-    hyprpaper
 }
 
 # ──────────────────────────────────────
@@ -415,8 +419,8 @@ fetch_random_wallpaper() {
     ln -s -f "$output_png" ~/.config/rofi/images/a.png
     ln -s -f "$output_png" ~/.config/rofi/images/c.png
 
-    killall hyprpaper
-    hyprpaper
+    killall swaybg
+    swaybg --image ~/.wallpaper.png
 }
 
 # ──────────────────────────────────────

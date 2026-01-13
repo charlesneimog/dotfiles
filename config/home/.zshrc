@@ -60,19 +60,20 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# Aliases
+# Shell integrations
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+eval "$(zoxide init --cmd cd zsh)"
+
+#╭──────────────────────────────────────╮
+#│               Aliases                │
+#╰──────────────────────────────────────╯
 alias ls='ls --color'
 alias v='nvim'
 alias n='nvim'
 alias c='clear'
+alias inkscape='org.inkscape.Inkscape'
 alias cat='bat --paging=never'
-
-
-# Shell integrations
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
-
-eval "$(zoxide init --cmd cd zsh)"
 
 #╭──────────────────────────────────────╮
 #│             Conda Setup              │
@@ -117,3 +118,4 @@ ibus-daemon -drx
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /home/neimog/.dart-cli-completion/zsh-config.zsh ]] && . /home/neimog/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
+export LD_LIBRARY_PATH=/home/neimog/.local/lib/arch-mojo:$LD_LIBRARY_PATH
