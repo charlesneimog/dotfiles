@@ -3,6 +3,14 @@ return {
 		"karb94/neoscroll.nvim",
 		opts = {},
 	},
+	{
+		dir = "~/Documents/Git/focusservice",
+		name = "focusservice",
+		lazy = false, -- load on startup
+		config = function()
+			require("focusservice").setup({})
+		end,
+	},
 	{ "vuciv/golf" },
 	{
 		"mcauley-penney/visual-whitespace.nvim",
@@ -30,15 +38,6 @@ return {
 				dos = "↙",
 			},
 			ignore = { filetypes = {}, buftypes = {} },
-		},
-	},
-	{
-		"lowitea/aw-watcher.nvim",
-		opts = {
-			aw_server = {
-				host = "127.0.0.1",
-				port = 5600,
-			},
 		},
 	},
 }

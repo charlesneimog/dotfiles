@@ -47,7 +47,7 @@ startup_services() {
 
     org.gnome.Calendar --gapplication-service &
     org.gnome.clocks --gapplication-service &
-    focusservice > /home/neimog/focus.log 2>&1 &
+    Concentrate & #> /home/neimog/focus.log 2>&1 &
 
     io.anytype.anytype &
 }
