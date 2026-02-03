@@ -4,8 +4,8 @@ return {
 		opts = {},
 	},
 	{
-		dir = "~/Documents/Git/focusservice",
-		name = "focusservice",
+		dir = "~/Documents/Git/Concentrate",
+		name = "Concentrate",
 		lazy = false, -- load on startup
 		config = function()
 			require("focusservice").setup({})
