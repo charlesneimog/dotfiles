@@ -4,11 +4,10 @@ return {
 		opts = {},
 	},
 	{
-		dir = "~/Documents/Git/Concentrate",
-		name = "Concentrate",
-		lazy = false, -- load on startup
+		"charlesneimog/Concentrate",
+		lazy = false,
 		config = function()
-			require("focusservice").setup({})
+			require("focusservice").setup({ port = 7079 })
 		end,
 	},
 	{ "vuciv/golf" },

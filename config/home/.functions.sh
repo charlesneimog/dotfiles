@@ -50,7 +50,7 @@ startup_services() {
 
     io.anytype.anytype &
 
-    Concentrate #--logdebug > /home/neimog/focus.log 2>&1 &
+    concentrate #--logdebug > /home/neimog/focus.log 2>&1 &
 
 }
 

@@ -24,11 +24,11 @@ output "eDP-1" {
     scale 1
 }
 
-switch-events {
+// switch-events {
     // lid-open {
     //     spawn "systemctl" "suspend"
     // }
-}
+// }
 
 //╭─────────────────────────────────────╮
 //│             Environment             │
