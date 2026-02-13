@@ -4,3 +4,4 @@ Config/lazygit/state.yml
 utils/.cache/clangd/index
 utils/build
 utils/compile_commands.json
+scripts/webpage.yaml

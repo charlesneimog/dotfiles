@@ -164,6 +164,12 @@ source ~/Documents/Git/dotfiles/arch/link.sh
 xdg-mime default io.bassi.Amberol.desktop audio/x-wav
 
 #╭──────────────────────────────────────╮
+#│                 Cron                 │
+#╰──────────────────────────────────────╯
+(crontab -l 2>/dev/null; echo "0 */3 * * * /home/neimog/Documents/Git/dotfiles/scripts/check-web-page.py > /tmp/check_names.log 2>&1") | crontab -
+
+
+#╭──────────────────────────────────────╮
 #│                 Mime                 │
 #╰──────────────────────────────────────╯
 cd ~/Documents/Git/dotfiles

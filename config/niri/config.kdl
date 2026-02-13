@@ -24,12 +24,6 @@ output "eDP-1" {
     scale 1
 }
 
-// switch-events {
-    // lid-open {
-    //     spawn "systemctl" "suspend"
-    // }
-// }
-
 //╭─────────────────────────────────────╮
 //│             Environment             │
 //╰─────────────────────────────────────╯
@@ -159,7 +153,7 @@ spawn-at-startup "sh" "-c" "$HOME/.functions.sh startup_services"
 binds {
     Alt+Space { show-hotkey-overlay; }
 
-    Mod+Return hotkey-overlay-title="Open a Terminal: wezterm" {
+    Mod+Return hotkey-overlay-title="Open a Terminal: Ghostty" {
         spawn "ghostty"
     }
     Mod+D hotkey-overlay-title="Run an Application: rofi" {
