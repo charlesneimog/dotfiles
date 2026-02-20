@@ -27,8 +27,7 @@ path10: /home/neimog/Documents/Pd/externals/xlab/lua/pd-orchidea
 npath: 10
 standardpath: 1
 verbose: 1
-loadlib1: build
-nloadlib: 1
+nloadlib: 0
 defeatrt: 1
 flags: -font-weight normal -font-size 10
 zoom: 2
