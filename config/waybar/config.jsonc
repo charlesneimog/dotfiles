@@ -1,6 +1,5 @@
 {
     "font": "JetBrainsMono Nerd Font",
-    "reload_style_on_change": true,
     "spacing": 1,
     "modules-left": ["group/quick-actions", "custom/weather", "tray", "wlr/taskbar", "privacy"],
     "modules-center": ["niri/workspaces"],

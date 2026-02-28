@@ -69,7 +69,6 @@ tooltip label {
 #workspaces,
 #wireplumber,
 #bluetooth,
-#tray,
 #backlight,
 #privacy,
 #actions,
@@ -89,7 +88,7 @@ tooltip label {
     margin: 0px 2px;
     min-width: 14px;
     background: @surface1;
-
+            background-color: @surface1;
 }
 
 /* Center single-icon modules for consistent alignment */
@@ -123,7 +122,6 @@ tooltip label {
 #custom-flathub:hover,
 #custom-powermenu:hover,
 #custom-aur:hover,
-#tray:hover,
 #temperature:hover,
 #network:hover,
 #wireplumber:hover,
@@ -132,37 +130,47 @@ tooltip label {
 #idle_inhibitor:hover,
 #custom-notification:hover {
     color: @sapphire;
-    background: @surface1;
+    background-color: @surface1;
 }
 
+
+/*
+ *╭─────────────────────────────────────╮
+ *│                Tray                 │
+ *╰─────────────────────────────────────╯
+*/
 #tray {
-    background: @surface1;
+    background-color: @surface1;
     margin: 0px 10px;
 }
 
 #tray menu {
-    background-color: rgba(15, 23, 42, 0.9);
+    background-color: @surface1;
     border: 1px solid rgba(125, 211, 252, 0.22);
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
     border-radius: 8px;
     padding: 8px 8px;
-    margin-top: 2px;
+    margin-top: 4px;
     color: @text;
 }
 
 #tray menuitem {
     padding: 2px 8px;
+    background-color: @surface1;
     border-radius: 4px;
 }
 
 #tray menuitem:hover {
+    background-color: @surface1;
     background: rgba(96, 165, 250, 0.16);
     color: @text;
 }
 
 #tray > .needs-attention {
     color: @red;
+    background: red;
     text-shadow: 0 0 8px rgba(251, 113, 133, 0.4);
+    background-color: @surface1;
 }
 
 /*

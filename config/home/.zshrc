@@ -3,6 +3,11 @@ autoload -U promptinit && promptinit
 eval "$(oh-my-posh init zsh --config $HOME/.oh-my-posh.toml)"
 
 #╭──────────────────────────────────────╮
+#│              Variables               │
+#╰──────────────────────────────────────╯
+export CMAKE_GENERATOR="Ninja"
+
+#╭──────────────────────────────────────╮
 #│                ZINIT                 │
 #╰──────────────────────────────────────╯
 # Set the directory we want to store zinit and plugins
