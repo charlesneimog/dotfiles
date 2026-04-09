@@ -120,7 +120,7 @@
 
     "custom/aur": {
         "format": "{text}",
-        "interval": 6000,
+        "interval": 900,
         "exec": "$HOME/.functions.sh get_aur_waybar_icon",
         "on-click": "ghostty -e bash -lc \"paru -Scc --noconfirm && paru -Syu --noconfirm && sudo pacman -Scc --noconfirm && pkill -SIGRTMIN+8 waybar\"",
         "signal": 8,
@@ -130,7 +130,7 @@
 
     "custom/flathub": {
         "format": "{text}",
-        "interval": 43200,
+        "interval": 900,
         "exec": "$HOME/.functions.sh get_flatpak_waybar_icon",
         "on-click": "$HOME/.functions.sh update_flatpak_packages",
         "signal": 9,

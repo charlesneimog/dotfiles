@@ -1,6 +1,6 @@
 OWNER=charlesneimog
-REPO=pd4web
-WORKFLOW_ID=Compiler.yml
+REPO=pd-xlab
+WORKFLOW_ID=cmake-multi-platform.yml
 
 # list workflows
 gh api -X GET /repos/$OWNER/$REPO/actions/workflows | jq '.workflows[] | .name,.id'

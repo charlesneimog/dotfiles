@@ -10,6 +10,18 @@ return {
 			require("focusservice").setup({ port = 7079 })
 		end,
 	},
+	{
+		"luisjure/csound-vim",
+		config = function()
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "csound",
+				callback = function()
+					vim.opt_local.foldmethod = "manual"
+					vim.opt_local.foldenable = false
+				end,
+			})
+		end,
+	},
 	{ "vuciv/golf" },
 	{
 		"mcauley-penney/visual-whitespace.nvim",

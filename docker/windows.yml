@@ -1,0 +1,28 @@
+services:
+  windows:
+    image: dockurr/windows
+    container_name: windows
+
+    environment:
+      VERSION: "11"
+      DISK_SIZE: "64G"
+      RAM_SIZE: "12G"
+      CPU_CORES: "12"
+      KEYBOARD: "pt-BR"
+      AUDIO: "pa"
+      PULSE_SERVER: "unix:/run/user/1000/pulse/native"
+
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+
+    volumes:
+      - /home/neimog/.windows:/storage
+      - /run/user/1000/pulse:/run/user/1000/pulse
+
+    ports:
+      - 8006:8006
+      - 3389:3389/tcp
+      - 3389:3389/udp
+
+    restart: always

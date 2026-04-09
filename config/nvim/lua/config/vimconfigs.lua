@@ -37,4 +37,5 @@ vim.diagnostic.config({
 
 -- Work
 vim.cmd("autocmd BufRead,BufNewFile *.pd_lua set filetype=lua")
+vim.cmd("autocmd BufRead,BufNewFile *.pd_luajit set filetype=lua")
 vim.cmd("autocmd BufRead,BufNewFile *.pd_py set filetype=python")

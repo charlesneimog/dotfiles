@@ -12,6 +12,7 @@ return {
 			javascript = { "prettier" },
 			css = { "prettier" },
 			html = { "prettier" },
+			toml = { "taplo" },
 
 			-- data
 			yaml = { "yamlfix" },
@@ -26,7 +27,6 @@ return {
 			cpp = { "clang-format" },
 			c = { "clang-format" },
 			cmake = { "cmake_format" },
-
 		}
 		local formatters = {}
 		local mason_conform = {

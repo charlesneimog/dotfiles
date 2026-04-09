@@ -38,8 +38,7 @@ startup_services() {
 
     # Apps
     xwayland-satellite &
-    nextcloud &
-    anytype &
+    # nextcloud &
     blueman-applet &
     waybar &
     hypridle &
@@ -47,7 +46,7 @@ startup_services() {
 
     org.gnome.Calendar --gapplication-service &
     org.gnome.clocks --gapplication-service &
-
+    io.github.alainm23.planify --background &
     io.anytype.anytype &
 
     concentrate #--logdebug > /home/neimog/focus.log 2>&1 &
@@ -121,12 +120,13 @@ get_flatpak_waybar_icon() {
     local text
 
     tooltip=$(
-        flatpak remote-ls --updates --columns=name,version 2>/dev/null |
+        flatpak update -n 2>/dev/null |
         awk '
-            { names[NR]=$1; vers[NR]=$2; if (length($1)>max) max=length($1) }
-            END {
-                for (i=1; i<=NR; i++)
-                    printf "%-*s  v%s\n", max, names[i], vers[i]
+            BEGIN { start=0 }
+            /^ *[0-9]+\./ { start=1 }
+            start && NF {
+                name=$2
+                printf "%s\n", name
             }
         '
     )
@@ -145,8 +145,11 @@ get_flatpak_waybar_icon() {
         text=" $updates"
     fi
 
-    # JSON-safe tooltip
-    tooltip=$(printf "%s" "$tooltip" | sed ':a;N;$!ba;s/\n/\\n/g; s/"/\\"/g')
+    tooltip=$(
+        printf "%s\n" "$tooltip" |
+        sed '/^\s*$/d' |
+        sed ':a;N;$!ba;s/\n/\\n/g; s/"/\\"/g'
+    )
 
     printf '{"text":"%s","tooltip":"%s","alt":"%s","class":"%s"}\n' \
         "$text" "$tooltip" "$updates" "$class"
