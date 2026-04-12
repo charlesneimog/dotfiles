@@ -21,6 +21,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
 vim.pack.add({
 	-- GUI
 	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/karb94/neoscroll.nvim",
 
 	-- Quality of Live
 	"https://github.com/folke/snacks.nvim",
@@ -82,6 +83,7 @@ vim.pack.add({
 	"https://github.com/mason-org/mason-lspconfig.nvim",
 	"https://github.com/linrongbin16/lsp-progress.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/lewis6991/hover.nvim",
 
 	-- treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
@@ -100,6 +102,9 @@ vim.pack.add({
 
 	-- render tabs
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
+
+	-- SuperCollider
+	"https://github.com/davidgranstrom/scnvim",
 })
 
 require("config.keys")

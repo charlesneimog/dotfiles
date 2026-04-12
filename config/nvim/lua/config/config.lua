@@ -154,7 +154,7 @@ cmp.setup({
 })
 
 --╭─────────────────────────────────────╮
---│             Comment Box             │
+--│             COMMENT BOX             │
 --╰─────────────────────────────────────╯
 require("comment-box").setup({
 	doc_width = 40, -- width of the document
@@ -168,7 +168,16 @@ FILES_TO_FORMAT = {}
 
 require("conform").setup({
 	formatters_by_ft = {
+		cmake = { "cmake_format" },
 		lua = { "stylua" },
+		c = { "clang_format" },
+		cpp = { "clang_format" },
+		javascript = { "prettier" },
+		json = { "prettier" },
+		yaml = { "prettier" },
+		html = { "prettier" },
+		css = { "prettier" },
+		python = { "isort", "black" },
 	},
 	format_on_save = function(bufnr)
 		local file = vim.api.nvim_buf_get_name(bufnr)
@@ -187,6 +196,24 @@ require("conform").setup({
 			return false
 		end
 	end,
+})
+
+--╭─────────────────────────────────────╮
+--│              LSP HOVER              │
+--╰─────────────────────────────────────╯
+require("hover").setup({
+	init = function()
+		require("hover.providers.lsp")
+	end,
+	preview_opts = {
+		border = "single",
+	},
+	preview_window = false,
+	title = true,
+	mouse_providers = {
+		"LSP",
+	},
+	mouse_delay = 1000,
 })
 
 --╭─────────────────────────────────────╮
@@ -338,6 +365,28 @@ require("noice").setup({
 --│                MASON                │
 --╰─────────────────────────────────────╯
 require("mason").setup({})
+
+--╭─────────────────────────────────────╮
+--│              NEOSCROLL              │
+--╰─────────────────────────────────────╯
+require("neoscroll").setup({
+	hide_cursor = true, -- Hide cursor while scrolling
+	stop_eof = true, -- Stop at <EOF> when scrolling downwards
+	respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+	cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+	duration_multiplier = 1.0, -- Global duration multiplier
+	easing = "linear", -- Default easing function
+	pre_hook = nil, -- Function to run before the scrolling animation starts
+	post_hook = nil, -- Function to run after the scrolling animation ends
+	performance_mode = false, -- Disable "Performance Mode" on all buffers.
+})
+
+--╭─────────────────────────────────────╮
+--│            SUPERCOLLIDER            │
+--╰─────────────────────────────────────╯
+require("scnvim").setup({
+	ensure_installed = true,
+})
 
 --╭─────────────────────────────────────╮
 --│             TREESITTER              │

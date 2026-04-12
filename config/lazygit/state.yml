@@ -1,10 +1,13 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/charlesneimog.github.io
-    - /home/neimog/Documents/Git/pd4web
-    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/OpenScofo
+    - /home/neimog/Documents/Git/LocalReader
+    - /home/neimog/Documents/Git/pd-bhack
+    - /home/neimog/Documents/Git/pd-dddd
+    - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/charlesneimog.github.io
+    - /home/neimog/Documents/Git/pd.cmake
     - /home/neimog/Documents/Git/pd-else
     - /home/neimog/Documents/Git/mar_tilde
     - /home/neimog/Documents/Git/anytype-client
@@ -12,11 +15,9 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-lua
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/pd-xlab
-    - /home/neimog/Documents/Git/pd-bhack
     - /home/neimog/Documents/Git/telematico
     - /home/neimog/Documents/Git/pd-saf
     - /home/neimog/Documents/Git/onsetsds_tilde
-    - /home/neimog/Documents/Git/LocalReader
     - /home/neimog/Documents/Git/Score-follower
     - /home/neimog/Documents/Git/pd-onnx
     - /home/neimog/Documents/Git/concentrate
@@ -30,7 +31,7 @@ recentrepos:
     - /home/neimog/Documents/Git/gaiasense
 startuppopupversion: 5
 didshowhunkstaginghint: true
-lastversion: 0.61.0
+lastversion: 0.61.1
 customcommandshistory:
     - q
     - ""
@@ -41,8 +42,18 @@ customcommandshistory:
     - '?'
 hidecommandlog: false
 githubPullRequests:
+    /home/neimog/Documents/Git/LocalReader: []
+    /home/neimog/Documents/Git/OpenScofo:
+        - headRefName: main
+          number: 7
+          title: fix out-of-bound access for chord lookup in online editor
+          state: MERGED
+          url: https://github.com/charlesneimog/OpenScofo/pull/7
+          headRepositoryOwner: nendonerd
     /home/neimog/Documents/Git/charlesneimog.github.io: []
     /home/neimog/Documents/Git/dotfiles: []
+    /home/neimog/Documents/Git/pd-bhack: []
+    /home/neimog/Documents/Git/pd-dddd: []
     /home/neimog/Documents/Git/pd.cmake:
         - headRefName: main
           number: 5

@@ -52,7 +52,9 @@ vim.keymap.set({ "n", "i" }, "<leader>sf", "<cmd>Telescope find_files<cr>", {
 	desc = "[S]earch [F]iles",
 })
 
--- search
+--╭─────────────────────────────────────╮
+--│               search                │
+--╰─────────────────────────────────────╯
 vim.keymap.set({ "n", "i" }, "<leader>sf", function()
 	builtin.find_files()
 end, { desc = "[S]earch [F]iles" })
@@ -73,21 +75,23 @@ vim.keymap.set({ "n", "i" }, "<leader>sd", function()
 	builtin.lsp_definitions()
 end, { desc = "[S]earch [D]efinitions" })
 
--- file browser
+--╭─────────────────────────────────────╮
+--│            file browser             │
+--╰─────────────────────────────────────╯
 vim.keymap.set({ "n", "i" }, "<leader>bf", function()
 	telescope.extensions.file_browser.file_browser()
 end, { desc = "[F]ile [B]rowser" })
 
--- aerial
+--╭─────────────────────────────────────╮
+--│               aerial                │
+--╰─────────────────────────────────────╯
 vim.keymap.set("n", "<leader>a", function()
 	telescope.extensions.aerial.aerial()
 end, { desc = "Aerial" })
 
-
---          ╭─────────────────────────────────────────────────────────╮
---          │                          Mason                          │
---          ╰─────────────────────────────────────────────────────────╯
---
+--╭─────────────────────────────────────╮
+--│                MASON                │
+--╰─────────────────────────────────────╯
 vim.api.nvim_set_keymap(
 	"n",
 	"<leader>rn",
@@ -108,3 +112,10 @@ vim.api.nvim_set_keymap(
 	"<cmd>lua vim.lsp.buf.code_action()<CR>",
 	{ noremap = true, silent = true, desc = "Code [A]ction" }
 )
+
+--╭─────────────────────────────────────╮
+--│                HOVER                │
+--╰─────────────────────────────────────╯
+vim.keymap.set({ "n" }, "K", function()
+	require("hover").hover()
+end, { desc = "Get hover information" })

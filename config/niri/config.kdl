@@ -299,6 +299,10 @@ binds {
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "s" "5%-"; }
     XF86Calculator { spawn "flatpak" "run" "org.gnome.Calculator"; }
 
+    XF86AudioPrev { spawn "playerctl" "prev"; }
+    XF86AudioNext { spawn "playerctl" "next"; }
+    XF86AudioPause {spawn "playerctl" "play-pause";}
+
     Mod+O repeat=false {
         toggle-overview
     }
