@@ -81,11 +81,6 @@ alias inkscape='org.inkscape.Inkscape'
 alias cat='bat --paging=never'
 
 #╭──────────────────────────────────────╮
-#│             Conda Setup              │
-#╰──────────────────────────────────────╯
-export PATH="$PATH:/home/neimog/.local/bin"
-
-#╭──────────────────────────────────────╮
 #│                 Yazi                 │
 #╰──────────────────────────────────────╯
 export EDITOR=nvim
@@ -103,22 +98,28 @@ PATH=/usr/local/bin:$PATH
 alias wish='/usr/local/bin/wish9.1'
 
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/neimog/.config/miniconda3.dir/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh" ]; then
-        . "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/neimog/.config/miniconda3.dir/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-ibus-daemon -drx
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/home/neimog/.config/miniconda3.dir/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh" ]; then
+#         . "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/neimog/.config/miniconda3.dir/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
 
+function conda() {
+    unset -f conda
+    source /home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh
+    conda "$@"
+}
+
+ibus-daemon -drx
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall

@@ -1,18 +1,21 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/OpenScofo
     - /home/neimog/Documents/Git/LocalReader
+    - /home/neimog/Documents/Git/pd4web
+    - /home/neimog/Documents/Git/pd.cmake
+    - /home/neimog/Documents/Git/charlesneimog.github.io
+    - /home/neimog/Documents/Git/LocalReader/thirdparty/foliate-js
+    - /home/neimog/Documents/Git/OpenScofo
+    - /home/neimog/Documents/Git/concentrate
+    - /home/neimog/Documents/Git/pure-data
+    - /home/neimog/Documents/Git/pd-else
+    - /home/neimog/Documents/Git/pd-lua
+    - /home/neimog/.config/miniconda3.dir/lib/python3.13/site-packages/pd4web/Pd4Web/pd.cmake
     - /home/neimog/Documents/Git/pd-bhack
     - /home/neimog/Documents/Git/pd-dddd
-    - /home/neimog/Documents/Git/pd4web
-    - /home/neimog/Documents/Git/charlesneimog.github.io
-    - /home/neimog/Documents/Git/pd.cmake
-    - /home/neimog/Documents/Git/pd-else
     - /home/neimog/Documents/Git/mar_tilde
     - /home/neimog/Documents/Git/anytype-client
-    - /home/neimog/Documents/Git/pure-data
-    - /home/neimog/Documents/Git/pd-lua
     - /home/neimog/Documents/Git/py4pd
     - /home/neimog/Documents/Git/pd-xlab
     - /home/neimog/Documents/Git/telematico
@@ -20,7 +23,6 @@ recentrepos:
     - /home/neimog/Documents/Git/onsetsds_tilde
     - /home/neimog/Documents/Git/Score-follower
     - /home/neimog/Documents/Git/pd-onnx
-    - /home/neimog/Documents/Git/concentrate
     - /home/neimog/Documents/Git/nanovgXC
     - /home/neimog/Documents/Git/nanovg
     - /home/neimog/Documents/Git/pd4web+gps
@@ -42,7 +44,51 @@ customcommandshistory:
     - '?'
 hidecommandlog: false
 githubPullRequests:
+    /home/neimog/.config/miniconda3.dir/lib/python3.13/site-packages/pd4web/Pd4Web/pd.cmake:
+        - headRefName: main
+          number: 5
+          title: Minor updates and add github actions
+          state: MERGED
+          url: https://github.com/pure-data/pd.cmake/pull/5
+          headRepositoryOwner: charlesneimog
+        - headRefName: main
+          number: 1
+          title: Merge `pd.build` from Pierre Guillot
+          state: MERGED
+          url: https://github.com/pure-data/pd.cmake/pull/1
+          headRepositoryOwner: charlesneimog
     /home/neimog/Documents/Git/LocalReader: []
+    /home/neimog/Documents/Git/LocalReader/thirdparty/foliate-js:
+        - headRefName: main
+          number: 130
+          title: 'fix: single column mode not working for pdfs'
+          state: OPEN
+          url: https://github.com/johnfactotum/foliate-js/pull/130
+          headRepositoryOwner: Skazitron
+        - headRefName: main
+          number: 105
+          title: Update pdf.js import path to resolve build errors
+          state: OPEN
+          url: https://github.com/johnfactotum/foliate-js/pull/105
+          headRepositoryOwner: Pasithea0
+        - headRefName: main
+          number: 97
+          title: Fix null error related to the behavior of ResizeObserver on Firefox & Safari
+          state: OPEN
+          url: https://github.com/johnfactotum/foliate-js/pull/97
+          headRepositoryOwner: InfiniteRain
+        - headRefName: main
+          number: 49
+          title: 'refactor: improve readability of getSegmenter function'
+          state: CLOSED
+          url: https://github.com/johnfactotum/foliate-js/pull/49
+          headRepositoryOwner: palashahuja
+        - headRefName: main
+          number: 46
+          title: Fix selection handling in Paginator component
+          state: MERGED
+          url: https://github.com/johnfactotum/foliate-js/pull/46
+          headRepositoryOwner: Ray-D-Song
     /home/neimog/Documents/Git/OpenScofo:
         - headRefName: main
           number: 7
@@ -51,9 +97,18 @@ githubPullRequests:
           url: https://github.com/charlesneimog/OpenScofo/pull/7
           headRepositoryOwner: nendonerd
     /home/neimog/Documents/Git/charlesneimog.github.io: []
+    /home/neimog/Documents/Git/concentrate: []
     /home/neimog/Documents/Git/dotfiles: []
     /home/neimog/Documents/Git/pd-bhack: []
     /home/neimog/Documents/Git/pd-dddd: []
+    /home/neimog/Documents/Git/pd-else: []
+    /home/neimog/Documents/Git/pd-lua:
+        - headRefName: emscripten
+          number: 2
+          title: add support to pdlua to emscripten (pd4web and others)
+          state: OPEN
+          url: https://github.com/EL-LOCUS-SOLUS/pd-lua/pull/2
+          headRepositoryOwner: EL-LOCUS-SOLUS
     /home/neimog/Documents/Git/pd.cmake:
         - headRefName: main
           number: 5
@@ -68,3 +123,36 @@ githubPullRequests:
           url: https://github.com/pure-data/pd.cmake/pull/1
           headRepositoryOwner: charlesneimog
     /home/neimog/Documents/Git/pd4web: []
+    /home/neimog/Documents/Git/pure-data: []
+    /home/neimog/Downloads/Algorithm-Music: []
+    /home/neimog/Downloads/LuaJIT:
+        - headRefName: v2.1
+          number: 1419
+          title: Support for C-style comments.
+          state: CLOSED
+          url: https://github.com/LuaJIT/LuaJIT/pull/1419
+          headRepositoryOwner: 1therealcloud
+        - headRefName: v2.1
+          number: 1409
+          title: Fix LTO and -fvisibility=hidden builds
+          state: CLOSED
+          url: https://github.com/LuaJIT/LuaJIT/pull/1409
+          headRepositoryOwner: StDymphna
+        - headRefName: v2.1
+          number: 1367
+          title: Prevent SIGSEGV from unpack call with a high lower/upper bound. + Prevent SIGSEGV from pcall(error) in a recursive context.
+          state: CLOSED
+          url: https://github.com/LuaJIT/LuaJIT/pull/1367
+          headRepositoryOwner: Regen1337
+        - headRefName: v2.1
+          number: 1271
+          title: Exposing the GC Estimate Value to the API
+          state: CLOSED
+          url: https://github.com/LuaJIT/LuaJIT/pull/1271
+          headRepositoryOwner: LeonTheo02
+        - headRefName: v2.1
+          number: 1190
+          title: Fix OSX 10.6 / iOS 4.2
+          state: CLOSED
+          url: https://github.com/LuaJIT/LuaJIT/pull/1190
+          headRepositoryOwner: Un1q32

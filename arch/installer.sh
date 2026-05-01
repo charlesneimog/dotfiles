@@ -204,3 +204,13 @@ sudo chmod u+rw /usr/share/sddm/themes/silent/backgrounds/smoky.jpg
 #╰──────────────────────────────────────╯
 gh auth login
 netbird login
+
+#╭──────────────────────────────────────╮
+#│                Config                │
+#╰──────────────────────────────────────╯
+mkdir -p /home/neimog/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/
+# 
+ln /home/neimog/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so /home/neimog/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so
+
+
+

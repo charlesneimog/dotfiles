@@ -130,7 +130,7 @@
 
     "custom/flathub": {
         "format": "{text}",
-        "interval": 900,
+        "interval": 43200,
         "exec": "$HOME/.functions.sh get_flatpak_waybar_icon",
         "on-click": "$HOME/.functions.sh update_flatpak_packages",
         "signal": 9,
