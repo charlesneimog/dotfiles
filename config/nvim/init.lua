@@ -100,11 +100,17 @@ vim.pack.add({
 	"https://github.com/MunifTanjim/nui.nvim",
 	"https://github.com/folke/noice.nvim",
 
+	-- Latex
+	"https://github.com/chomosuke/typst-preview.nvim",
+
 	-- render tabs
 	"https://github.com/lukas-reineke/indent-blankline.nvim",
 
 	-- SuperCollider
 	"https://github.com/davidgranstrom/scnvim",
+
+	-- OpenScofo
+	{ src = "https://github.com/charlesneimog/OpenScofo", name = "OpenScofo", version = "main" },
 })
 
 require("config.keys")

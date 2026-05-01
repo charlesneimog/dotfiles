@@ -29,6 +29,7 @@ launch_powermenu() {
 startup_services() {
     /usr/lib/xdg-desktop-portal-gtk &
     /usr/lib/xdg-desktop-portal-gnome &
+    /usr/lib/evolution-data-server/evolution-alarm-notify &
 
     # Services
     wl-paste --type text --watch cliphist store &
@@ -114,31 +115,51 @@ update_flatpak_packages() {
 
 # ──────────────────────────────────────
 get_flatpak_waybar_icon() {
-    local updates
-    local tooltip
-    local class
-    local text
+    local tooltip=""
+    local updates=0
+    local class=""
+    local text=""
+
+    # system installation
+    if flatpak remotes --system | grep -q '^flathub'; then
+        tooltip+=$(
+            flatpak remote-ls \
+                --system \
+                flathub \
+                --updates \
+                --columns=name \
+                2>/dev/null
+        )
+        tooltip+=$'\n'
+    fi
+
+    # user installation
+    if flatpak remotes --user | grep -q '^flathub'; then
+        tooltip+=$(
+            flatpak remote-ls \
+                --user \
+                flathub \
+                --updates \
+                --columns=name \
+                2>/dev/null
+        )
+        tooltip+=$'\n'
+    fi
 
     tooltip=$(
-        flatpak update -n 2>/dev/null |
-        awk '
-            BEGIN { start=0 }
-            /^ *[0-9]+\./ { start=1 }
-            start && NF {
-                name=$2
-                printf "%s\n", name
-            }
-        '
+        printf "%s\n" "$tooltip" |
+        sort -u |
+        sed '/^\s*$/d'
     )
 
-    updates=$(printf "%s\n" "$tooltip" | sed '/^\s*$/d' | wc -l)
+    updates=$(printf "%s\n" "$tooltip" | grep -c .)
 
     if [ "$updates" -eq 0 ]; then
         class="noupdates"
         text=""
         tooltip="No Flatpak updates"
-    elif [ "$updates" -gt 10 ]; then
-        class="morethen10updates"
+    elif [ "$updates" -ge 10 ]; then
+        class="morethan10updates"
         text=" $updates"
     else
         class="updates"
@@ -147,12 +168,14 @@ get_flatpak_waybar_icon() {
 
     tooltip=$(
         printf "%s\n" "$tooltip" |
-        sed '/^\s*$/d' |
         sed ':a;N;$!ba;s/\n/\\n/g; s/"/\\"/g'
     )
 
     printf '{"text":"%s","tooltip":"%s","alt":"%s","class":"%s"}\n' \
-        "$text" "$tooltip" "$updates" "$class"
+        "$text" \
+        "$tooltip" \
+        "$updates" \
+        "$class"
 }
 
 # ──────────────────────────────────────
@@ -179,46 +202,49 @@ get_aur_waybar_icon() {
         awk '
             {
                 name=$1
-                new=$NF
+                old=$2
+                new=$4
+
                 names[NR]=name
                 vers[NR]=new
-                if (length(name) > max) max = length(name)
+
+                if (length(name) > max)
+                    max = length(name)
             }
+
             END {
-                for (i=1; i<=NR; i++)
-                    printf "%-*s  v%s\n", max, names[i], vers[i]
+                for (i = 1; i <= NR; i++)
+                    printf "%-*s  %s\n", max, names[i], vers[i]
             }
         '
     )
 
-    updates=$(printf "%s\n" "$tooltip" | sed '/^\s*$/d' | wc -l)
+    updates=$(paru -Qu 2>/dev/null | wc -l)
 
     if [ "$updates" -eq 0 ]; then
         class="noupdates"
         text=""
         tooltip="No AUR updates"
-    elif [ "$updates" -gt 10 ]; then
-        class="morethen10updates"
+    elif [ "$updates" -ge 10 ]; then
+        class="morethan10updates"
         text=" $updates"
     else
         class="updates"
         text=" $updates"
     fi
 
-    # JSON-safe tooltip
-    tooltip=$(printf "%s" "$tooltip" | sed ':a;N;$!ba;s/\n/\\n/g; s/"/\\"/g')
+    tooltip=$(
+        printf "%s" "$tooltip" |
+        sed ':a;N;$!ba;s/\n/\\n/g; s/"/\\"/g'
+    )
 
     printf '{"text":"%s","tooltip":"%s","alt":"%s","class":"%s"}\n' \
         "$text" "$tooltip" "$updates" "$class"
-
-    pkill -SIGRTMIN+9 waybar
 }
 
 # ──────────────────────────────────────
 update_aur_packages() {
     notify-send "Update" "Checking for updates in AUR" -t 1000
-    paru -Sy
-    pacman -Sy
 
     pkill -SIGRTMIN+8 waybar
 
@@ -233,34 +259,8 @@ update_aur_packages() {
         return 0
     fi
 
-    local PASSWORD
-    PASSWORD=$(zenity --password --title="Authentication Required for update") || {
-        notify-send "Update" "Cancelled by user" -t 1000
-        pkill -SIGRTMIN+8 waybar
-        return 1
-    }
+    notify-send "Update" "$updates package updates available" -t 1000
 
-    # Validate password
-    echo "$PASSWORD" | sudo -S true 2>/dev/null || {
-        notify-send "Update" "Incorrect password" -t 1000
-        pkill -SIGRTMIN+8 waybar
-        return 1
-    }
-
-    # Run update inside wezterm
-    bash -c "
-        echo \"$PASSWORD\" | sudo -S pacman -Sy && paru -Sy && paru -Syu --noconfirm 
-        if [ \$? -eq 0 ]; then
-            notify-send 'Update' 'System packages updated'
-            pkill -SIGRTMIN+8 waybar
-        else
-            notify-send 'Update' 'paru failed'
-            pkill -SIGRTMIN+8 waybar
-        fi
-    "
-
-    printf '{"text": "%s", "tooltip": "%s", "alt": "%s", "class": "%s"}\n' \
-        "$ACTIVE" "$ACTIVE" "$ACTIVE" "$CLASS"
     pkill -SIGRTMIN+8 waybar
 }
 

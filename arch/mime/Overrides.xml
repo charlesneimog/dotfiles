@@ -21,4 +21,11 @@
 		<generic-icon name="musescore-neimog" />
 	</mime-type>
 
+	<!-- OpenScofo -->
+    <mime-type type="text/x-scofo">
+		<comment xml:lang="en">OpenScofo</comment>
+		<glob pattern="*.scofo"/>
+		<generic-icon name="text-x-scofo" />
+	</mime-type>
+
 </mime-info>

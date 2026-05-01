@@ -1,8 +1,4 @@
 #!/bin/bash
-
-rm -dfr ~/.config/niri
-rm -dfr ~/.config/waybar
-
 #╭──────────────────────────────────────╮
 #│         Pacman Configuration         │
 #╰──────────────────────────────────────╯
@@ -30,7 +26,7 @@ source ./arch/packages.conf
 mkdir -p /home/neimog/Downloads
 
 #╭──────────────────────────────────────╮
-#│             Install paru              │
+#│             Install paru             │
 #╰──────────────────────────────────────╯
 if ! command -v paru  &> /dev/null; then
     echo "paru  não encontrado. Instalando..."
@@ -105,8 +101,8 @@ sudo cp ~/Documents/Scripts/notitranslation /usr/bin/
 #╭──────────────────────────────────────╮
 #│              Mime types              │
 #╰──────────────────────────────────────╯
-sudo cp ~/Documents/Git/dotfiles/Arch/icons/*.svg /usr/share/icons/
-sudo cp ~/Documents/Git/dotfiles/Arch/mime/Overrides.xml /usr/share/mime/packages/
+sudo cp ~/Documents/Git/dotfiles/arch/icons/*.svg /usr/share/icons/
+sudo cp ~/Documents/Git/dotfiles/arch/mime/Overrides.xml /usr/share/mime/packages/
 
 #╭──────────────────────────────────────╮
 #│            Configurations            │
@@ -204,3 +200,10 @@ sudo chmod u+rw /usr/share/sddm/themes/silent/backgrounds/smoky.jpg
 #╰──────────────────────────────────────╯
 gh auth login
 netbird login
+
+#╭──────────────────────────────────────╮
+#│                Config                │
+#╰──────────────────────────────────────╯
+mkdir -p /home/neimog/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/
+# 
+ln /home/neimog/.local/share/MuseSampler/lib/libMuseSamplerCoreLib.so /home/neimog/.var/app/org.musescore.MuseScore/data/MuseSampler/lib/libMuseSamplerCoreLib.so

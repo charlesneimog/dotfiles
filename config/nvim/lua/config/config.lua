@@ -162,6 +162,10 @@ require("comment-box").setup({
 })
 
 --╭─────────────────────────────────────╮
+--│             CONCENTRATE             │
+--╰─────────────────────────────────────╯
+require("focusservice").setup({ port = 7079 })
+--╭─────────────────────────────────────╮
 --│              FORMARTING             │
 --╰─────────────────────────────────────╯
 FILES_TO_FORMAT = {}
@@ -512,6 +516,15 @@ elseif sysname == "Darwin" then
 	end
 end
 
+vim.api.nvim_create_user_command("SetMyTheme", function()
+	local theme = vim.g.colors_name
+	if theme == "catppuccin-mocha" then
+		vim.cmd.colorscheme("catppuccin-latte")
+	else
+		vim.cmd.colorscheme("catppuccin-mocha")
+	end
+end, {})
+
 --╭─────────────────────────────────────╮
 --│              Telescope              │
 --╰─────────────────────────────────────╯
@@ -562,3 +575,9 @@ require("trouble").setup({
 	position = "right",
 	width = 50,
 })
+
+--╭─────────────────────────────────────╮
+--│              OpenScofo              │
+--╰─────────────────────────────────────╯
+vim.opt.rtp:append(vim.fn.stdpath("data") .. "/site/pack/core/opt/OpenScofo/Sources/Language/nvim")
+require("openscofo").setup()

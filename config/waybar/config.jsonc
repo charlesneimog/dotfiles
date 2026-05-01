@@ -3,7 +3,7 @@
     "spacing": 1,
     "modules-left": ["group/quick-actions", "custom/weather", "tray", "wlr/taskbar", "privacy"],
     "modules-center": ["niri/workspaces"],
-    "modules-right": ["network", "backlight", "wireplumber", "group/hardware", "clock", "custom/notification"],
+    "modules-right": ["custom/task", "mpris", "network", "backlight", "wireplumber", "group/hardware", "clock", "custom/notification"],
 
     "wlr/taskbar": {
         "format": "{icon}",
@@ -12,6 +12,11 @@
         "tooltip-format": "{title}",
         "on-click": "activate",
         "on-click-middle": "close"
+    },
+
+    "custom/task": {
+        "format": "",
+        "on-click": "flatpak run --command=io.github.alainm23.planify.quick-add io.github.alainm23.planify"
     },
 
     "custom/weather": {
@@ -122,7 +127,7 @@
         "format": "{text}",
         "interval": 900,
         "exec": "$HOME/.functions.sh get_aur_waybar_icon",
-        "on-click": "ghostty -e bash -lc \"paru -Scc --noconfirm && paru -Syu --noconfirm && sudo pacman -Scc --noconfirm && pkill -SIGRTMIN+8 waybar\"",
+        "on-click": "$HOME/.functions.sh update_aur_packages",
         "signal": 8,
         "tooltip": true,
         "return-type": "json"
@@ -130,7 +135,7 @@
 
     "custom/flathub": {
         "format": "{text}",
-        "interval": 900,
+        "interval": 43200,
         "exec": "$HOME/.functions.sh get_flatpak_waybar_icon",
         "on-click": "$HOME/.functions.sh update_flatpak_packages",
         "signal": 9,
@@ -216,14 +221,14 @@
     "custom/notification": {
         "tooltip": false,
         "format-icons": {
-            "notification": "<span foreground='red'><sup></sup></span>",
-            "none": "",
-            "dnd-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-none": "",
-            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-            "inhibited-none": "",
-            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-inhibited-none": ""
+            "notification": "󰂚<span foreground='#b86a7f' rise='5000' size='small'></span>",
+            "none": "󰂚",
+            "dnd-notification": "󰂛<span foreground='#b86a7f' rise='5000' size='small'></span>",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󰂚<span foreground='#b86a7f' rise='5000' size='small'></span>",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󰂛<span foreground='#b86a7f' rise='5000' size='small'></span>",
+            "dnd-inhibited-none": "󰂛"
         },
         "format": "{icon}",
         "return-type": "json",
@@ -268,14 +273,10 @@
         }
     },
 
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
+    "mpris": {
+        "format": " <i>{title}</i>",
+        "format-paused": " <i>{title}</i>",
+        "title-len": 20,
     },
 
     "cpu": {
@@ -292,6 +293,10 @@
         "on-click": "flatpak run net.nokyan.Resources"
     },
 
+    "task": {
+
+    },
+
     "clock": {
         "format": "󱑂 {:%H:%M:%S %a %d %b}",
         "tooltip-format": "<span size='11000'>{calendar}</span>",
@@ -301,11 +306,10 @@
             "on-scroll"     : 1,
             "on-click-right": "mode",
             "format": {
-                "months":   "<span size='11000' color='#a5b4fc'><b>{}</b></span>",   // lavender
-                "days":     "<span size='11000' color='#e5e7eb'><b>{}</b></span>",   // text
-                "weekdays": "<span size='11000' color='#facc15'>{}</span>",   // yellow
-                "weeks":    "<span size='11000' color='#22d3ee'><b>W{}</b></span>",       // teal
-                "today":    "<span size='11000' color='#f472b6'><b><u>{}</u></b></span>" // maroon
+                "months":   "<span size='11000' color='#b4befe'><b>{}</b></span>",   // lavender
+                "days":     "<span size='11000' color='#cdd6f4'><b>{}</b></span>",   // text
+                "weekdays": "<span size='11000' color='#f9e2af'>{}</span>",   // yellow
+                "today":    "<span size='11000' color='#eba0ac'><b><u>{}</u></b></span>" // maroon
             }
         },
         "timezone": "Brazil/East",
