@@ -3,7 +3,7 @@
     "spacing": 1,
     "modules-left": ["group/quick-actions", "custom/weather", "tray", "wlr/taskbar", "privacy"],
     "modules-center": ["niri/workspaces"],
-    "modules-right": ["custom/task", "mpris", "network", "backlight", "wireplumber", "group/hardware", "clock", "custom/notification"],
+    "modules-right": ["custom/task", "mpris", "network", "backlight", "pulseaudio", "group/hardware", "clock", "custom/notification"],
 
     "wlr/taskbar": {
         "format": "{icon}",
@@ -104,7 +104,7 @@
         "format-icons": ["", "", ""]
     },
 
-    "wireplumber": {
+    "pulseaudio": {
         "format": "{volume}% {icon} ",
         "format-muted": "Muted ",
         "format-icons": ["", "", ""],

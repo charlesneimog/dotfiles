@@ -109,6 +109,9 @@ vim.pack.add({
 	-- SuperCollider
 	"https://github.com/davidgranstrom/scnvim",
 
+	-- Minimalist
+	"https://github.com/pocco81/true-zen.nvim",
+
 	-- OpenScofo
 	{ src = "https://github.com/charlesneimog/OpenScofo", name = "OpenScofo", version = "main" },
 })

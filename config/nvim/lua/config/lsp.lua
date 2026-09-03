@@ -21,5 +21,4 @@ vim.lsp.enable("yamlls")
 vim.lsp.enable("tinymist")
 
 vim.opt.rtp:append(vim.fn.stdpath("data") .. "/site/pack/core/opt/OpenScofo/Sources/Language/nvim")
-
 require("openscofo").setup()

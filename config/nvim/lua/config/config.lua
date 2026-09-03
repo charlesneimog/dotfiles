@@ -581,3 +581,8 @@ require("trouble").setup({
 --╰─────────────────────────────────────╯
 vim.opt.rtp:append(vim.fn.stdpath("data") .. "/site/pack/core/opt/OpenScofo/Sources/Language/nvim")
 require("openscofo").setup()
+
+--╭─────────────────────────────────────╮
+--│             Minimalist              │
+--╰─────────────────────────────────────╯
+require("true-zen").setup()

@@ -542,7 +542,7 @@ window-rule {
 
 window-rule {
     match app-id="zoom"
-    open-floating true
+    // open-floating true
 }
 
 window-rule {

@@ -88,7 +88,7 @@ tooltip label {
 #memory,
 #network,
 #workspaces,
-#wireplumber,
+#pulseaudio,
 #bluetooth,
 #backlight,
 #privacy,
@@ -162,7 +162,7 @@ tooltip label {
 #memory:hover,
 #temperature:hover,
 #network:hover,
-#wireplumber:hover,
+#pulseaudio:hover,
 #hardware:hover,
 #clock:hover,
 #idle_inhibitor:hover,
@@ -348,13 +348,13 @@ tooltip label {
  *╰─────────────────────────────────────╯
 */
 
-#wireplumber.muted {
+#pulseaudio.muted {
     color: @muted-red;
     background: @red_a;
     text-shadow: 0 0 8px rgba(88, 35, 48, 0.55);
 }
 
-#wireplumber {
+#pulseaudio {
     color: @muted-teal;
     background: @teal_a;
 }

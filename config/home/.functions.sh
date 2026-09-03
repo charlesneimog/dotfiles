@@ -41,9 +41,10 @@ startup_services() {
     xwayland-satellite &
     # nextcloud &
     blueman-applet &
-    waybar &
-    hypridle &
+    waybar > /tmp/waybar.log 2>&1 &
     swaybg --image ~/.wallpaper.png &
+
+    hypridle &
 
     org.gnome.Calendar --gapplication-service &
     org.gnome.clocks --gapplication-service &

@@ -2,6 +2,10 @@ ZSH_THEME="robbyrussell"
 autoload -U promptinit && promptinit
 eval "$(oh-my-posh init zsh --config $HOME/.oh-my-posh.toml)"
 
+export CMAKE_BUILD_PARALLEL_LEVEL=12
+export MAKEFLAGS="-j12"
+export NINJAFLAGS="-j12"
+
 #╭──────────────────────────────────────╮
 #│              Variables               │
 #╰──────────────────────────────────────╯
@@ -126,3 +130,8 @@ ibus-daemon -drx
 [[ -f /home/neimog/.dart-cli-completion/zsh-config.zsh ]] && . /home/neimog/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 export LD_LIBRARY_PATH=/home/neimog/.local/lib/arch-mojo:$LD_LIBRARY_PATH
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/neimog/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
