@@ -38,13 +38,11 @@ startup_services() {
     gnome-keyring-daemon --start --components=secrets &
 
     # Apps
-    xwayland-satellite &
-    # nextcloud &
-    blueman-applet &
-    waybar > /tmp/waybar.log 2>&1 &
-    swaybg --image ~/.wallpaper.png &
-
-    hypridle &
+    xwayland-satellite & # X11 app
+    blueman-applet & # Bluethoof
+    quickshell & # bar
+    swaybg --image ~/.wallpaper.png & # Wallpaper
+    hypridle & # Idle
 
     org.gnome.Calendar --gapplication-service &
     org.gnome.clocks --gapplication-service &

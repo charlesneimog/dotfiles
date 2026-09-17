@@ -1,0 +1,3 @@
+module QuickshellConfig
+
+# Components import their owning directories; avoid duplicate type registrations.

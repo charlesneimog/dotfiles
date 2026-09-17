@@ -1,15 +1,21 @@
+#╭──────────────────────────────────────╮
+#│                Theme                 │
+#╰──────────────────────────────────────╯
 ZSH_THEME="robbyrussell"
 autoload -U promptinit && promptinit
 eval "$(oh-my-posh init zsh --config $HOME/.oh-my-posh.toml)"
 
-export CMAKE_BUILD_PARALLEL_LEVEL=12
-export MAKEFLAGS="-j12"
-export NINJAFLAGS="-j12"
 
 #╭──────────────────────────────────────╮
 #│              Variables               │
 #╰──────────────────────────────────────╯
 export CMAKE_GENERATOR="Ninja"
+export CMAKE_BUILD_PARALLEL_LEVEL=12
+export MAKEFLAGS="-j12"
+export NINJAFLAGS="-j12"
+export PATH="/home/neimog/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR=nvim
 
 #╭──────────────────────────────────────╮
 #│                ZINIT                 │
@@ -87,7 +93,6 @@ alias cat='bat --paging=never'
 #╭──────────────────────────────────────╮
 #│                 Yazi                 │
 #╰──────────────────────────────────────╯
-export EDITOR=nvim
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
@@ -100,38 +105,7 @@ function y() {
 # pnpm end
 PATH=/usr/local/bin:$PATH 
 alias wish='/usr/local/bin/wish9.1'
-
-
-# # >>> conda initialize >>>
-# # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/home/neimog/.config/miniconda3.dir/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh" ]; then
-#         . "/home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/home/neimog/.config/miniconda3.dir/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# # <<< conda initialize <<<
-
-function conda() {
-    unset -f conda
-    source /home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh
-    conda "$@"
-}
-
+source /home/neimog/.config/miniconda3.dir/etc/profile.d/conda.sh
 ibus-daemon -drx
-
-## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /home/neimog/.dart-cli-completion/zsh-config.zsh ]] && . /home/neimog/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
-export LD_LIBRARY_PATH=/home/neimog/.local/lib/arch-mojo:$LD_LIBRARY_PATH
-
-
-# Added by Antigravity CLI installer
-export PATH="/home/neimog/.local/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"

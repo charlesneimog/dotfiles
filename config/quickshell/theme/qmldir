@@ -1,0 +1,4 @@
+singleton Board 1.0 Board.qml
+singleton Palettes 1.0 Palettes.qml
+singleton Theme 1.0 Theme.qml
+singleton Tr 1.0 Tr.qml

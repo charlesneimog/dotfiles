@@ -7,3 +7,4 @@ utils/compile_commands.json
 scripts/webpage.yaml
 /scripts/.env
 /scripts/papers.json
+/.vscode

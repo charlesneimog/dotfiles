@@ -18,12 +18,16 @@ path3: /home/neimog/Documents/Pd/externals/xlab/sf/
 path4: /home/neimog/Documents/Pd/externals/xlab/lua/pd-upic
 path5: /home/neimog/Documents/Pd/externals/xlab/lua/pd-orchidea
 path6: /home/neimog/Documents/Pd/externals/py4pd
-npath: 6
+path7: /home/neimog/Documents/Git/pd-xlab/build/xlab
+path8: /home/neimog/Documents/Git/pd-xlab/build/xlab/sf/
+path9: /home/neimog/Documents/Git/pd-xlab/build/xlab/lua/pd-upic
+path10: /home/neimog/Documents/Git/pd-xlab/build/xlab/lua/pd-orchidea
+npath: 10
 standardpath: 0
 verbose: 0
 loadlib1: /home/neimog/Documents/Pd/externals
 nloadlib: 1
 defeatrt: 0
 flags: -font-weight normal
-zoom: 1
+zoom: 2
 loading: no

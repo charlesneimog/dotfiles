@@ -49,7 +49,7 @@ prefer-no-csd
 
 layout {
     center-focused-column "never"
-    gaps 10
+    gaps 5
     preset-column-widths {
         proportion 0.2
         proportion 0.3
@@ -62,7 +62,7 @@ layout {
         proportion 0.5 
     }
     focus-ring {
-        width 4
+        width 3
         active-color "#ff000066"
     }
     border {
@@ -239,7 +239,7 @@ binds {
     Mod+B hotkey-overlay-title="Open Zen Browser" { spawn "flatpak" "run" "app.zen_browser.zen"; }
     Mod+Z hotkey-overlay-title="Open Zotero" { spawn "zotero"; }
     Mod+E hotkey-overlay-title="Open Nautilus: nautilus" { spawn "nautilus"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "bash" "-c" "$HOME/.functions.sh lock_screen"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: Hyprlock" { spawn "bash" "-c" "$HOME/.functions.sh lock_screen"; }
     XF86AudioRaiseVolume allow-when-locked=true { spawn "bash" "-c" "$HOME/.functions.sh increase_volume"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "bash" "-c" "$HOME/.functions.sh decrease_volume"; }
     XF86AudioMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
@@ -471,16 +471,19 @@ window-rule {
 window-rule {
     match app-id="(^PdWindow)"
     default-column-width { proportion 0.3; }
+    // open-floating true
 }
 
 window-rule {
     match app-id="(^PatchWindow)"
     default-column-width { proportion 0.5; }
+    // open-floating true
 }
 
 window-rule {
     match app-id="(^Menu)"
     clip-to-geometry true
+    // open-floating true
 }
 
 
