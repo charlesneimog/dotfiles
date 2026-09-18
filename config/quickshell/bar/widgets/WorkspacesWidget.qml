@@ -94,7 +94,7 @@ Item {
                             return Theme.indicatorBad
                         if (slot.focused || mouse.containsMouse)
                             return Theme.barAccent
-                        return slot.occupied ? Theme.textMuted : Theme.indicatorDim
+                        return slot.occupied ? Theme.islandTextMuted : Theme.indicatorDim
                     }
                     // Dimming separates occupied from focused without a third
                     // shape.

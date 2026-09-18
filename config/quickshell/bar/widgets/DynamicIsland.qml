@@ -261,7 +261,7 @@ Rectangle {
         : Math.min(root.height / 2, Theme.radiusLarge + 4)
 
     color: islandState.expanded
-        ? Theme.island
+        ? Theme.background
         : root.surfaceColor
     border.color: Theme.islandBorder
 

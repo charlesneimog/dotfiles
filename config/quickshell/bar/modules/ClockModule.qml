@@ -64,7 +64,7 @@ Item {
                     font.family: Theme.fontFamily
                     font.pixelSize: Math.min(11, Theme.capsuleHeight - 2)
                     font.weight: Font.DemiBold
-                    color: Theme.text
+                    color: Theme.islandText
                 }
 
                 Text {
@@ -73,7 +73,7 @@ Item {
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fontSizeSmall
                     font.weight: Font.Medium
-                    color: Theme.textMuted
+                    color: Theme.islandTextMuted
                 }
             }
         }

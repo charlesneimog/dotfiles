@@ -140,7 +140,7 @@ Singleton {
     // `split` starts a new capsule; neither is a module.
     readonly property var barDefaults: ({
         left: ["aur", "workspaces"],
-        right: ["planify", "notifications", "network", "bluetooth", "volume", "battery"]
+        right: ["notifications", "network", "bluetooth", "volume", "battery"]
     })
 
     // An entry is a bare id, or `{ id, shape, figure, when }` when the piece

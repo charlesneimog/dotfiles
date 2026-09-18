@@ -57,32 +57,23 @@ Item {
 
         Segment {
             id: leading
-
             anchors.left: parent.left
-
             width: ModuleService.activitySide
             height: parent.height
-
             visible: root.activities.length > 0
-
             activityId: root.activities[0] ?? ""
             part: root.split ? "mark" : "both"
         }
 
         Segment {
             id: trailing
-
             anchors.right: parent.right
-
             width: ModuleService.activitySide
             height: parent.height
-
             visible: root.activities.length > 0
-
             activityId: root.split
                 ? (root.activities[0] ?? "")
                 : (root.activities[1] ?? "")
-
             part: root.split ? "figure" : "both"
         }
     }
@@ -108,9 +99,7 @@ Item {
 
             Text {
                 visible: PrivacyService.microphoneActive
-
                 anchors.verticalCenter: parent.verticalCenter
-
                 text: ""
                 font.family: Theme.fontFamily
                 font.pixelSize: 12
@@ -120,9 +109,7 @@ Item {
 
             Text {
                 visible: PrivacyService.cameraActive
-
                 anchors.verticalCenter: parent.verticalCenter
-
                 text: ""
                 font.family: Theme.fontFamily
                 font.pixelSize: 12
@@ -157,29 +144,22 @@ Item {
         Row {
             anchors.centerIn: parent
             spacing: 7
-
             Loader {
                 anchors.verticalCenter: parent.verticalCenter
-
                 active:
                     segment.part !== "figure"
                     && segment.activityId !== ""
-
                 visible: active
-
                 sourceComponent:
                     segment.marks[segment.activityId] ?? null
             }
 
             Loader {
                 anchors.verticalCenter: parent.verticalCenter
-
                 active:
                     segment.part !== "mark"
                     && segment.activityId !== ""
-
                 visible: active
-
                 sourceComponent:
                     segment.figures[segment.activityId] ?? null
             }

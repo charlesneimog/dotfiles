@@ -137,7 +137,7 @@ Item {
             font.pixelSize: Math.min(11, Theme.capsuleHeight - 4)
             font.weight: Font.Normal
             font.features: { "tnum": 1 }
-            color: Theme.text
+            color: Theme.islandText
         }
     }
 }

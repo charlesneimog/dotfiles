@@ -41,10 +41,10 @@ Singleton {
         { id: "media",         name: "Media",          bar: true,  width: 380, height: 150 },
         { id: "timer",         name: "Timer",          bar: true,  width: 348, height: 116 },
         { id: "battery",       name: "Battery",        bar: true,  width: 320, height: 132 },
+        { id: "bluetooth",     name: "Bluetooth",      bar: true,  width: 356, height: 132 },
+        { id: "network",       name: "Network",        bar: true,  width: 356, height: 132 },
         { id: "volume",        name: "Volume",         bar: true,  width: 340, height: 116 },
         { id: "brightness",    name: "Brightness",     bar: true,  width: 340, height: 100 },
-        { id: "network",       name: "Network",        bar: true,  width: 356, height: 132 },
-        { id: "bluetooth",     name: "Bluetooth",      bar: true,  width: 356, height: 132 },
         { id: "notifications", name: "Notifications",  bar: true,  desk: false, width: 380, height: 340 },
         { id: "weather",       name: "Weather",        bar: true,  width: 380, height: 150 },
         { id: "updates",       name: "Updates",        bar: true,  width: 356, height: 132 },
@@ -87,13 +87,13 @@ Singleton {
     // Modules with a ring face. A ring is a gauge, so the bell, with nothing
     // to measure, keeps its symbol; on/off links get an empty ring.
     readonly property var ringed: [
+        "bluetooth",
+        "network",
         "media",
         "timer",
         "battery",
         "volume",
         "brightness",
-        "network",
-        "bluetooth",
         "weather",
         "updates"
     ]

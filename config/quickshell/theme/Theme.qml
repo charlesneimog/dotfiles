@@ -26,56 +26,57 @@ QtObject {
     // ── ISLAND ──────────────────────────────────────────────────────────────
 
     // The bar and menus follow the selected palette, including light themes.
-    readonly property color island: root.background
-    readonly property color islandSurface: root.surface
-    readonly property color islandSurfaceHover: root.surfaceHover
-    readonly property color islandBorder: root.border
-    readonly property color barAccent: root.accent
+    // readonly property color island: root.background
+    // readonly property color islandSurface: root.surface
+    // readonly property color islandSurfaceHover: root.surfaceHover
+    // readonly property color islandBorder: root.border
 
     // ── SEMANTIC COLOURS ────────────────────────────────────────────────────
-    property color background: "#000000"
-    property color surface: "#141414"
-    property color surfaceHover: "#202020"
-    property color border: "#282828"
-    property color text: "#ffffff"
-    property color textMuted: "#8e8e93"
-    property color accent: "#0a84ff"
-    property color accentHover: "#409cff"
+    readonly property color island: "#000000"
+    readonly property color islandText: "#ffffff"
+    readonly property color islandTextMuted: "#8e8e93"
+    readonly property color islandSurface: ThemeService.dark ? "#ffffff" : "#ffffff"
+    readonly property color islandSurfaceHover: ThemeService.dark ? "#2E2E32" : "#e5e5e5"
+    readonly property color islandBorder: ThemeService.dark ? "#282828" : "#d1d1d6"
+
+    readonly property color barBackground: "#000000"
+    readonly property color barAccent: root.accent
+
+    property color background: ThemeService.dark ? "#000000" : "#ffffff"
+    property color surface: ThemeService.dark ? "#1D1D20" : "#f2f2f2"
+    property color surfaceHover: ThemeService.dark ? "#2E2E32" : "#e5e5e5"
+    property color border: ThemeService.dark ? "#282828" : "#d1d1d6"
+
+    property color text: ThemeService.dark ? "#ffffff" : "#1c1c1e"
+    property color textMuted: ThemeService.dark ? "#8e8e93" : "#6e6e73"
+
+    property color accent: ThemeService.dark ? "#0a84ff" : "#007aff"
+    property color accentHover: ThemeService.dark ? "#409cff" : "#0a84ff"
     property color accentText: "#ffffff"
 
-    property color red: "#ff453a"
-    property color green: "#32d74b"
-    property color yellow: "#ffd60a"
-    property color blue: "#0a84ff"
+    property color red: ThemeService.dark ? "#ff453a" : "#ff3b30"
+    property color green: ThemeService.dark ? "#32d74b" : "#34c759"
+    property color yellow: ThemeService.dark ? "#ffd60a" : "#ffcc00"
+    property color blue: ThemeService.dark ? "#0a84ff" : "#007aff"
 
     // Status indicators are fixed: a wallpaper-derived accent must not change
     // what a battery ring means.
-    readonly property color indicator: root.text
+    readonly property color indicator: root.islandText
     readonly property color indicatorDim: root.border
     readonly property color indicatorGood: root.green
     readonly property color indicatorWarn: root.yellow
     readonly property color indicatorBad: root.red
     readonly property color indicatorTimer: root.blue
 
-    // Ground and ink over photographs. Fixed, since the ground is always dark.
     readonly property color scrim: "#bf000000"
-    // Not `onScrim`: QML parses "on" + capital as a signal handler.
     readonly property color scrimText: "#ffffff"
     readonly property color hairline: "#20ffffff"
 
-    // Sticky-note paper: a palette tint washed towards white, with ink that
-    // stays dark in every palette.
     readonly property color paperWash: "#c4ffffff"
     readonly property color paperInk: "#1c1c1e"
     readonly property color paperInkMuted: "#8a1c1c1e"
     readonly property color paperLine: "#261c1c1e"
     readonly property int paperRadius: 10
-
-    // Contribution graph, empty to busiest. GitHub's dark ramp, fixed across
-    // palettes; the empty step is lifted off black so it reads as a cell.
-    readonly property var githubLevels: [
-        "#26292e", "#0e4429", "#006d32", "#26a641", "#39d353"
-    ]
 
     readonly property int paletteTransition: 260
 

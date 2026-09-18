@@ -55,7 +55,7 @@ Item {
                         text: AudioService.icon
                         font.family: Theme.fontMono
                         font.pixelSize: Math.round(Theme.capsuleHeight * 0.38)
-                        color: AudioService.muted ? Theme.textMuted : Theme.indicator
+                        color: AudioService.muted ? Theme.islandTextMuted : Theme.indicator
                     }
                 }
             }
@@ -85,7 +85,7 @@ Item {
                     text: AudioService.icon
                     font.family: Theme.fontMono
                     font.pixelSize: 20
-                    color: AudioService.muted ? Theme.textMuted : Theme.indicator
+                    color: AudioService.muted ? Theme.islandTextMuted : Theme.indicator
                 }
             }
 
@@ -103,14 +103,14 @@ Item {
                         font.family: Theme.fontFamily
                         font.pixelSize: Theme.fontSizeSmall
                         font.weight: Font.DemiBold
-                        color: Theme.text
+                        color: Theme.islandText
                     }
 
                     Text {
                         text: AudioService.muted ? "Muted" : `${AudioService.volume}%`
                         font.family: Theme.fontMono
                         font.pixelSize: Theme.fontSizeSmall
-                        color: AudioService.muted ? Theme.textMuted : Theme.text
+                        color: AudioService.muted ? Theme.islandTextMuted : Theme.islandText
                     }
                 }
 

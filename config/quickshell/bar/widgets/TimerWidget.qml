@@ -40,7 +40,7 @@ RingIndicator {
         font.family: Theme.fontMono
         font.pixelSize: Math.round(root.size * 0.36)
         color: TimerService.paused || !TimerService.running
-            ? Theme.textMuted : Theme.indicator
+            ? Theme.islandTextMuted: Theme.indicator
 
         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
     }

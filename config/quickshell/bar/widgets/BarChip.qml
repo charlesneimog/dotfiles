@@ -90,7 +90,7 @@ Item {
         text: root.door ? root.door.glyph : ""
         font.family: Theme.fontMono
         font.pixelSize: Math.min(11, Theme.capsuleHeight - 4)
-        color: Theme.text
+        color: Theme.islandText
     }
 
     ChipFace {
@@ -112,7 +112,7 @@ Item {
             text: String((root.button ? root.door?.name : ModuleService.tooltipOf(root.moduleId)) ?? "")
             font.family: Theme.fontFamily
             font.pixelSize: 11
-            color: Theme.text
+            color: Theme.islandText
         }
         background: Rectangle {
             color: Theme.islandSurface
