@@ -14,11 +14,11 @@ import Quickshell.Wayland
 
 import "../theme"
 import "../services"
+import "../components"
 import "./widgets"
 import "./modules"
 import "./island"
 import "./island/controls"
-import "../components"
 
 // The island in the middle and the two sides (`Config.barZone`), in
 // one of three styles:
@@ -51,12 +51,22 @@ PanelWindow {
 
     readonly property bool holding: island.expanded
 
-    // Maximum panel width. Spread, the sides stay put, so a panel gets the room
-    // between them; otherwise the sides move aside and it gets the whole bar.
-    readonly property int panelRoom: root.spread
-        ? root.width - 2 * (root.edgeMargin
-            + Math.max(leftZone.width, rightZone.width) + Theme.capsuleSpacing)
-        : root.width - 2 * root.edgeMargin
+    // Maximum panel width.
+    //
+    // Normally, spread mode keeps the side zones fixed and reserves their
+    // space. When a full panel is open, however, the side zones move away
+    // and the panel may use the whole bar width between the edge margins.
+    readonly property int panelRoom:
+        island.expanded
+            && island.state.openPanel !== "module"
+                ? root.width - 2 * root.edgeMargin
+                : root.spread
+                    ? root.width - 2 * (
+                        root.edgeMargin
+                        + Math.max(leftZone.width, rightZone.width)
+                        + Theme.capsuleSpacing
+                    )
+                    : root.width - 2 * root.edgeMargin
 
     // Computed rather than read from `island.x`, which comes from an anchor
     // resolved during layout and would lag a frame behind the width.
@@ -174,11 +184,12 @@ PanelWindow {
     readonly property int collapsedHeight: Theme.barBand
 
     // Grouped, the sides make room for a module detail but hide for a panel.
+    // Spread now follows the same rule for full panels so a wide control
+    // centre can use the available screen width.
     // In one capsule they hide whenever the island takes the band.
     readonly property bool sidesAway: root.unified
         ? root.islandTaken
         : island.expanded
-            && root.grouped
             && island.state.openPanel !== "module"
 
     anchors {

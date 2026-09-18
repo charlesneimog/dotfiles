@@ -182,6 +182,7 @@ require("conform").setup({
 		html = { "prettier" },
 		css = { "prettier" },
 		python = { "isort", "black" },
+		qml = { "qmlformat" },
 	},
 	format_on_save = function(bufnr)
 		local file = vim.api.nvim_buf_get_name(bufnr)

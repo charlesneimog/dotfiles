@@ -346,9 +346,16 @@ Rectangle {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
+
             onClicked: {
                 root.summaryHeld = true
-                root.open("controls")
+
+                // Defer opening the panel until the current mouse event has
+                // completely finished. This avoids constructing the ControlsPanel
+                // (Loader -> Repeater -> ItemView) from inside mouseReleaseEvent.
+                Qt.callLater(() => {
+                    root.open("controls")
+                })
             }
         }
 

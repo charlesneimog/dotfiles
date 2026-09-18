@@ -23,7 +23,7 @@ Singleton {
 
     // Capsule height and distance from the top edge. Every other bar
     // metric derives from `barHeight`.
-    property int barHeight: 18
+    property int barHeight: 20
     property int barMargin: 0
 
     // A notch flush with the top edge instead of a floating capsule.

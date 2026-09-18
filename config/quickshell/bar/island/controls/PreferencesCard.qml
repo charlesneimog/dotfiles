@@ -1,7 +1,7 @@
 // ╭──────────────────────────────────────────────────────────────────────────╮
 // │                                                                          │
 // │   U P D A T E S                                                          │
-// │   Flatpak system updates                                                 │
+// │   Arch / AUR and Flatpak updates                                         │
 // │                                                                          │
 // │   github.com/andreumassanet/impasto                                      │
 // │                                                                          │
@@ -17,11 +17,18 @@ import "../../../components"
 Rectangle {
     id: root
 
-    readonly property int updates:
+    readonly property int aurUpdates:
+        Number(UpdatesService.aurReport?.alt ?? 0)
+
+    readonly property int flatpakUpdates:
         Number(UpdatesService.flatpakReport?.alt ?? 0)
+
+    readonly property int updates:
+        aurUpdates + flatpakUpdates
 
     radius: Theme.radiusMedium
     color: Theme.islandSurface
+
     border.color: Theme.islandBorder
     border.width: 1
 
@@ -30,6 +37,8 @@ Rectangle {
         anchors.margins: 12
         spacing: 8
 
+        // ── HEADER ──────────────────────────────────────────────────────────
+
         RowLayout {
             Layout.fillWidth: true
             spacing: 7
@@ -37,14 +46,17 @@ Rectangle {
             Text {
                 text: "󰏖"
                 color: Theme.textMuted
+
                 font.family: Theme.fontMono
                 font.pixelSize: Theme.fontSizeSmall
             }
 
             Text {
                 Layout.fillWidth: true
-                text: "Flatpak updates"
+
+                text: "Updates"
                 color: Theme.text
+
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSizeSmall
                 font.weight: Font.DemiBold
@@ -57,13 +69,14 @@ Rectangle {
                     18,
                     updateCount.implicitWidth + 10
                 )
-                implicitHeight: 17
 
+                implicitHeight: 17
                 radius: height / 2
                 color: Theme.islandSurfaceHover
 
                 Text {
                     id: updateCount
+
                     anchors.centerIn: parent
 
                     text: root.updates
@@ -76,35 +89,140 @@ Rectangle {
             }
         }
 
+        // ── PACKAGES ────────────────────────────────────────────────────────
+
         Flickable {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            contentHeight: details.implicitHeight
+            contentHeight: packageList.implicitHeight
             clip: true
 
-            Text {
-                id: details
+            Column {
+                id: packageList
 
                 width: parent.width
+                spacing: 10
 
-                text:
-                    UpdatesService.flatpakError
-                    || UpdatesService.flatpakReport?.tooltip
-                    || "Checking…"
+                // ── ARCH / AUR ──────────────────────────────────────────────
 
-                textFormat: Text.PlainText
-                wrapMode: Text.Wrap
+                Column {
+                    width: parent.width
+                    spacing: 3
 
-                color: Theme.textMuted
+                    Row {
+                        width: parent.width
+                        spacing: 6
 
-                font.family: Theme.fontFamily
-                font.pixelSize: Theme.fontSizeLabel
+                        Text {
+                            text: ""
+                            color: Theme.textMuted
+
+                            font.family: Theme.fontMono
+                            font.pixelSize: Theme.fontSizeLabel
+                        }
+
+                        Text {
+                            text: "Arch / AUR"
+                            color: Theme.text
+
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.fontSizeLabel
+                            font.weight: Font.DemiBold
+                        }
+
+                        Text {
+                            visible: root.aurUpdates > 0
+
+                            text: `${root.aurUpdates}`
+                            color: Theme.textMuted
+
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.fontSizeLabel
+                        }
+                    }
+
+                    Text {
+                        width: parent.width
+
+                        text:
+                            UpdatesService.aurError
+                            || UpdatesService.aurReport?.tooltip
+                            || "Checking…"
+
+                        textFormat: Text.PlainText
+                        wrapMode: Text.Wrap
+
+                        color: Theme.textMuted
+
+                        font.family: Theme.fontFamily
+                        font.pixelSize: Theme.fontSizeLabel
+                    }
+                }
+
+                // ── FLATPAK ─────────────────────────────────────────────────
+
+                Column {
+                    width: parent.width
+                    spacing: 3
+
+                    Row {
+                        width: parent.width
+                        spacing: 6
+
+                        Text {
+                            text: ""
+                            color: Theme.textMuted
+
+                            font.family: Theme.fontMono
+                            font.pixelSize: Theme.fontSizeLabel
+                        }
+
+                        Text {
+                            text: "Flatpak"
+                            color: Theme.text
+
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.fontSizeLabel
+                            font.weight: Font.DemiBold
+                        }
+
+                        Text {
+                            visible: root.flatpakUpdates > 0
+
+                            text: `${root.flatpakUpdates}`
+                            color: Theme.textMuted
+
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.fontSizeLabel
+                        }
+                    }
+
+                    Text {
+                        width: parent.width
+
+                        text:
+                            UpdatesService.flatpakError
+                            || UpdatesService.flatpakReport?.tooltip
+                            || "Checking…"
+
+                        textFormat: Text.PlainText
+                        wrapMode: Text.Wrap
+
+                        color: Theme.textMuted
+
+                        font.family: Theme.fontFamily
+                        font.pixelSize: Theme.fontSizeLabel
+                    }
+                }
             }
         }
 
+        // ── ACTIONS ─────────────────────────────────────────────────────────
+
         RowLayout {
             Layout.fillWidth: true
+            spacing: 6
 
             PillButton {
                 text: UpdatesService.checking
@@ -123,17 +241,37 @@ Rectangle {
             }
 
             PillButton {
+                visible: root.aurUpdates > 0
+
                 text: UpdatesService.busy
                     ? "Updating…"
-                    : "Update"
+                    : "Arch / AUR"
+
+                enabled:
+                    !UpdatesService.busy
+                    && !UpdatesService.checking
+                    && !UpdatesService.aurError
+                    && root.aurUpdates > 0
+
+                onClicked:
+                    UpdatesService.update("aur")
+            }
+
+            PillButton {
+                visible: root.flatpakUpdates > 0
+
+                text: UpdatesService.busy
+                    ? "Updating…"
+                    : "Flatpak"
 
                 enabled:
                     !UpdatesService.busy
                     && !UpdatesService.checking
                     && !UpdatesService.flatpakError
-                    && root.updates > 0
+                    && root.flatpakUpdates > 0
 
-                onClicked: UpdatesService.update("flatpak")
+                onClicked:
+                    UpdatesService.update("flatpak")
             }
         }
     }

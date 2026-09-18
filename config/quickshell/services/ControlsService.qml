@@ -391,6 +391,8 @@ Singleton {
     readonly property int panelHeight:
         root.boardHeight + root.rowHeight + root.rowGap + 2 * Theme.panelPadding
 
+
+
     function offsetX(col: int): real {
         return col * Theme.centreStrideX
     }
@@ -473,7 +475,14 @@ Singleton {
     property var keys: []
 
     onBlocksChanged: root.syncKeys()
-    Component.onCompleted: root.syncKeys()
+    Component.onCompleted: {
+    console.log("[ControlsService] columns:", root.columns)
+    console.log("[ControlsService] boardWidth:", root.boardWidth)
+    console.log("[ControlsService] panelWidth:", root.panelWidth)
+    console.log("[ControlsService] cellWidth:", Theme.centreCellWidth)
+    console.log("[ControlsService] gutter:", Theme.centreGutter)
+    root.syncKeys()
+}
 
     function syncKeys(): void {
         const next = root.blocks.map(block => block.key)

@@ -8,7 +8,6 @@
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 
 import "../../theme"
@@ -104,22 +103,6 @@ Item {
         reveal: root.reveal
     }
 
-    ToolTip {
-        visible: mouse.containsMouse && !root.open
-        delay: 600
-        text: String((root.button ? root.door?.name : ModuleService.tooltipOf(root.moduleId)) ?? "")
-        contentItem: Text {
-            text: String((root.button ? root.door?.name : ModuleService.tooltipOf(root.moduleId)) ?? "")
-            font.family: Theme.fontFamily
-            font.pixelSize: 11
-            color: Theme.islandText
-        }
-        background: Rectangle {
-            color: Theme.islandSurface
-            border.color: Theme.islandBorder
-            radius: 6
-        }
-    }
 
     MouseArea {
         id: mouse

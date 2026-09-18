@@ -25,5 +25,6 @@ singleton SunsetService 1.0 SunsetService.qml
 singleton SystemService 1.0 SystemService.qml
 singleton ThemeService 1.0 ThemeService.qml
 singleton TimerService 1.0 TimerService.qml
+singleton TodoService 1.0 TodoService.qml
 singleton WeatherService 1.0 WeatherService.qml
 singleton UpdatesService 1.0 UpdatesService.qml

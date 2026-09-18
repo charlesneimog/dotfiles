@@ -18,30 +18,27 @@ import "../../../components"
 Card {
     id: root
 
-    // Temporary data while TodoService is being implemented.
-    // Remove this once TodoService.tasks is available.
-    readonly property var mockTasks: [
-        {
-            summary: "Review pull requests",
-            completed: false
-        },
-        {
-            summary: "Write documentation",
-            completed: false
-        },
-        {
-            summary: "Fix Quickshell config",
-            completed: true
-        }
-    ]
+    readonly property var tasks: TodoService.tasks
 
-    readonly property var tasks: root.mockTasks
+    property bool adding: false
+
+    function submitTask(): void {
+        const title = taskInput.text.trim()
+
+        if (!title)
+            return
+
+        TodoService.addTask(title)
+
+        taskInput.text = ""
+        adding = false
+    }
 
     ColumnLayout {
         anchors.fill: parent
         spacing: 10
 
-        // ── Header ────────────────────────────────────────────────────────
+        // ── Header ──────────────────────────────────────────────────────────
 
         RowLayout {
             Layout.fillWidth: true
@@ -49,25 +46,38 @@ Card {
 
             Text {
                 text: "Todo"
+
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSizeMedium
                 font.weight: Font.DemiBold
+
                 color: Theme.text
             }
 
             Rectangle {
                 visible: root.tasks.length > 0
-                implicitWidth: Math.max(18, count.implicitWidth + 10)
+
+                implicitWidth: Math.max(
+                    18,
+                    count.implicitWidth + 10
+                )
+
                 implicitHeight: 10
                 radius: height / 2
+
                 color: Theme.islandSurfaceHover
+
                 Text {
                     id: count
+
                     anchors.centerIn: parent
+
                     text: root.tasks.length
+
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fontSizeLabel
                     font.weight: Font.DemiBold
+
                     color: Theme.textMuted
                 }
             }
@@ -77,9 +87,13 @@ Card {
             }
 
             Text {
-                text: "Add"
+                text: root.adding
+                    ? "Cancel"
+                    : "Add"
+
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSizeSmall
+
                 color: addMouse.containsMouse
                     ? Theme.accent
                     : Theme.textMuted
@@ -100,31 +114,143 @@ Card {
                     cursorShape: Qt.PointingHandCursor
 
                     onClicked: {
-                        console.log("TODO: add task")
+                        Qt.callLater(() => {
+                            root.adding = !root.adding
+
+                            if (root.adding)
+                                taskInput.forceActiveFocus()
+                            else
+                                taskInput.text = ""
+                        })
                     }
                 }
             }
         }
 
-        // ── Empty state ───────────────────────────────────────────────────
+        // ── Add task ────────────────────────────────────────────────────────
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 38
+            visible: root.adding
+            radius: Theme.radiusSmall
+            color: Theme.islandSurfaceHover
+
+            RowLayout {
+                anchors.fill: parent
+
+                anchors.leftMargin: 10
+                anchors.rightMargin: 10
+
+                spacing: 10
+
+                TextInput {
+                    id: taskInput
+
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignVCenter
+
+                    clip: true
+
+                    font.family: Theme.fontFamily
+                    font.pixelSize: Theme.fontSizeSmall
+
+                    color: Theme.text
+                    selectionColor: Theme.accent
+
+                    onAccepted: {
+                        root.submitTask()
+                    }
+
+                    Keys.onEscapePressed: {
+                        text = ""
+                        root.adding = false
+                    }
+                }
+
+                Text {
+                    text: "Add"
+
+                    font.family: Theme.fontFamily
+                    font.pixelSize: Theme.fontSizeSmall
+                    font.weight: Font.DemiBold
+
+                    color: submitMouse.containsMouse
+                        && taskInput.text.trim() !== ""
+                        ? Theme.accent
+                        : Theme.textMuted
+
+                    opacity:
+                        taskInput.text.trim() !== ""
+                        ? 1
+                        : 0.5
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: Theme.durationFast
+                        }
+                    }
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: Theme.durationFast
+                        }
+                    }
+
+                    MouseArea {
+                        id: submitMouse
+
+                        anchors.fill: parent
+                        anchors.margins: -6
+
+                        hoverEnabled: true
+
+                        enabled:
+                            taskInput.text.trim() !== ""
+
+                        cursorShape:
+                            enabled
+                            ? Qt.PointingHandCursor
+                            : Qt.ArrowCursor
+
+                        onClicked: {
+                            root.submitTask()
+                        }
+                    }
+                }
+            }
+        }
+
+        // ── Empty / loading / error state ───────────────────────────────────
 
         Text {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            visible: root.tasks.length === 0
+            visible:
+                root.tasks.length === 0
+                && !root.adding
 
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
 
-            text: "Nothing to do"
+            text: TodoService.loading
+                ? "Loading…"
+                : TodoService.error
+                    ? TodoService.error
+                    : "Nothing to do"
+
+            wrapMode: Text.Wrap
 
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSizeSmall
-            color: Theme.textMuted
+
+            color: TodoService.error
+                ? Theme.red
+                : Theme.textMuted
         }
 
-        // ── Tasks ─────────────────────────────────────────────────────────
+        // ── Tasks ──────────────────────────────────────────────────────────
 
         ListView {
             Layout.fillWidth: true
@@ -165,7 +291,7 @@ Card {
 
                     spacing: 9
 
-                    // ── Checkbox ──────────────────────────────────────────
+                    // ── Complete ────────────────────────────────────────────
 
                     Rectangle {
                         id: checkbox
@@ -176,94 +302,133 @@ Card {
 
                         radius: 5
 
-                        color: entry.modelData.completed
-                            ? Theme.accent
-                            : "transparent"
+                        color: "transparent"
 
                         border.width: 1
 
-                        border.color: entry.modelData.completed
+                        border.color:
+                            checkboxMouse.containsMouse
                             ? Theme.accent
                             : Theme.textMuted
 
-                        Text {
-                            anchors.centerIn: parent
-
-                            visible: entry.modelData.completed
-
-                            text: "󰄬"
-
-                            font.family: Theme.fontMono
-                            font.pixelSize: 11
-
-                            color: Theme.accentText
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            anchors.margins: -5
-
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-
-                            onClicked: {
-                                console.log(
-                                    "TODO: toggle",
-                                    entry.modelData.summary
-                                )
-                            }
-                        }
-                    }
-
-                    // ── Description ───────────────────────────────────────
-
-                    Text {
-                        Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignVCenter
-
-                        text: entry.modelData.summary
-
-                        elide: Text.ElideRight
-
-                        font.family: Theme.fontFamily
-                        font.pixelSize: Theme.fontSizeSmall
-                        font.weight: Font.DemiBold
-
-                        color: entry.modelData.completed
-                            ? Theme.textMuted
-                            : Theme.text
-
-                        opacity: entry.modelData.completed ? 0.55 : 1.0
-
-                        font.strikeout: entry.modelData.completed
-
-                        Behavior on color {
+                        Behavior on border.color {
                             ColorAnimation {
                                 duration: Theme.durationFast
                             }
                         }
 
-                        Behavior on opacity {
-                            NumberAnimation {
-                                duration: Theme.durationFast
+                        Text {
+                            anchors.centerIn: parent
+
+                            text: "󰄬"
+
+                            opacity:
+                                checkboxMouse.containsMouse
+                                ? 1
+                                : 0
+
+                            font.family: Theme.fontMono
+                            font.pixelSize: 11
+
+                            color: Theme.accent
+
+                            Behavior on opacity {
+                                NumberAnimation {
+                                    duration: Theme.durationFast
+                                }
+                            }
+                        }
+
+                        MouseArea {
+                            id: checkboxMouse
+
+                            anchors.fill: parent
+                            anchors.margins: -5
+
+                            hoverEnabled: true
+
+                            cursorShape:
+                                Qt.PointingHandCursor
+
+                            enabled:
+                                !TodoService.loading
+
+                            onClicked: {
+                                TodoService.completeTask(
+                                    entry.modelData
+                                )
                             }
                         }
                     }
 
-                    // ── Remove ────────────────────────────────────────────
+                    // ── Description ─────────────────────────────────────────
 
-                    IconButton {
+                    ColumnLayout {
+                        Layout.fillWidth: true
                         Layout.alignment: Qt.AlignVCenter
 
-                        visible: entryMouse.containsMouse
+                        spacing: 1
+
+                        Text {
+                            Layout.fillWidth: true
+
+                            text:
+                                entry.modelData.title
+
+                            elide: Text.ElideRight
+
+                            font.family:
+                                Theme.fontFamily
+
+                            font.pixelSize:
+                                Theme.fontSizeSmall
+
+                            font.weight:
+                                Font.DemiBold
+
+                            color:
+                                Theme.text
+                        }
+
+                        Text {
+                            Layout.fillWidth: true
+
+                            visible:
+                                entry.modelData.list !== ""
+
+                            text:
+                                entry.modelData.list
+
+                            elide:
+                                Text.ElideRight
+
+                            font.family:
+                                Theme.fontFamily
+
+                            font.pixelSize:
+                                Theme.fontSizeLabel
+
+                            color:
+                                Theme.textMuted
+                        }
+                    }
+
+                    // ── Remove ──────────────────────────────────────────────
+
+                    IconButton {
+                        Layout.alignment:
+                            Qt.AlignVCenter
+
+                        visible:
+                            entryMouse.containsMouse
 
                         icon: "󰅖"
                         iconSize: 11
 
                         onClicked: {
                             console.log(
-                                "TODO: remove",
-                                entry.modelData.summary
+                                "[TodoList] TODO: remove",
+                                entry.modelData.title
                             )
                         }
                     }

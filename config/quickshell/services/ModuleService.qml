@@ -35,8 +35,6 @@ Singleton {
     //
     // The chip look is global (`Config.chipShape`, `chipFigure`);
     readonly property var catalogue: [
-        { id: "aur",           name: "Arch / AUR",     bar: true,  width: 0,   height: 0 },
-        { id: "flathub",       name: "Flathub",        bar: true,  width: 0,   height: 0 },
         { id: "planify",       name: "Planify",        bar: true,  width: 0,   height: 0 },
         { id: "media",         name: "Media",          bar: true,  width: 380, height: 150 },
         { id: "timer",         name: "Timer",          bar: true,  width: 348, height: 116 },
@@ -115,10 +113,6 @@ Singleton {
     // One table for every place a module's symbol and figure appear.
     function glyphOf(id: string): string {
         switch (id) {
-        case "aur":
-            return ""
-        case "flathub":
-            return ""
         case "planify":
             return ""
         case "network":
@@ -247,13 +241,6 @@ Singleton {
 
     // The full names remain in tooltips and the existing detail panels.
     function barValueOf(id: string): string {
-        if (id === "bluetooth")
-            return ""
-
-        if (id === "notifications"
-                && NotificationService.history.length === 0)
-            return ""
-
         return root.valueOf(id)
     }
 
