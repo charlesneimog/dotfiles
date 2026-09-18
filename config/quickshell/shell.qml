@@ -1,3 +1,4 @@
+//@ pragma UseQApplication
 //@ pragma IconTheme Tela-circle
 // ╭──────────────────────────────────────────────────────────────────────────╮
 // │                                                                          │
@@ -13,8 +14,6 @@ import Quickshell
 import Quickshell.Io
 
 import "./bar"
-import "./capture"
-import "./desktop"
 import "./services"
 
 // Entry point: the windows, the services that must start at boot, and the
@@ -30,8 +29,6 @@ ShellRoot {
         void ThemeService.activeId
         // Builds the launcher index ahead of the first open.
         void LauncherService.applications
-        // Keeps history, so the graph has data before the panel opens.
-        void StatsService.ready
         // Starts the Niri event stream.
         void NiriService.workspaces
         // Re-applies the monitor arrangement kept for this set of screens.
@@ -39,17 +36,14 @@ ShellRoot {
         // Niri key bindings remain in config.kdl.
         // Reads the user name for the system information block.
         void AccountService.user
-        // Probes for hyprpicker, so the first press is not the one that asks.
-        void PickerService.available
         // Starts the clipboard watcher.
         void ClipboardService.count
-        // Probes the monitor source, so the first take is not silent, and
-        // picks up a take left running by a previous shell.
-        void RecorderService.available
         // Restores the night light.
         void SunsetService.available
         // Arms the idle monitors.
         void IdleService.lockAfter
+
+    console.log("PrivacyService loaded:", PrivacyService.active)
     }
 
     // ── SCREENS ─────────────────────────────────────────────────────────────
@@ -158,19 +152,6 @@ ShellRoot {
         }
     }
 
-    IpcHandler {
-        target: "overview"
-        function toggle(): void {
-            root.island?.toggle("overview")
-        }
-    }
-
-    IpcHandler {
-        target: "stats"
-        function toggle(): void {
-            root.island?.toggle("stats")
-        }
-    }
 
     IpcHandler {
         target: "session"
@@ -187,12 +168,6 @@ ShellRoot {
     }
 
 
-    IpcHandler {
-        target: "appearance"
-        function toggle(): void {
-            root.island?.toggle("appearance")
-        }
-    }
 
     // Same panel, on the palette strip. Each name only closes from its own
     // strip.
@@ -200,24 +175,6 @@ ShellRoot {
         target: "palette"
         function toggle(): void {
             root.island?.toggle("palette")
-        }
-    }
-
-
-
-
-
-    IpcHandler {
-        target: "keys"
-        function toggle(): void {
-            root.island?.toggle("keys")
-        }
-    }
-
-    IpcHandler {
-        target: "packages"
-        function toggle(): void {
-            root.island?.toggle("packages")
         }
     }
 
@@ -236,128 +193,6 @@ ShellRoot {
             }
             LauncherService.query = sigil
             root.island?.open("launcher")
-        }
-    }
-
-    // hyprpicker freezes a screenshot of the screen, so an open panel has to
-    // finish closing before it starts.
-    IpcHandler {
-        target: "picker"
-        function toggle(): void {
-            const wasOpen = root.island?.expanded ?? false
-            root.island?.close()
-            PickerService.pick(wasOpen ? PickerService.settle : 0)
-        }
-    }
-
-    // ── CAPTURE ─────────────────────────────────────────────────────────────
-    //
-    // `capture` opens the surface in its last mode; the others preset a shape
-    // or destination and are unbound by default. The photo is taken with
-    // whatever panel is open, so a panel can be captured.
-    function capture(shape: string, to: string): void {
-        CaptureService.open(shape, "photo", to, 0)
-    }
-
-    IpcHandler {
-        target: "capture"
-        function toggle(): void {
-            CaptureService.open("", "", "", 0)
-        }
-    }
-
-    IpcHandler {
-        target: "captureRegion"
-        function toggle(): void {
-            root.capture("region", "file")
-        }
-    }
-
-    IpcHandler {
-        target: "captureWindow"
-        function toggle(): void {
-            root.capture("window", "file")
-        }
-    }
-
-    IpcHandler {
-        target: "captureScreen"
-        function toggle(): void {
-            root.capture("screen", "file")
-        }
-    }
-
-    IpcHandler {
-        target: "captureEdit"
-        function toggle(): void {
-            root.capture("region", "editor")
-        }
-    }
-
-    IpcHandler {
-        target: "captureText"
-        function toggle(): void {
-            root.capture("region", "text")
-        }
-    }
-
-    // Toggles a recording. In region mode it opens the surface instead (see
-    // the connections below).
-    IpcHandler {
-        target: "record"
-        function toggle(): void {
-            const wasOpen = root.island?.expanded ?? false
-            root.island?.close()
-            RecorderService.toggle(wasOpen ? CaptureService.settle : 0)
-        }
-    }
-
-    // Always built rather than behind a Loader: creating a layer surface at
-    // capture time flashes a black frame over the screen being captured.
-    CaptureOverlay {}
-
-    // Region recording, joined here to keep the two services acyclic.
-    Connections {
-        target: CaptureService
-
-        function onRecordRequested(shape: string, geometry: string): void {
-            RecorderService.startAt(shape, geometry)
-        }
-    }
-
-    Connections {
-        target: RecorderService
-
-        function onSurfaceRequested(shape: string, after: int): void {
-            CaptureService.open(shape, "video", "", after)
-        }
-    }
-
-    // A new wallpaper re-derives the adaptive palette. Wired here so the
-    // dependency runs one way: the theme knows about wallpapers, not the
-    // reverse.
-    Connections {
-        target: WallpaperService
-
-        function onApplied(path: string): void {
-            ThemeService.reloadAdaptiveColors()
-        }
-    }
-
-    // ── IPC ─────────────────────────────────────────────────────────────────
-    //
-    // Every palette push hangs off WallpaperService.applied, which only fires
-    // inside this process. External callers (Thunar's "Set as Wallpaper")
-    // come in here instead of running theme_manager.py directly:
-    //   qs ipc call wallpaper set <path>
-    IpcHandler {
-        target: "wallpaper"
-
-        function set(path: string): string {
-            if (!path)
-                return "usage: qs ipc call wallpaper set <path>"
-            WallpaperService.apply(path)
-            return path
         }
     }
 
@@ -396,7 +231,6 @@ ShellRoot {
                 wifiEnabled: NetworkService.wifiEnabled,
                 wifiConnected: NetworkService.wifiConnected,
                 network: NetworkService.connectionName,
-                wallpaper: WallpaperService.currentWallpaper,
                 font: SettingsService.fontMono,
                 weatherAvailable: WeatherService.available,
                 weatherPlace: WeatherService.place,
@@ -415,4 +249,8 @@ ShellRoot {
             Quickshell.reload(false)
         }
     }
+
+
+    // Privacy module
+
 }

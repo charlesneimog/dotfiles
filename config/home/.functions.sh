@@ -41,6 +41,8 @@ startup_services() {
     xwayland-satellite & # X11 app
     blueman-applet & # Bluethoof
     quickshell & # bar
+    # waybar & # bar
+
     swaybg --image ~/.wallpaper.png & # Wallpaper
     hypridle & # Idle
 

@@ -110,7 +110,6 @@ QtObject {
     // Widgets span whole cells. The gutter matches Hyprland's `gaps_out`.
     // A square is at least `desktopCell` and grows up to `desktopCellLargest`
     // so the board's margin is the same on all four sides
-    // (`DesktopService.gridFor`). At the least, a 4 × 2 widget is 398 × 190,
     // which fits the largest island detail (380 × 172) with one gutter around
     // it; a larger detail needs a larger cell.
     readonly property int desktopCell: 86
@@ -121,7 +120,7 @@ QtObject {
     // ── CONTROL CENTRE GRID ─────────────────────────────────────────────────
     //
     // 6 × 8 cells; one cell is one toggle tile, and blocks span whole cells.
-    readonly property int centreColumns: 6
+    readonly property int centreColumns: 8
     readonly property int centreRows: 8
     readonly property int centreCellWidth: 140
     readonly property int centreCellHeight: 64
@@ -275,15 +274,6 @@ QtObject {
     // How long anything that screenshots the screen (lock, picker, capture)
     // waits after closing the island: the morph plus a couple of frames.
     readonly property int durationIslandGone: root.durationMorph + 40
-
-
-    // ── CAPTURE ─────────────────────────────────────────────────────────────
-
-    // Wash outside the selection. Neutral black: a tinted wash would recolour
-    // the screenshot being cropped.
-    readonly property color captureWash: "#99000000"
-
-    readonly property int captureBarMargin: root.barTopMargin + 14
 
     // ── APPLICATION ─────────────────────────────────────────────────────────
 

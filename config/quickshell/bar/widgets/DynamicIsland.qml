@@ -54,7 +54,6 @@ Rectangle {
     // default, so an island without a bar gets the size it asks for.
     property int roomForPanel: 100000
 
-    readonly property int overviewRows: Math.ceil(SettingsService.workspaceMax / 5)
 
     // ── PANEL SIZES ─────────────────────────────────────────────────────────
     //
@@ -62,10 +61,6 @@ Rectangle {
     // before the panel inside it is loaded.
     readonly property var panelSizes: ({
         controls:   { width: ControlsService.panelWidth, height: ControlsService.panelHeight },
-        appearance: root.appearanceSize,
-        palette:    root.appearanceSize,
-        stats:      { width: 940,  height: 614 },
-        // Depends on the results when `launcherFits` is on.
         launcher:   { width: LauncherService.panelWidth,
                       height: LauncherService.panelHeight },
         wifi:       { width: 420,  height: 500 },
@@ -77,12 +72,8 @@ Rectangle {
         keys:       { width: ShortcutService.sheetWidth, height: ShortcutService.sheetHeight },
         packages:   { width: 560, height: 360 },
         module:     root.moduleSize,
-        overview:   { width: 1560, height: 72 + root.overviewRows * 190 }
     })
 
-    // One panel under two names (its two strips), so switching between them
-    // slides instead of rebuilding. Fits five strip tiles and the large one.
-    readonly property var appearanceSize: ({ width: 940, height: 196 })
 
     // A module's detail, sized from the catalogue.
     readonly property var moduleSize: ModuleService.openSize(ModuleService.openId)
@@ -124,16 +115,10 @@ Rectangle {
 
     readonly property var panelComponents: ({
         controls: controlsPanel,
-        appearance: appearancePanel,
-        palette: appearancePanel,
         launcher: launcherPanel,
         wifi: networkDetail,
         bluetooth: bluetoothDetail,
-        stats: statsPanel,
-        overview: overviewPanel,
         session: sessionPanel,
-        keys: keysPanel,
-        packages: packagesPanel,
         module: moduleDetail
     })
 
@@ -486,16 +471,6 @@ Rectangle {
         }
     }
 
-    Component {
-        id: appearancePanel
-        AppearancePanel {
-            page: islandState.openPanel === "palette" ? "palette" : "wallpaper"
-            onClosed: root.close()
-            // Up and Down switch strips by panel name, so `page` follows
-            // `openPanel`.
-            onPanelRequested: panel => root.open(panel)
-        }
-    }
 
     Component {
         id: launcherPanel
@@ -519,15 +494,7 @@ Rectangle {
         BluetoothDetail { onBack: root.open("controls") }
     }
 
-    Component {
-        id: statsPanel
-        StatsPanel { onClosed: root.close() }
-    }
 
-    Component {
-        id: overviewPanel
-        OverviewPanel { onClosed: root.close() }
-    }
 
     Component {
         id: sessionPanel
@@ -538,15 +505,7 @@ Rectangle {
 
 
 
-    Component {
-        id: keysPanel
-        KeysPanel { onClosed: root.close() }
-    }
 
-    Component {
-        id: packagesPanel
-        PackagesPanel { onClosed: root.close() }
-    }
 
     // A module asking for a panel: the arcade's detail opening the arcade.
     Connections {

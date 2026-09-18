@@ -230,9 +230,11 @@ spawn-at-startup "sh" "-c" "$HOME/.functions.sh startup_services"
 binds {
     alt+space { show-hotkey-overlay; }
     mod+return hotkey-overlay-title="open a terminal: ghostty" { spawn "ghostty"; }
-    mod+D hotkey-overlay-title="run an application: rofi" { spawn "bash" "-c" "$HOME/.functions.sh launch_rofi"; }
-    mod+p hotkey-overlay-title="run an application: rofi" { spawn "bash" "-c" "$HOME/.functions.sh unsplash"; }
-    mod+v hotkey-overlay-title="run rofi copy menu" { spawn "bash" "-c" "$HOME/.functions.sh clipboard_rofi"; }
+    // mod+D hotkey-overlay-title="run an application: rofi" { spawn "bash" "-c" "$HOME/.functions.sh launch_rofi"; }
+    mod+D hotkey-overlay-title="run an application: quickshell" { spawn "qs" "ipc" "call" "launcher" "toggle"; }
+
+    mod+p hotkey-overlay-title="change the wallpaper" { spawn "bash" "-c" "$HOME/.functions.sh unsplash"; }
+    mod+v hotkey-overlay-title="show copy history" { spawn "qs" "ipc" "call" "clipboard" "toggle"; }
 
     // Apps
     Mod+A hotkey-overlay-title="Open Anytype" { spawn "io.anytype.anytype"; }

@@ -13,7 +13,6 @@ import "../theme"
 
 // A miniature of one of the four desktop widget styles: the capsule in the
 // given ink with a two-letter type sample. Shared by the settings page and
-// the inspector. `ink` comes from `DesktopService.inkFor`, already inverted
 // for the accent style.
 Rectangle {
     id: root

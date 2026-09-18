@@ -35,23 +35,11 @@ Singleton {
     readonly property var catalogue: [
         { name: "launcher",       label: "Launcher",             description: "Shell · Open the launcher" },
         { name: "controls",       label: "Control centre",       description: "Shell · Open the control centre" },
-        { name: "overview",       label: "Workspace overview",   description: "Shell · Open the workspace overview" },
-        { name: "appearance",     label: "Appearance",           description: "Shell · Open appearance" },
-        { name: "palette",        label: "Palette",              description: "Shell · Open the palette" },
-        { name: "stats",          label: "System statistics",    description: "Shell · Open system statistics" },
         { name: "session",        label: "Session menu",         description: "Session · Session menu" },
         { name: "lock",           label: "Lock the screen",      description: "Session · Lock the screen" },
         { name: "keys",           label: "Keys",                 description: "Shell · Show every key" },
         { name: "packages",       label: "Packages",             description: "Shell · Open the packages" },
         { name: "clipboard",      label: "Clipboard history",    description: "Shell · Open the clipboard history" },
-        { name: "picker",         label: "Colour picker",        description: "Shell · Pick a colour off the screen" },
-        { name: "capture",        label: "Capture",              description: "Shell · Open the capture surface" },
-        { name: "captureRegion",  label: "Capture a region",     description: "Shell · Capture a region" },
-        { name: "captureWindow",  label: "Capture a window",     description: "Shell · Capture a window" },
-        { name: "captureScreen",  label: "Capture the screen",   description: "Shell · Capture the whole screen" },
-        { name: "captureEdit",    label: "Capture and annotate", description: "Shell · Capture a region and annotate it" },
-        { name: "captureText",    label: "Read a region",        description: "Shell · Read a region as text" },
-        { name: "record",         label: "Record the screen",    description: "Shell · Start or stop recording the screen" }
     ]
 
     readonly property var keys: SettingsService.keys

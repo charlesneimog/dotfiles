@@ -1,33 +1,27 @@
 // ╭──────────────────────────────────────────────────────────────────────────╮
 // │                                                                          │
-// │   P   A   P   E   R                                                      │
-// │   paper background tinted from the text colour                           │
+// │   T O D O   S E R V I C E                                                │
+// │   Nextcloud task synchronization                                         │
 // │                                                                          │
 // │   github.com/andreumassanet/impasto                                      │
 // │                                                                          │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
+pragma Singleton
+
 import QtQuick
 
-import "../../../theme"
-
-// Paper for calendar leaves, a watch's date window and parcel labels: the text
-// colour under the notes' wash, written on in the notes' ink.
-Item {
+QtObject {
     id: root
 
-    property var ink
-    property real radius: Theme.paperRadius
+    property var tasks: []
+    property bool loading: false
 
-    Rectangle {
-        anchors.fill: parent
-        radius: root.radius
-        color: root.ink.text
+    function refresh() {
+        console.log("[TodoService] refresh")
     }
 
-    Rectangle {
-        anchors.fill: parent
-        radius: root.radius
-        color: Theme.paperWash
+    function completeTask(task) {
+        console.log("[TodoService] complete:", task)
     }
 }

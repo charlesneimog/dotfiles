@@ -38,11 +38,10 @@ Item {
 
     // Seconds are appended to the chosen format so the two settings stay
     // independent.
-    readonly property string format: "hh:mm:ss"
-
+    readonly property string format: "hh:mm"
     Loader {
         id: holder
-        anchors.fill: parent
+        anchors.centerIn: parent
         sourceComponent: detail
     }
 
@@ -50,7 +49,12 @@ Item {
         id: detail
 
         Item {
+            implicitWidth: content.implicitWidth
+            implicitHeight: Theme.capsuleHeight
+
             Row {
+                id: content
+
                 anchors.centerIn: parent
                 spacing: 8
 
@@ -65,10 +69,10 @@ Item {
 
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: SettingsService.clockShowsDate
-                    text: Qt.formatDateTime(clock.date, "ddd d MMM")
+                    text: Qt.formatDateTime(clock.date, "ddd d MMM").toUpperCase()
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fontSizeSmall
+                    font.weight: Font.Medium
                     color: Theme.textMuted
                 }
             }

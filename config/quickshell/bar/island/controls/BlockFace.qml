@@ -42,8 +42,8 @@ Item {
         weather: weatherBlock,
         calendar: calendarBlock,
         notifications: notificationsBlock,
-        impasto: impastoBlock,
         clock: clockBlock,
+        todo: todoBlock,
     })
 
     Loader {
@@ -126,21 +126,17 @@ Item {
     }
 
     Component {
-        id: impastoBlock
-        ImpastoBlock {
+        id: clockBlock
+        ClockBlock {
             cols: root.shape.cols
             rows: root.shape.rows
         }
     }
 
 
-
     Component {
-        id: clockBlock
-        ClockBlock {
-            cols: root.shape.cols
-            rows: root.shape.rows
-        }
+        id: todoBlock
+        TodoBlock {}
     }
 
     // A note with no card around it. Clicking opens it for editing.

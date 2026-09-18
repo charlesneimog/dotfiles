@@ -40,8 +40,8 @@ PanelWindow {
     // Input only on the band, and none while the desktop is being arranged
     // (see `Bar.qml`).
     mask: Region {
-        width: DesktopService.editing ? 0 : root.width
-        height: DesktopService.editing ? 0 : root.collapsedHeight
+        width: root.width
+        height: root.collapsedHeight
     }
 
     readonly property int edgeMargin: SettingsService.barSideMargin

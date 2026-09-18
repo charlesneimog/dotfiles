@@ -179,13 +179,12 @@ PanelWindow {
     // over the bar would move the pointer to this surface, and the desktop
     // would drop the widget.
     mask: Region {
-        width: DesktopService.editing ? 0 : root.width
-        height: DesktopService.editing ? 0
-            : root.holding ? root.height : root.collapsedHeight
+        width: root.width
+        height: root.holding ? root.height : root.collapsedHeight
 
         Region {
             x: root.shapeLeft
-            width: DesktopService.editing ? 0 : root.shapeRight - root.shapeLeft
+            width: root.shapeRight - root.shapeLeft
             height: root.islandTopMargin + island.height + 12
         }
     }
@@ -198,7 +197,7 @@ PanelWindow {
     // ── FOCUS ───────────────────────────────────────────────────────────────
     //
     // Niri supports the layer-shell keyboard mode; no Hyprland focus grab.
-    readonly property bool holdsKeyboard: island.expanded && !CaptureService.active
+    readonly property bool holdsKeyboard: island.expanded 
     WlrLayershell.keyboardFocus: root.holdsKeyboard
         ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 

@@ -73,7 +73,7 @@ Item {
                 RingIndicator {
                     anchors.fill: parent
                     thickness: 2.5
-                    progress: MediaService.playing ? CavaService.level : 0
+                    progress: MediaService.playing 
                     trackColor: Theme.indicatorDim
                     // White: loudness has no level worth colouring, unlike
                     // charge or a countdown.
@@ -137,8 +137,8 @@ Item {
                 spacing: 13
 
                 ClippingRectangle {
-                    Layout.preferredWidth: 52
-                    Layout.preferredHeight: 52
+                    Layout.preferredWidth: 40
+                    Layout.preferredHeight: 40
                     radius: width * Theme.pictureCorner
                     color: Theme.islandSurfaceHover
 
@@ -186,8 +186,8 @@ Item {
                         Spectrum {
                             Layout.preferredHeight: 18
                             Layout.alignment: Qt.AlignVCenter
-                            barWidth: 3
-                            minimum: 2
+                            barWidth: 1
+                            minimum: 1
                             active: MediaService.playing
                             barColor: Theme.indicator
                         }

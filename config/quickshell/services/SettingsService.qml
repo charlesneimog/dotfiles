@@ -57,7 +57,6 @@ Singleton {
     readonly property alias dockAutohide: config.dockAutohide
     readonly property alias dockLauncher: config.dockLauncher
     readonly property alias weatherPlace: config.weatherPlace
-    readonly property alias githubUser: config.githubUser
     readonly property alias launcherResults: config.launcherResults
     readonly property alias launcherOrder: config.launcherOrder
     readonly property alias launcherFits: config.launcherFits
@@ -68,10 +67,6 @@ Singleton {
     readonly property alias userName: config.userName
     readonly property alias userAvatar: config.userAvatar
     readonly property alias doNotDisturb: config.doNotDisturb
-    readonly property alias recorderAudio: config.recorderAudio
-    readonly property alias recorderShape: config.recorderShape
-    readonly property alias captureShape: config.captureShape
-    readonly property alias captureKind: config.captureKind
     readonly property alias notesHandwriting: config.notesHandwriting
     readonly property alias deckOnEmpty: config.deckOnEmpty
     readonly property alias workspaceCount: config.workspaceCount
@@ -81,7 +76,6 @@ Singleton {
     readonly property alias animationPreset: config.animationPreset
     readonly property alias windowShadow: config.windowShadow
     readonly property alias windowGlass: config.windowGlass
-    readonly property alias wallpaperTransition: config.wallpaperTransition
     readonly property alias greeting: config.greeting
     readonly property alias fontFamily: config.fontFamily
     readonly property alias fontMono: config.fontMono
@@ -160,7 +154,7 @@ Singleton {
         const opposite = side === "left" ? config.barRight : config.barLeft
         const oppositeIds = opposite ? Array.from(opposite).map(entry => typeof entry === "string" ? entry : entry.id) : []
         const list = kept ? Array.from(kept) : root.barDefaults[side].filter(id => !oppositeIds.includes(id))
-        return list.filter(entry => !["pet", "games", "settings", "notes", "tasks", "board", "brightness", "weather", "flathub"].includes(typeof entry === "string" ? entry : entry.id))
+        return list.filter(entry => !["pet", "games", "settings", "notes", "tasks", "board", "brightness", "weather", "flathub", "updates"].includes(typeof entry === "string" ? entry : entry.id))
             .map(entry => typeof entry === "string"
             ? { id: entry, shape: "", figure: "", when: "" }
             : { id: entry.id, shape: entry.shape ?? "", figure: entry.figure ?? "",
@@ -222,7 +216,7 @@ Singleton {
 
     // Modules allowed beside the time on the island while running. One left
     // out still works on the bar; it just doesn't take a side of the island.
-    readonly property var besideDefaults: ["recorder", "timer", "media"]
+    readonly property var besideDefaults: ["timer", "media"]
 
     function beside(id: string): bool {
         const kept = config.islandActivities
@@ -284,9 +278,8 @@ Singleton {
     // Reset. The recorder and capture entries are last-used state.
     readonly property var machineKeys: [
         "displays", "lidPolicy",
-        "userName", "userAvatar", "language", "keyboard", "weatherPlace", "githubUser",
+        "userName", "userAvatar", "language", "keyboard", "weatherPlace",         
         "doNotDisturb", "nightLight", "nightTemperature",
-        "recorderAudio", "recorderShape", "captureShape", "captureKind"
     ]
 
     // A Store never read from disk: its initialisers are the defaults.
@@ -433,9 +426,6 @@ Singleton {
         // `CompositorService` pushes it at login and after every reload.
         property bool windowGlass: false
 
-        // Row id from `WallpaperService.transitions`; `random` picks anew on
-        // each change.
-        property string wallpaperTransition: "wipe"
 
         // Row id from `ThemeService.greetings`; `random` is picked by `fa` on
         // each run.
@@ -494,14 +484,6 @@ Singleton {
         // Persisted so silent mode survives a restart.
         property bool doNotDisturb: false
 
-        // Same shape names as the capture surface.
-        property string recorderShape: "screen"
-        property bool recorderAudio: false
-
-        // The capture surface reopens on its last shape and kind. The
-        // destination is not stored: it resets to saving a file.
-        property string captureShape: "region"
-        property string captureKind: "photo"
 
         // Note bodies in the handwriting font instead of the UI font.
         property bool notesHandwriting: true
@@ -596,7 +578,6 @@ Singleton {
         property var desktopWidgets: []
 
         // Defaults for widgets without their own: a theme from
-        // `DesktopService.themes` and a style from `DesktopService.styles`.
         // Colours always come from the palette.
         property string desktopTheme: "modern"
         property string desktopStyle: "capsule"
@@ -664,9 +645,6 @@ Singleton {
         // Anything wttr.in accepts: a city, postcode or airport code. Empty
         // lets wttr.in geolocate by IP, which can be tens of kilometres off.
         property string weatherPlace: ""
-
-        // GitHub user for the contributions widget; empty draws nothing.
-        property string githubUser: ""
 
         // Idle timeouts in minutes, 0 = never; all off by default.
         // `IdleService` runs one monitor per value.

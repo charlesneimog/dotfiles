@@ -27,11 +27,10 @@ Item {
         precision: SystemClock.Minutes
     }
 
-    // Only when the weather is already shown on the bar or the desktop:
+    // Only when the weather is already shown on the bar:
     // touching the service builds it, and building it makes a network request.
-    readonly property bool weather: (SettingsService.onBar("weather")
-            || DesktopService.placed("weather"))
-        && WeatherService.available
+    readonly property bool weather:
+        SettingsService.onBar("weather") && WeatherService.available
 
     // The spectrum is cava, a process; it is only started for a glance that
     // has a track to show.
@@ -62,8 +61,6 @@ Item {
         if (NotificationService.history.length > 0)
             out.push({ glyph: "󰂚", text: `${NotificationService.history.length}`,
                        tint: Theme.textMuted })
-        if (RecorderService.recording)
-            out.push({ glyph: "●", text: RecorderService.display, tint: Theme.indicatorBad })
         if (TimerService.running)
             out.push({ glyph: "󰔛", text: TimerService.display, tint: Theme.textMuted })
         return out

@@ -34,29 +34,23 @@ Singleton {
     //   height
     //
     // The chip look is global (`SettingsService.chipShape`, `chipFigure`);
-    // desktop faces are listed per theme in `DesktopService.faces`.
     readonly property var catalogue: [
-        { id: "aur", name: "Arch / AUR", bar: true, width: 0, height: 0 },
-        { id: "flathub", name: "Flathub", bar: true, width: 0, height: 0 },
-        { id: "planify", name: "Planify", bar: true, width: 0, height: 0 },
-        { id: "media",         name: "Media",         bar: true,  width: 380, height: 150 },
-        { id: "timer",         name: "Timer",         bar: true,  width: 348, height: 116 },
-        { id: "claude",        name: "Claude",        bar: true,  width: 356, height: 150 },
-        { id: "battery",       name: "Battery",       bar: true,  width: 320, height: 132 },
-        { id: "volume",        name: "Volume",        bar: true,  width: 340, height: 116 },
-        { id: "brightness",    name: "Brightness",    bar: true,  width: 340, height: 100 },
-        { id: "network",       name: "Network",       bar: true,  width: 356, height: 132 },
-        { id: "bluetooth",     name: "Bluetooth",     bar: true,  width: 356, height: 132 },
-        { id: "notifications", name: "Notifications", bar: true,  desk: false, width: 380, height: 340 },
-        { id: "weather",       name: "Weather",       bar: true,  width: 380, height: 150 },
-        { id: "github",        name: "GitHub",        bar: false, width: 380, height: 158 },
-        { id: "stats",         name: "System",        bar: true,  width: 380, height: 148 },
-        { id: "updates",       name: "Updates",       bar: true,  width: 356, height: 132 },
-        { id: "recorder",      name: "Recorder",      bar: true,  width: 356, height: 150 },
-        { id: "calendar",      name: "Calendar",      bar: true,  width: 340, height: 330 },
-        { id: "photo",         name: "Photo",         bar: false, width: 356, height: 150 },
-        { id: "clock",         name: "Clock",         bar: false,
-          width: SettingsService.clockShowsDate ? 180 : (SettingsService.clockShowsSeconds ? 80 : 64), height: Theme.capsuleHeight }
+        { id: "aur",           name: "Arch / AUR",     bar: true,  width: 0,   height: 0 },
+        { id: "flathub",       name: "Flathub",        bar: true,  width: 0,   height: 0 },
+        { id: "planify",       name: "Planify",        bar: true,  width: 0,   height: 0 },
+        { id: "media",         name: "Media",          bar: true,  width: 380, height: 150 },
+        { id: "timer",         name: "Timer",          bar: true,  width: 348, height: 116 },
+        { id: "battery",       name: "Battery",        bar: true,  width: 320, height: 132 },
+        { id: "volume",        name: "Volume",         bar: true,  width: 340, height: 116 },
+        { id: "brightness",    name: "Brightness",     bar: true,  width: 340, height: 100 },
+        { id: "network",       name: "Network",        bar: true,  width: 356, height: 132 },
+        { id: "bluetooth",     name: "Bluetooth",      bar: true,  width: 356, height: 132 },
+        { id: "notifications", name: "Notifications",  bar: true,  desk: false, width: 380, height: 340 },
+        { id: "weather",       name: "Weather",        bar: true,  width: 380, height: 150 },
+        { id: "updates",       name: "Updates",        bar: true,  width: 356, height: 132 },
+        { id: "calendar",      name: "Calendar",       bar: true,  width: 340, height: 330 },
+        { id: "photo",         name: "Photo",          bar: false, width: 356, height: 150 },
+        { id: "clock",         name: "Clock",          bar: false, width: 140, height: Theme.capsuleHeight }
     ]
 
     function entry(id: string): var {
@@ -69,7 +63,6 @@ Singleton {
     // shortcuts. Alone in a capsule, a button is drawn as a circle.
     readonly property var buttons: ({
         launcher: { name: "Search",         glyph: "󰍉", panel: "launcher" },
-        overview: { name: "Overview",       glyph: "󰕰", panel: "overview" },
         controls: { name: "Control centre", glyph: "󰨚", panel: "controls" },
         session:  { name: "Session",        glyph: "󰐥", panel: "session" }
     })
@@ -93,14 +86,24 @@ Singleton {
     //
     // Modules with a ring face. A ring is a gauge, so the bell, with nothing
     // to measure, keeps its symbol; on/off links get an empty ring.
-    readonly property var ringed: ["media", "timer", "claude", "battery", "volume",
-        "brightness", "network", "bluetooth", "weather", "stats", "updates",
-        "recorder"]
+    readonly property var ringed: [
+        "media",
+        "timer",
+        "battery",
+        "volume",
+        "brightness",
+        "network",
+        "bluetooth",
+        "weather",
+        "updates"
+    ]
 
     // A piece's own shape when it has one, the bar's when it does not.
     function shapeOf(id: string, own: var): string {
         const chosen = own ? own : SettingsService.chipShape
-        return chosen === "ring" && root.ringed.indexOf(id) >= 0 ? "ring" : "icon"
+        return chosen === "ring" && root.ringed.indexOf(id) >= 0
+            ? "ring"
+            : "icon"
     }
 
     function figureOf(own: var): string {
@@ -109,14 +112,15 @@ Singleton {
 
     // ── GLYPH AND FIGURE ────────────────────────────────────────────────────
     //
-    // One table for every place a module's symbol and figure appear (bar,
-    // glance, settings), in either chip shape. Claude and the pet draw their
-    // own mark instead of a glyph (`ChipFace`).
+    // One table for every place a module's symbol and figure appear.
     function glyphOf(id: string): string {
         switch (id) {
-        case "aur": return ""
-        case "flathub": return ""
-        case "planify": return ""
+        case "aur":
+            return ""
+        case "flathub":
+            return ""
+        case "planify":
+            return ""
         case "network":
             return NetworkService.icon
         case "bluetooth":
@@ -137,56 +141,66 @@ Singleton {
             return "󰎇"
         case "timer":
             return "󰔛"
-        case "stats":
-            return "󰍛"
         case "calendar":
             return "󰃭"
-        case "recorder":
-            return RecorderService.recording ? "󰑊" : "󰕧"
         }
+
         return ""
     }
 
-    // Never empty, so "always show the figure" applies to every module: a
-    // connection shows its name, an empty bell "0", an idle countdown "0:00".
+    // Never empty, so "always show the figure" applies to every module.
     function valueOf(id: string): string {
         if (id === "aur" || id === "flathub") {
-            const report = id === "aur" ? UpdatesService.aurReport : UpdatesService.flatpakReport
+            const report = id === "aur"
+                ? UpdatesService.aurReport
+                : UpdatesService.flatpakReport
+
             return report ? String(report.alt) : "…"
         }
+
         switch (id) {
         case "volume":
-            return AudioService.muted ? "Muted" : `${AudioService.volume}%`
+            return AudioService.muted
+                ? "Muted"
+                : `${AudioService.volume}%`
+
         case "brightness":
             return `${BrightnessService.percent}%`
+
         case "battery":
             return `${BatteryService.percent}%`
+
         case "weather":
-            return WeatherService.available ? `${WeatherService.temperature}°` : "--°"
+            return WeatherService.available
+                ? `${WeatherService.temperature}°`
+                : "--°"
+
         case "updates":
             return `${UpdatesService.count}`
+
         case "notifications":
             return `${NotificationService.history.length}`
+
         case "media":
             return MediaService.available
-                ? (MediaService.title || MediaService.identity || "Playing") : "Nothing playing"
+                ? (MediaService.title || MediaService.identity || "Playing")
+                : "Nothing playing"
+
         case "timer":
-            return TimerService.running ? TimerService.display : "0:00"
-        case "claude":
-            if (ClaudeService.measured)
-                return `${Math.round(ClaudeService.sessionFraction * 100)}%`
-            return ClaudeService.blockTokens > 0 ? ClaudeService.compact(ClaudeService.blockTokens) : "0%"
-        case "stats":
-            return `${StatsService.cpu.toFixed(0)}%`
-        case "recorder":
-            return RecorderService.recording ? RecorderService.display : "REC"
+            return TimerService.running
+                ? TimerService.display
+                : "0:00"
+
         case "network":
             return NetworkService.connectionName
+
         case "bluetooth":
             return BluetoothService.summary
+
         case "calendar":
             return Qt.formatDate(root.today.date, "ddd d")
         }
+
         return ""
     }
 
@@ -201,98 +215,178 @@ Singleton {
         switch (id) {
         case "media":
             return 150
+
         case "network":
         case "bluetooth":
             return 110
         }
+
         return 0
     }
 
     // Keep labels neutral and use the selected accent for connected devices.
     function tintOf(id: string): color {
-        if (id === "volume" && AudioService.muted) return Theme.textMuted
-        if (id === "network") return NetworkService.wifiConnected || NetworkService.wiredConnected
-            ? Theme.accent : Theme.textMuted
-        if (id === "bluetooth") return BluetoothService.connectedDevices.length > 0
-            ? Theme.accent : Theme.textMuted
-        if (id === "battery" && BatteryService.low) return Theme.indicatorWarn
-        if (id === "recorder" && RecorderService.recording) return Theme.indicatorBad
+        if (id === "volume" && AudioService.muted)
+            return Theme.textMuted
+
+        if (id === "network")
+            return NetworkService.wifiConnected || NetworkService.wiredConnected
+                ? Theme.accent
+                : Theme.textMuted
+
+        if (id === "bluetooth")
+            return BluetoothService.connectedDevices.length > 0
+                ? Theme.accent
+                : Theme.textMuted
+
+        if (id === "battery" && BatteryService.low)
+            return Theme.indicatorWarn
+
         return Theme.text
     }
 
     // The full names remain in tooltips and the existing detail panels.
     function barValueOf(id: string): string {
-        if (id === "bluetooth") return ""
-        if (id === "notifications" && NotificationService.history.length === 0) return ""
+        if (id === "bluetooth")
+            return ""
+
+        if (id === "notifications"
+                && NotificationService.history.length === 0)
+            return ""
+
         return root.valueOf(id)
     }
 
     function tooltipOf(id: string): string {
-        if (id === "aur") return UpdatesService.aurError || UpdatesService.aurReport?.tooltip || "Checking Arch / AUR updates…"
-        if (id === "flathub") return UpdatesService.flatpakError || UpdatesService.flatpakReport?.tooltip || "Checking Flatpak updates…"
-        if (id === "weather") return WeatherService.error || `${WeatherService.place} · ${WeatherService.description}`
-        if (id === "planify") return "Add task in Planify"
-        if (id === "network") return NetworkService.connectionName + " · " + NetworkService.stateLine
-        if (id === "bluetooth") return "Bluetooth · " + BluetoothService.summary
-        if (id === "volume") return "Volume · " + root.valueOf(id) + "\nScroll to adjust · middle click to mute · right click for mixer"
+        if (id === "aur")
+            return UpdatesService.aurError
+                || UpdatesService.aurReport?.tooltip
+                || "Checking Arch / AUR updates…"
+
+        if (id === "flathub")
+            return UpdatesService.flatpakError
+                || UpdatesService.flatpakReport?.tooltip
+                || "Checking Flatpak updates…"
+
+        if (id === "weather")
+            return WeatherService.error
+                || `${WeatherService.place} · ${WeatherService.description}`
+
+        if (id === "planify")
+            return "Add task in Planify"
+
+        if (id === "network")
+            return NetworkService.connectionName
+                + " · "
+                + NetworkService.stateLine
+
+        if (id === "bluetooth")
+            return "Bluetooth · " + BluetoothService.summary
+
+        if (id === "volume")
+            return "Volume · "
+                + root.valueOf(id)
+                + "\nScroll to adjust · middle click to mute · right click for mixer"
+
         const value = root.valueOf(id)
-        return root.entry(id).name + (value ? " · " + value : "")
+
+        return root.entry(id).name
+            + (value ? " · " + value : "")
     }
 
     // ── VISIBILITY ──────────────────────────────────────────────────────────
     //
     // A placed piece always shows; the player says "Nothing playing" rather
-    // than disappearing. Timer, recorder and player can instead be set to show
+    // than disappearing. Timer and player can instead be set to show
     // only while running (`when: "running"`).
-    readonly property var runners: ["timer", "recorder", "media"]
+    readonly property var runners: [
+        "timer",
+        "media"
+    ]
 
     function runs(id: string): bool {
         switch (id) {
         case "timer":
             return TimerService.running
-        case "recorder":
-            return RecorderService.recording
+
         case "media":
             return MediaService.playing
         }
+
         return false
     }
 
     function shows(id: string, when: var): bool {
-        if (when === "running" && root.runners.indexOf(id) >= 0)
+        if (when === "running"
+                && root.runners.indexOf(id) >= 0)
             return root.runs(id)
+
         return id === "media" || root.has(id)
     }
 
     // ── ACTIVITIES ──────────────────────────────────────────────────────────
     //
-    // Up to two running activities shown beside the time, most urgent first:
-    // recording, countdown, music. Each can be kept off the island
-    // (`SettingsService.beside`) without affecting its module.
+    // Activities retain their original behaviour. Privacy deliberately does
+    // not participate here, otherwise activating the microphone/camera would
+    // rearrange media or timer between the two sides.
     readonly property var activities: {
         const list = []
-        if (RecorderService.recording && SettingsService.beside("recorder"))
-            list.push("recorder")
-        if (TimerService.running && SettingsService.beside("timer"))
+
+        if (TimerService.running
+                && SettingsService.beside("timer"))
             list.push("timer")
-        if (MediaService.playing && SettingsService.beside("media"))
+
+        if (MediaService.playing
+                && SettingsService.beside("media"))
             list.push("media")
+
         return list.slice(0, 2)
     }
 
-    // Resting width. Alone, the time keeps the catalogue width; with
-    // activities it shrinks to fit and each side gets a slot. One activity
-    // splits across both sides (mark left, figure right); two take one each.
-    readonly property int clockCore: SettingsService.clockShowsDate
-        ? 150 : (SettingsService.clockShowsSeconds ? 88 : 72)
-    readonly property int activitySide: root.activities.length > 1 ? 92 : 64
-    readonly property int restWidth: root.activities.length === 0
-        ? root.entry("clock").width
-        : root.clockCore + 2 * root.activitySide
+    // ── RESTING ISLAND GEOMETRY ─────────────────────────────────────────────
+    //
+    // The original island layout keeps its own width. Privacy is appended as
+    // a completely separate slot on the right.
+    //
+    // This means:
+    //
+    //   media:
+    //       [ artwork ][ clock ][ spectrum ]
+    //
+    //   media + privacy:
+    //       [ artwork ][ clock ][ spectrum ][ privacy ]
+    //
+    // Nothing inside the original content changes position when privacy
+    // appears.
+
+    readonly property int clockCore:
+        SettingsService.clockShowsDate
+            ? 150
+            : (SettingsService.clockShowsSeconds ? 88 : 72)
+
+    readonly property int activitySide:
+        root.activities.length > 1
+            ? 92
+            : 64
+
+    // Width the island would have had without privacy.
+    readonly property int restContentWidth:
+        root.activities.length === 0
+            ? root.entry("clock").width
+            : root.clockCore + 2 * root.activitySide
+
+    // Additional slot appended to the right.
+    readonly property int privacySide:
+        PrivacyService.active ? 32 : 0
+
+    // Total resting island width.
+    readonly property int restWidth:
+        root.restContentWidth + root.privacySide
 
     // The glance the island opens under a resting pointer.
     readonly property int summaryWidth: 384
-    readonly property int summaryHeight: MediaService.available ? 168 : 116
+    readonly property int summaryHeight:
+        MediaService.available ? 168 : 116
 
     // ── OPEN DETAIL ─────────────────────────────────────────────────────────
     //
@@ -310,39 +404,63 @@ Singleton {
     // control centre's lists, and an empty notification list, which is short.
     function openSize(id: string): var {
         if (id === "network" || id === "bluetooth")
-            return { width: 420, height: 500 }
+            return {
+                width: 420,
+                height: 500
+            }
+
         const item = root.entry(id)
-        if (id === "notifications" && NotificationService.history.length === 0)
-            return { width: item.width, height: 124 }
-        return { width: item.width, height: item.height }
+
+        if (id === "notifications"
+                && NotificationService.history.length === 0)
+            return {
+                width: item.width,
+                height: 124
+            }
+
+        return {
+            width: item.width,
+            height: item.height
+        }
     }
 
     // A module that becomes unavailable closes its open detail.
-    readonly property bool openGone: root.openId !== "" && !root.has(root.openId)
+    readonly property bool openGone:
+        root.openId !== ""
+        && !root.has(root.openId)
 
     onOpenGoneChanged: {
         if (root.openGone)
             root.close()
     }
 
-    // Chips cannot see their bar, so they ask here and the bar listens. `from`
-    // ("zone", "island" or "elsewhere") lets the screen with the island answer
-    // for one without it.
+    // Chips cannot see their bar, so they ask here and the bar listens.
     signal activationRequested(string id, string from)
 
     function activate(id: string, from: string): void {
         if (id === "aur" || id === "flathub") {
-            UpdatesService.update(id === "aur" ? "aur" : "flatpak")
+            UpdatesService.update(
+                id === "aur"
+                    ? "aur"
+                    : "flatpak"
+            )
             return
         }
+
         if (id === "planify") {
-            Quickshell.execDetached(["flatpak", "run", "--command=io.github.alainm23.planify.quick-add", "io.github.alainm23.planify"])
+            Quickshell.execDetached([
+                "flatpak",
+                "run",
+                "--command=io.github.alainm23.planify.quick-add",
+                "io.github.alainm23.planify"
+            ])
             return
         }
+
         root.activationRequested(id, from)
     }
 
-    // A module asking for a panel, e.g. the games detail opening the arcade.
+    // A module asking for a panel.
     signal panelRequested(string panel)
 
     function requestPanel(panel: string): void {
@@ -351,12 +469,11 @@ Singleton {
 
     // ── AVAILABILITY ────────────────────────────────────────────────────────
     //
-    // Whether this machine can show the module at all (a backlight, a player
-    // on the bus, pacman-contrib installed). Not a preference; placement is
-    // the layout's job.
+    // Whether this machine can show the module at all.
     function has(id: string): bool {
         if (root.isButton(id))
             return true
+
         switch (id) {
         case "clock":
         case "calendar":
@@ -367,44 +484,35 @@ Singleton {
         case "workspaces":
         case "notifications":
             return true
+
         case "media":
             return MediaService.available
-        case "claude":
-            // Reading this constructs the lazy singleton, which runs its
-            // first query; it turns true a moment later.
-            return ClaudeService.available
+
         case "battery":
             return BatteryService.available
+
         case "volume":
             return AudioService.ready
+
         case "brightness":
-            // A desktop has no backlight, the way it has no battery.
             return BrightnessService.available
+
         case "network":
-            // Disconnected is still a reading.
             return true
+
         case "bluetooth":
             return BluetoothService.available
+
         case "weather":
-            // Builds the service, which runs its first fetch.
             return true
-        case "github":
-            // False until a name is set and a grid comes back, so nothing
-            // shows on an unconfigured machine.
-            return GithubService.available
-        case "stats":
-            // The sampler runs from boot (shell.qml touches it).
-            return true
+
         case "updates":
-            // False on a machine with neither checkupdates nor pacman.
             return UpdatesService.available
-        case "recorder":
-            // Needs an encoder.
-            return RecorderService.available
+
         case "photo":
-            // An empty one asks for a picture.
             return true
         }
+
         return false
     }
 }

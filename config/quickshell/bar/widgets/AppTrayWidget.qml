@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.SystemTray
 import "../../services"
@@ -51,9 +50,6 @@ Item {
                     acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    ToolTip.visible: containsMouse
-                    ToolTip.text: modelData.tooltipTitle || modelData.title || modelData.id
-                    ToolTip.delay: 500
                     Image {
                         anchors.centerIn: parent
                         width: 12
@@ -62,14 +58,15 @@ Item {
                         source: tray.modelData.icon
                     }
                     onClicked: event => {
-                        if (event.button === Qt.RightButton || modelData.onlyMenu) {
-                            if (modelData.hasMenu) {
-                                const point = mapToItem(null, 0, height)
-                                modelData.display(root.hostWindow, point.x, point.y)
-                            }
-                        } else if (event.button === Qt.MiddleButton) {
+                        if (event.button === Qt.MiddleButton) {
                             modelData.secondaryActivate()
-                        } else modelData.activate()
+                        } else if (modelData.hasMenu) {
+                            // Both left and right click expose the app's tray options.
+                            const point = tray.mapToItem(root.hostWindow.contentItem, 0, tray.height)
+                            modelData.display(root.hostWindow, Math.round(point.x), Math.round(point.y))
+                        } else if (event.button === Qt.LeftButton) {
+                            modelData.activate()
+                        }
                     }
                     onWheel: event => {
                         modelData.scroll(event.angleDelta.y || event.angleDelta.x, event.angleDelta.y === 0)
@@ -89,9 +86,6 @@ Item {
                     acceptedButtons: Qt.LeftButton | Qt.MiddleButton
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    ToolTip.visible: containsMouse
-                    ToolTip.text: modelData.title || modelData.app_id || "Window"
-                    ToolTip.delay: 500
                     Rectangle {
                         anchors.fill: parent
                         radius: 4

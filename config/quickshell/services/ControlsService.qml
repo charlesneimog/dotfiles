@@ -39,10 +39,6 @@ Singleton {
     //   detail  subtitle in the launcher's `>` mode; also searched
     //   panel   island panel it opens, or "" for the settings window
     readonly property var doors: [
-        { id: "stats",      icon: "󰕬", label: "System statistics",
-          detail: "Processor, memory, disks, the network", panel: "stats" },
-        { id: "overview",   icon: "󰕰", label: "Workspace overview",
-          detail: "Every workspace side by side",          panel: "overview" },
         { id: "launcher",   icon: "󰍉", label: "Launcher",
           detail: "Where you already are",                 panel: "launcher" },
         { id: "session",    icon: "󰐥", label: "Session menu",
@@ -53,7 +49,7 @@ Singleton {
           detail: "Updates, what is installed, the AUR",   panel: "packages" }
     ]
 
-    readonly property var defaultButtons: ["stats"]
+    readonly property var defaultButtons: []
 
     // Not `Array.isArray`: lists read back from the settings file are wrapped
     // sequences that behave like arrays but fail that check.
@@ -173,6 +169,26 @@ Singleton {
             action: () => AudioService.toggleSourceMute()
         },
         Toggle {
+            key: "idle"
+            icon: "󰒲"
+            label: "Do Not Idle"
+            detail: IdleService.inhibited ? "On" : "Off"
+            active: IdleService.inhibited
+            available: true
+            action: () => IdleService.toggleInhibit()
+        },
+
+        Toggle {
+            key: "theme"
+            icon: ThemeService.dark ? "" : ""
+            label: "Theme"
+            detail: ThemeService.dark ? "Dark" : "Light"
+            active: ThemeService.dark
+            available: ThemeService.ready && !ThemeService.busy
+            action: () => ThemeService.toggle()
+        },
+
+        Toggle {
             key: "airplane"; icon: root.airborne ? "󰀝" : "󰀞"; label: "Airplane"
             detail: root.airborne ? "Radios off" : "Radios on"
             active: root.airborne
@@ -217,52 +233,6 @@ Singleton {
             action: () => SettingsService.set("windowShadow", !SettingsService.windowShadow)
         },
         Toggle {
-            key: "screenshot"; icon: "󰹑"; label: "Capture"
-            detail: "Photo or video"
-            available: CaptureService.can("grim")
-            closes: true
-            // Waits for the panel to close so it is not in the screenshot.
-            // Empty arguments reuse the capture surface's last choices.
-            action: () => CaptureService.open("", "", "", CaptureService.settle)
-        },
-        Toggle {
-            key: "annotate"; icon: "󰏫"; label: "Annotate"
-            detail: "A region, in satty"
-            available: CaptureService.can("editor")
-            closes: true
-            action: () => CaptureService.open("region", "photo", "editor",
-                                              CaptureService.settle)
-        },
-        Toggle {
-            key: "text"; icon: "󱄽"; label: "Read text"
-            detail: "A region, to the clipboard"
-            available: CaptureService.can("text")
-            closes: true
-            action: () => CaptureService.open("region", "photo", "text",
-                                              CaptureService.settle)
-        },
-        Toggle {
-            key: "picker"; icon: PickerService.icon; label: "Colour"
-            detail: "A pixel"
-            active: PickerService.picking
-            available: PickerService.available
-            closes: true
-            // hyprpicker freezes the screen as it is, so wait for the panel
-            // to close. The delay is passed by the caller because a keybind
-            // with nothing open needs none.
-            action: () => PickerService.pick(PickerService.settle)
-        },
-        Toggle {
-            key: "record"; icon: RecorderService.recording ? "󰑊" : "󰕧"
-            label: "Record"
-            detail: RecorderService.recording
-                ? RecorderService.display : RecorderService.subject
-            active: RecorderService.recording
-            available: RecorderService.available
-            closes: true
-            action: () => RecorderService.toggle(CaptureService.settle)
-        },
-        Toggle {
             key: "clearClipboard"; icon: "󰅍"; label: "Clear clipboard"
             detail: ClipboardService.count === 1
                 ? "1 entry kept" : `${ClipboardService.count} entries kept`
@@ -275,7 +245,7 @@ Singleton {
     ]
 
     readonly property var defaultToggles:
-        ["wifi", "bluetooth", "power", "focus", "microphone", "airplane"]
+        ["theme","idle","wifi", "bluetooth", "power", "focus","microphone", "airplane"]
 
     function tileOf(key: string): var {
         for (let index = 0; index < root.toggleCatalogue.length; index++) {
@@ -348,7 +318,8 @@ Singleton {
         { id: "weather",       name: "Weather",       icon: "󰖐", sizes: ["2x1", "2x2", "2x3", "4x2"] },
         { id: "calendar",      name: "Calendar",      icon: "󰃭", sizes: ["2x3", "2x4", "3x4"] },
         { id: "notifications", name: "Notifications", icon: "󰂚", sizes: ["2x4", "2x6", "2x8", "3x8"] },
-        { id: "impasto",       name: "impasto",       icon: "󰏘", sizes: ["1x2", "2x2", "2x4"] },
+        { id: "todo", name: "Todo", icon: "󰄬", sizes: ["2x4", "2x6", "2x8", "3x8"] },
+        { id: "theme", name: "Theme", icon: "󰄬", sizes: ["2x4", "2x6", "2x8", "3x8"] },
         { id: "clock",         name: "Clock",         icon: "󰥔", sizes: ["1x2", "2x2", "2x4"] },
     ]
 
@@ -362,7 +333,9 @@ Singleton {
         { id: "media",         col: 2, row: 0, size: "2x2" },
         { id: "weather",       col: 2, row: 2, size: "2x3" },
         { id: "calendar",      col: 2, row: 5, size: "2x3" },
-        { id: "notifications", col: 4, row: 0, size: "2x8" }
+        { id: "notifications", col: 4, row: 0, size: "2x8" }, 
+        { id: "todo",          col: 6, row: 0, size: "2x8" },
+        { id: "theme",          col: 6, row: 0, size: "2x8" }
     ]
 
     function entry(id: string): var {
@@ -464,8 +437,6 @@ Singleton {
             if (!kept)
                 continue
             const row = Object.assign({}, kept)
-            if (row.id === "appearance")
-                row.id = "preferences"
             if (root.entry(row.id) === null)
                 continue
             if (!row.key)
@@ -681,7 +652,6 @@ Singleton {
 
     // Size selected by the resize handle, given the dragged extent in cells:
     // the smallest offered footprint containing the pointer pulled back by
-    // `handleInset`, else the nearest corner. Same rule as `DesktopService`.
     readonly property real handleInset: 0.35
 
     function sizeNearest(id: string, cols: real, rows: real): string {

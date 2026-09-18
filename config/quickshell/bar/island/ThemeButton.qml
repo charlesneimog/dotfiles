@@ -1,25 +1,23 @@
 // ╭──────────────────────────────────────────────────────────────────────────╮
 // │                                                                          │
-// │   T H E M E   S E R V I C E                                              │
-// │   system application light / dark theme                                  │
+// │   T H E M E   B U T T O N                                                │
+// │   toggle system application theme                                        │
 // │                                                                          │
 // │   github.com/andreumassanet/impasto                                      │
 // │                                                                          │
 // ╰──────────────────────────────────────────────────────────────────────────╯
 
-pragma Singleton
-
 import QtQuick
 import Quickshell.Io
 
-QtObject {
+import "../../theme"
+import "../../components"
+
+IconButton {
     id: root
 
     property bool dark: true
-    property bool ready: false
-
-    readonly property bool busy:
-        themeQuery.running || themeChange.running
+    property bool themeReady: false
 
     function readTheme(output: string): void {
         try {
@@ -29,24 +27,25 @@ QtObject {
                 throw new Error("Invalid theme")
 
             root.dark = report.alt === "dark"
-            root.ready = true
+            root.themeReady = true
         } catch (error) {
-            root.ready = false
+            root.themeReady = false
             console.warn("Could not read system theme:", error)
         }
     }
 
-    function refresh(): void {
-        if (!root.busy)
-            themeQuery.running = true
+    icon: root.dark ? "" : ""
+    enabled: root.themeReady
+        && !themeQuery.running
+        && !themeChange.running
+
+    onClicked: {
+        themeChange.running = true
     }
 
-    function toggle(): void {
-        if (root.ready && !root.busy)
-            themeChange.running = true
-    }
+    Process {
+        id: themeQuery
 
-    readonly property Process themeQuery: Process {
         command: [
             "bash",
             "-c",
@@ -61,11 +60,13 @@ QtObject {
 
         onExited: code => {
             if (code !== 0)
-                root.ready = false
+                root.themeReady = false
         }
     }
 
-    readonly property Process themeChange: Process {
+    Process {
+        id: themeChange
+
         command: [
             "bash",
             "-c",
@@ -74,15 +75,18 @@ QtObject {
 
         onExited: code => {
             if (code === 0)
-                root.themeQuery.running = true
+                themeQuery.running = true
         }
     }
 
-    readonly property Timer refreshTimer: Timer {
+    Timer {
         interval: 60000
         running: true
         repeat: true
 
-        onTriggered: root.refresh()
+        onTriggered: {
+            if (!themeQuery.running && !themeChange.running)
+                themeQuery.running = true
+        }
     }
 }

@@ -62,61 +62,52 @@ Item {
     implicitHeight: Theme.capsuleHeight
 
     // ── MARK ────────────────────────────────────────────────────────────────
+// ── MARK ────────────────────────────────────────────────────────────────
 
-    Item {
-        id: glyph
+Item {
+    id: glyph
 
-        x: root.pad
-        anchors.verticalCenter: parent.verticalCenter
-        visible: !root.ring
-        width: symbol.visible ? symbol.implicitWidth : root.size
-        height: root.size + 2
+    x: root.pad
+    anchors.verticalCenter: parent.verticalCenter
+    visible: !root.ring
+    width: symbol.implicitWidth
+    height: root.size + 2
 
-        // Claude and the pet have no font glyph and draw their own mark at
-        // glyph size.
-        Loader {
-            anchors.centerIn: parent
-            active: !root.ring && root.moduleId === "claude"
-            sourceComponent: ClaudeMark {
-                width: root.size
-                height: root.size
-                color: root.tint
-            }
-        }
+    Text {
+        id: symbol
 
+        anchors.centerIn: parent
+        text: ModuleService.glyphOf(root.moduleId)
+        font.family: Theme.fontMono
+        font.pixelSize: root.size
+        color: root.tint
 
-        Text {
-            id: symbol
-
-            anchors.centerIn: parent
-            visible: root.moduleId !== "claude"
-            text: ModuleService.glyphOf(root.moduleId)
-            font.family: Theme.fontMono
-            font.pixelSize: root.size
-            color: root.tint
-
-            Behavior on color { ColorAnimation { duration: Theme.durationFast } }
-        }
-    }
-
-    Item {
-        id: gauge
-
-        visible: root.ring
-        width: Theme.capsuleHeight
-        height: Theme.capsuleHeight
-        anchors.verticalCenter: parent.verticalCenter
-        scale: root.alone ? 1 - 0.15 * (root.figured ? root.reveal : 0) : 0.85
-
-        Loader {
-            anchors.fill: parent
-            active: root.ring && root.moduleId !== ""
-            sourceComponent: Module {
-                moduleId: root.moduleId
-                compact: true
+        Behavior on color {
+            ColorAnimation {
+                duration: Theme.durationFast
             }
         }
     }
+}
+
+Item {
+    id: gauge
+
+    visible: root.ring
+    width: Theme.capsuleHeight
+    height: Theme.capsuleHeight
+    anchors.verticalCenter: parent.verticalCenter
+    scale: root.alone ? 1 - 0.15 * (root.figured ? root.reveal : 0) : 0.85
+
+    Loader {
+        anchors.fill: parent
+        active: root.ring && root.moduleId !== ""
+        sourceComponent: Module {
+            moduleId: root.moduleId
+            compact: true
+        }
+    }
+}
 
     // ── FIGURE ──────────────────────────────────────────────────────────────
     //

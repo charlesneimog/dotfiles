@@ -29,17 +29,13 @@ Item {
         calendar: calendarModule,
         media: mediaModule,
         timer: timerModule,
-        claude: claudeModule,
         battery: batteryModule,
         volume: volumeModule,
         brightness: brightnessModule,
         network: networkModule,
         bluetooth: bluetoothModule,
         weather: weatherModule,
-        github: githubModule,
-        stats: statsModule,
         updates: updatesModule,
-        recorder: recorderModule,
         notifications: notificationsModule
     })
 
@@ -57,16 +53,12 @@ Item {
     Component { id: calendarModule; CalendarModule {} }
     Component { id: mediaModule;   MediaModule { compact: root.compact } }
     Component { id: timerModule;   TimerModule { compact: root.compact } }
-    Component { id: claudeModule;  ClaudeModule { compact: root.compact } }
     Component { id: batteryModule; BatteryModule { compact: root.compact } }
     Component { id: volumeModule;     VolumeModule { compact: root.compact } }
     Component { id: brightnessModule; BrightnessModule { compact: root.compact } }
     Component { id: networkModule;    NetworkModule { compact: root.compact } }
     Component { id: bluetoothModule;  BluetoothModule { compact: root.compact } }
     Component { id: weatherModule;    WeatherModule { compact: root.compact } }
-    Component { id: githubModule;     GithubModule {} }
-    Component { id: statsModule;      StatsModule { compact: root.compact } }
     Component { id: updatesModule;    UpdatesModule { compact: root.compact } }
-    Component { id: recorderModule;   RecorderModule { compact: root.compact } }
     Component { id: notificationsModule; NotificationsModule {} }
 }
