@@ -21,7 +21,7 @@ Row {
     id: root
 
     // The layout's pieces, `{ id, shape, figure }`
-    // (`SettingsService.barItems`).
+    // (`Config.barItems`).
     property var entries: []
 
     // Inside the one capsule, where the band is already the ground.
@@ -111,7 +111,7 @@ Row {
             readonly property int reach: Theme.shadowBarRange + 4
             readonly property int spread: Theme.shadowBarSpread
 
-            visible: SettingsService.windowShadow && !group.chromeless
+            visible: Config.windowShadow && !group.chromeless
             x: -shadow.reach
             y: -shadow.reach
             width: group.width + 2 * shadow.reach

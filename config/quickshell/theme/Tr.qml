@@ -22,7 +22,7 @@ import "../services"
 QtObject {
     id: root
 
-    readonly property string language: SettingsService.language
+    readonly property string language: Config.language
 
     readonly property var languages: [
         { id: "en", label: "English" },

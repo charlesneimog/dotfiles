@@ -40,7 +40,7 @@ Rectangle {
             || islandState.layer === islandState.layerSummary)
     readonly property color surfaceColor: root.lit
         ? Theme.islandSurfaceHover
-        : (SettingsService.islandAttached ? Theme.island : Theme.islandSurface)
+        : (Config.islandAttached ? Theme.island : Theme.islandSurface)
 
     // ── HOSTED ──────────────────────────────────────────────────────────────
     //
@@ -104,7 +104,7 @@ Rectangle {
 
     // Attached, only the shape reaches up to the screen edge; the contents keep
     // their padding, so nothing already drawn moves.
-    readonly property int notchPad: SettingsService.islandAttached ? Theme.barTopMargin : 0
+    readonly property int notchPad: Config.islandAttached ? Theme.barTopMargin : 0
 
     readonly property var layerComponents: ({
         modules: restLayer,
@@ -163,7 +163,7 @@ Rectangle {
     readonly property bool restBusy: islandState.layer === islandState.layerModules
         && (collapsedLoader.item?.busy ?? false)
 
-    readonly property bool canSummarise: SettingsService.islandSummary
+    readonly property bool canSummarise: Config.islandSummary
         && !root.summaryHeld
         && !root.landing
         && ModuleService.openId === ""
@@ -269,14 +269,14 @@ Rectangle {
     // through the band's interior, and while growing the band is the outer
     // edge. `Bar.qml` draws the outline over both.
     readonly property bool inBand: root.hosted
-    border.width: root.menuBorder && !root.inBand && !SettingsService.islandAttached ? 1 : 0
+    border.width: root.menuBorder && !root.inBand && !Config.islandAttached ? 1 : 0
     clip: true
 
     readonly property bool menuBorder: islandState.expanded && islandState.openPanel === "controls"
 
     // Keep the expanded clock menu outlined, with its top stroke offscreen.
     Rectangle {
-        visible: root.menuBorder && SettingsService.islandAttached && !root.inBand
+        visible: root.menuBorder && Config.islandAttached && !root.inBand
         x: 0
         y: -1
         width: root.width
@@ -291,8 +291,8 @@ Rectangle {
 
     // Attached, the upper corners go square: the curve is added outside the
     // island by NotchFillet, flaring away from it rather than cutting into it.
-    topLeftRadius: SettingsService.islandAttached ? 0 : root.radius
-    topRightRadius: SettingsService.islandAttached ? 0 : root.radius
+    topLeftRadius: Config.islandAttached ? 0 : root.radius
+    topRightRadius: Config.islandAttached ? 0 : root.radius
 
     Behavior on topLeftRadius {
         enabled: root.animated

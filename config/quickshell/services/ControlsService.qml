@@ -59,7 +59,7 @@ Singleton {
 
     // Door ids on the row, left to right. Unknown ids are skipped.
     readonly property var buttons: {
-        const kept = SettingsService.centreButtons
+        const kept = Config.centreButtons
         const list = root.stored(kept) ? kept : root.defaultButtons
         return list.filter(id => root.door(id) !== null)
     }
@@ -82,11 +82,11 @@ Singleton {
         const list = root.buttons.filter(entry => entry !== id)
         if (on)
             list.push(id)
-        SettingsService.set("centreButtons", list)
+        Config.set("centreButtons", list)
     }
 
     function moveDoor(id: string, delta: int): void {
-        SettingsService.set("centreButtons", root.moved(root.buttons, id, delta))
+        Config.set("centreButtons", root.moved(root.buttons, id, delta))
     }
 
     // Returns a copy of `list` with `id` moved by `delta` places.
@@ -216,27 +216,27 @@ Singleton {
         },
         Toggle {
             key: "dock"; icon: "󱂠"; label: "Dock"
-            detail: SettingsService.dockEnabled ? "Shown" : "Hidden"
-            active: SettingsService.dockEnabled
-            action: () => SettingsService.set("dockEnabled", !SettingsService.dockEnabled)
+            detail: Config.dockEnabled ? "Shown" : "Hidden"
+            active: Config.dockEnabled
+            action: () => Config.set("dockEnabled", !Config.dockEnabled)
         },
         Toggle {
             key: "notch"; icon: "󰌢"; label: "Notch"
-            detail: SettingsService.islandAttached ? "Attached" : "Floating"
-            active: SettingsService.islandAttached
-            action: () => SettingsService.set("islandAttached", !SettingsService.islandAttached)
+            detail: Config.islandAttached ? "Attached" : "Floating"
+            active: Config.islandAttached
+            action: () => Config.set("islandAttached", !Config.islandAttached)
         },
         Toggle {
             key: "shadow"; icon: "󰘷"; label: "Shadows"
-            detail: SettingsService.windowShadow ? "On the windows" : "Off"
-            active: SettingsService.windowShadow
-            action: () => SettingsService.set("windowShadow", !SettingsService.windowShadow)
+            detail: Config.windowShadow ? "On the windows" : "Off"
+            active: Config.windowShadow
+            action: () => Config.set("windowShadow", !Config.windowShadow)
         },
         Toggle {
             key: "clearClipboard"; icon: "󰅍"; label: "Clear clipboard"
             detail: ClipboardService.count === 1
                 ? "1 entry kept" : `${ClipboardService.count} entries kept`
-            available: SettingsService.clipboardHistory
+            available: Config.clipboardHistory
                 && ClipboardService.count > 0
             // A one-shot action, which also lists it in the launcher's `>`.
             closes: true
@@ -259,7 +259,7 @@ Singleton {
     // Fallback tiles for a toggles block without its own list: the legacy
     // panel-wide `centreToggles`, else the defaults.
     readonly property var toggleKeys: {
-        const kept = SettingsService.centreToggles
+        const kept = Config.centreToggles
         const list = root.stored(kept) ? kept : root.defaultToggles
         return Array.from(list).filter(key => root.tileOf(key) !== null)
     }
@@ -447,14 +447,14 @@ Singleton {
     }
 
     function read(): var {
-        const kept = SettingsService.centreBlocks
+        const kept = Config.centreBlocks
         return root.normalise(root.stored(kept) ? kept : root.defaultBlocks)
     }
 
     property var blocks: root.read()
 
     Connections {
-        target: SettingsService
+        target: Config
 
         function onCentreBlocksChanged(): void {
             if (saver.running)
@@ -465,7 +465,7 @@ Singleton {
 
     readonly property Timer saver: Timer {
         interval: 120
-        onTriggered: SettingsService.set("centreBlocks", root.blocks)
+        onTriggered: Config.set("centreBlocks", root.blocks)
     }
 
     // Block keys, reassigned only when the set changes. The panel's Repeater
@@ -684,7 +684,7 @@ Singleton {
 
     // Stored as null so the shipped default applies.
     function restore(): void {
-        SettingsService.set("centreBlocks", null)
+        Config.set("centreBlocks", null)
     }
 
     // ── ARRANGING ───────────────────────────────────────────────────────────

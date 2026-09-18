@@ -33,7 +33,7 @@ Singleton {
     //   width    detail size
     //   height
     //
-    // The chip look is global (`SettingsService.chipShape`, `chipFigure`);
+    // The chip look is global (`Config.chipShape`, `chipFigure`);
     readonly property var catalogue: [
         { id: "aur",           name: "Arch / AUR",     bar: true,  width: 0,   height: 0 },
         { id: "flathub",       name: "Flathub",        bar: true,  width: 0,   height: 0 },
@@ -100,14 +100,14 @@ Singleton {
 
     // A piece's own shape when it has one, the bar's when it does not.
     function shapeOf(id: string, own: var): string {
-        const chosen = own ? own : SettingsService.chipShape
+        const chosen = own ? own : Config.chipShape
         return chosen === "ring" && root.ringed.indexOf(id) >= 0
             ? "ring"
             : "icon"
     }
 
     function figureOf(own: var): string {
-        return own ? own : SettingsService.chipFigure
+        return own ? own : Config.chipFigure
     }
 
     // ── GLYPH AND FIGURE ────────────────────────────────────────────────────
@@ -333,11 +333,11 @@ Singleton {
         const list = []
 
         if (TimerService.running
-                && SettingsService.beside("timer"))
+                && Config.beside("timer"))
             list.push("timer")
 
         if (MediaService.playing
-                && SettingsService.beside("media"))
+                && Config.beside("media"))
             list.push("media")
 
         return list.slice(0, 2)
@@ -360,9 +360,9 @@ Singleton {
     // appears.
 
     readonly property int clockCore:
-        SettingsService.clockShowsDate
+        Config.clockShowsDate
             ? 150
-            : (SettingsService.clockShowsSeconds ? 88 : 72)
+            : (Config.clockShowsSeconds ? 88 : 72)
 
     readonly property int activitySide:
         root.activities.length > 1

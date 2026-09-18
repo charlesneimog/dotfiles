@@ -19,7 +19,7 @@ singleton NotificationService 1.0 NotificationService.qml
 singleton OsdService 1.0 OsdService.qml
 singleton PrivacyService 1.0 PrivacyService.qml
 singleton SessionService 1.0 SessionService.qml
-singleton SettingsService 1.0 SettingsService.qml
+singleton Config 1.0 Config.qml
 singleton ShortcutService 1.0 ShortcutService.qml
 singleton SunsetService 1.0 SunsetService.qml
 singleton SystemService 1.0 SystemService.qml

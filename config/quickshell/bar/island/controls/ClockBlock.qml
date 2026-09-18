@@ -28,13 +28,13 @@ Card {
 
     SystemClock {
         id: clock
-        precision: SettingsService.clockShowsSeconds
+        precision: Config.clockShowsSeconds
             ? SystemClock.Seconds : SystemClock.Minutes
     }
 
-    readonly property string format: SettingsService.clockShowsSeconds
-        ? SettingsService.clockFormat.replace("mm", "mm:ss")
-        : SettingsService.clockFormat
+    readonly property string format: Config.clockShowsSeconds
+        ? Config.clockFormat.replace("mm", "mm:ss")
+        : Config.clockFormat
 
     readonly property int timeSize: root.tall ? 64 : (root.wide ? 44 : 30)
 

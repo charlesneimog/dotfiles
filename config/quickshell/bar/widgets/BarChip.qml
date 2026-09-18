@@ -36,7 +36,7 @@ Item {
 
     property bool alone: false
 
-    // The piece's own look, "" for the bar's (`SettingsService.barItems`).
+    // The piece's own look, "" for the bar's (`Config.barItems`).
     property string ownShape: ""
     property string ownFigure: ""
     property string ownWhen: ""

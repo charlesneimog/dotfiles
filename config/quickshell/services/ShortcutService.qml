@@ -42,7 +42,7 @@ Singleton {
         { name: "clipboard",      label: "Clipboard history",    description: "Shell · Open the clipboard history" },
     ]
 
-    readonly property var keys: SettingsService.keys
+    readonly property var keys: Config.keys
 
     // ── TABLE ───────────────────────────────────────────────────────────────
     //
@@ -113,7 +113,7 @@ Singleton {
         for (const row of root.table)
             next[row.description] = row.description === description
                 ? combination : row.combination
-        SettingsService.set("keys", next)
+        Config.set("keys", next)
     }
 
     // ── KEYS.TSV ────────────────────────────────────────────────────────────
@@ -145,7 +145,7 @@ Singleton {
     // writes and reloads nothing.
     function writeKeys(): void {
         if (NiriService.active) return
-        if (!SettingsService.arrived || !root.keysFile.known)
+        if (!Config.arrived || !root.keysFile.known)
             return
         if (root.keysFile.says === root.keysText)
             return
@@ -157,7 +157,7 @@ Singleton {
         property bool known: false
         property string says: ""
 
-        path: `${SettingsService.stateDirectory}/keys.tsv`
+        path: `${Config.stateDirectory}/keys.tsv`
         printErrors: false
 
         // Deferred: a save started from inside the load handler writes the
@@ -182,7 +182,7 @@ Singleton {
     }
 
     readonly property Connections settingsArrive: Connections {
-        target: SettingsService
+        target: Config
 
         function onArrivedChanged(): void {
             root.writeKeys()

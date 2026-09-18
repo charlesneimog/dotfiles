@@ -84,7 +84,7 @@ Singleton {
         .sort()
         .join(" · ")
 
-    readonly property var store: SettingsService.displays
+    readonly property var store: Config.displays
 
     readonly property var arrangement: (root.store ?? ({}))[root.profile] ?? null
 
@@ -131,7 +131,7 @@ Singleton {
 
     // ── STORE ───────────────────────────────────────────────────────────────
     //
-    // `SettingsService.displays` maps profile key to arrangement. The field
+    // `Config.displays` maps profile key to arrangement. The field
     // whitelist lives in `monitors.py`, which rejects anything else before it
     // reaches `hyprctl eval`.
 
@@ -167,7 +167,7 @@ Singleton {
         screens[description] = Object.assign({}, screens[description] ?? ({}), fields)
         profile.monitors = screens
         kept[root.profile] = profile
-        SettingsService.set("displays", kept)
+        Config.set("displays", kept)
     }
 
     function rememberMirror(on: bool): void {
@@ -176,7 +176,7 @@ Singleton {
                                       kept[root.profile] ?? ({}))
         profile.mirror = on
         kept[root.profile] = profile
-        SettingsService.set("displays", kept)
+        Config.set("displays", kept)
     }
 
     function rememberPrimary(description: string): void {
@@ -185,7 +185,7 @@ Singleton {
                                       kept[root.profile] ?? ({}))
         profile.primary = description
         kept[root.profile] = profile
-        SettingsService.set("displays", kept)
+        Config.set("displays", kept)
     }
 
     // Also reloads the config: Hyprland keeps whatever was last pushed.
@@ -193,7 +193,7 @@ Singleton {
         if (NiriService.active) return
         const kept = Object.assign({}, root.store ?? ({}))
         delete kept[root.profile]
-        SettingsService.set("displays", kept)
+        Config.set("displays", kept)
         root.reloader.running = true
     }
 
@@ -391,13 +391,13 @@ Singleton {
         if (NiriService.active) return
         if (!root.loaded || !root.internal)
             return
-        if (SettingsService.lidPolicy === "system")
+        if (Config.lidPolicy === "system")
             return
         const others = root.monitors.filter(
             monitor => monitor.name !== root.internalName)
         if (others.length === 0)
             return
-        if (closed && SettingsService.lidPolicy !== "off")
+        if (closed && Config.lidPolicy !== "off")
             return
         // Opening always lights the panel, whatever the policy.
         root.remember(root.internal.description, { disabled: closed })

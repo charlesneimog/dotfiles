@@ -24,32 +24,32 @@ import "../theme"
 QtObject {
     id: root
 
-    readonly property int maxResults: SettingsService.launcherResults
+    readonly property int maxResults: Config.launcherResults
 
     // The prefix-less mode must be last. Sigils come from the settings
-    // (`SettingsService.launcherPrefixDefaults`).
+    // (`Config.launcherPrefixDefaults`).
     readonly property var modes: [
-        { id: "calculate", prefix: SettingsService.launcherPrefix("calculate"),
+        { id: "calculate", prefix: Config.launcherPrefix("calculate"),
           label: "Calculate", icon: "󰃬",
           hint: "Work something out",  empty: "An expression — 12 * 34, (5 + 5) / 2" },
-        { id: "desk",      prefix: SettingsService.launcherPrefix("desk"),
+        { id: "desk",      prefix: Config.launcherPrefix("desk"),
           label: "Desk",      icon: "󰍜",
           hint: "Open a panel or an action",
           empty: "Nothing on the desk by that name" },
-        { id: "windows",   prefix: SettingsService.launcherPrefix("windows"),
+        { id: "windows",   prefix: Config.launcherPrefix("windows"),
           label: "Windows",   icon: "󰖯",
           hint: "Find an open window", empty: "No window by that name is open" },
-        { id: "timer",     prefix: SettingsService.launcherPrefix("timer"),
+        { id: "timer",     prefix: Config.launcherPrefix("timer"),
           label: "Timer",     icon: "󰔟",
           hint: "Start a countdown",   empty: "A duration — 25m, 90s, 1:30" },
-        { id: "clipboard", prefix: SettingsService.launcherPrefix("clipboard"),
+        { id: "clipboard", prefix: Config.launcherPrefix("clipboard"),
           label: "Clipboard", icon: "󰅍",
           hint: "Copy something again",
           empty: ClipboardService.entries.length === 0
               ? "Nothing has been copied yet" : "Nothing copied says that" },
         { id: "apps",      prefix: "",  label: "Apps",      icon: "󰀻",
           hint: "Search applications",
-          empty: `No application matches. Type ${SettingsService.launcherPrefix("desk")} for what the shell itself can do.` }
+          empty: `No application matches. Type ${Config.launcherPrefix("desk")} for what the shell itself can do.` }
     ]
 
     function modeFor(query: string): var {
@@ -97,7 +97,7 @@ QtObject {
     // Fixed height with a scrolling list, or (`launcherFits`) sized to the
     // results up to `maxResults` rows.
     readonly property int panelHeight:
-        SettingsService.launcherFits ? root.heightFor(root.rows) : 520
+        Config.launcherFits ? root.heightFor(root.rows) : 520
 
     // Whitelist: the expression is passed to a JavaScript evaluator.
     readonly property var arithmetic: /^[0-9+\-*/(). %]+$/
@@ -114,7 +114,7 @@ QtObject {
     //
     // Results are ranked by a launch count with exponential decay (frecency),
     // stored in the state directory.
-    readonly property string order: SettingsService.launcherOrder
+    readonly property string order: Config.launcherOrder
 
     readonly property real halfLife: 30 * 24 * 3600 * 1000
 
@@ -123,7 +123,7 @@ QtObject {
     property var launches: ({})
 
     readonly property FileView historyFile: FileView {
-        path: `${SettingsService.stateDirectory}/launcher-history.json`
+        path: `${Config.stateDirectory}/launcher-history.json`
         watchChanges: true
 
         onFileChanged: reload()
@@ -163,7 +163,7 @@ QtObject {
     //
     // The dock's pinned apps, read from the settings rather than `DockService`
     // (which depends on this service). They get a bonus of one launch.
-    readonly property var favourites: SettingsService.dockPinned ?? []
+    readonly property var favourites: Config.dockPinned ?? []
 
     function weightOf(app: var): real {
         return root.scoreOf(app.id)
@@ -286,7 +286,7 @@ QtObject {
             if (mode.id === "desk" || mode.prefix === "")
                 continue
             // Not advertised while history is off; the sigil still works.
-            if (mode.id === "clipboard" && !SettingsService.clipboardHistory)
+            if (mode.id === "clipboard" && !Config.clipboardHistory)
                 continue
             offer({
                 kind: "mode", id: mode.id, icon: mode.icon,

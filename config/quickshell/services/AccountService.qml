@@ -26,12 +26,12 @@ Singleton {
     property string systemName: ""
     property string systemAvatar: ""
 
-    readonly property string name: SettingsService.userName !== ""
-        ? SettingsService.userName
+    readonly property string name: Config.userName !== ""
+        ? Config.userName
         : (root.systemName !== "" ? root.systemName : root.user)
 
-    readonly property string avatar: SettingsService.userAvatar !== ""
-        ? SettingsService.userAvatar
+    readonly property string avatar: Config.userAvatar !== ""
+        ? Config.userAvatar
         : root.systemAvatar
 
     // Drawn when there is no picture: at most two initials.

@@ -29,7 +29,7 @@ Singleton {
 
     readonly property string icon: root.on ? "󰃜" : "󰃝"
 
-    readonly property int temperature: SettingsService.nightTemperature
+    readonly property int temperature: Config.nightTemperature
 
     // hyprsunset is optional; checked once so the tile can say it is missing.
     property bool available: false
@@ -55,14 +55,14 @@ Singleton {
     // opens the control centre.
     readonly property Process filter: Process {
         command: ["hyprsunset", "--temperature", String(root.temperature)]
-        running: SettingsService.nightLight && root.available
+        running: Config.nightLight && root.available
 
         // Exited on its own, usually because another client already holds
         // the gamma ramp. Turn the setting off to match, and say so.
         onExited: {
-            if (!SettingsService.nightLight)
+            if (!Config.nightLight)
                 return
-            SettingsService.set("nightLight", false)
+            Config.set("nightLight", false)
             OsdService.requested(root.icon, "Night light stopped", -1)
         }
     }
@@ -81,6 +81,6 @@ Singleton {
     function toggle(): void {
         if (!root.available)
             return
-        SettingsService.set("nightLight", !SettingsService.nightLight)
+        Config.set("nightLight", !Config.nightLight)
     }
 }

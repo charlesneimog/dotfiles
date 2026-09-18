@@ -35,7 +35,7 @@ QtObject {
     readonly property color island: "#000000"
     readonly property color islandText: "#ffffff"
     readonly property color islandTextMuted: "#8e8e93"
-    readonly property color islandSurface: ThemeService.dark ? "#ffffff" : "#ffffff"
+    readonly property color islandSurface: ThemeService.dark ? "#1d1d20" : "#ffffff"
     readonly property color islandSurfaceHover: ThemeService.dark ? "#2E2E32" : "#e5e5e5"
     readonly property color islandBorder: ThemeService.dark ? "#282828" : "#d1d1d6"
 
@@ -94,8 +94,8 @@ QtObject {
 
     // The bar's scale. Ring chips, the resting island and the one-capsule
     // band are all one capsule tall.
-    readonly property int capsuleHeight: SettingsService.barHeight
-    readonly property int barTopMargin: SettingsService.barMargin
+    readonly property int capsuleHeight: Config.barHeight
+    readonly property int barTopMargin: Config.barMargin
     readonly property int capsuleSpacing: 5
 
     // Exclusive zone: exactly what the bar paints. Hyprland adds `gaps_out`
@@ -137,7 +137,7 @@ QtObject {
     // ── DOCK ────────────────────────────────────────────────────────────────
     //
     // Everything scales off the icon size. The margin matches `gaps_out`.
-    readonly property int dockIcon: SettingsService.dockIconSize
+    readonly property int dockIcon: Config.dockIconSize
     readonly property int dockPadding: 8
     readonly property int dockGap: root.capsuleSpacing
     readonly property int dockMargin: root.desktopGutter
@@ -201,8 +201,8 @@ QtObject {
 
     // ── TYPOGRAPHY ──────────────────────────────────────────────────────────
 
-    readonly property string fontFamily: resolveFont(SettingsService.fontFamily)
-    readonly property string fontMono: resolveFont(SettingsService.fontMono)
+    readonly property string fontFamily: resolveFont(Config.fontFamily)
+    readonly property string fontMono: resolveFont(Config.fontMono)
 
     // Qt expects one installed family, not a CSS comma-separated stack.
     function resolveFont(value: string): string {
@@ -224,7 +224,7 @@ QtObject {
     }
 
     // Note bodies: handwriting unless switched off.
-    readonly property string fontHand: SettingsService.notesHandwriting
+    readonly property string fontHand: Config.notesHandwriting
         ? root.fontSignature : root.fontFamily
 
     readonly property int fontSizeLabel: 10
@@ -240,7 +240,7 @@ QtObject {
 
     // ── MOTION ──────────────────────────────────────────────────────────────
 
-    readonly property real motion: SettingsService.motionScale / 100
+    readonly property real motion: Config.motionScale / 100
 
     readonly property var easingCurves: [
         { id: "OutCubic", label: "Smooth",  type: Easing.OutCubic },
@@ -250,7 +250,7 @@ QtObject {
     ]
 
     readonly property int easing: {
-        const curve = root.easingCurves.find(entry => entry.id === SettingsService.motionCurve)
+        const curve = root.easingCurves.find(entry => entry.id === Config.motionCurve)
         return curve ? curve.type : Easing.OutCubic
     }
 

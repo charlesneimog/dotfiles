@@ -110,7 +110,7 @@ ShellRoot {
     Connections {
         target: LockService
         function onLockedChanged(): void {
-            if (LockService.locked && SettingsService.clipboardWipeOnLock)
+            if (LockService.locked && Config.clipboardWipeOnLock)
                 ClipboardService.wipe()
         }
     }
@@ -185,7 +185,7 @@ ShellRoot {
     IpcHandler {
         target: "clipboard"
         function toggle(): void {
-            const sigil = SettingsService.launcherPrefix("clipboard")
+            const sigil = Config.launcherPrefix("clipboard")
             const showing = root.island?.state.openPanel === "launcher"
             if (showing && LauncherService.query.startsWith(sigil)) {
                 root.island?.close()
@@ -231,7 +231,7 @@ ShellRoot {
                 wifiEnabled: NetworkService.wifiEnabled,
                 wifiConnected: NetworkService.wifiConnected,
                 network: NetworkService.connectionName,
-                font: SettingsService.fontMono,
+                font: Config.fontMono,
                 weatherAvailable: WeatherService.available,
                 weatherPlace: WeatherService.place,
                 weatherProvider: WeatherService.provider,
@@ -239,7 +239,7 @@ ShellRoot {
                 applications: LauncherService.applications.length,
                 packageUpdates: UpdatesService.count,
                 lockBackend: "hyprlock",
-                barStyle: SettingsService.barStyle,
+                barStyle: Config.barStyle,
                 clipboardWatcher: ClipboardService.watcher.running,
                 mediaPlayer: MediaService.identity
             })

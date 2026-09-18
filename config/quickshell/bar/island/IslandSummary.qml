@@ -30,7 +30,7 @@ Item {
     // Only when the weather is already shown on the bar:
     // touching the service builds it, and building it makes a network request.
     readonly property bool weather:
-        SettingsService.onBar("weather") && WeatherService.available
+        Config.onBar("weather") && WeatherService.available
 
     // The spectrum is cava, a process; it is only started for a glance that
     // has a track to show.
@@ -79,7 +79,7 @@ Item {
             spacing: 12
 
             Text {
-                text: Qt.formatDateTime(clock.date, SettingsService.clockFormat)
+                text: Qt.formatDateTime(clock.date, Config.clockFormat)
                 font.family: Theme.fontFamily
                 font.pixelSize: 34
                 font.weight: Font.DemiBold
@@ -91,14 +91,14 @@ Item {
                 spacing: 0
 
                 Text {
-                    text: Qt.locale(SettingsService.language).toString(clock.date, "dddd")
+                    text: Qt.locale(Config.language).toString(clock.date, "dddd")
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fontSizeSmall
                     color: Theme.textMuted
                 }
 
                 Text {
-                    text: Qt.locale(SettingsService.language).toString(clock.date, "d MMMM")
+                    text: Qt.locale(Config.language).toString(clock.date, "d MMMM")
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fontSizeMedium
                     font.weight: Font.DemiBold

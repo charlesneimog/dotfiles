@@ -63,7 +63,7 @@ Singleton {
     // Read-only here: the script is the only writer, and its lock serialises
     // the processes that modify the file.
     readonly property FileView store: FileView {
-        path: `${SettingsService.stateDirectory}/clipboard.json`
+        path: `${Config.stateDirectory}/clipboard.json`
         watchChanges: true
 
         onFileChanged: reload()
@@ -85,10 +85,10 @@ Singleton {
     //
     // wl-paste spawns a fresh process per change, so the limits travel as
     // arguments. Changing any of them restarts the watcher.
-    readonly property var wanted: SettingsService.clipboardHistory
+    readonly property var wanted: Config.clipboardHistory
         ? [root.script, "watch",
-           "--keep", `${SettingsService.clipboardKeep}`,
-           SettingsService.clipboardImages ? "--images" : "--no-images"]
+           "--keep", `${Config.clipboardKeep}`,
+           Config.clipboardImages ? "--images" : "--no-images"]
         : []
 
     property bool ready: false
@@ -148,7 +148,7 @@ Singleton {
     }
 
     function run(arguments: var): void {
-        if (!SettingsService.clipboardHistory)
+        if (!Config.clipboardHistory)
             return
         root.action.running = false
         root.action.command = [root.script].concat(arguments)

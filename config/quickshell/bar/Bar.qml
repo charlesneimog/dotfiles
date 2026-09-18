@@ -20,7 +20,7 @@ import "./island"
 import "./island/controls"
 import "../components"
 
-// The island in the middle and the two sides (`SettingsService.barZone`), in
+// The island in the middle and the two sides (`Config.barZone`), in
 // one of three styles:
 //
 //   grouped   the sides sit against the island and move aside as it grows
@@ -38,16 +38,16 @@ PanelWindow {
 
     // Distance from the screen edge to the ends. Matches the compositor's
     // outer gap so the bar lines up with tiled windows.
-    readonly property int edgeMargin: SettingsService.barSideMargin
+    readonly property int edgeMargin: Config.barSideMargin
 
-    readonly property string style: SettingsService.barStyle
+    readonly property string style: Config.barStyle
     readonly property bool spread: root.style === "spread"
     readonly property bool unified: root.style === "island"
     readonly property bool grouped: !root.spread && !root.unified
 
     // Stretch the band across the screen instead of fitting its contents.
     // Only the one-capsule style has a band.
-    readonly property bool fullWidth: root.unified && SettingsService.barFullWidth
+    readonly property bool fullWidth: root.unified && Config.barFullWidth
 
     readonly property bool holding: island.expanded
 
@@ -133,7 +133,7 @@ PanelWindow {
 
     // Attached (notch mode), only the island reaches the screen edge; the
     // sides stay capsules, centred on `laneY`.
-    readonly property int islandTopMargin: SettingsService.islandAttached ? 0 : Theme.barTopMargin
+    readonly property int islandTopMargin: Config.islandAttached ? 0 : Theme.barTopMargin
 
     // The line everything on the bar is centred on. Attached, the island
     // reaches the screen edge, so its centre is half a margin higher and the
@@ -296,7 +296,7 @@ PanelWindow {
     // does not work inside a Repeater.
     Loader {
         anchors.fill: parent
-        active: SettingsService.windowShadow
+        active: Config.windowShadow
         sourceComponent: shadowBody
     }
 
@@ -384,8 +384,8 @@ PanelWindow {
             width: root.bandWidth
             height: Math.max(root.bandRow, island.height)
             radius: island.radius
-            topLeftRadius: SettingsService.islandAttached ? 0 : band.radius
-            topRightRadius: SettingsService.islandAttached ? 0 : band.radius
+            topLeftRadius: Config.islandAttached ? 0 : band.radius
+            topRightRadius: Config.islandAttached ? 0 : band.radius
             color: island.surfaceColor
 
             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
@@ -464,7 +464,7 @@ PanelWindow {
 
         x: (root.unified ? Math.min(root.bandX, root.islandLeft) : root.islandLeft) - width
         anchors.top: parent.top
-        visible: SettingsService.islandAttached
+        visible: Config.islandAttached
         mirrored: true
         color: island.surfaceColor
     }
@@ -474,7 +474,7 @@ PanelWindow {
 
         x: root.unified ? Math.max(root.bandX + root.bandWidth, root.islandRight) : root.islandRight
         anchors.top: parent.top
-        visible: SettingsService.islandAttached
+        visible: Config.islandAttached
         color: island.surfaceColor
     }
 
@@ -501,7 +501,7 @@ PanelWindow {
                 : root.islandLeft - Theme.capsuleSpacing - leftZone.width) - sides.x
             BarZone {
                 id: leftModules
-                entries: SettingsService.barItems("left")
+                entries: Config.barItems("left")
                 chromeless: root.unified
             }
             AppTrayWidget {
@@ -522,7 +522,7 @@ PanelWindow {
         BarZone {
             id: rightZone
 
-            entries: SettingsService.barItems("right")
+            entries: Config.barItems("right")
             chromeless: root.unified
             x: (root.unified ? root.bodyX + root.bodyWidth - root.hostedInset - rightZone.width
                 : root.spread ? root.width - root.edgeMargin - rightZone.width

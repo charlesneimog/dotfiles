@@ -28,9 +28,9 @@ Singleton {
     property bool inhibited: false
 
     // Minutes; `IdleMonitor` takes seconds.
-    readonly property int lockAfter: SettingsService.idleLock
-    readonly property int screenAfter: SettingsService.idleScreen
-    readonly property int suspendAfter: SettingsService.idleSuspend
+    readonly property int lockAfter: Config.idleLock
+    readonly property int screenAfter: Config.idleScreen
+    readonly property int suspendAfter: Config.idleSuspend
 
     readonly property IdleMonitor lockWatch: IdleMonitor {
         enabled: !root.inhibited && root.lockAfter > 0

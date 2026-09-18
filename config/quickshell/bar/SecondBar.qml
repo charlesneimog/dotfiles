@@ -44,10 +44,10 @@ PanelWindow {
         height: root.collapsedHeight
     }
 
-    readonly property int edgeMargin: SettingsService.barSideMargin
+    readonly property int edgeMargin: Config.barSideMargin
 
     BarZone {
-        entries: SettingsService.barItems("left")
+        entries: Config.barItems("left")
         origin: "elsewhere"
         x: root.edgeMargin
         y: Theme.barTopMargin
@@ -56,7 +56,7 @@ PanelWindow {
     BarZone {
         id: right
 
-        entries: SettingsService.barItems("right")
+        entries: Config.barItems("right")
         origin: "elsewhere"
         x: root.width - root.edgeMargin - right.width
         y: Theme.barTopMargin

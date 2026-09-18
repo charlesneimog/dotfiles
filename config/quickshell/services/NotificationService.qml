@@ -24,7 +24,7 @@ Singleton {
     signal arrived(var notification)
 
     // For notifications that do not set their own timeout.
-    readonly property int defaultTimeout: SettingsService.notificationTimeout
+    readonly property int defaultTimeout: Config.notificationTimeout
 
     property var current: null
     property var history: []
@@ -122,11 +122,11 @@ Singleton {
 
     // Kept in settings so it survives a restart. Notifications are still
     // recorded while it is on; they just do not take the island.
-    readonly property bool doNotDisturb: SettingsService.doNotDisturb
+    readonly property bool doNotDisturb: Config.doNotDisturb
 
     function toggleDoNotDisturb(): void {
         const silence = !root.doNotDisturb
-        SettingsService.set("doNotDisturb", silence)
+        Config.set("doNotDisturb", silence)
         if (silence)
             root.dismiss()
     }

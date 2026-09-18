@@ -103,7 +103,7 @@ Singleton {
 
     // A new place is a different reading; fetch it now.
     Connections {
-        target: SettingsService
+        target: Config
 
         function onWeatherPlaceChanged(): void {
             if (root.watchers > 0)
@@ -129,7 +129,7 @@ Singleton {
         // as shell code. A failed city lookup falls back to wttr.in geolocation.
         command: ["sh", "-c",
             "place=\"$1\"; if [ -z \"$place\" ]; then place=$(curl -fsS --connect-timeout 5 --max-time 10 https://ipinfo.io/json | jq -r '.city // empty'); fi; encoded=$(printf %s \"$place\" | jq -sRr @uri); exec curl -fsS --connect-timeout 5 --max-time 30 \"https://wttr.in/$encoded?format=j1&lang=pt\"",
-            "weather", SettingsService.weatherPlace.trim()]
+            "weather", Config.weatherPlace.trim()]
         onExited: {
             if (!root.primarySucceeded) root.locationQuery.running = true
         }
@@ -179,15 +179,15 @@ Singleton {
     // TLS validation enabled and fall back to Open-Meteo instead.
     readonly property Process locationQuery: Process {
         command: ["curl", "-fsS", "--connect-timeout", "5", "--max-time", "15",
-            SettingsService.weatherPlace.trim() !== ""
-                ? "https://geocoding-api.open-meteo.com/v1/search?count=1&language=pt&name=" + encodeURIComponent(SettingsService.weatherPlace.trim())
+            Config.weatherPlace.trim() !== ""
+                ? "https://geocoding-api.open-meteo.com/v1/search?count=1&language=pt&name=" + encodeURIComponent(Config.weatherPlace.trim())
                 : "https://ipinfo.io/json"]
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
                     const data = JSON.parse(text)
                     let location
-                    if (SettingsService.weatherPlace.trim() !== "") {
+                    if (Config.weatherPlace.trim() !== "") {
                         const match = data.results?.[0]
                         if (!match) throw new Error("Unknown location")
                         location = { latitude: match.latitude, longitude: match.longitude,
