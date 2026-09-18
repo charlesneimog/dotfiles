@@ -63,9 +63,8 @@ Singleton {
 
     // One of `chipShapes` and one of `chipFigures`.
     property string chipShape: "icon"
-    property string chipFigure: "on"
-
-    property int launcherResults: 9
+    property string chipFigure: "hover"
+    property int launcherResults: 20
 
     // Order with an empty query: `recent` ranks by launch count with
     // decay; otherwise alphabetical.
@@ -82,7 +81,7 @@ Singleton {
     property bool clipboardHistory: true
 
     // Payloads are stored as separate files, so the index stays small.
-    property int clipboardKeep: 200
+    property int clipboardKeep: 100
 
     property bool clipboardImages: true
 
@@ -305,8 +304,8 @@ Singleton {
     }
 
     readonly property var barDefaults: ({
-        left: ["aur", "workspaces"],
-        right: ["notifications", "network", "bluetooth", "volume", "battery"]
+        left: ["workspaces", "tray", "windows"],
+        right: ["network", "bluetooth", "volume", "battery", "notifications"]
     })
 
     function barItems(side: string): var {

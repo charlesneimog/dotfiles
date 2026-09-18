@@ -23,41 +23,33 @@ QtObject {
     property string activeId: "adaptive"
     property string activeName: "Adaptive (Wallpaper)"
 
-    // ── ISLAND ──────────────────────────────────────────────────────────────
-
-    // The bar and menus follow the selected palette, including light themes.
-    // readonly property color island: root.background
-    // readonly property color islandSurface: root.surface
-    // readonly property color islandSurfaceHover: root.surfaceHover
-    // readonly property color islandBorder: root.border
-
-    // ── SEMANTIC COLOURS ────────────────────────────────────────────────────
     readonly property color island: "#000000"
     readonly property color islandText: "#ffffff"
     readonly property color islandTextMuted: "#8e8e93"
-    readonly property color islandSurface: ThemeService.dark ? "#1d1d20" : "#ffffff"
-    readonly property color islandSurfaceHover: ThemeService.dark ? "#2E2E32" : "#e5e5e5"
-    readonly property color islandBorder: ThemeService.dark ? "#282828" : "#d1d1d6"
+    readonly property color islandSurface: "#1d1d20"
+    readonly property color islandSurfaceHover: "#2e2e32"
+    readonly property color islandBorder: "#282828"
 
     readonly property color barBackground: "#000000"
     readonly property color barAccent: root.accent
 
-    property color background: ThemeService.dark ? "#000000" : "#ffffff"
-    property color surface: ThemeService.dark ? "#1D1D20" : "#f2f2f2"
-    property color surfaceHover: ThemeService.dark ? "#2E2E32" : "#e5e5e5"
-    property color border: ThemeService.dark ? "#282828" : "#d1d1d6"
+    property color background: "#000000"
+    property color surface: "#1d1d20"
+    property color surfaceHover: "#2e2e32"
+    property color border: "#282828"
 
-    property color text: ThemeService.dark ? "#ffffff" : "#1c1c1e"
-    property color textMuted: ThemeService.dark ? "#8e8e93" : "#6e6e73"
+    property color text: "#ffffff"
+    property color textMuted: "#8e8e93"
 
-    property color accent: ThemeService.dark ? "#0a84ff" : "#007aff"
-    property color accentHover: ThemeService.dark ? "#409cff" : "#0a84ff"
+    property color accent: "#0a84ff"
+    property color accentHover: "#409cff"
     property color accentText: "#ffffff"
 
-    property color red: ThemeService.dark ? "#ff453a" : "#ff3b30"
-    property color green: ThemeService.dark ? "#32d74b" : "#34c759"
-    property color yellow: ThemeService.dark ? "#ffd60a" : "#ffcc00"
-    property color blue: ThemeService.dark ? "#0a84ff" : "#007aff"
+    property color red: "#ff453a"
+    property color green: "#32d74b"
+    property color yellow: "#ffd60a"
+    property color blue: "#0a84ff"
+
 
     // Status indicators are fixed: a wallpaper-derived accent must not change
     // what a battery ring means.

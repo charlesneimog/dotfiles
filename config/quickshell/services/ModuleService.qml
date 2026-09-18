@@ -366,8 +366,8 @@ Singleton {
 
     readonly property int activitySide:
         root.activities.length > 1
-            ? 92
-            : 64
+            ? 110
+            : 92
 
     // Width the island would have had without privacy.
     readonly property int restContentWidth:
