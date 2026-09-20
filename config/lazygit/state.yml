@@ -1,8 +1,9 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/neimog/Documents/Git/dotfiles
-    - /home/neimog/Documents/Git/charlesneimog.github.io
     - /home/neimog/Documents/Git/NewPiece
+    - /home/neimog/Documents/Git/sonologia
+    - /home/neimog/Documents/Git/charlesneimog.github.io
     - /home/neimog/Documents/Git/pd-xlab
     - /home/neimog/Documents/Git/pd-bhack
     - /home/neimog/Documents/Git/pd-saf
@@ -10,7 +11,6 @@ recentrepos:
     - /home/neimog/Documents/Git/pd-else
     - /home/neimog/Documents/Git/SmartFit
     - /home/neimog/Documents/Git/pd4web
-    - /home/neimog/Documents/Git/sonologia
     - /home/neimog/Documents/Git/pd-upic
     - /home/neimog/Documents/Git/journal
     - /home/neimog/Documents/Git/OpenScofo
