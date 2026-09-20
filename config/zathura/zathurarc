@@ -1,3 +1,0 @@
- # Adding reverse search between gvim and zathura
-set synctex true
-set synctex-editor-command "nvim --remote-silent +%{line} %{input}"

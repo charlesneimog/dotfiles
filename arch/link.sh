@@ -50,19 +50,6 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 link_files "$SCRIPT_DIR/../config/home" "$HOME" true
 link_files "$SCRIPT_DIR/../config/nvim" "$HOME/.config/nvim" false
-link_files "$SCRIPT_DIR/../config/rofi" "$HOME/.config/rofi" false
-link_files "$SCRIPT_DIR/../config/waybar" "$HOME/.config/waybar" false
 link_files "$SCRIPT_DIR/../config/quickshell" "$HOME/.config/quickshell" false
-link_files "$SCRIPT_DIR/../config/zathura" "$HOME/.config/zathura" false
-link_files "$SCRIPT_DIR/../config/swaync" "$HOME/.config/swaync" false 
-link_files "$SCRIPT_DIR/../config/sway" "$HOME/.config/sway" false 
 link_files "$SCRIPT_DIR/../config/hypr" "$HOME/.config/hypr" false 
-link_files "$SCRIPT_DIR/../config/lazygit" "$HOME/.config/lazygit" false
-link_files "$SCRIPT_DIR/../config/yazi" "$HOME/.config/yazi" false
-link_files "$SCRIPT_DIR/../config/swaylock" "$HOME/.config/swaylock" false 
-link_files "$SCRIPT_DIR/../config/pipewire" "$HOME/.config/pipewire" false
-link_files "$SCRIPT_DIR/../config/formatters" "$HOME/" true 
-link_files "$SCRIPT_DIR/../config/plugdata" "$HOME/Documents/plugdata" true 
-link_files "$SCRIPT_DIR/../config/niri" "$HOME/.config/niri" false
 link_files "$SCRIPT_DIR/../config/ghostty" "$HOME/.config/ghostty" false
-link_files "$SCRIPT_DIR/../config/quickshell" "$HOME/.config/quickshell" false
