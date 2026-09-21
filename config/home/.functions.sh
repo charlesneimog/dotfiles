@@ -48,7 +48,6 @@ startup_services() {
 
     org.gnome.Calendar --gapplication-service &
     org.gnome.clocks --gapplication-service &
-    io.github.alainm23.planify --background &
     io.anytype.anytype &
 
     concentrate #--logdebug > /home/neimog/focus.log 2>&1 &

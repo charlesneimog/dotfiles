@@ -305,7 +305,13 @@ Singleton {
 
     readonly property var barDefaults: ({
         left: ["workspaces", "tray", "windows"],
-        right: ["network", "bluetooth", "volume", "battery", "notifications"]
+        right: [
+            "network", 
+            "bluetooth", 
+            "volume", 
+            "battery", 
+            "notifications"
+        ]
     })
 
     function barItems(side: string): var {

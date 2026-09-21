@@ -60,7 +60,20 @@ CATPUCCIN_PALETTE = [
 ]
 
 # Cores de fundo (tons mais escuros da paleta)
-BACKGROUND_COLORS = ["#1e1e2e", "#181825", "#11111b"]
+BACKGROUND_COLORS = [
+    "#020102",
+    "#080304",
+    "#18070A",
+    "#010204",
+    "#030711",
+    "#071426",
+    "#010302",
+    "#031008",
+    "#082317",
+    "#020103",
+    "#08040D",
+    "#180A24",
+]
 
 # Estilos de arte disponíveis
 ART_STYLES = [
@@ -154,8 +167,22 @@ class MathArt:
     def to_render_size(self, v):
         return int(v * self.supersample)
 
-    def apply_vignette_noise(self, bg_color=None, strength=0.6, noise=6):
-        """Fast vignette + fine noise using NumPy (no per-pixel Python loops)."""
+    def apply_vignette_noise(
+        self,
+        bg_color=None,
+        noise=3,
+        focus_radius=0.16,
+        falloff_width=0.78,
+        edge_level=0.24,
+        center_boost=1.08,
+    ):
+        """Fundo radial com centro colorido e bordas realmente escuras.
+
+        focus_radius controla o tamanho do núcleo mais luminoso.
+        falloff_width controla quanto a transição se espalha pela tela.
+        edge_level controla quão escuras ficam as bordas.
+        center_boost dá um brilho discreto à região central.
+        """
         base = pg.Color(bg_color or random.choice(BACKGROUND_COLORS))
         self.canvas.fill((base.r, base.g, base.b, 255))
 
@@ -165,9 +192,24 @@ class MathArt:
         y = np.linspace(-1.0, 1.0, self.height, dtype=np.float32)
         dist = np.sqrt(x[None, :] ** 2 + y[:, None] ** 2).T  # shape: (width, height)
         dist = np.clip(dist / dist.max(), 0.0, 1.0)
-        mask = 1.0 - strength * (dist * dist)
 
-        noise_arr = np.random.randint(-noise, noise + 1, (self.width, self.height, 1))
+        # Mantém um foco central, mas prolonga a transição colorida antes de
+        # chegar às bordas escuras. Smoothstep evita um círculo marcado.
+        transition = np.clip(
+            (dist - focus_radius) / max(0.01, falloff_width),
+            0.0,
+            1.0,
+        )
+        transition = transition * transition * (3.0 - 2.0 * transition)
+        mask = center_boost * (1.0 - transition) + edge_level * transition
+        mask = np.clip(mask, 0.0, 1.15)
+
+        noise_arr = np.random.randint(
+            -noise,
+            noise + 1,
+            (self.width, self.height, 1),
+            dtype=np.int16,
+        )
         scaled = px.astype(np.float32) * mask[..., None] + noise_arr
         np.clip(scaled, 0, 255, out=scaled)
         px[:] = scaled.astype(np.uint8)
@@ -249,9 +291,17 @@ class MathArt:
         active_palette = palette or self.last_palette or CATPUCCIN_PALETTE
         mode = texture_mode or self.background_texture_mode
 
-        r_noise = random.randint(4, 20)
-        raw_str = random.uniform(0.5, 4)
-        self.apply_vignette_noise(bg_color, strength=raw_str, noise=r_noise)
+        # O núcleo continua evidente; apenas a zona de transição ficou maior.
+        # As bordas permanecem quase pretas.
+        r_noise = random.randint(1, 4)
+        self.apply_vignette_noise(
+            bg_color,
+            noise=r_noise,
+            focus_radius=random.uniform(0.12, 0.20),
+            falloff_width=random.uniform(0.72, 0.84),
+            edge_level=random.uniform(0.18, 0.28),
+            center_boost=random.uniform(1.04, 1.10),
+        )
         self.apply_palette_texture(active_palette, mode=mode)
 
 
@@ -1701,3 +1751,4 @@ if __name__ == "__main__":
 
 # Before/after:
 # - Before: jagged edges, linear gradients, default save
+

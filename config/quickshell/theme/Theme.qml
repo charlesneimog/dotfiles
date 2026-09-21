@@ -23,7 +23,7 @@ QtObject {
     property string activeId: "adaptive"
     property string activeName: "Adaptive (Wallpaper)"
 
-    readonly property color island: "#1c1c1c"
+    readonly property color island: "#101010"
     readonly property color islandText: "#ffffff"
     readonly property color islandTextMuted: "#8e8e93"
     readonly property color islandSurface: "#1d1d20"

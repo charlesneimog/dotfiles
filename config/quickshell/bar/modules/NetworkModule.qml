@@ -1,18 +1,8 @@
-// ╭──────────────────────────────────────────────────────────────────────────╮
-// │                                                                          │
-// │   N E T W O R K   M O D U L E                                            │
-// │   network · link status, radio switch when open                          │
-// │                                                                          │
-// │   github.com/andreumassanet/impasto                                      │
-// │                                                                          │
-// ╰──────────────────────────────────────────────────────────────────────────╯
-
+import "../../components"
+import "../../services"
+import "../../theme"
 import QtQuick
 import QtQuick.Layouts
-
-import "../../theme"
-import "../../services"
-import "../../components"
 
 // The chip is the link's glyph and the network name. The detail shows the link
 // type, internet reachability and the Wi-Fi switch; choosing a network is done
@@ -20,18 +10,16 @@ import "../../components"
 Item {
     id: root
 
-    property bool compact: false
+    property bool compact: true
+    readonly property string stateLine: NetworkService.stateLine
 
     implicitWidth: holder.implicitWidth
     implicitHeight: holder.implicitHeight
-
     Component.onCompleted: NetworkService.refresh()
-
-    // Shared with the desktop widget.
-    readonly property string stateLine: NetworkService.stateLine
 
     Loader {
         id: holder
+
         anchors.fill: parent
         sourceComponent: root.compact ? chip : detail
     }
@@ -64,9 +52,13 @@ Item {
                         font.pixelSize: Math.round(Theme.capsuleHeight * 0.4)
                         color: NetworkService.online ? Theme.indicator : Theme.textMuted
                     }
+
                 }
+
             }
+
         }
+
     }
 
     Component {
@@ -97,6 +89,7 @@ Item {
                         font.pixelSize: 18
                         color: NetworkService.online ? Theme.indicator : Theme.textMuted
                     }
+
                 }
 
                 ColumnLayout {
@@ -121,7 +114,9 @@ Item {
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.textMuted
                     }
+
                 }
+
             }
 
             RowLayout {
@@ -142,8 +137,9 @@ Item {
                     label: "LINK"
                     value: {
                         if (NetworkService.wiredConnected)
-                            return "Wired"
-                        return NetworkService.wifiConnected ? "Wireless" : "None"
+                            return "Wired";
+
+                        return NetworkService.wifiConnected ? "Wireless" : "None";
                     }
                     note: NetworkService.online ? "internet reached" : ""
                 }
@@ -155,7 +151,11 @@ Item {
                     implicitHeight: 28
                     onClicked: NetworkService.toggleWifi()
                 }
+
             }
+
         }
+
     }
+
 }
