@@ -1,3 +1,5 @@
+#!/bin/bash
+
 clipboard_rofi() {
     if pgrep -x rofi > /dev/null; then
         killall rofi
@@ -27,27 +29,25 @@ launch_powermenu() {
 
 # ──────────────────────────────────────
 startup_services() {
+    # Publish the Wayland session before activating services that may prompt
+    # to unlock the keyring, and finish starting Secret Service before the bar.
+    dbus-update-activation-environment --systemd --all
+    gnome-keyring-daemon --start --components=secrets
+
     /usr/lib/xdg-desktop-portal-gtk &
     /usr/lib/xdg-desktop-portal-gnome &
-    /usr/lib/evolution-data-server/evolution-alarm-notify &
 
     # Services
-    wl-paste --type text --watch cliphist store &
-    wl-paste --type image --watch cliphist store &
-    dbus-update-activation-environment --all &
-    gnome-keyring-daemon --start --components=secrets &
+    # wl-paste --type text --watch cliphist store &
+    # wl-paste --type image --watch cliphist store &
 
     # Apps
     xwayland-satellite & # X11 app
     blueman-applet & # Bluethoof
-    quickshell & # bar
-    # waybar & # bar
+    quickshell > ~/tmp.txt & # bar
 
     swaybg --image ~/.wallpaper.png & # Wallpaper
     hypridle & # Idle
-
-    org.gnome.Calendar --gapplication-service &
-    org.gnome.clocks --gapplication-service &
     io.anytype.anytype &
 
     concentrate #--logdebug > /home/neimog/focus.log 2>&1 &
@@ -278,7 +278,6 @@ function unlock_ssh {
 }
 
 # ──────────────────────────────────────
-#!/bin/bash
 function get_unsplash_wallpaper_mac {
     # --- Config ---
     QUERY_LIST="rocks+lake+desert+dunes+mountain"

@@ -18,10 +18,11 @@ Singleton {
 
     property string password: ""
 
-Process {
+    Process {
         id: passwordLookup
 
         command: [
+            "timeout", "20s",
             "secret-tool",
             "lookup",
             "service", "impasto-nextcloud",
@@ -41,6 +42,8 @@ Process {
                 }
 
                 root.password = secret
+                credentialRetry.stop()
+                credentialRetry.interval = 15000
 
                 console.log(
                     "[TodoService] Nextcloud credentials loaded"
@@ -72,6 +75,17 @@ Process {
                 root.error =
                     "Could not load Nextcloud credentials"
             }
+            if (!root.password)
+                credentialRetry.restart()
+        }
+    }
+
+    Timer {
+        id: credentialRetry
+        interval: 15000
+        onTriggered: {
+            interval = Math.min(interval * 2, 300000)
+            root.refresh()
         }
     }
 
@@ -97,6 +111,8 @@ Process {
     // ── Public API ──────────────────────────────────────────────────────────
     function refresh(): void {
         if (!password) {
+            if (!passwordLookup.running)
+                passwordLookup.running = true
             return
         }
 
@@ -855,7 +871,7 @@ function escapeIcal(value): string {
 
 
     readonly property Timer refreshTimer: Timer {
-        interval: 300000
+        interval: 600000
         repeat: true
         running: true
 

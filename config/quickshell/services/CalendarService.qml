@@ -66,10 +66,13 @@ Singleton {
                     if (!result.error) {
                         root.events = result.events
                         root.calendars = result.calendars || []
+                        console.log("[CalendarService] loaded", root.events.length, "events from", root.calendars.length, "calendars")
                     }
                 } catch (e) {
                     root.error = "Could not read Nextcloud events"
                 }
+                if (root.error)
+                    console.warn("[CalendarService]", root.error)
             }
         }
         onExited: code => {
@@ -121,7 +124,8 @@ Singleton {
     }
 
     Timer {
-        interval: 300000
+        // Retry startup failures promptly when the keyring/network comes up.
+        interval: root.error !== "" ? 30000 : 600000
         repeat: true
         running: true
         onTriggered: root.refresh()

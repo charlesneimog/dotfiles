@@ -42,8 +42,12 @@ ShellRoot {
         void SunsetService.available
         // Arms the idle monitors.
         void IdleService.lockAfter
+        // Load Nextcloud data before either panel is opened.
+        void TodoService.tasks
+        CalendarService.refresh()
 
-    console.log("PrivacyService loaded:", PrivacyService.active)
+        // Watch capture activity before the island is first shown.
+        void PrivacyService.active
     }
 
     // ── SCREENS ─────────────────────────────────────────────────────────────
@@ -237,11 +241,16 @@ ShellRoot {
                 weatherProvider: WeatherService.provider,
                 weatherError: WeatherService.error,
                 applications: LauncherService.applications.length,
+                calendarLoading: CalendarService.loading,
+                calendarEvents: CalendarService.events.length,
+                calendarError: CalendarService.error,
                 packageUpdates: UpdatesService.count,
                 lockBackend: "hyprlock",
                 barStyle: Config.barStyle,
                 clipboardWatcher: ClipboardService.watcher.running,
-                mediaPlayer: MediaService.identity
+                mediaPlayer: MediaService.identity,
+                microphoneActive: PrivacyService.microphoneActive,
+                cameraActive: PrivacyService.cameraActive
             })
         }
 

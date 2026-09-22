@@ -364,7 +364,9 @@ Singleton {
 
     // Additional slot appended to the right.
     readonly property int privacySide:
-        PrivacyService.active ? 32 : 0
+        PrivacyService.active
+            ? (PrivacyService.microphoneActive && PrivacyService.cameraActive ? 52 : 32)
+            : 0
 
     // Total resting island width.
     readonly property int restWidth:
