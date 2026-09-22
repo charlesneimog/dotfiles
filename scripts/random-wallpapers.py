@@ -14,6 +14,7 @@ import sys
 import random
 import math
 import argparse
+import colorsys
 from datetime import datetime
 import pygame as pg
 import numpy as np
@@ -41,7 +42,7 @@ pg.init()
 pg.display.gl_set_attribute(pg.GL_MULTISAMPLEBUFFERS, 1)
 pg.display.gl_set_attribute(pg.GL_MULTISAMPLESAMPLES, 4)
 
-# Paleta Catppuccin completa
+# Paleta Catppuccin com amarelo dourado adicional
 CATPUCCIN_PALETTE = [
     "#f5e0dc",
     "#f2cdcd",
@@ -51,6 +52,7 @@ CATPUCCIN_PALETTE = [
     "#eba0ac",
     "#fab387",
     "#f9e2af",
+    "#c9ad46",  # Amarelo dourado, com fundo amarelo escuro correspondente
     "#a6e3a1",
     "#94e2d5",
     "#89dceb",
@@ -204,13 +206,16 @@ class MathArt:
         mask = center_boost * (1.0 - transition) + edge_level * transition
         mask = np.clip(mask, 0.0, 1.15)
 
-        noise_arr = np.random.randint(
-            -noise,
-            noise + 1,
+        # Ruído contínuo antes da quantização quebra as faixas de cor de 8 bits.
+        # Compensa o SSAA, que suaviza o dithering ao reduzir a imagem final.
+        noise_strength = max(float(noise), float(self.supersample))
+        noise_arr = np.random.uniform(
+            -noise_strength,
+            noise_strength,
             (self.width, self.height, 1),
-            dtype=np.int16,
-        )
+        ).astype(np.float32)
         scaled = px.astype(np.float32) * mask[..., None] + noise_arr
+        np.rint(scaled, out=scaled)
         np.clip(scaled, 0, 255, out=scaled)
         px[:] = scaled.astype(np.uint8)
 
@@ -285,10 +290,19 @@ class MathArt:
 
     def generate_background(self, bg_color=None, palette=None, texture_mode=None):
         """Gera fundo com gradiente/cor sólida e textura da paleta"""
+        active_palette = palette or self.last_palette or [random.choice(CATPUCCIN_PALETTE)]
         if bg_color is None:
-            bg_color = random.choice(BACKGROUND_COLORS)
+            figure = pg.Color(active_palette[0])
+            hue, lightness, saturation = colorsys.rgb_to_hls(
+                figure.r / 255, figure.g / 255, figure.b / 255
+            )
+            bg_color = tuple(
+                round(channel * 255)
+                for channel in colorsys.hls_to_rgb(
+                    hue, min(0.10, lightness * 0.2), saturation
+                )
+            )
 
-        active_palette = palette or self.last_palette or CATPUCCIN_PALETTE
         mode = texture_mode or self.background_texture_mode
 
         # O núcleo continua evidente; apenas a zona de transição ficou maior.
@@ -685,7 +699,7 @@ class MathArt:
                 max(80, min(255, depth_alpha)),
             )
             pg.draw.polygon(layer, color, projected)
-            pg.draw.lines(layer, (255, 255, 255, color[3]), True, projected, 2)
+            pg.draw.lines(layer, color, True, projected, 2)
 
         self.canvas.blit(layer, (0, 0))
 
@@ -776,7 +790,7 @@ class MathArt:
                 grid.extend([(x, y, w, cut), (x, y + cut, w, h - cut)])
 
         border = max(6, min(box_w_r, box_h_r) // 70)
-        line_color = pg.Color("#ffffff")
+        line_color = pg.Color(palette[0])
         for rx, ry, rw, rh in grid:
             if random.random() < 0.4:
                 pg.draw.rect(
@@ -814,7 +828,7 @@ class MathArt:
             return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
 
         rgb_palette = [hex_to_rgb(c) for c in palette]
-        line_color = (255, 255, 255, 120)
+        line_color = (*rgb_palette[0], 120)
         for i in range(rows + 1):
             for j in range(cols + 1):
                 x = offset_x_r + j * cell_w
@@ -1504,7 +1518,7 @@ class MathArt:
 
         Args:
             style: Estilo de arte (ou 'random' para escolher aleatório)
-            palette: Lista de cores em formato hexadecimal
+            palette: Cores candidatas; uma é escolhida para todas as figuras
             complexity: Complexidade (5-30)
             max_size: Tamanho máximo dos círculos
             layers: Número de camadas/estilos a combinar
@@ -1513,6 +1527,8 @@ class MathArt:
         if palette is None:
             palette = CATPUCCIN_PALETTE
 
+        # Uma única cor por imagem, com fundo mais escuro do mesmo matiz.
+        palette = [random.choice(palette)]
         self.last_palette = palette
         if background_texture is not None:
             self.background_texture_mode = background_texture
@@ -1528,7 +1544,7 @@ class MathArt:
         layers = max(1, min(3, layers))
 
         print(f"Generating {style} art...")
-        print(f"  Palette: {len(palette)} colors")
+        print(f"  Figure color: {palette[0]}")
         print(f"  Complexity: {complexity}")
         print(f"  Max size: {max_size}")
         print(f"  Layers: {layers}")
@@ -1589,7 +1605,7 @@ class MathArt:
 def parse_arguments():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
-        description="Generate abstract circle art in 4K using Catppuccin palette",
+        description="Generate monochromatic abstract art with a matching dark background",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -1644,7 +1660,7 @@ Examples:
     parser.add_argument(
         "--custom-colors",
         type=str,
-        help="Custom color palette as space-separated hex colors",
+        help="Space-separated hex colors; one is chosen for all figures and the matching dark background",
     )
 
     parser.add_argument(
@@ -1751,4 +1767,3 @@ if __name__ == "__main__":
 
 # Before/after:
 # - Before: jagged edges, linear gradients, default save
-
