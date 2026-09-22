@@ -28,9 +28,8 @@ import "./island/controls"
 //   island    everything in one capsule; the band morphs into whatever the
 //             island opens
 //
-// Every detail opens in the island. The window is full-screen and never
-// resizes; the input mask covers the bar and the island, and a focus grab
-// closes the island on any click outside it.
+// Every detail opens in the island. Open panels use a full-screen window so
+// a click outside can close them; passive layers only allocate their height.
 PanelWindow {
     id: root
 
@@ -200,14 +199,15 @@ PanelWindow {
 
     // ── SURFACE ─────────────────────────────────────────────────────────────
 
-    readonly property bool compactSurface:
-        island.state.layer === island.state.layerModules
-        && island.settled
-        && !ControlsService.editing
-
-    implicitHeight: root.compactSurface
-        ? root.collapsedHeight + Theme.shadowBarRange + 12
-        : root.screen.height
+    // Include both ends of a morph so growing contents and shadows fit.
+    // Panels retain the full-screen input area for click-outside dismissal.
+    implicitHeight: island.expanded || ControlsService.editing
+        ? root.screen.height
+        : Math.min(root.screen.height,
+            Math.max(root.collapsedHeight,
+                root.islandTopMargin + Math.max(island.height,
+                    island.size.height + island.notchPad))
+            + Theme.shadowBarRange + 12)
 
     readonly property real shapeLeft: root.unified
         ? Math.min(root.bandX, root.islandLeft)

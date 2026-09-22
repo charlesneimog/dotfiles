@@ -74,6 +74,9 @@ Singleton {
 
     function present(notification: var): void {
         root.history = [notification].concat(root.history).slice(0, root.historyLimit)
+        // Run after current has been selected, including the early returns
+        // below. A critical popup can outlive its entry in the history.
+        Qt.callLater(root.releaseUnused)
 
         // Critical notifications ignore do-not-disturb.
         const isCritical = notification.urgency === NotificationUrgency.Critical
@@ -101,23 +104,42 @@ Singleton {
     function dismiss(): void {
         root.expiry.stop()
         root.current = null
+        Qt.callLater(root.releaseUnused)
+    }
+
+    function releaseUnused(): void {
+        // Copy first: expiring a notification changes the server's model.
+        const tracked = Array.from(root.server.trackedNotifications.values)
+        for (const notification of tracked) {
+            if (notification !== root.current && root.history.indexOf(notification) < 0)
+                notification.expire()
+        }
     }
 
     // The user closed it deliberately, so the application is told.
     function close(): void {
         if (root.current)
-            root.current.dismiss()
-        root.dismiss()
+            root.remove(root.current)
+        else
+            root.dismiss()
     }
 
     function clearHistory(): void {
+        const removed = root.history
         root.history = []
+        for (const notification of removed) {
+            if (notification && notification !== root.current && notification.tracked)
+                notification.dismiss()
+        }
+        Qt.callLater(root.releaseUnused)
     }
 
     function remove(notification: var): void {
         root.history = root.history.filter(entry => entry !== notification)
         if (root.current === notification)
             root.dismiss()
+        if (notification && notification.tracked)
+            notification.dismiss()
     }
 
     // Kept in settings so it survives a restart. Notifications are still

@@ -44,15 +44,17 @@ Item {
         spacing: root.barSpacing
 
         Repeater {
-            model: CavaService.values
+            // Keep the delegates alive as new audio frames arrive.
+            model: root.barCount
 
             Rectangle {
-                required property real modelData
+                required property int index
+                readonly property real amplitude: CavaService.values[index] ?? 0
 
                 Layout.preferredWidth: root.barWidth
                 Layout.preferredHeight: root.active
                     ? Math.max(root.minimum,
-                        root.height * Math.pow(Math.max(0, modelData), root.curve))
+                        root.height * Math.pow(Math.max(0, amplitude), root.curve))
                     : root.minimum
                 Layout.alignment: Qt.AlignVCenter
                 radius: width / 2

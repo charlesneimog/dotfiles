@@ -368,6 +368,9 @@ Rectangle {
             Loader {
                 id: collapsedLoader
 
+                // Finish the outgoing fade before releasing its contents;
+                // recreate immediately when the collapsed face returns.
+                active: !islandState.expanded || capsule.opacity > 0
                 anchors.fill: parent
                 // Attached, the contents are centred in the full height,
                 // matching the bar's raised midline (`Bar.laneY`).
