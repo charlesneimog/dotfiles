@@ -28,3 +28,4 @@ singleton TimerService 1.0 TimerService.qml
 singleton TodoService 1.0 TodoService.qml
 singleton WeatherService 1.0 WeatherService.qml
 singleton UpdatesService 1.0 UpdatesService.qml
+singleton CalendarService 1.0 CalendarService.qml

@@ -316,15 +316,15 @@ Singleton {
         { id: "preferences",   name: "Theme and updates",    icon: "󰔏", sizes: ["2x2", "2x3", "2x4", "3x3", "4x2"] },
         { id: "media",         name: "Media",         icon: "󰝚", sizes: ["2x2", "2x3", "3x2", "4x2"] },
         { id: "weather",       name: "Weather",       icon: "󰖐", sizes: ["2x1", "2x2", "2x3", "4x2"] },
-        { id: "calendar",      name: "Calendar",      icon: "󰃭", sizes: ["2x3", "2x4", "3x4"] },
-        { id: "notifications", name: "Notifications", icon: "󰂚", sizes: ["2x4", "2x6", "2x8", "3x8"] },
+        { id: "calendar",      name: "Calendar",      icon: "󰃭", sizes: ["2x3", "2x4", "3x4", "2x8", "3x8"] },
+        { id: "notifications", name: "Notifications", icon: "󰂚", sizes: ["2x3", "2x4", "2x6", "2x8", "3x8"] },
         { id: "todo", name: "Todo", icon: "󰄬", sizes: ["2x4", "2x6", "2x8", "3x8"] },
         { id: "theme", name: "Theme", icon: "󰄬", sizes: ["2x4", "2x6", "2x8", "3x8"] },
         { id: "clock",         name: "Clock",         icon: "󰥔", sizes: ["1x2", "2x2", "2x4"] },
     ]
 
     // Toggles, sliders and preferences on the left; media, weather and
-    // calendar in the middle; notifications on the right.
+    // notifications in the middle; calendar on the right.
     readonly property var defaultBlocks: [
         { id: "toggles",       col: 0, row: 0, size: "2x3" },
         { id: "volume",        col: 0, row: 3, size: "2x1" },
@@ -332,8 +332,8 @@ Singleton {
         { id: "preferences",   col: 0, row: 5, size: "2x3" },
         { id: "media",         col: 2, row: 0, size: "2x2" },
         { id: "weather",       col: 2, row: 2, size: "2x3" },
-        { id: "calendar",      col: 2, row: 5, size: "2x3" },
-        { id: "notifications", col: 4, row: 0, size: "2x8" }, 
+        { id: "notifications", col: 2, row: 5, size: "2x3" },
+        { id: "calendar",      col: 4, row: 0, size: "2x8" },
         { id: "todo",          col: 6, row: 0, size: "2x8" },
         { id: "theme",          col: 6, row: 0, size: "2x8" }
     ]
