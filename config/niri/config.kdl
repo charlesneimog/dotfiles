@@ -230,15 +230,18 @@ spawn-at-startup "sh" "-c" "$HOME/.functions.sh startup_services"
 binds {
     alt+space { show-hotkey-overlay; }
     mod+return hotkey-overlay-title="open a terminal: ghostty" { spawn "ghostty"; }
-    // mod+D hotkey-overlay-title="run an application: rofi" { spawn "bash" "-c" "$HOME/.functions.sh launch_rofi"; }
+    mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn "hyprlock"; }
+
+    // Quickshell
+    mod+V hotkey-overlay-title="show copy history" { spawn "qs" "ipc" "call" "clipboard" "toggle"; }
     mod+D hotkey-overlay-title="run an application: quickshell" { spawn "qs" "ipc" "call" "launcher" "toggle"; }
 
-    mod+P hotkey-overlay-title="change the wallpaper" { spawn "bash" "-c" "$HOME/.functions.sh unsplash"; }
-    mod+v hotkey-overlay-title="show copy history" { spawn "qs" "ipc" "call" "clipboard" "toggle"; }
+    // Personalization
+    mod+W hotkey-overlay-title="change the wallpaper" { spawn "bash" "-c" "$HOME/.functions.sh unsplash"; }
 
     // Apps
     Mod+A hotkey-overlay-title="Open Anytype" { spawn "io.anytype.anytype"; }
-    Mod+B hotkey-overlay-title="Open Zen Browser" { spawn "flatpak" "run" "app.zen_browser.zen"; }
+    Mod+B hotkey-overlay-title="Open Zen Browser" { spawn "app.zen_browser.zen"; }
     Mod+Z hotkey-overlay-title="Open Zotero" { spawn "zotero"; }
     Mod+E hotkey-overlay-title="Open Nautilus: nautilus" { spawn "nautilus"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: Hyprlock" { spawn "bash" "-c" "$HOME/.functions.sh lock_screen"; }
@@ -248,8 +251,8 @@ binds {
     XF86AudioMicMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "s" "5%+"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "s" "5%-"; }
-    XF86Calculator { spawn "flatpak" "run" "org.gnome.Calculator"; }
-
+    // { spawn "flatpak" "run" "org.gnome.Calculator"; }
+    XF86Calculator hotkey-overlay-title="run an application: quickshell" { spawn "qs" "ipc" "call" "calculate" "toggle"; }
     XF86AudioPrev { spawn "playerctl" "prev"; }
     XF86AudioNext { spawn "playerctl" "next"; }
     XF86AudioPause {spawn "playerctl" "play-pause";}
@@ -355,9 +358,6 @@ binds {
     }
     Mod+Shift+V {
         switch-focus-between-floating-and-tiling
-    }
-    Mod+W {
-        toggle-column-tabbed-display
     }
     Print {
         spawn "bash" "-c" "$HOME/.functions.sh screenshot"

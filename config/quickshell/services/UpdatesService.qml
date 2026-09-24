@@ -11,6 +11,7 @@ Singleton {
     property var flatpakReport: null
     property string aurError: ""
     property string flatpakError: ""
+    property string actionError: ""
     property real checkedAt: 0
     readonly property bool available: aurReport !== null || flatpakReport !== null
     readonly property bool checking: aurQuery.running || flatpakQuery.running
@@ -48,9 +49,13 @@ Singleton {
         else flatpakError = message
     }
     function update(source: string): void {
-        if (busy || !["aur", "flatpak"].includes(source)) return
-        action.command = ["bash", "-c", 'exec "$HOME/.functions.sh" "$1"',
-            "updates", source === "aur" ? "update_aur_packages" : "update_flatpak_packages"]
+        if (busy || checking || !["aur", "flatpak"].includes(source)) return
+        actionError = ""
+        // The old AUR helper only counts updates. Use a terminal for sudo and
+        // package prompts; -e keeps a separate Ghostty process until it exits.
+        action.command = ["ghostty", "-e", "bash", "-c",
+            (source === "aur" ? "paru -Syu" : "flatpak update")
+            + '; result=$?; printf "\\nFinished (exit %s). Press Enter to close. " "$result"; read -r; exit "$result"']
         action.running = true
     }
     Component.onCompleted: refresh()
@@ -73,10 +78,10 @@ Singleton {
         stdout: StdioCollector { onStreamFinished: root.read(text, "flatpak") }
     }
     readonly property Process action: Process {
+        onRunningChanged: if (!running) root.refresh()
+        onStarted: root.actionError = ""
         onExited: (code) => {
-            // Existing helpers signal Waybar; refresh this shell directly too.
-            if (code !== 0) console.warn("Package helper exited with status", code)
-            root.refresh()
+            if (code !== 0) root.actionError = "The update terminal exited with an error; check its output."
         }
     }
 }

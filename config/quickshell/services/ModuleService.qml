@@ -233,6 +233,9 @@ Singleton {
                 ? Theme.accent
                 : Theme.textMuted
 
+        if (id === "battery" && BatteryService.critical)
+            return Theme.indicatorBad
+
         if (id === "battery" && BatteryService.low)
             return Theme.indicatorWarn
 

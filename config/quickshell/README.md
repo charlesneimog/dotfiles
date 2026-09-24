@@ -43,6 +43,14 @@ have Python helpers; unused font and compositor helpers are also removed.
 
 ## Locking and media
 
+Quickshell manages idle timeouts directly, using the values in `services/Config.qml`.
+Activity restores brightness and screen power. `Do Not Idle` disables these
+actions without a helper process. Edit `idleDim`, `idleLock`,
+`idleScreen`, and `idleSuspend` in `services/Config.qml`; all use seconds and zero disables
+an action. Hypridle is no longer started or required. Idle and battery suspend
+use Quickshell's lock-before-sleep path; external sleep requests are not handled
+by the removed hypridle before-sleep hook.
+
 Lock buttons and `qs ipc call lock toggle` launch Hyprlock with your existing
 `config/hypr/hyprlock.conf`. Hyprlock runs independently of shell reloads;
 Quickshell no longer provides PAM authentication or a lock surface. Suspend
@@ -63,13 +71,24 @@ Saved layouts remain in `$XDG_STATE_HOME/quickshell/settings.json` (normally
 `~/.local/state/quickshell/settings.json`). Defaults skip modules already on
 the opposite saved side. Internal settings storage remains necessary for
 layouts and service preferences; there is no settings window or settings IPC.
-Niri input, monitor layout and keybindings stay in `config/niri/config.kdl`.
+Niri input and keybindings stay in `config/niri/config.kdl`. The Monitors panel
+applies temporary output changes without editing that file.
 
 ```kdl
 Mod+S { spawn "qs" "ipc" "call" "controls" "toggle"; }
 ```
 
-Other panel targets include `launcher`, `overview`, `appearance`,
-`stats` and `packages`, each with `toggle`.
+Other panel targets include `launcher`, `session`, `keys`, `packages` and
+`monitors`, each with `toggle`. In the launcher, type `>` to find these entries.
+Keys opens Niri's native shortcut overlay. Packages shows Arch/AUR and Flatpak
+updates; update buttons run `paru -Syu` or `flatpak update` in Ghostty.
+
+Monitors offers notebook only, external only, extended, and duplicate modes.
+External only enables all connected external screens. Extend places screens
+side by side with the notebook first, preserving their resolution and scale.
+Duplicate requires `wl-mirror` and opens a fullscreen mirror of the notebook
+on each external screen (Niri has no native output cloning). Choosing another
+mode stops those mirrors. Unavailable modes are disabled. Output changes last
+until Niri restarts or its output configuration is reloaded; they are not saved.
 `qs ipc call shell status` reports Niri, audio, network, weather provider,
 application count and pending package updates.

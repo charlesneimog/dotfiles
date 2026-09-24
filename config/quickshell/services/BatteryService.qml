@@ -11,6 +11,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.UPower
 
 import "../theme"
@@ -31,6 +32,55 @@ Singleton {
     readonly property bool charging: root.state === UPowerDeviceState.Charging
     readonly property bool full: root.state === UPowerDeviceState.FullyCharged
     readonly property bool low: root.available && !root.charging && !root.full && root.percent <= 20
+    readonly property bool critical: root.available && !root.charging && !root.full && root.percent <= 5
+    readonly property bool discharging: root.available && UPower.onBattery
+        && root.state === UPowerDeviceState.Discharging
+
+    // One warning and suspend request per discharge episode. In particular,
+    // waking below 3% must not immediately send the notebook back to sleep.
+    property bool warned: false
+    property bool suspendRequested: false
+
+    function checkBattery(): void {
+        if (!root.available)
+            return
+        if (!UPower.onBattery || root.charging || root.full) {
+            root.warned = false
+            root.suspendRequested = false
+            return
+        }
+        if (root.percent > 5)
+            root.warned = false
+        if (root.percent > 3)
+            root.suspendRequested = false
+        if (!root.discharging)
+            return
+        if (root.percent <= 5 && !root.warned) {
+            root.warned = true
+            root.warning.command = ["notify-send", "--app-name=Quickshell",
+                "--urgency=critical", "--expire-time=0", "--icon=battery-caution",
+                "Low battery",
+                `Battery is at ${root.percent}%. Connect the charger. The notebook will sleep at 3%.`]
+            root.warning.running = true
+        }
+        if (root.percent <= 3 && !root.suspendRequested) {
+            root.suspendRequested = true
+            SessionService.run("suspend")
+        }
+    }
+
+    readonly property Process warning: Process {}
+    // Defer until related UPower properties have settled for this update.
+    onPercentChanged: Qt.callLater(root.checkBattery)
+    onDischargingChanged: Qt.callLater(root.checkBattery)
+    onChargingChanged: Qt.callLater(root.checkBattery)
+    onFullChanged: Qt.callLater(root.checkBattery)
+    onAvailableChanged: Qt.callLater(root.checkBattery)
+    readonly property Connections powerChanges: Connections {
+        target: UPower
+        function onOnBatteryChanged(): void { Qt.callLater(root.checkBattery) }
+    }
+    Component.onCompleted: Qt.callLater(root.checkBattery)
 
     // Listed rather than computed: the Material Design battery glyphs are not
     // contiguous. Empty is U+F008E, the nine partial levels U+F007A–U+F0082,
@@ -46,7 +96,7 @@ Singleton {
             return Theme.indicatorDim
         if (root.charging || root.full)
             return Theme.indicatorGood
-        if (root.percent <= 15)
+        if (root.critical)
             return Theme.indicatorBad
         if (root.percent <= 35)
             return Theme.indicatorWarn

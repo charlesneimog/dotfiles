@@ -33,6 +33,8 @@ ShellRoot {
         void NiriService.workspaces
         // Re-applies the monitor arrangement kept for this set of screens.
         void MonitorService.loaded
+        // Battery protection also runs when the battery module is hidden.
+        void BatteryService.available
         // Niri key bindings remain in config.kdl.
         // Reads the user name for the system information block.
         void AccountService.user
@@ -162,6 +164,21 @@ ShellRoot {
         function toggle(): void {
             root.island?.toggle("session")
         }
+    }
+
+    IpcHandler {
+        target: "keys"
+        function toggle(): void { root.island?.open("keys") }
+    }
+
+    IpcHandler {
+        target: "packages"
+        function toggle(): void { root.island?.toggle("packages") }
+    }
+
+    IpcHandler {
+        target: "monitors"
+        function toggle(): void { root.island?.toggle("monitors") }
     }
 
     IpcHandler {

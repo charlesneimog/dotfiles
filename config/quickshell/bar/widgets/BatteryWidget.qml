@@ -42,7 +42,6 @@ RingIndicator {
         text: BatteryService.icon
         font.family: Theme.fontMono
         font.pixelSize: Math.round(root.size * 0.38)
-        // The ring carries the level; the glyph only says what is measured.
-        color: root.glyphColor
+        color: BatteryService.critical ? Theme.indicatorBad : root.glyphColor
     }
 }

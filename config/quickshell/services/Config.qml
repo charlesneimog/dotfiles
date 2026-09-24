@@ -261,11 +261,11 @@ Singleton {
     // lets wttr.in geolocate by IP, which can be tens of kilometres off.
     property string weatherPlace: ""
 
-    // Idle timeouts in minutes, 0 = never; all off by default.
-    // `IdleService` runs one monitor per value.
-    property int idleLock: 0
-    property int idleScreen: 0
-    property int idleSuspend: 0
+    // All idle timeouts are in seconds. Zero disables an individual action.
+    property int idleDim: 60
+    property int idleLock: 240
+    property int idleScreen: 600
+    property int idleSuspend: 900
 
     // Kelvin. Persisted, unlike keep-awake, so a restart comes back
     // warm. `SunsetService` drives hyprsunset.

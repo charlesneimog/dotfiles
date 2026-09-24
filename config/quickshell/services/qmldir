@@ -13,6 +13,7 @@ singleton MachineService 1.0 MachineService.qml
 singleton MediaService 1.0 MediaService.qml
 singleton ModuleService 1.0 ModuleService.qml
 singleton MonitorService 1.0 MonitorService.qml
+singleton DisplayModeService 1.0 DisplayModeService.qml
 singleton NetworkService 1.0 NetworkService.qml
 singleton NiriService 1.0 NiriService.qml
 singleton NotificationService 1.0 NotificationService.qml

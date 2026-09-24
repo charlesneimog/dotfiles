@@ -13,6 +13,7 @@ import "../../theme"
 import "../../services"
 import "../island"
 import "../modules"
+import "../island/controls"
 
 // One capsule that changes shape to fit whatever it shows. IslandState picks
 // the layer, this sizes the capsule for it, and a Loader swaps the contents;
@@ -69,8 +70,8 @@ Rectangle {
         // A row per creature, plus one for the next egg.
         // Declared by their services, which the panels read back for layout.
         // The key sheet's columns come from the compositor's bind list.
-        keys:       { width: ShortcutService.sheetWidth, height: ShortcutService.sheetHeight },
         packages:   { width: 560, height: 360 },
+        monitors:   { width: 520, height: 360 },
         module:     root.moduleSize,
     })
 
@@ -119,10 +120,17 @@ Rectangle {
         wifi: networkDetail,
         bluetooth: bluetoothDetail,
         session: sessionPanel,
+        packages: packagesPanel,
+        monitors: monitorsPanel,
         module: moduleDetail
     })
 
     function open(panel: string): void {
+        if (panel === "keys") {
+            root.close()
+            NiriService.dispatch({ShowHotkeyOverlay: {}})
+            return
+        }
         islandState.open(panel)
     }
 
@@ -509,6 +517,16 @@ Rectangle {
     Component {
         id: sessionPanel
         SessionPanel { onClosed: root.close() }
+    }
+
+    Component {
+        id: packagesPanel
+        PreferencesCard {}
+    }
+
+    Component {
+        id: monitorsPanel
+        MonitorsPanel {}
     }
 
 

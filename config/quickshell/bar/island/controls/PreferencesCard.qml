@@ -218,6 +218,16 @@ Rectangle {
             }
         }
 
+        Text {
+            Layout.fillWidth: true
+            visible: UpdatesService.actionError !== ""
+            text: UpdatesService.actionError
+            wrapMode: Text.Wrap
+            color: Theme.textMuted
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSizeLabel
+        }
+
         // ── ACTIONS ─────────────────────────────────────────────────────────
 
         RowLayout {

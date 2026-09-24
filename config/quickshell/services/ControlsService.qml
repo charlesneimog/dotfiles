@@ -44,9 +44,11 @@ Singleton {
         { id: "session",    icon: "󰐥", label: "Session menu",
           detail: "Lock, log out, suspend, restart, off",  panel: "session" },
         { id: "keys",       icon: "󰌌", label: "Keys",
-          detail: "Every shortcut, on one sheet",          panel: "keys" },
+          detail: "Niri keyboard shortcuts",               panel: "keys" },
         { id: "packages",   icon: "󰏗", label: "Packages",
-          detail: "Updates, what is installed, the AUR",   panel: "packages" }
+          detail: "Arch, AUR and Flatpak updates",         panel: "packages" },
+        { id: "monitors",   icon: "󰍹", label: "Monitors",
+          detail: "Notebook, external, extend or duplicate", panel: "monitors" }
     ]
 
     readonly property var defaultButtons: []

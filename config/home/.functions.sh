@@ -47,7 +47,7 @@ startup_services() {
     quickshell > ~/tmp.txt & # bar
 
     swaybg --image ~/.wallpaper.png & # Wallpaper
-    hypridle & # Idle
+    # Quickshell manages idle dimming, locking, screen power and suspend.
     io.anytype.anytype &
 
     concentrate #--logdebug > /home/neimog/focus.log 2>&1 &
