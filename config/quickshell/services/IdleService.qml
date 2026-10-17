@@ -24,6 +24,11 @@ Singleton {
     property bool inhibited: false
     Component.onCompleted: { void BrightnessService.available }
 
+    // Closing the lid is an explicit lock request, independent of idle inhibitors.
+    function lidClosed(): void {
+        LockService.lock()
+    }
+
     // Serialise dim/restore commands so input during dimming still restores.
     property bool dimWanted: false
     property int savedBrightness: -1

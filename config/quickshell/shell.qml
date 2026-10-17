@@ -132,14 +132,12 @@ ShellRoot {
 
     // ── LID ─────────────────────────────────────────────────────────────────
     //
-    // Handled here rather than with `switch:` binds in Lua. MonitorService's
-    // display profile is the one owner of whether the panel is lit, and it is
-    // re-applied on hotplug and after config reloads. A `switch:` bind in the
-    // same file as `hl.monitor()` calls is also silently not registered, and
-    // a runtime monitor rule does not survive a reload.
+    // Niri forwards switch events here. IdleService locks on lid close;
+    // MonitorService retains display handling for other compositors.
     IpcHandler {
         target: "lidClosed"
         function toggle(): void {
+            IdleService.lidClosed()
             MonitorService.lid(true)
         }
     }

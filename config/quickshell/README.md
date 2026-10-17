@@ -51,6 +51,11 @@ an action. Hypridle is no longer started or required. Idle and battery suspend
 use Quickshell's lock-before-sleep path; external sleep requests are not handled
 by the removed hypridle before-sleep hook.
 
+Niri forwards lid switch events to Quickshell. Closing the laptop lid calls
+`IdleService.lidClosed()` and locks with Hyprlock, even with `Do Not Idle`
+enabled or an idle inhibitor active. Opening the lid does not unlock the session.
+The system's existing logind lid suspend policy remains in effect.
+
 Lock buttons and `qs ipc call lock toggle` launch Hyprlock with your existing
 `config/hypr/hyprlock.conf`. Hyprlock runs independently of shell reloads;
 Quickshell no longer provides PAM authentication or a lock surface. Suspend

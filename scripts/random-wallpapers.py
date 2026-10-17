@@ -1,5 +1,5 @@
-# Gera arte abstrata com círculos em 4K usando paleta Catppuccin
-# Uso: python abstract_circle_art.py [opções]
+# Gera arte procedural em 1900x1080 usando paleta Catppuccin
+# Uso: python scripts/random-wallpapers.py [opções]
 
 # TODO: hopf_fibration
 # TODO: Strange Attractors
@@ -81,29 +81,17 @@ BACKGROUND_COLORS = [
 ART_STYLES = [
     "concentric",
     "orbital",
-    "lissajous",
     "lissajous3d",
-    "random3d",
-    "torus_knot",
     "grossman",
     "mondrian",
-    "vasarely",
     "mesh_sphere",
     "mesh_sphere_squeezed",
     "circle_squeezed",
     "rotorelief",
     "strange_attractor",
     "delaunay_flow",
+    "nonflowers",
 ]
-
-STYLE_WEIGHTS = {
-    "lissajous3d": 4,
-    "strange_attractor": 10,
-    "mesh_sphere_squeezed": 3,
-    "mesh_sphere": 3,
-    "mesh_sphere_squeezed": 3,
-}
-
 
 class AntiAliasedRenderer:
     def __init__(self, surf, scale):
@@ -438,50 +426,6 @@ class MathArt:
                         ),
                     )
 
-    def draw_lissajous(self, palette, complexity=6, max_size=350):
-        cx, cy = self.width // 2, self.height // 2
-        self.generate_background()
-
-        # convert hex colors to RGB
-        def hex_to_rgb(h):
-            h = h.lstrip("#")
-            return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
-
-        NUM_PHASORS = random.randint(6, 25)
-        STEPS = 12000
-        TIME_SCALE = 0.005
-        RADIUS = self.to_render_size(max_size)
-        stroke = self.to_render_size(random.uniform(1, 5))
-
-        amps = [random.uniform(0.01, 0.5) for _ in range(NUM_PHASORS)]
-        freqs = [random.uniform(0.3, 10.0) for _ in range(NUM_PHASORS)]
-        phases = [random.uniform(0, math.tau) for _ in range(NUM_PHASORS)]
-
-        color = hex_to_rgb(random.choice(palette))
-
-        last_px = None
-
-        for t in range(STEPS):
-            tt = t * TIME_SCALE
-
-            x = 0.0
-            y = 0.0
-
-            for i in range(NUM_PHASORS):
-                x += amps[i] * math.cos(freqs[i] * tt + phases[i])
-                y += amps[i] * math.sin(freqs[i] * tt + phases[i])
-
-            px = cx + int(x * RADIUS)
-            py = cy + int(y * RADIUS)
-
-            if last_px is not None:
-                if self.antialias:
-                    self.aa.draw_aa_line(pg.Color(*color), last_px, (px, py), stroke)
-                else:
-                    pg.draw.line(self.canvas, color, last_px, (px, py), int(stroke))
-
-            last_px = (px, py)
-
     def draw_lissajous3d(self, palette, complexity=8, max_size=350):
         """Renderiza uma curva de Lissajous em 3D com projeção 2D e gradiente de cor"""
         cx, cy = self.width // 2, self.height // 2
@@ -543,165 +487,6 @@ class MathArt:
                 else:
                     pg.draw.line(self.canvas, color, last_px, (px, py), int(stroke))
             last_px = (px, py)
-
-    def draw_torus_knot(self, palette, complexity=12, max_size=300):
-        """Generate (p,q) torus knot - beautiful interlaced patterns"""
-        self.generate_background()
-        cx, cy = self.width // 2, self.height // 2
-
-        def hex_to_rgb(h):
-            h = h.lstrip("#")
-            return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
-
-        rgb_palette = [hex_to_rgb(c) for c in palette]
-
-        base_size = max(self.target_width, self.target_height)
-        radius = random.randint(2000, 5000)
-        R = radius * random.uniform(0.45, 0.95)  # major radius
-        r = radius * random.uniform(0.46, 0.78)  # tube radius
-        inv_scale = 1.0 / max(1e-6, (R + r))
-
-        # Choose coprime (p, q) for a proper knot
-        while True:
-            p = random.randint(8, 32)
-            q = random.randint(8, 32)
-            if math.gcd(p, q) == 1:
-                break
-
-        # Resolution scales with complexity for smooth curves
-        steps = max(1000, int(complexity * 1000))
-        dt = math.tau / steps
-
-        # Random orientation
-        yaw = random.uniform(0, math.tau)
-        pitch = random.uniform(-math.pi / 3, math.pi / 3)
-        roll = random.uniform(-math.pi / 4, math.pi / 4)
-        cyaw, syaw = math.cos(yaw), math.sin(yaw)
-        cpitch, spitch = math.cos(pitch), math.sin(pitch)
-        croll, sroll = math.cos(roll), math.sin(roll)
-
-        def rotate(x, y, z):
-            # roll
-            y1 = y * croll - z * sroll
-            z1 = y * sroll + z * croll
-            x1 = x
-            # pitch
-            x2 = x1 * cpitch + z1 * spitch
-            z2 = -x1 * spitch + z1 * cpitch
-            y2 = y1
-            # yaw
-            x3 = x2 * cyaw - y2 * syaw
-            y3 = x2 * syaw + y2 * cyaw
-            return x3, y3, z2
-
-        def project(x, y, z, persp=2.4):
-            denom = max(0.45, persp - z)
-            scale = radius / denom
-            return cx + int(x * scale), cy + int(y * scale), z
-
-        segments = []
-
-        # Precompute palette cycling for subtle variation
-        color_shift = random.randint(0, len(rgb_palette) - 1)
-
-        t = 0.0
-        last = None
-        col = rgb_palette[
-            (int(t / math.tau * len(rgb_palette)) + color_shift) % len(rgb_palette)
-        ]
-        while t <= math.tau + 1e-6:
-            x = (R + r * math.cos(q * t)) * math.cos(p * t)
-            y = (R + r * math.cos(q * t)) * math.sin(p * t)
-            z = r * math.sin(q * t)
-            xr, yr, zr = rotate(x * inv_scale, y * inv_scale, z * inv_scale)
-            px, py, pz = project(xr, yr, zr)
-            if last is not None:
-                zavg = (pz + last[2]) * 0.5
-                znorm = max(0.0, min(1.0, (zavg + 1) * 0.5))
-                alpha = int(90 + 150 * znorm)
-                stroke = random.uniform(3, 10)
-                segments.append(
-                    (zavg, col, alpha, stroke, (last[0], last[1]), (px, py))
-                )
-            last = (px, py, pz)
-            t += dt
-
-        # Depth sort for occlusion
-        segments.sort(key=lambda s: s[0])
-        for zavg, col, alpha, stroke, a, b in segments:
-            if self.antialias:
-                self.aa.draw_aa_line(pg.Color(*col, alpha), a, b, stroke)
-            else:
-                pg.draw.line(self.canvas, (*col, alpha), a, b, int(stroke))
-
-    def draw_random3d(self, palette, complexity=10, max_size=350):
-        """Forma 3D randômica centrada, usando a paleta fornecida"""
-        width, height = self.canvas.get_size()
-        cx, cy = width // 2, height // 2
-        self.generate_background()
-
-        def hex_to_rgb(h):
-            h = h.lstrip("#")
-            return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
-
-        rgb_palette = [hex_to_rgb(c) for c in palette]
-
-        # Dimensão e rotação aleatória
-        radius = self.to_render_size(
-            int(min(self.target_width, self.target_height) * random.uniform(0.18, 0.32))
-        )
-        yaw = random.uniform(0, math.tau)
-        pitch = random.uniform(-math.pi / 3, math.pi / 3)
-        roll = random.uniform(-math.pi / 4, math.pi / 4)
-        cyaw, syaw = math.cos(yaw), math.sin(yaw)
-        cpitch, spitch = math.cos(pitch), math.sin(pitch)
-        croll, sroll = math.cos(roll), math.sin(roll)
-
-        def rotate(vx, vy, vz):
-            # roll
-            y1 = vy * croll - vz * sroll
-            z1 = vy * sroll + vz * croll
-            x1 = vx
-            # pitch
-            x2 = x1 * cpitch + z1 * spitch
-            z2 = -x1 * spitch + z1 * cpitch
-            y2 = y1
-            # yaw
-            x3 = x2 * cyaw - y2 * syaw
-            y3 = x2 * syaw + y2 * cyaw
-            return x3, y3, z2
-
-        layer = pg.Surface((width, height), pg.SRCALPHA)
-        faces = max(4, complexity)
-        base_color = random.choice(rgb_palette)
-        for _ in range(faces):
-            verts_3d = []
-            for _ in range(random.randint(3, 5)):
-                vx = random.uniform(-1, 1)
-                vy = random.uniform(-1, 1)
-                vz = random.uniform(-1, 1)
-                verts_3d.append(rotate(vx, vy, vz))
-
-            projected = []
-            avg_z = 0
-            for x3, y3, z3 in verts_3d:
-                px = cx + int(x3 * radius)
-                py = cy + int(y3 * radius)
-                projected.append((px, py))
-                avg_z += z3
-            avg_z /= len(verts_3d)
-
-            depth_alpha = int(90 + 140 * (avg_z + 1) / 2)
-            color = (
-                base_color[0],
-                base_color[1],
-                base_color[2],
-                max(80, min(255, depth_alpha)),
-            )
-            pg.draw.polygon(layer, color, projected)
-            pg.draw.lines(layer, color, True, projected, 2)
-
-        self.canvas.blit(layer, (0, 0))
 
     def draw_grossman(self, palette, complexity=12, max_size=360):
         """Forma procedural inspirada em Bathsheba Grossman (quase-gyroid projetado)"""
@@ -799,108 +584,6 @@ class MathArt:
                     pg.Rect(rx, ry, rw, rh),
                 )
             pg.draw.rect(self.canvas, line_color, pg.Rect(rx, ry, rw, rh), width=border)
-
-    def draw_vasarely(self, palette, complexity=12, max_size=300):
-        """Op-art inspirado em Vasarely: grade curva com sombreamento centralizada"""
-        self.generate_background()
-        width, height = self.canvas.get_size()
-        box_w = int(self.target_width * 0.45)
-        box_h = int(self.target_height * 0.45)
-        offset_x = (self.target_width - box_w) // 2
-        offset_y = (self.target_height - box_h) // 2
-        box_w_r = self.to_render_size(box_w)
-        box_h_r = self.to_render_size(box_h)
-        offset_x_r = self.to_render_size(offset_x)
-        offset_y_r = self.to_render_size(offset_y)
-        cols = max(10, complexity)
-        rows = max(8, int(complexity * 0.8))
-        cell_w = box_w_r // cols
-        cell_h = box_h_r // rows
-        warp_amp = 0.25 + random.random() * 0.35
-        warp_freq = random.uniform(1.5, 3.5)
-        depth_shade = random.uniform(0.4, 0.8)
-        # random phases and jitter to avoid repetition
-        warp_phase_r = random.uniform(0, math.tau)
-        warp_phase_c = random.uniform(0, math.tau)
-
-        def hex_to_rgb(h):
-            h = h.lstrip("#")
-            return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
-
-        rgb_palette = [hex_to_rgb(c) for c in palette]
-        line_color = (*rgb_palette[0], 120)
-        for i in range(rows + 1):
-            for j in range(cols + 1):
-                x = offset_x_r + j * cell_w
-                y = offset_y_r + i * cell_h
-                dx = (
-                    math.sin(i / rows * math.pi * warp_freq + warp_phase_r)
-                    * cell_w
-                    * warp_amp
-                )
-                dy = (
-                    math.sin(j / cols * math.pi * warp_freq + warp_phase_c)
-                    * cell_h
-                    * warp_amp
-                )
-                # slight jitter per node
-                dx += random.uniform(-0.05, 0.05) * cell_w
-                dy += random.uniform(-0.05, 0.05) * cell_h
-                x += dx
-                y += dy
-                if j < cols and i < rows:
-                    x2 = (
-                        offset_x_r
-                        + (j + 1) * cell_w
-                        + math.sin(i / rows * math.pi * warp_freq + warp_phase_r)
-                        * cell_w
-                        * warp_amp
-                    )
-                    y2 = y
-                    x3 = x
-                    y3 = (
-                        offset_y_r
-                        + (i + 1) * cell_h
-                        + math.sin(j / cols * math.pi * warp_freq + warp_phase_c)
-                        * cell_h
-                        * warp_amp
-                    )
-                    x4 = (
-                        offset_x_r
-                        + (j + 1) * cell_w
-                        + math.sin((i + 1) / rows * math.pi * warp_freq + warp_phase_r)
-                        * cell_w
-                        * warp_amp
-                    )
-                    y4 = (
-                        offset_y_r
-                        + (i + 1) * cell_h
-                        + math.sin((j + 1) / cols * math.pi * warp_freq + warp_phase_c)
-                        * cell_h
-                        * warp_amp
-                    )
-                    # jitter vertices individually
-                    jitter = lambda v: v + random.uniform(-0.03, 0.03) * min(
-                        cell_w, cell_h
-                    )
-                    poly = [
-                        (jitter(x), jitter(y)),
-                        (jitter(x2), jitter(y2)),
-                        (jitter(x4), jitter(y4)),
-                        (jitter(x3), jitter(y3)),
-                    ]
-                    base_color = random.choice(rgb_palette)
-                    shade = depth_shade * (
-                        math.sin((i + j) * 0.6 + random.random()) * 0.5 + 0.5
-                    )
-                    fill = (
-                        int(base_color[0] * (0.7 + 0.3 * shade)),
-                        int(base_color[1] * (0.7 + 0.3 * shade)),
-                        int(base_color[2] * (0.7 + 0.3 * shade)),
-                        255,
-                    )
-                    pg.draw.polygon(self.canvas, fill, poly)
-                    pg.draw.polygon(self.canvas, line_color, poly, width=1)
 
     def draw_mesh_sphere(self, palette, complexity=14, max_size=220):
         """3D Catppuccin mesh sphere, small, centered, with large padding"""
@@ -1503,6 +1186,153 @@ class MathArt:
                     self.canvas, (*base_color, alpha), start, end, int(thickness)
                 )
 
+    def draw_nonflowers(self, palette, complexity=8, max_size=300):
+        """Imaginary plants inspired by Lingdong Huang's Nonflowers (2018).
+
+        Curved, tapering stems carry veined leaves and layered petal ribbons.
+        All shading uses the selected palette color, as in the other styles.
+        """
+        color = pg.Color(random.choice(palette))
+        shapes = []
+        blooms = []
+        leaf_power = random.uniform(0.6, 1.8)
+        petal_power = random.uniform(0.4, 1.1)
+        petal_count = random.randint(5, 11)
+        petal_length = random.uniform(22, 48)
+        petal_width = random.uniform(8, 18)
+        leaf_length = random.uniform(45, 95)
+        leaf_width = random.uniform(8, 18)
+
+        def tone(level):
+            return tuple(round(channel * level) for channel in color[:3])
+
+        def blade(origin, angle, length, width, petal=False, flatten=1.0):
+            # Sample both edges of a bent ribbon, then shade each strip.
+            bend = random.uniform(-0.5, 0.5) * length
+            phase = random.uniform(0, math.tau)
+            power = petal_power if petal else leaf_power
+            centers, left, right = [], [], []
+            ca, sa = math.cos(angle), math.sin(angle)
+            for step in range(25):
+                t = step / 24
+                ripple = 1 + (0.13 if petal else 0.06) * math.sin(t * 19 + phase)
+                half_width = width * max(0.0, math.sin(math.pi * t)) ** power * ripple
+                along = t * length
+                across = bend * t * t
+
+                def point(offset):
+                    return (
+                        origin[0] + ca * along - sa * (across + offset) * flatten,
+                        origin[1] + sa * along + ca * (across + offset) * flatten,
+                    )
+
+                centers.append(point(0))
+                left.append(point(half_width))
+                right.append(point(-half_width))
+
+            for i in range(1, len(centers)):
+                t = i / (len(centers) - 1)
+                level = (0.48 + 0.50 * t) if petal else (0.24 + 0.28 * t)
+                for edge, shade in ((left, 1.0), (right, 0.82)):
+                    shapes.append((tone(level * shade), [
+                        centers[i - 1], edge[i - 1], edge[i], centers[i]
+                    ], 0))
+
+            shapes.append((tone(0.40 if petal else 0.64), centers, 0.55))
+            if not petal:
+                for i in range(4, 21, 3):
+                    for edge in (left, right):
+                        shapes.append((tone(0.38), [centers[i - 2], edge[i]], 0.45))
+
+        def stem(origin, angle, length, width, depth):
+            bend = random.uniform(-0.65, 0.65)
+            phase = random.uniform(0, math.tau)
+            points, angles = [origin], [angle]
+            for i in range(1, 37):
+                t = i / 36
+                direction = angle + bend * t + 0.10 * math.sin(t * 7 + phase)
+                previous = points[-1]
+                points.append((
+                    previous[0] + math.cos(direction) * length / 36,
+                    previous[1] + math.sin(direction) * length / 36,
+                ))
+                angles.append(direction)
+                shapes.append((tone(0.48), points[-2:], width * (1 - 0.78 * t)))
+
+            for i in range(8, 33, random.randint(5, 8)):
+                side = -1 if (i // 3) % 2 else 1
+                blade(
+                    points[i], angles[i] + side * random.uniform(0.65, 1.25),
+                    leaf_length * random.uniform(0.65, 1.2), leaf_width,
+                )
+
+            if depth:
+                count = random.randint(2, min(4, 3 + complexity // 15))
+                for j in range(count):
+                    index = round(36 * (0.35 + 0.50 * (j + 1) / (count + 1)))
+                    side = -1 if j % 2 else 1
+                    stem(
+                        points[index], angles[index] + side * random.uniform(0.45, 0.95),
+                        length * random.uniform(0.35, 0.55), width * 0.52, depth - 1,
+                    )
+            blooms.append((points[-1], angles[-1]))
+
+        woody = random.random() < 0.5
+        count = 1 if woody else random.randint(3, min(6, 4 + complexity // 10))
+        for i in range(count):
+            spread = (i - (count - 1) / 2) * random.uniform(0.16, 0.30)
+            stem(
+                (0, 0), -math.pi / 2 + spread, random.uniform(440, 620),
+                random.uniform(3.5, 6.0), 2 if woody else 1,
+            )
+
+        # Flowers go over the foliage. Each specimen shares one petal shape.
+        for origin, direction in blooms:
+            rotation = random.uniform(0, math.tau)
+            tilt = random.uniform(0.55, 0.95)
+            for ring in (1.0, 0.65):
+                for i in range(petal_count):
+                    angle = rotation + i * math.tau / petal_count + (1 - ring) * 0.8
+                    blade(
+                        origin, angle, petal_length * ring * random.uniform(0.85, 1.15),
+                        petal_width * ring, petal=True, flatten=tilt,
+                    )
+            # Fine stamens follow the stem's direction inside each bloom.
+            for i in range(5):
+                angle = direction + (i - 2) * 0.45
+                tip = (
+                    origin[0] + math.cos(angle) * petal_length * 0.25,
+                    origin[1] + math.sin(angle) * petal_length * 0.25,
+                )
+                shapes.append((tone(0.85), [origin, tip], 0.7))
+                shapes.append((tone(1.0), [tip, (tip[0] + 0.8, tip[1])], 2.0))
+
+        # Fit the complete specimen, including petals, before supersampling.
+        points = np.asarray([point for _, polygon, _ in shapes for point in polygon])
+        minimum = points.min(axis=0)
+        maximum = points.max(axis=0)
+        extent = np.maximum(maximum - minimum, 1.0)
+        scale = min(
+            min(self.target_width * 0.78, max_size * 3.0) / extent[0],
+            min(self.target_height * 0.82, max_size * 3.0) / extent[1],
+        )
+        center = (minimum + maximum) * 0.5
+        for shade, polygon, width in shapes:
+            transformed = [
+                self.to_render_coords(
+                    self.target_width / 2 + (x - center[0]) * scale,
+                    self.target_height / 2 + (y - center[1]) * scale,
+                )
+                for x, y in polygon
+            ]
+            if width == 0:
+                pg.draw.polygon(self.canvas, shade, transformed)
+            else:
+                pg.draw.lines(
+                    self.canvas, shade, False, transformed,
+                    max(1, self.to_render_size(width * scale)),
+                )
+
     def generate_art(
         self,
         style,
@@ -1535,8 +1365,7 @@ class MathArt:
 
         # Escolher estilo se 'random'
         if style == "random":
-            weights = [STYLE_WEIGHTS.get(s, 1) for s in ART_STYLES]
-            style = random.choices(ART_STYLES, weights=weights, k=1)[0]
+            style = random.choice(ART_STYLES)
 
         # Garantir valores dentro dos limites
         complexity = max(5, min(30, complexity))
@@ -1556,19 +1385,16 @@ class MathArt:
         draw_methods = {
             "concentric": self.draw_concentric_circles,
             "orbital": self.draw_orbital_pattern,
-            "lissajous": self.draw_lissajous,
             "lissajous3d": self.draw_lissajous3d,
-            "random3d": self.draw_random3d,
-            "torus_knot": self.draw_torus_knot,
             "grossman": self.draw_grossman,
             "mondrian": self.draw_mondrian,
-            "vasarely": self.draw_vasarely,
             "mesh_sphere": self.draw_mesh_sphere,
             "mesh_sphere_squeezed": self.draw_mesh_sphere_squeezed,
             "circle_squeezed": self.draw_circle_squeezed,
             "rotorelief": self.draw_rotorelief,
             "strange_attractor": self.draw_strange_attractor,
             "delaunay_flow": self.draw_delaunay_flow,
+            "nonflowers": self.draw_nonflowers,
         }
 
         draw_methods[style](palette, int(complexity), max_size)
@@ -1609,10 +1435,9 @@ def parse_arguments():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python abstract_circle_art.py --style chaotic
-  python abstract_circle_art.py --style random --complexity 20 --size 400
-  python abstract_circle_art.py --style clusters --layers 3 --output my_art.png
-  python abstract_circle_art.py --style wave --custom-colors "#ff0000 #00ff00 #0000ff"
+  python scripts/random-wallpapers.py --style nonflowers --output nonflowers.png
+  python scripts/random-wallpapers.py --style random --complexity 20 --size 400
+  python scripts/random-wallpapers.py --style nonflowers --seed 42 --custom-colors "#cba6f7"
         """,
     )
 
@@ -1625,11 +1450,11 @@ Examples:
     )
 
     parser.add_argument(
-        "--width", type=int, default=1900 * 2, help="Output width (default: 1900)"
+        "--width", type=int, default=1900*2, help="Output width (default: 1900)"
     )
 
     parser.add_argument(
-        "--height", type=int, default=1200 * 2, help="Output height (default: 1200)"
+        "--height", type=int, default=1200*2, help="Output height (default: 1080)"
     )
 
     parser.add_argument(

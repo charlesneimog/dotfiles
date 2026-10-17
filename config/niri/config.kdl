@@ -24,6 +24,11 @@ output "eDP-1" {
     scale 1
 }
 
+switch-events {
+    lid-close { spawn "qs" "ipc" "call" "lidClosed" "toggle"; }
+    lid-open { spawn "qs" "ipc" "call" "lidOpened" "toggle"; }
+}
+
 //╭─────────────────────────────────────╮
 //│             Environment             │
 //╰─────────────────────────────────────╯

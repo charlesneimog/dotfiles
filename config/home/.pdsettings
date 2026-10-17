@@ -29,5 +29,4 @@ loadlib1: /home/neimog/Documents/Pd/externals
 nloadlib: 1
 defeatrt: 0
 flags: -font-weight normal
-zoom: 2
 loading: no
