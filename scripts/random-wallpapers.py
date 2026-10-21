@@ -44,37 +44,74 @@ pg.display.gl_set_attribute(pg.GL_MULTISAMPLESAMPLES, 4)
 
 # Paleta Catppuccin com amarelo dourado adicional
 CATPUCCIN_PALETTE = [
-    "#f5e0dc",
-    "#f2cdcd",
-    "#f5c2e7",
-    "#cba6f7",
-    "#f38ba8",
-    "#eba0ac",
-    "#fab387",
-    "#f9e2af",
-    "#c9ad46",  # Amarelo dourado, com fundo amarelo escuro correspondente
-    "#a6e3a1",
-    "#94e2d5",
-    "#89dceb",
-    "#74c7ec",
-    "#89b4fa",
-    "#b4befe",
+    "#f5e0dc",  # Rosewater
+    "#f2cdcd",  # Flamingo
+    "#f5c2e7",  # Pink
+    "#cba6f7",  # Mauve
+    "#f38ba8",  # Red
+    "#eba0ac",  # Maroon
+    "#fab387",  # Peach
+    "#f9e2af",  # Yellow
+    "#c9ad46",  # Gold
+    "#a6e3a1",  # Green
+    "#94e2d5",  # Teal
+    "#89dceb",  # Sky
+    "#74c7ec",  # Sapphire
+    "#89b4fa",  # Blue
+    "#b4befe",  # Lavender
+
+    # Cores adicionais
+    "#ff9eb5",  # Coral pink
+    "#e78ac3",  # Orchid
+    "#b48ead",  # Dusty purple
+    "#9d7cd8",  # Violet
+    "#7c8cf8",  # Indigo
+    "#6495ed",  # Cornflower blue
+    "#5bc0eb",  # Cyan blue
+    "#4dd0c8",  # Turquoise
+    "#70d6a7",  # Mint green
+    "#8fce72",  # Lime green
+    "#c4d96f",  # Chartreuse
+    "#e6c65b",  # Mustard yellow
+    "#f0a45d",  # Amber
+    "#e88d67",  # Terracotta
+    "#d97b93",  # Dusty rose
 ]
 
-# Cores de fundo (tons mais escuros da paleta)
+# Fundos escuros correspondentes, na mesma ordem
 BACKGROUND_COLORS = [
-    "#020102",
-    "#080304",
-    "#18070A",
-    "#010204",
-    "#030711",
-    "#071426",
-    "#010302",
-    "#031008",
-    "#082317",
-    "#020103",
-    "#08040D",
-    "#180A24",
+    "#1e1015",  # Rosewater
+    "#211216",  # Flamingo
+    "#241026",  # Pink
+    "#1b102c",  # Mauve
+    "#270e19",  # Red
+    "#241018",  # Maroon
+    "#29170e",  # Peach
+    "#28210f",  # Yellow
+    "#211c08",  # Gold
+    "#102515",  # Green
+    "#0c2522",  # Teal
+    "#0b2229",  # Sky
+    "#0b1d2b",  # Sapphire
+    "#101b32",  # Blue
+    "#171b35",  # Lavender
+
+    # Fundos das cores adicionais
+    "#2a101d",  # Coral pink
+    "#251024",  # Orchid
+    "#1e1422",  # Dusty purple
+    "#1a1029",  # Violet
+    "#11152e",  # Indigo
+    "#101c30",  # Cornflower blue
+    "#0a2230",  # Cyan blue
+    "#092723",  # Turquoise
+    "#0e271b",  # Mint green
+    "#172610",  # Lime green
+    "#22280e",  # Chartreuse
+    "#29220c",  # Mustard yellow
+    "#2b1b0c",  # Amber
+    "#29160f",  # Terracotta
+    "#251019",  # Dusty rose
 ]
 
 # Estilos de arte disponíveis
