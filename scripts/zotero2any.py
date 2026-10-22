@@ -6,15 +6,23 @@ Defaults to the space named API. Use --space NAME when ready to switch.
 Use --input annotations.json to import a saved export. Older exports fetch
 missing bibliographic fields from Zotero using their document keys.
 Colors other than yellow, red, blue, and green require an interactive replacement.
+Anytype request limits are retried automatically until the import finishes.
+Authors link to Human/Person pages; similar names prompt before reuse.
 """
 
 import argparse
+from contextlib import contextmanager
+from email.utils import parsedate_to_datetime
+from functools import wraps
+from difflib import SequenceMatcher
 import importlib
 import importlib.util
 import os
 from pathlib import Path
 import re
 import sys
+import time
+import unicodedata
 
 import requests
 import json
@@ -25,11 +33,12 @@ from html.parser import HTMLParser
 BASE_URL = "http://localhost:23119/api/users/0/items"
 OUTPUT_FILE = "annotations.json"
 IMPORT_DESCRIPTION = "Annotations imported from Zotero."
+HUMAN_ICON = {"format": "icon", "name": "person-circle", "color": "blue"}
 ANYTYPE_COLORS = {
     "yellow": "yellow", "red": "red", "blue": "blue", "green": "lime",
 }
 BIBLIOGRAPHIC_PROPERTIES = {
-    "author": ("Author", "text"),
+    "author": ("Author", "objects"),
     "year": ("Year", "number"),
     "doi": ("Doi", "text"),
     "journal": ("Journal", "text"),
@@ -277,7 +286,7 @@ def collect_annotations():
         data = item["data"]
 
         # Clean highlighted text
-        text = remove_html(data.get("annotationText", ""))
+        text = single_line(remove_html(data.get("annotationText", "")))
 
         # Ignore empty annotations
         if not text or not text.strip():
@@ -376,6 +385,68 @@ def literal_text(value):
     return re.sub(r"([\\`*_\[\]~<])", r"\\\1", str(value))
 
 
+def single_line(value):
+    return " ".join(str(value or "").split())
+
+
+def retry_delay(error, fallback):
+    response = getattr(error, "response", None)
+    headers = getattr(response, "headers", {})
+    retry_after = headers.get("Retry-After")
+    if retry_after:
+        try:
+            seconds = float(retry_after)
+        except ValueError:
+            try:
+                seconds = parsedate_to_datetime(retry_after).timestamp() - time.time()
+            except (TypeError, ValueError, OverflowError):
+                return fallback
+        if seconds >= 0 and seconds < float("inf"):
+            return max(1, seconds)
+    return fallback
+
+
+@contextmanager
+def retry_anytype_requests(client):
+    """Retry only rejected API requests, including reads following a creation.
+
+    Retrying create_object itself could duplicate a page if its POST succeeded
+    but the subsequent GET was rate limited.
+    """
+    endpoint_class = client.apiEndpoints
+    original = endpoint_class._request
+
+    @wraps(original)
+    def request(api, *args, **kwargs):
+        fallback = 10
+        while True:
+            try:
+                return original(api, *args, **kwargs)
+            except Exception as exc:
+                status = getattr(exc, "status_code", None)
+                if status is None:
+                    status = getattr(getattr(exc, "response", None), "status_code", None)
+                message = str(exc).casefold()
+                if (status != 429 and "maximum request limit" not in message
+                    and "rate limit" not in message):
+                    raise
+                delay = retry_delay(exc, fallback)
+                print(f"Anytype request limit reached. Waiting {delay:g} seconds, "
+                      "then retrying…", flush=True)
+                remaining = delay
+                while remaining > 0:
+                    pause = min(remaining, 60)
+                    time.sleep(pause)
+                    remaining -= pause
+                fallback = min(fallback * 2, 60)
+
+    endpoint_class._request = request
+    try:
+        yield
+    finally:
+        endpoint_class._request = original
+
+
 def page_sort_key(page):
     try:
         return (0, int(page))
@@ -435,10 +506,11 @@ def build_pages(annotations, client):
     for notes in documents.values():
         obj = client.Object(notes[0].get("name") or "Untitled Zotero document", type="page")
         obj.description = IMPORT_DESCRIPTION
-        obj.icon = "📚"
+        #obj.icon = "📚"
         authors = list(dict.fromkeys(a for note in notes for a in (note.get("author") or [])))
+        obj._author_names = authors
         if authors:
-            obj.properties["author"] = "; ".join(authors)
+            obj.properties["author"] = authors
         for field in ("year", "doi", "journal"):
             values = [note.get(field) for note in notes if note.get(field) not in (None, "")]
             if values:
@@ -455,7 +527,7 @@ def build_pages(annotations, client):
                 obj.add_title2(literal_text(f"Page {page}" if page else "Unnumbered page"))
                 previous_page = page
             color = choose_color(note, replacements)
-            text = literal_text(note["text"])
+            text = literal_text(single_line(note["text"]))
             if color:
                 text = f'<font color="{color}">{text}</font>'
             obj.add_quote(text)
@@ -473,24 +545,160 @@ def paginated(fetch):
         offset += len(batch)
 
 
+def content_blocks(obj):
+    blocks = [b for b in obj.blocks if b.type not in
+              ("title", "description", "featured_properties")]
+
+    def empty_placeholder(block):
+        return (block.type == "paragraph" and not getattr(block, "text", "")
+                and not any(value for key, value in block.to_dict().items()
+                            if key not in ("id", "type", "text")))
+
+    # A Page's default template can add an empty paragraph around imported blocks.
+    while blocks and empty_placeholder(blocks[0]):
+        blocks.pop(0)
+    while blocks and empty_placeholder(blocks[-1]):
+        blocks.pop()
+    return blocks
+
+
 def content_signature(obj):
     # Compare visible content; the server adds block IDs and may normalize escapes.
     return [
         (b.type, re.sub(r"\\([\\`*_\[\]~<])", r"\1", getattr(b, "text", "")),
          getattr(b, "background_color", "") or "")
-        for b in obj.blocks if b.type not in ("title", "description", "featured_properties")
+        for b in content_blocks(obj)
     ]
 
 
+def normalized_name(name):
+    name = single_line(name)
+    if name.count(",") == 1:
+        last, first = name.split(",", 1)
+        name = f"{first} {last}"
+    name = unicodedata.normalize("NFKD", name.casefold())
+    name = "".join(char for char in name if not unicodedata.combining(char))
+    return " ".join(re.findall(r"[^\W_]+", name))
+
+
+def name_similarity(first, second):
+    first, second = normalized_name(first), normalized_name(second)
+    if not first or not second:
+        return 0
+    a, b = first.split(), second.split()
+    score = max(SequenceMatcher(None, first, second).ratio(),
+                SequenceMatcher(None, " ".join(sorted(a)), " ".join(sorted(b))).ratio())
+    if len(a) > 1 and len(b) > 1 and a[-1] == b[-1]:
+        score = max(score, 0.8)
+    return score
+
+
+def choose_human(name, humans):
+    exact = [h for h in humans if normalized_name(h.name) == normalized_name(name)]
+    if len(exact) == 1:
+        return exact[0]
+    candidates = exact or sorted(
+        [h for h in humans if name_similarity(name, h.name) >= 0.78],
+        key=lambda h: name_similarity(name, h.name), reverse=True,
+    )[:5]
+    if not candidates:
+        return None
+    print(f"\nPossible existing human pages for {name!r}:")
+    for index, human in enumerate(candidates, 1):
+        print(f"{index}) {human.name} ({human.id})")
+    print("0) Create a separate human page")
+    while True:
+        try:
+            answer = input("Choose the same person, or 0 for a different person: ").strip()
+        except EOFError as exc:
+            raise RuntimeError(f"Choose a human page for {name!r} in an interactive terminal") from exc
+        if answer == "0":
+            return None
+        if answer.isascii() and answer.isdigit() and 1 <= int(answer) <= len(candidates):
+            return candidates[int(answer) - 1]
+        print(f"Please choose 0–{len(candidates)}.")
+
+
+def bind_human_authors(space, pages, client, dry_run=False, human_type=None, author_key="author"):
+    names = list(dict.fromkeys(name for page in pages for name in page._author_names if name.strip()))
+    if not names:
+        return
+    types = list(paginated(space.get_types))
+    human_labels = {"human", "humans", "person", "people", "pessoa", "pessoas", "humano", "humanos"}
+    human_types = [t for t in types if normalized_name(t.name) in human_labels
+                   or t.key in ("human", "person", "zotero_human")]
+    if human_type:
+        matches = [t for t in types if t.key == human_type or normalized_name(t.name) == normalized_name(human_type)]
+        if len(matches) != 1:
+            raise RuntimeError(f"Expected one human type matching {human_type!r}; found {len(matches)}")
+        target_type = matches[0]
+        if all(t.key != target_type.key for t in human_types):
+            human_types.append(target_type)
+    elif human_types:
+        target_type = next((t for t in human_types if normalized_name(t.name) == "human"), human_types[0])
+    else:
+        if dry_run:
+            raise RuntimeError("No Human type exists. Run without --dry-run to create it.")
+        definition = client.Type()
+        definition.name = "Human"
+        definition.plural_name = "Humans"
+        definition.key = "zotero_human"
+        definition.icon = HUMAN_ICON
+        target_type = space.create_type(definition)
+        human_types.append(target_type)
+
+    humans_by_id = {}
+    for kind in human_types:
+        def fetch(offset, limit):
+            return space.get_objects(offset=offset, limit=limit,
+                                     filters={"type": kind.key, "fields": "id,name,type"})
+        for human in paginated(fetch):
+            humans_by_id[human.id] = human
+    humans = list(humans_by_id.values())
+    resolved = {}
+    created = reused = 0
+    print(f"Resolving {len(names)} author names against {len(humans)} existing human pages.", flush=True)
+    for name in names:
+        normalized = normalized_name(name)
+        if normalized in resolved:
+            continue
+        human = choose_human(name, humans)
+        if human is None:
+            if dry_run:
+                raise RuntimeError(f"Human page {name!r} is missing. Run without --dry-run to create it.")
+            obj = client.Object(single_line(name), type=target_type.key)
+            obj.icon = HUMAN_ICON
+            human = space.create_object(obj)
+            humans.append(human)
+            created += 1
+            print(f"Created human: {human.name}", flush=True)
+        else:
+            reused += 1
+            print(f"Reused human: {name} → {human.name}", flush=True)
+        resolved[normalized] = human.id
+    for page in pages:
+        ids = list(dict.fromkeys(resolved[normalized_name(name)] for name in page._author_names if name.strip()))
+        if ids:
+            page.properties[author_key] = ids
+    print(f"Humans: {created} created; {reused} reused.", flush=True)
+
+
 def find_page_property(properties, field, name, fmt, space_name):
+    keys = {field, f"zotero_{field}"}
+    if field == "author":
+        keys.add("zotero_author_objects")
     matches = [p for p in properties
-               if p.key in (field, f"zotero_{field}") or p.name.casefold() == name.casefold()]
+               if p.key in keys or p.name.casefold() == name.casefold()]
+    if field == "author":
+        # A text property cannot become an object relation in place.
+        matches = [p for p in matches if p.format == "objects"]
     if len(matches) > 1:
         raise RuntimeError(f"Multiple properties match {name!r} in {space_name!r}")
     if not matches:
         return None
     prop = matches[0]
-    if prop.format != fmt:
+    allowed_formats = {"text", "url"} if field == "doi" else {fmt}
+    if prop.format not in allowed_formats:
         raise RuntimeError(f"Property {name!r} must use {fmt!r}, found {prop.format!r}")
     return prop
 
@@ -498,10 +706,14 @@ def find_page_property(properties, field, name, fmt, space_name):
 def bind_page_properties(space, pages, client, dry_run=False):
     """Resolve space-specific property keys without modifying the shared Page type."""
     properties = list(paginated(space.get_properties))
+    legacy_author_keys = [p.key for p in properties if p.format == "text" and
+                          (p.key in ("author", "zotero_author") or p.name.casefold() == "author")]
     resolved = {}
+    formats = {}
     for field, (name, fmt) in BIBLIOGRAPHIC_PROPERTIES.items():
         prop = find_page_property(properties, field, name, fmt, space.name)
         resolved[field] = prop.key if prop else None
+        formats[field] = prop.format if prop else fmt
     missing = [BIBLIOGRAPHIC_PROPERTIES[f][0] for f, key in resolved.items() if key is None]
     if missing and dry_run:
         raise RuntimeError(
@@ -512,7 +724,7 @@ def bind_page_properties(space, pages, client, dry_run=False):
         if key is None:
             name, fmt = BIBLIOGRAPHIC_PROPERTIES[field]
             definition = client.Property.from_format(name, fmt)
-            definition.key = f"zotero_{field}"
+            definition.key = "zotero_author_objects" if field == "author" else f"zotero_{field}"
             try:
                 prop = space.create_property(definition)
             except Exception as exc:
@@ -526,22 +738,29 @@ def bind_page_properties(space, pages, client, dry_run=False):
                         "but did not return it in the property list."
                     ) from exc
             resolved[field] = prop.key
+            formats[field] = prop.format
     for page in pages:
+        if formats["doi"] == "url" and page.properties.get("doi"):
+            doi = str(page.properties["doi"]).strip()
+            if not doi.casefold().startswith(("http://", "https://")):
+                doi = "https://doi.org/" + re.sub(r"^doi:\s*", "", doi, flags=re.IGNORECASE)
+            page.properties["doi"] = doi
         page.properties = {resolved.get(key, key): value for key, value in page.properties.items()}
+        page._legacy_author_keys = legacy_author_keys
     return resolved
 
 
 def metadata_matches(current, expected):
     values = current._property_values()
-    return all(values.get(key) == value for key, value in expected.properties.items())
+    return (all(values.get(key) == value for key, value in expected.properties.items())
+            and not any(key in values for key in getattr(expected, "_legacy_author_keys", [])))
 
 
 def update_operations(current, expected, client, author_key):
-    old_blocks = [b for b in current.blocks if b.type not in
-                  ("title", "description", "featured_properties")]
+    old_blocks = content_blocks(current)
     ops = []
     # Migrate only the known author paragraph emitted by previous script versions.
-    author = expected.properties.get(author_key)
+    author = "; ".join(getattr(expected, "_author_names", []))
     if author and old_blocks and old_blocks[0].type == "paragraph":
         paragraph = client.Object(blocks=[old_blocks[0]])
         legacy = client.Object(blocks=[client.Text(literal_text("Authors: " + author))])
@@ -554,8 +773,15 @@ def update_operations(current, expected, client, author_key):
         raise RuntimeError(f"Page structure changed for {expected.name!r}; refusing to overwrite")
     changed = {key: value for key, value in expected.properties.items()
                if current._property_values().get(key) != value}
-    if changed:
-        ops.append({"op": "set_properties", "set": changed})
+    unset = [key for key in getattr(expected, "_legacy_author_keys", [])
+             if key in current._property_values()]
+    if changed or unset:
+        op = {"op": "set_properties"}
+        if changed:
+            op["set"] = changed
+        if unset:
+            op["unset"] = unset
+        ops.append(op)
     ops.extend({"op": "update_block", "id": old.id,
                 "set": {"text": new.text, "background_color": ""}}
                for old, new in zip(old_blocks, expected.blocks) if old.type == "quote"
@@ -564,6 +790,11 @@ def update_operations(current, expected, client, author_key):
 
 
 def export_pages(pages, client, args):
+    with retry_anytype_requests(client):
+        return _export_pages(pages, client, args)
+
+
+def _export_pages(pages, client, args):
     anytype = client.Anytype()
     # Read existing credentials without asking the client to create directories.
     api_key = os.environ.get("ANYTYPE_API_KEY")
@@ -579,8 +810,12 @@ def export_pages(pages, client, args):
                 "Use --space-id to select an existing space explicitly."
             )
         space = matches[0]
+        print(space)
     print(f"Destination: {space.name} ({space.id})", flush=True)
     property_keys = bind_page_properties(space, pages, client, dry_run=args.dry_run)
+    bind_human_authors(space, pages, client, dry_run=args.dry_run,
+                       human_type=getattr(args, "human_type", None),
+                       author_key=property_keys["author"])
     existing = {}
     def imported_objects(offset, limit):
         # Descriptions are omitted from the API's default list projection.
@@ -637,14 +872,15 @@ def export_pages(pages, client, args):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--space", default="API", help="Exact destination space name (default: API)")
+    parser.add_argument("--space", default="Charles K. Neimog", help="Exact destination space name (default: API)")
     parser.add_argument("--space-id", help="Explicit space ID, overriding --space")
+    parser.add_argument("--human-type", help="Existing human/person type name or API key (auto-detected by default)")
     parser.add_argument("--input", type=Path, help="Read an existing annotations JSON export")
     parser.add_argument("--output", type=Path, default=Path(OUTPUT_FILE), help="JSON output path")
     parser.add_argument("--client-path", type=Path, help="Path to an anytype-client checkout")
     parser.add_argument("--json-only", action="store_true", help="Save JSON without contacting Anytype")
     parser.add_argument("--dry-run", action="store_true", help="Validate pages in Anytype without creating them")
-    parser.add_argument("--update-existing", action="store_true", help="Update metadata, quotes, and colors; move legacy author text into properties")
+    parser.add_argument("--update-existing", action="store_true", help="Update metadata, quotes, and colors; migrate text authors to human-page links")
     parser.add_argument("--limit", type=int, help="Export only the first N document pages")
     args = parser.parse_args(argv)
     if args.limit is not None and args.limit < 1:
@@ -656,6 +892,10 @@ def main(argv=None):
         enrich_annotations(annotations)
     else:
         annotations = collect_annotations()
+
+    for note in annotations:
+        if isinstance(note, dict) and isinstance(note.get("text"), str):
+            note["text"] = single_line(note["text"])
 
     # Preserve the JSON export alongside the Anytype import.
     with open(
